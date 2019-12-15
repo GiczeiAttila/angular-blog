@@ -1,0 +1,20 @@
+<div class="d-flex flex-wrap justify-content-around">
+    <div class="card m-3" *ngFor="let post of posts">
+        <h3 class="card-header"><a [routerLink]="['/posts', post.id]">{{post.title}}</a></h3>
+        <div class="card-body card-body-date">
+            <h6 class="card-subtitle text-muted">
+                {{post.createdAt}}
+            </h6>
+        </div>
+        <img class="card-image"
+             [src]="post.imgUrl" alt=""/>
+        <div class="card-body card-body-text">
+            <div class="card-text">
+                {{post.postBodyShortened}}
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            Comments: <span class="badge badge-primary badge-pill">{{post.numberOfComments}}</span>
+        </div>
+    </div>
+</div>

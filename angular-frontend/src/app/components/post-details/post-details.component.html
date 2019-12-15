@@ -1,0 +1,17 @@
+<div class="jumbotron post-details">
+    <h3 class="text-success"><strong>{{postDetails.title}}</strong></h3>
+    <h6 class="text-muted">{{postDetails.createdAt}}</h6>
+    <div>
+        <img *ngIf="postDetails.imgUrl" [src]="postDetails.imgUrl" class="post-image" alt=""/>
+        {{postDetails.postBody}}
+    </div>
+    <br/>
+    <div class="clearfix">
+        <h4 class="text-success">Comments</h4>
+        <div *ngFor="let comment of postDetails.comments">
+            <h6 class="text-info">{{comment.author + ' - ' + comment.createdAt}}</h6>
+            <p class="text-muted">{{comment.commentBody}}</p>
+        </div>
+    </div>
+    <app-comment-form *ngIf="id" [postId]="id" (commentCreated)="loadPostDetails()"></app-comment-form>
+</div>

@@ -1,0 +1,67 @@
+<div>
+    <h3>New Post</h3>
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <input
+                type="text"
+                id="title"
+                formControlName="title"
+                placeholder="Title"
+                class="form-control"
+                [ngClass]="{
+                'is-invalid': postForm.get('title').invalid && postForm.get('title').touched || postForm.get('title').errors?.serverError
+                }"
+            >
+            <small
+                *ngIf="postForm.get('title').invalid
+                        && postForm.get('title').touched
+                        && !postForm.get('title').errors?.serverError"
+                class="text-danger"
+            >
+                Please enter a title
+            </small>
+            <small *ngIf="postForm.get('title').errors?.serverError" class="text-danger">
+                {{postForm.get('title').errors['serverError']}}
+            </small>
+        </div>
+
+        <div class="form-group">
+            <textarea
+                rows="10"
+                id="postBody"
+                formControlName="postBody"
+                placeholder="Text"
+                class="form-control"
+                [ngClass]="{
+                'is-invalid': postForm.get('postBody').invalid && postForm.get('postBody').touched || postForm.get('postBody').errors?.serverError
+                }"
+            >
+            </textarea>
+            <small
+                *ngIf="postForm.get('postBody').invalid
+                        && postForm.get('postBody').touched
+                        && !postForm.get('postBody').errors?.serverError"
+                class="text-danger"
+            >
+                Please enter the body of the post
+            </small>
+            <small *ngIf="postForm.get('postBody').errors?.serverError" class="text-danger">
+                {{postForm.get('postBody').errors['serverError']}}
+            </small>
+        </div>
+
+        <div class="form-group">
+            <input
+                type="text"
+                id="imgUrl"
+                formControlName="imgUrl"
+                placeholder="Image url (optional)"
+                class="form-control"
+                [ngClass]="{
+                'is-invalid': postForm.get('imgUrl').invalid && postForm.get('imgUrl').touched || postForm.get('imgUrl').errors?.serverError
+                }"
+            >
+        </div>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+</div>

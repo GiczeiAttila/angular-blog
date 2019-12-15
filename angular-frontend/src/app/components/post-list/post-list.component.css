@@ -1,0 +1,23 @@
+.card {
+    min-width: 300px;
+    width: 300px;
+    text-align: center;
+}
+
+.card-text {
+    text-align: justify;
+}
+
+.card-image {
+    height: 200px;
+    width: 100%;
+    display: block;
+}
+
+.card-body-date {
+    max-height: 30px;
+}
+
+.card-body-text {
+    min-height: 208px;
+}

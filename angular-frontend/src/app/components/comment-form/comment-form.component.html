@@ -1,0 +1,34 @@
+<form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <input
+            type="text"
+            formControlName="author"
+            placeholder="Author (Optional)"
+            class="form-control"
+        >
+    </div>
+
+    <div class="form-group">
+        <textarea
+            formControlName="commentBody"
+            rows="4"
+            class="form-control"
+            placeholder="Text"
+            [ngClass]="{
+                'is-invalid': commentForm.get('commentBody').invalid && commentForm.get('commentBody').touched || commentForm.get('commentBody').errors?.serverError
+                }"
+        ></textarea>
+        <small
+            *ngIf="commentForm.get('commentBody').invalid
+                        && commentForm.get('commentBody').touched
+                        && !commentForm.get('commentBody').errors?.serverError"
+            class="text-danger"
+        >
+            Please enter the body of the comment
+        </small>
+        <small *ngIf="commentForm.get('commentBody').errors?.serverError" class="text-danger">
+            {{commentForm.get('commentBody').errors['serverError']}}
+        </small>
+    </div>
+    <button type="submit" class="btn btn-info">Submit</button>
+</form>
