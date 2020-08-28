@@ -25,6 +25,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name = "title")
     private String title;
 
@@ -40,6 +41,7 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
+
 
     public Post() {
     }
