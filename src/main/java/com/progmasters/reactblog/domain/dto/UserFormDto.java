@@ -2,10 +2,11 @@ package com.progmasters.reactblog.domain.dto;
 
 public class UserFormDto {
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
-    private String telNumber;
+    private String phoneNumber;
 
     public Long getId() {
         return id;
@@ -15,12 +16,20 @@ public class UserFormDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -31,6 +40,7 @@ public class UserFormDto {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -39,11 +49,11 @@ public class UserFormDto {
         this.password = password;
     }
 
-    public String getTelNumber() {
-        return telNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

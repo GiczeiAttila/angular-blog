@@ -10,6 +10,9 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { UserRegistrationFormComponent } from './components/user-registration-form/user-registration-form.component';
+import { UserLoginFormComponent } from './components/user-login-form/user-login-form.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
     PostListComponent,
     PostFormComponent,
     PostDetailsComponent,
-    CommentFormComponent
+    CommentFormComponent,
+    UserRegistrationFormComponent,
+    UserLoginFormComponent,
+    WelcomeComponent
   ],
     imports: [
         BrowserModule,

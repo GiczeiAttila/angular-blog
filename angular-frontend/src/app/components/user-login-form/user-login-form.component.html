@@ -1,0 +1,57 @@
+<div>
+    <h3>Login form</h3>
+    <hr/>
+    <form [formGroup]="loginForm">
+        <div class="form-group">
+            <label
+                for="id"
+                class="form-control-label"
+                [ngClass]="{'text-danger': loginForm.get('id').invalid && loginForm.get('id').touched
+                    || loginForm.get('id').errors?.serverError}"
+            >
+                Id:
+            </label>
+            <input
+                type="text"
+                id="id"
+                formControlName="id"
+                name="id"
+                placeholder="id"
+                class="form-control"
+                [ngClass]="{'is-invalid': loginForm.get('id').invalid && loginForm.get('id').touched
+                    || loginForm.get('id').errors?.serverError}"
+            />
+            <small *ngIf="loginForm.get('id').invalid && loginForm.get('id').touched && !loginForm.get('id').errors?.serverError" class="text-danger">
+                Please enter an id
+            </small>
+            <small *ngIf="loginForm.get('id').errors?.serverError" class="text-danger">
+                {{loginForm.get('id').errors['serverError']}}
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label
+                for="password"
+                class="form-control-label"
+                [ngClass]="{'text-danger': loginForm.get('password').invalid && loginForm.get('password').touched
+                    || loginForm.get('password').errors?.serverError}"
+            >
+                Password:
+            </label>
+            <input
+                type="password"
+                id="password"
+                formControlName="password"
+                name="password"
+                class="form-control"
+                [ngClass]="{'is-invalid': loginForm.get('password').invalid && loginForm.get('password').touched
+                    || loginForm.get('password').errors?.serverError}"
+            />
+            <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" class="text-danger">
+                Please enter a password
+            </small>
+        </div>
+
+        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success" (click)="onSubmit()">Login</button>
+    </form>
+</div>

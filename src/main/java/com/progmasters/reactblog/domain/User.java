@@ -13,28 +13,30 @@ public class User {
 
     @Id
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
-    private String telNumber;
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "author")
-    private List<Post> myPosts;
+//    @OneToMany(mappedBy = "author")
+//    private List<Post> myPosts;
 
-    @OneToMany
-    private List<Comment> myComments;
+//    @OneToMany(mappedBy = "author")
+//    private List<Comment> myComments;
 
     public User() {
     }
 
     public User(UserFormDto userFormDto) {
         this.id = userFormDto.getId();
-        this.name = userFormDto.getName();
+        this.firstName = userFormDto.getFirstName();
+        this.lastName = userFormDto.getLastName();
         this.email = userFormDto.getEmail();
         this.password = userFormDto.getPassword();
-        this.telNumber = userFormDto.getTelNumber();
-        this.myPosts = new ArrayList<>();
-        this.myComments = new ArrayList<>();
+        this.phoneNumber = userFormDto.getPhoneNumber();
+//        this.myPosts = new ArrayList<>();
+//        this.myComments = new ArrayList<>();
     }
 
     public Long getId() {
@@ -45,12 +47,20 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -69,27 +79,27 @@ public class User {
         this.password = password;
     }
 
-    public String getTelNumber() {
-        return telNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public List<Post> getMyPosts() {
-        return myPosts;
-    }
+    //    public List<Post> getMyPosts() {
+//        return myPosts;
+//    }
+//
+//    public void setMyPosts(List<Post> myPosts) {
+//        this.myPosts = myPosts;
+//    }
 
-    public void setMyPosts(List<Post> myPosts) {
-        this.myPosts = myPosts;
-    }
-
-    public List<Comment> getMyComments() {
-        return myComments;
-    }
-
-    public void setMyComments(List<Comment> myComments) {
-        this.myComments = myComments;
-    }
+//    public List<Comment> getMyComments() {
+//        return myComments;
+//    }
+//
+//    public void setMyComments(List<Comment> myComments) {
+//        this.myComments = myComments;
+//    }
 }

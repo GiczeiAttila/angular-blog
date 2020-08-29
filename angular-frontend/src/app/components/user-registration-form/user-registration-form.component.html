@@ -1,0 +1,43 @@
+<h1>Create account</h1>
+<form (ngSubmit)="submitRegistration()" [formGroup]="registrationForm">
+
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input class="form-control" formControlName="id" id="id" type="number">
+        <small class="text-danger">{{registrationForm.get('id').errors?.serverError}}</small>
+    </div>
+    <div class="form-group">
+        <label for="firstName">Firstname</label>
+        <input class="form-control" formControlName="firstName" id="firstName" type="text">
+        <small class="text-danger">{{registrationForm.get('firstName').errors?.serverError}}</small>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Lastname</label>
+        <input class="form-control" formControlName="lastName" id="lastName" type="text">
+        <small class="text-danger">{{registrationForm.get('lastName').errors?.serverError}}</small>
+    </div>
+
+    <div class="form-group">
+        <label for="email">e-mail</label>
+        <input class="form-control" formControlName="email" id="email" type="text">
+        <small class="text-danger">{{registrationForm.get('email').errors?.serverError}}</small>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input class="form-control" formControlName="phoneNumber" id="phoneNumber" type="text">
+        <small class="text-danger">{{registrationForm.get('phoneNumber').errors?.serverError}}</small>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" formControlName="password" id="password" type="password">
+        <small class="text-danger">{{registrationForm.get('password').errors?.serverError}}</small>
+    </div>
+    <div class="form-group">
+        <label for="password2">Password confirmation</label>
+        <input class="form-control" formControlName="password2" id="password2" type="password">
+        <small class="text-danger">{{registrationForm.get('password2').errors?.serverError}}</small>
+        <small *ngIf="registrationForm.get('password2').touched && registrationForm.get('password').value!==registrationForm.get('password2').value" class="text-danger">the password confirmation is incorrect</small>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
