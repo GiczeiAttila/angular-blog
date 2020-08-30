@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class User {
@@ -18,6 +19,9 @@ public class User {
     private String email;
     private String password;
     private String phoneNumber;
+    private String token;
+    private UserStatusEnum userStatus;
+
 
 //    @OneToMany(mappedBy = "author")
 //    private List<Post> myPosts;
@@ -35,6 +39,8 @@ public class User {
         this.email = userFormDto.getEmail();
         this.password = userFormDto.getPassword();
         this.phoneNumber = userFormDto.getPhoneNumber();
+        this.userStatus = UserStatusEnum.REGISTERED;
+        this.token =  UUID.randomUUID().toString();
 //        this.myPosts = new ArrayList<>();
 //        this.myComments = new ArrayList<>();
     }
@@ -85,6 +91,22 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public UserStatusEnum getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEnum userStatus) {
+        this.userStatus = userStatus;
     }
 
     //    public List<Post> getMyPosts() {
