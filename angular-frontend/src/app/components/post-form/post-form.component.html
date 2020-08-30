@@ -23,7 +23,7 @@
 
         <div class="form-group">
             <label for="type">Select type</label>
-            <select (change)="getTypeValue" ) class="form-control" formControlName="type" id="type">
+            <select (change)="getTypeValue()" class="form-control" formControlName="type" id="type">
                 <option *ngFor="let type of types" value="{{type.name}}">{{type.displayName}}</option>
             </select>
         </div>
