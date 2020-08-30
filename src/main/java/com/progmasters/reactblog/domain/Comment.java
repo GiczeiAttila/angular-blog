@@ -36,6 +36,10 @@ public class Comment {
     @ManyToOne
     private Post post;
 
+//    @ManyToOne
+//    @JoinColumn(name = "author_id")
+//    private User author;
+
     public Comment() {
     }
 
