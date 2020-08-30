@@ -23,7 +23,7 @@ public class PostListItem {
     private Long id;
     private String title;
     private String postBodyShortened;
-    private String imgUrl;
+    private String picture;
     private String createdAt;
     private Integer numberOfComments;
 
@@ -57,7 +57,7 @@ public class PostListItem {
         this.postBodyShortened = postBody;
     */
 
-        this.imgUrl = post.getImgUrl();
+        this.picture = post.getPicture();
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
     }
@@ -74,8 +74,8 @@ public class PostListItem {
         return postBodyShortened;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getPicture() {
+        return picture;
     }
 
     public String getCreatedAt() {

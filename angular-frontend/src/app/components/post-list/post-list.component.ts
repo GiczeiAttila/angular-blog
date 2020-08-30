@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../../services/blog.service';
+import {Component, OnInit} from '@angular/core';
+import {BlogService} from '../../services/blog.service';
+import {PostListItemModel} from "../../models/postListItem.model";
 
 @Component({
-  selector: 'app-post-list',
-  templateUrl: './post-list.component.html',
-  styleUrls: ['./post-list.component.css']
+    selector: 'app-post-list',
+    templateUrl: './post-list.component.html',
+    styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
 

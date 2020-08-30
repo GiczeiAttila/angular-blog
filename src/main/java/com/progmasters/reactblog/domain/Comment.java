@@ -24,8 +24,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "author")
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
     @Column(name = "comment_body", columnDefinition = "TEXT")
     private String commentBody;
@@ -44,7 +45,7 @@ public class Comment {
     }
 
     public Comment(CommentFormData commentFormData, Post post) {
-        this.author = commentFormData.getAuthor();
+        this.id = commentFormData.getAuthorId();
         this.commentBody = commentFormData.getCommentBody();
         this.createdAt = LocalDateTime.now();
         this.post = post;
@@ -58,11 +59,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

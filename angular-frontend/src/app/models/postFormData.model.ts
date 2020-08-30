@@ -1,5 +1,7 @@
-interface PostFormDataModel {
+export interface PostFormDataModel {
     title: string;
     postBody: string;
-    imgUrl?: string;
+    picture?: string;
+    category: string;
+    type: string;
 }

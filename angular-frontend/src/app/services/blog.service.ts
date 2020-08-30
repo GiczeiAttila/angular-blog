@@ -1,16 +1,26 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {CommentFormDataModel} from "../models/commentFormData.model";
+import {PostDetailsModel} from "../models/postDetails.model";
+import {PostFormDataModel} from "../models/postFormData.model";
+import {PostListItemModel} from "../models/postListItem.model";
+import {PostFormInitDataModel} from "../models/postFormInitData.model";
 
 const POSTS_BASE_URL = 'http://localhost:8080/api/posts';
 const COMMENTS_BASE_URL = 'http://localhost:8080/api/comments';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BlogService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
+
+    fetchPostFormInitData(): Observable<PostFormInitDataModel> {
+        return this.http.get<PostFormInitDataModel>(POSTS_BASE_URL + '/formData');
+    }
 
     fetchPosts(): Observable<Array<PostListItemModel>> {
         return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL)

@@ -36,7 +36,7 @@ public class Post {
     private String postBody;
 
     @Column(name = "img_url")
-    private String imgUrl;
+    private String picture;
 
     @Column(name = "creation_at")
     private LocalDateTime createdAt;
@@ -45,6 +45,14 @@ public class Post {
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private PostCategories category;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private PostTypes type;
+
 
     public Post() {
     }
@@ -52,7 +60,7 @@ public class Post {
     public Post(PostFormData postFormData) {
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
-        this.imgUrl = postFormData.getImgUrl();
+        this.picture = postFormData.getPicture();
         this.createdAt = LocalDateTime.now();
     }
 
@@ -80,12 +88,12 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setPicture(String imgUrl) {
+        this.picture = imgUrl;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -102,6 +110,30 @@ public class Post {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public PostCategories getCategory() {
+        return category;
+    }
+
+    public void setCategory(PostCategories category) {
+        this.category = category;
+    }
+
+    public PostTypes getType() {
+        return type;
+    }
+
+    public void setType(PostTypes type) {
+        this.type = type;
     }
 
     @Override
