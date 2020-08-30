@@ -18,6 +18,20 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: noreply.service.test@gmail.com
+    password: Progmasters
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
 
 logging:
   level:
@@ -26,3 +40,5 @@ logging:
     org.hibernate: error
   pattern:
     console: "%cyan(%d{yyyy-MM-dd HH:mm:ss}) [%green(%thread)] %highlight(%-5level) %yellow(%logger{36}) - %msg%n"
+
+
