@@ -3,10 +3,16 @@
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="category">Select a category</label>
-            <select class="form-control" formControlName="category" id="category">
+            <select [ngClass]="{
+                'is-invalid': postForm.get('category').invalid && postForm.get('category').touched || postForm.get('category').errors?.serverError
+                }" class="form-control" formControlName="category"
+                    id="category">
                 <option disabled>Choose...</option>
                 <option *ngFor="let category of categories" value="{{category.name}}">{{category.displayName}}</option>
             </select>
+            <small *ngIf="postForm.get('category').invalid && postForm.get('category').touched" class="text-danger">Please
+                choose a category</small>
+            <small class="text-danger">{{postForm.get('category').errors?.serverError}}</small>
         </div>
 
         <!-- <div class="input-group mb-3">
@@ -23,9 +29,15 @@
 
         <div class="form-group">
             <label for="type">Select type</label>
-            <select (change)="getTypeValue()" class="form-control" formControlName="type" id="type">
+            <select (change)="getTypeValue()" [ngClass]="{
+                'is-invalid': postForm.get('type').invalid && postForm.get('type').touched || postForm.get('type').errors?.serverError
+                }" class="form-control" formControlName="type"
+                    id="type">
                 <option *ngFor="let type of types" value="{{type.name}}">{{type.displayName}}</option>
             </select>
+            <small *ngIf="postForm.get('type').invalid && postForm.get('type').touched" class="text-danger">Please
+                choose a type</small>
+            <small class="text-danger">{{postForm.get('type').errors?.serverError}}</small>
         </div>
 
         <div class="form-group">
@@ -121,7 +133,7 @@
                 <input class="form-control" formControlName="coordinate" id="coordinate" type="text">
             </div>
         </div>
-
+        <br>
 
         <button type="submit" class="btn btn-info">Submit</button>
     </form>

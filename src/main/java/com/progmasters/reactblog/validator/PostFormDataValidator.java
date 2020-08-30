@@ -33,5 +33,15 @@ public class PostFormDataValidator implements Validator {
         if (postFormData.getPostBody() == null || postFormData.getPostBody().isEmpty()) {
             errors.rejectValue("postBody", "postFormData.postBody.empty");
         }
+
+        if (postFormData.getCategory() == null) {
+            errors.rejectValue("category", "postFormData.category.null");
+        }
+
+        if (postFormData.getType() == null) {
+            errors.rejectValue("type", "postFormData.type.null");
+        }
+
+
     }
 }
