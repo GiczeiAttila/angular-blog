@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.dto.PasswordDto;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.service.EmailSenderService;
@@ -10,6 +11,7 @@ import com.progmasters.reactblog.validator.UserFormDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,8 +52,17 @@ public class UserController {
     }
 
     @PostMapping("confirmation")
+    @Async
     public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
         userService.confirmRegistration(userConfirmationDto.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("password")
+    public ResponseEntity<Void> savePassword(@RequestBody PasswordDto passwordDto) {
+        userService.savePassword(passwordDto);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+
 }

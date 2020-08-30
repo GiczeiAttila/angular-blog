@@ -22,7 +22,7 @@ public class EmailSenderService {
         mailMessage.setTo(toMail);
         mailMessage.setSubject("Confirmation!");
         mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:4200//api/users/confirmation/"+token+"/"+id);
+                +"http://localhost:4200/confirmation/"+token+"/"+id);
         javaMailSender.send(mailMessage);
     }
 }

@@ -2,6 +2,7 @@ package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
+import com.progmasters.reactblog.domain.dto.PasswordDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,18 @@ public class UserService {
     public void confirmRegistration(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         User user = userOptional.get();
-        user.setUserStatus(UserStatusEnum.ACTIVE);
+        user.setUserStatus(UserStatusEnum.CONFIRMED);
         user.setToken(null);
+    }
+
+    public void savePassword(PasswordDto passwordDto) {
+        Optional<User> userOptional = userRepository.findById(passwordDto.getId());
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            if (user.getToken() ==null && user.getUserStatus()==UserStatusEnum.CONFIRMED){
+                user.setPassword(passwordDto.getPassword());
+                user.setUserStatus(UserStatusEnum.ACTIVE);
+            }
+        }
     }
 }

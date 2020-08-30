@@ -23,13 +23,16 @@ export class UserRegistrationConfirmationComponent implements OnInit {
               const idParam = +map.get('id');
               if (idParam && !isNaN(idParam)) {
                   this.id = idParam;
+                  console.log(this.id)
                   this.token = map.get('token');
-                  this.userConfirmationData.id = this.id;
-                  this.userConfirmationData.token = this.token;
-
+                  console.log(this.token)
+                  this.userConfirmationData = {
+                      'id':this.id,
+                      'token': this.token};
+                  console.log(this.userConfirmationData);
                   this.userService.sendConfirmation(this.userConfirmationData).subscribe(
                       ()=>{},
-                      error =>console.log(error),
+                      error =>this.confirmation = 'Wrong token or id',
                       ()=>{
                           this.confirmation='Registration confirmed!';
                           router.navigate(['/password', this.id])
