@@ -17,6 +17,7 @@ export class PostFormComponent implements OnInit {
     postForm: FormGroup;
     categories: Array<CategoryOptionModel>;
     types: Array<TypeOptionModel>;
+    isEvent: boolean;
 
 
     constructor(private formBuilder: FormBuilder,
@@ -28,6 +29,14 @@ export class PostFormComponent implements OnInit {
             title: ['', Validators.required],
             postBody: ['', Validators.required],
             picture: [''],
+            address: formBuilder.group({
+                country: [''],
+                zipCode: [''],
+                city: [''],
+                street: [''],
+                number: [''],
+                coordinate: ['']
+            })
         });
     }
 
@@ -49,5 +58,23 @@ export class PostFormComponent implements OnInit {
             },
             error => handleValidationErrors(error, this.postForm)
         )
+    }
+
+    /* getTypeValue(type) {
+         if(this.postForm.get('type').value == "EVENT"){
+             this.isEvent=true;
+         } else {
+             this.isEvent = false;
+         }
+     }
+
+     */
+    getTypeValue() {
+        let typeValue = this.postForm.get('type').value;
+        if (typeValue == "EVENT") {
+            this.isEvent = true;
+        } else {
+            this.isEvent = false;
+        }
     }
 }

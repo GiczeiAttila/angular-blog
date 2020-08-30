@@ -53,6 +53,9 @@ public class Post {
     @Column(name = "type")
     private PostTypes type;
 
+    @Embedded
+    private Address address;
+
 
     public Post() {
     }
@@ -62,6 +65,9 @@ public class Post {
         this.postBody = postFormData.getPostBody();
         this.picture = postFormData.getPicture();
         this.createdAt = LocalDateTime.now();
+        this.category = postFormData.getCategory();
+        this.type = postFormData.getType();
+        this.address = new Address(postFormData.getAddress());
     }
 
     public Long getId() {

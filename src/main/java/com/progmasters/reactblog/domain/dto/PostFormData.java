@@ -21,6 +21,8 @@ public class PostFormData {
     private String picture;
     private PostCategories category;
     private PostTypes type;
+    private AddressFormData address;
+
 
     public String getTitle() {
         return title;
@@ -41,4 +43,10 @@ public class PostFormData {
     public PostTypes getType() {
         return type;
     }
+
+    public AddressFormData getAddress() {
+        return address;
+    }
+
+
 }
