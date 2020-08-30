@@ -2,9 +2,7 @@ package com.progmasters.reactblog.domain;
 
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,11 +17,13 @@ public class User {
     private String password;
     private String phoneNumber;
     private String token;
+
+    @Enumerated(EnumType.STRING)
     private UserStatusEnum userStatus;
 
 
-    @OneToMany(mappedBy = "author")
-    private List<Post> myPosts;
+//    @OneToMany(mappedBy = "author")
+//    private List<Post> myPosts;
 
 //    @OneToMany(mappedBy = "author")
 //    private List<Comment> myComments;
@@ -107,8 +107,16 @@ public class User {
     public void setUserStatus(UserStatusEnum userStatus) {
         this.userStatus = userStatus;
     }
+//
+//    public List<Post> getMyPosts() {
+//        return myPosts;
+//    }
+//
+//    public void setMyPosts(List<Post> myPosts) {
+//        this.myPosts = myPosts;
+//    }
 
-    //    public List<Post> getMyPosts() {
+//    public List<Post> getMyPosts() {
 //        return myPosts;
 //    }
 //

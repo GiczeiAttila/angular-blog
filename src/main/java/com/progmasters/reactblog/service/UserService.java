@@ -29,16 +29,10 @@ public class UserService {
         return userRepository.findById(id).isPresent();
     }
 
-    public Boolean confirmRegistration(String token, Long id) {
+    public void confirmRegistration(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            if (user.getToken().equals(token)){
-                user.setUserStatus(UserStatusEnum.ACTIVE);
-                user.setToken(null);
-            }
-            return false;
-        }
-        return false;
+        User user = userOptional.get();
+        user.setUserStatus(UserStatusEnum.ACTIVE);
+        user.setToken(null);
     }
 }
