@@ -1,8 +1,8 @@
-interface PostListItemModel {
+export interface PostListItemModel {
     id: number;
     title: string;
     postBodyShortened: string;
-    imgUrl?: string;
+    picture?: string;
     createdAt: string;
     numberOfComments: number;
 }

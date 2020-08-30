@@ -1,5 +1,5 @@
-interface CommentFormDataModel {
+export interface CommentFormDataModel {
     postId: number;
-    author?: string;
+    authorId?: number;
     commentBody: string;
 }

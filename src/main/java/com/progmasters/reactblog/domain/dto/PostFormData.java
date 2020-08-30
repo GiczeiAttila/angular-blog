@@ -11,11 +11,18 @@
 
 package com.progmasters.reactblog.domain.dto;
 
+import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostTypes;
+
 public class PostFormData {
 
     private String title;
     private String postBody;
-    private String imgUrl;
+    private String picture;
+    private PostCategories category;
+    private PostTypes type;
+    private AddressFormData address;
+
 
     public String getTitle() {
         return title;
@@ -25,7 +32,21 @@ public class PostFormData {
         return postBody;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getPicture() {
+        return picture;
     }
+
+    public PostCategories getCategory() {
+        return category;
+    }
+
+    public PostTypes getType() {
+        return type;
+    }
+
+    public AddressFormData getAddress() {
+        return address;
+    }
+
+
 }

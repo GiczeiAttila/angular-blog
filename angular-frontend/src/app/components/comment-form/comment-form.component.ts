@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BlogService } from '../../services/blog.service';
-import { handleValidationErrors } from '../../shared/validation.handler';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BlogService} from '../../services/blog.service';
+import {handleValidationErrors} from '../../shared/validation.handler';
 import {UserService} from "../../services/user.service";
 
 @Component({
@@ -12,13 +12,14 @@ import {UserService} from "../../services/user.service";
 export class CommentFormComponent implements OnInit {
 
     @Input() postId: number;
+    @Input() authorId: number;
     @Output() commentCreated = new EventEmitter();
     commentForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder, private blogService: BlogService, private userService: UserService) {
         this.commentForm = formBuilder.group({
-            author: [''],
-            commentBody: ['', Validators.required]
+                author: [],
+                commentBody: ['', Validators.required]
             }
         )
     }
@@ -31,8 +32,8 @@ export class CommentFormComponent implements OnInit {
 
     onSubmit() {
         const commentData = {...this.commentForm.value};
-        commentData.author = commentData.author == null ? '' : commentData.author;
         commentData.postId = this.postId;
+        commentData.authorId = this.authorId;
         this.blogService.createComment(commentData).subscribe(
             () => {
                 this.commentForm.reset();

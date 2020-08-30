@@ -2,7 +2,7 @@
     <h3 class="text-success"><strong>{{postDetails.title}}</strong></h3>
     <h6 class="text-muted">{{postDetails.createdAt}}</h6>
     <div>
-        <img *ngIf="postDetails.imgUrl" [src]="postDetails.imgUrl" class="post-image" alt=""/>
+        <img *ngIf="postDetails.picture" [src]="postDetails.picture" alt="" class="post-image"/>
         {{postDetails.postBody}}
     </div>
     <br/>

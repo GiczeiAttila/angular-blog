@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { BlogService } from '../../services/blog.service';
-import { handleValidationErrors } from '../../shared/validation.handler';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {BlogService} from '../../services/blog.service';
+import {handleValidationErrors} from '../../shared/validation.handler';
+import {CategoryOptionModel} from "../../models/categoryOption.model";
+import {TypeOptionModel} from "../../models/typeOption.model";
+import {PostFormInitDataModel} from "../../models/postFormInitData.model";
 
 @Component({
     selector: 'app-post-form',
@@ -12,21 +15,66 @@ import { handleValidationErrors } from '../../shared/validation.handler';
 export class PostFormComponent implements OnInit {
 
     postForm: FormGroup;
+    categories: Array<CategoryOptionModel>;
+    types: Array<TypeOptionModel>;
+    isEvent: boolean;
 
-    constructor(private formBuilder: FormBuilder, private blogService: BlogService, private router: Router) {
+
+    constructor(private formBuilder: FormBuilder,
+                private blogService: BlogService,
+                private router: Router) {
         this.postForm = formBuilder.group({
+            category: [null, Validators.required],
+            type: [null, Validators.required],
             title: ['', Validators.required],
             postBody: ['', Validators.required],
-            imgUrl: [''],
+            picture: [''],
+            address: formBuilder.group({
+                country: [''],
+                zipCode: [''],
+                city: [''],
+                street: [''],
+                number: [''],
+                coordinate: ['']
+            })
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.blogService.fetchPostFormInitData().subscribe(
+            (data: PostFormInitDataModel) => {
+                this.categories = data.categories;
+                this.types = data.types;
+            },
+            error => console.warn(error)
+        )
+    }
 
     onSubmit() {
         this.blogService.createPost(this.postForm.value).subscribe(
-            () => this.router.navigate(['/posts']),
+            () => {
+                console.log(this.postForm);
+                this.router.navigate(['/posts'])
+            },
             error => handleValidationErrors(error, this.postForm)
         )
+    }
+
+    /* getTypeValue(type) {
+         if(this.postForm.get('type').value == "EVENT"){
+             this.isEvent=true;
+         } else {
+             this.isEvent = false;
+         }
+     }
+
+     */
+    getTypeValue() {
+        let typeValue = this.postForm.get('type').value;
+        if (typeValue == "EVENT") {
+            this.isEvent = true;
+        } else {
+            this.isEvent = false;
+        }
     }
 }

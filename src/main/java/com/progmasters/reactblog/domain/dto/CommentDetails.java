@@ -22,7 +22,7 @@ public class CommentDetails {
     private String createdAt;
 
     public CommentDetails(Comment comment) {
-        this.author = comment.getAuthor();
+        this.author = comment.getAuthor().getFirstName() + " " + comment.getAuthor().getLastName();
         this.commentBody = comment.getCommentBody();
         this.createdAt = DATE_TIME_FORMATTER.format(comment.getCreatedAt());
     }

@@ -12,14 +12,15 @@
 package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Post;
-import com.progmasters.reactblog.domain.dto.PostDetails;
-import com.progmasters.reactblog.domain.dto.PostFormData;
-import com.progmasters.reactblog.domain.dto.PostListItem;
+import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostTypes;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,5 +53,13 @@ public class PostService {
             details = new PostDetails(postRepository.getOne(id));
         }
         return details;
+    }
+
+    public PostFormInitData createFormInitData() {
+        return new PostFormInitData(
+                Arrays.stream(PostCategories.values()).map(CategoryOption::new).collect(Collectors.toList()),
+                Arrays.stream(PostTypes.values()).map(TypeOption::new).collect(Collectors.toList())
+        );
+
     }
 }
