@@ -1,4 +1,4 @@
-interface CommentDetailsModel {
+export interface CommentDetailsModel {
     author: string;
     commentBody: string;
     createdAt: string;

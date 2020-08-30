@@ -14,15 +14,15 @@ package com.progmasters.reactblog.domain.dto;
 public class CommentFormData {
 
     private Long postId;
-    private String author;
+    private Long authorId;
     private String commentBody;
 
     public Long getPostId() {
         return postId;
     }
 
-    public String getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
     public String getCommentBody() {

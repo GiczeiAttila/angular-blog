@@ -5,7 +5,6 @@ import com.progmasters.reactblog.domain.dto.UserFormDto;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +18,8 @@ public class User {
     private String password;
     private String phoneNumber;
 
-//    @OneToMany(mappedBy = "author")
-//    private List<Post> myPosts;
+    @OneToMany(mappedBy = "author")
+    private List<Post> myPosts;
 
 //    @OneToMany(mappedBy = "author")
 //    private List<Comment> myComments;

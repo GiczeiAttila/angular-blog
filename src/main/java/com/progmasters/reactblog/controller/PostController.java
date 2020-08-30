@@ -13,6 +13,7 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.dto.PostDetails;
 import com.progmasters.reactblog.domain.dto.PostFormData;
+import com.progmasters.reactblog.domain.dto.PostFormInitData;
 import com.progmasters.reactblog.domain.dto.PostListItem;
 import com.progmasters.reactblog.service.PostService;
 import com.progmasters.reactblog.validator.PostFormDataValidator;
@@ -46,6 +47,11 @@ public class PostController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(postFormDataValidator);
+    }
+
+    @GetMapping("/formData")
+    public ResponseEntity<PostFormInitData> getFormInitData() {
+        return new ResponseEntity<>(postService.createFormInitData(), HttpStatus.OK);
     }
 
     @PostMapping
