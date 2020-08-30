@@ -16,7 +16,7 @@ const routes: Routes = [
     {path: 'login', component: UserLoginFormComponent},
     {path: 'posts/:id', component: PostDetailsComponent},
     {path: 'confirmation/:token/:id', component: UserRegistrationFormComponent},
-    {path: 'password', component: UserPasswordFormComponent},
+    {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
 ];

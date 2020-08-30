@@ -5,6 +5,7 @@ import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
+import com.progmasters.reactblog.validator.TokenValidator;
 import com.progmasters.reactblog.validator.UserFormDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,17 +22,24 @@ public class UserController {
     private final UserService userService;
     private final UserFormDtoValidator userFormDtoValidator;
     private final EmailSenderService emailSenderService;
+    private final TokenValidator tokenValidator;
 
     @Autowired
-    public UserController(UserService userService, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService) {
+    public UserController(UserService userService, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, TokenValidator tokenValidator) {
         this.userService = userService;
         this.userFormDtoValidator = userFormDtoValidator;
         this.emailSenderService = emailSenderService;
+        this.tokenValidator = tokenValidator;
     }
 
     @InitBinder("userFormDto")
-    private void init(WebDataBinder binder) {
+    private void initUserFormValidator(WebDataBinder binder) {
         binder.addValidators(userFormDtoValidator);
+    }
+
+    @InitBinder("userConfirmationDto")
+    private void initTokenValidator(WebDataBinder binder) {
+        binder.addValidators(tokenValidator);
     }
 
     @PostMapping("create")
@@ -42,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("confirmation")
-    public ResponseEntity<Void> confirmUserAccount(@RequestBody UserConfirmationDto userConfirmationDto) {
+    public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
         userService.confirmRegistration(userConfirmationDto.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

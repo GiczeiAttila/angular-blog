@@ -39,15 +39,7 @@ export class UserRegistrationFormComponent implements OnInit {
                 },
                 error => handleValidationErrors(error, this.registrationForm),
                 () => {
-                    this.registrationForm.patchValue({
-                        id: '',
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        phoneNumber: '',
-                        password: '',
-                        password2: ''
-                    });
+
                 }
             );
     }
