@@ -24,8 +24,8 @@ public class EmailSenderService {
                 "You registration information for confirmation: \n" +
                         "Id: " + id + "\n" +
                         "Token: " + token + "\n" +
-                        "You can confirm your registration by clicking the link below" +
-                        "http://localhost:4200/confirmation/" + token + "/" + id;
+                        "You can confirm your registration by clicking the link below\n" +
+                        " http://localhost:4200/confirmation/" + token + "/" + id;
         mailMessage.setSubject("Confirmation!");
         mailMessage.setText(mailBody);
 //        mailMessage.setText("To confirm your account, please click here : "
