@@ -4,8 +4,10 @@ import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.PasswordDto;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
+import com.progmasters.reactblog.domain.dto.UserLogInFormDto;
 import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
+import com.progmasters.reactblog.validator.LoginValidator;
 import com.progmasters.reactblog.validator.PasswordValidator;
 import com.progmasters.reactblog.validator.RegistrationConfirmationValidator;
 import com.progmasters.reactblog.validator.UserFormDtoValidator;
@@ -16,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -27,14 +30,16 @@ public class UserController {
     private final EmailSenderService emailSenderService;
     private final RegistrationConfirmationValidator registrationConfirmationValidator;
     private final PasswordValidator passwordValidator;
+    private final LoginValidator loginValidator;
 
     @Autowired
-    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, RegistrationConfirmationValidator registrationConfirmationValidator) {
+    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, RegistrationConfirmationValidator registrationConfirmationValidator, LoginValidator loginValidator) {
         this.userService = userService;
         this.userFormDtoValidator = userFormDtoValidator;
         this.emailSenderService = emailSenderService;
         this.registrationConfirmationValidator = registrationConfirmationValidator;
         this.passwordValidator = passwordValidator;
+        this.loginValidator = loginValidator;
     }
 
     @InitBinder("userFormDto")
@@ -50,6 +55,11 @@ public class UserController {
     @InitBinder("passwordDto")
     private void initPasswordValidator(WebDataBinder binder) {
         binder.addValidators(passwordValidator);
+    }
+
+    @InitBinder("userLogInFormDto")
+    private void initLoginValidator(WebDataBinder binder) {
+        binder.addValidators(loginValidator);
     }
 
     @PostMapping("create")
@@ -71,4 +81,12 @@ public class UserController {
         userService.savePassword(passwordDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("login")
+    public ResponseEntity<Void> login(@Valid @RequestBody UserLogInFormDto userLogInFormDto, HttpSession session) {
+        session.setAttribute("customer_id", userLogInFormDto.getId());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+
 }

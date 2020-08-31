@@ -54,4 +54,8 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElse(null);
     }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }

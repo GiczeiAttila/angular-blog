@@ -12,21 +12,19 @@
                 Id:
             </label>
             <input
-                type="text"
+                type="number"
                 id="id"
                 formControlName="id"
                 name="id"
                 placeholder="id"
                 class="form-control"
                 [ngClass]="{'is-invalid': loginForm.get('id').invalid && loginForm.get('id').touched
-                    || loginForm.get('id').errors?.serverError}"
+                    || loginForm.get('id').errors?.serverError|| loginForm.get('password').errors?.serverError}"
             />
             <small *ngIf="loginForm.get('id').invalid && loginForm.get('id').touched && !loginForm.get('id').errors?.serverError" class="text-danger">
                 Please enter an id
             </small>
-            <small *ngIf="loginForm.get('id').errors?.serverError" class="text-danger">
-                {{loginForm.get('id').errors['serverError']}}
-            </small>
+            <small class="text-danger">{{loginForm.get('id').errors?.serverError}}</small>
         </div>
 
         <div class="form-group">
@@ -43,15 +41,17 @@
                 id="password"
                 formControlName="password"
                 name="password"
+                placeholder="password"
                 class="form-control"
                 [ngClass]="{'is-invalid': loginForm.get('password').invalid && loginForm.get('password').touched
                     || loginForm.get('password').errors?.serverError}"
             />
-            <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" class="text-danger">
+            <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched && !loginForm.get('password').errors?.serverError" class="text-danger">
                 Please enter a password
             </small>
+            <small class="text-danger">{{loginForm.get('password').errors?.serverError}}</small>
         </div>
 
-        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success" (click)="onSubmit()">Login</button>
+        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success" (click)="submitLogin()">Login</button>
     </form>
 </div>

@@ -4,6 +4,7 @@ import {Observable, Subject} from 'rxjs';
 import {UserRegistrationFormModel} from "../models/userRegistrationForm.model";
 import {UserConfirmationModel} from "../models/userConfirmation.model";
 import {PasswordModel} from "../models/password.model";
+import {UserLoginModel} from "../models/userLogin.model";
 
 const BASE_URL: string = 'http://localhost:8080/api/users';
 
@@ -29,5 +30,9 @@ export class UserService {
 
     finalizeRegistration(confirmationData: UserConfirmationModel) {
         return this.http.post(BASE_URL + '/confirmation', confirmationData);
+    }
+
+    login(loginData: UserLoginModel) {
+        return this.http.post(BASE_URL + '/login', loginData);
     }
 }
