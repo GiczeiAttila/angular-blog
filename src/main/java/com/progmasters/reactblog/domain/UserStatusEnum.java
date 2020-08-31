@@ -3,6 +3,7 @@ package com.progmasters.reactblog.domain;
 public enum UserStatusEnum {
     REGISTERED("Registered"),
     CONFIRMED("Confirmed"),
+    RESET("Password reset"),
     ACTIVE("Active"),
     BLOCKED("Blocked"),
     ARCHIVE("Archive");

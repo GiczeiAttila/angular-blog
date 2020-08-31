@@ -6,6 +6,7 @@ import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
+import com.progmasters.reactblog.validator.PasswordValidator;
 import com.progmasters.reactblog.validator.TokenValidator;
 import com.progmasters.reactblog.validator.UserFormDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,15 @@ public class UserController {
     private final UserFormDtoValidator userFormDtoValidator;
     private final EmailSenderService emailSenderService;
     private final TokenValidator tokenValidator;
+    private final PasswordValidator passwordValidator;
 
     @Autowired
-    public UserController(UserService userService, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, TokenValidator tokenValidator) {
+    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, TokenValidator tokenValidator) {
         this.userService = userService;
         this.userFormDtoValidator = userFormDtoValidator;
         this.emailSenderService = emailSenderService;
         this.tokenValidator = tokenValidator;
+        this.passwordValidator = passwordValidator;
     }
 
     @InitBinder("userFormDto")
@@ -42,6 +45,11 @@ public class UserController {
     @InitBinder("userConfirmationDto")
     private void initTokenValidator(WebDataBinder binder) {
         binder.addValidators(tokenValidator);
+    }
+
+    @InitBinder("passwordDto")
+    private void initPasswordValidator(WebDataBinder binder) {
+        binder.addValidators(passwordValidator);
     }
 
     @PostMapping("create")
@@ -59,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping("password")
-    public ResponseEntity<Void> savePassword(@RequestBody PasswordDto passwordDto) {
+    public ResponseEntity<Void> savePassword(@Valid @RequestBody PasswordDto passwordDto) {
         userService.savePassword(passwordDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

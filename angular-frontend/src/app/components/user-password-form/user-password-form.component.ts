@@ -24,9 +24,7 @@ export class UserPasswordFormComponent implements OnInit {
             map => {
                 const idParam = +map.get('id');
                 if (idParam && !isNaN(idParam)) {
-                    console.log(this.id);
                     this.id = idParam;
-                    console.log(this.id);
                 }
             },
         );
@@ -37,18 +35,18 @@ export class UserPasswordFormComponent implements OnInit {
     }
 
     submitPassword() {
-        console.log(this.passwordForm.value);
-        console.log(this.id);
         let data: PasswordModel = {
             'id': this.id,
-            'password': this.passwordForm.get('password').value
+            'password': this.passwordForm.get('password').value,
+            'password2': this.passwordForm.get('password2').value
         };
-        console.log(data);
-
         this.userService.savePassword(data)
             .subscribe(() => {
                 },
-                error => handleValidationErrors(error, this.passwordForm),
+                error => {
+                    console.log(error);
+                    handleValidationErrors(error, this.passwordForm);
+                },
                 () => this.router.navigate(['login'])
             );
     }

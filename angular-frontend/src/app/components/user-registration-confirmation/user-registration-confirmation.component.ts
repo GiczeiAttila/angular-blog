@@ -23,13 +23,10 @@ export class UserRegistrationConfirmationComponent implements OnInit {
               const idParam = +map.get('id');
               if (idParam && !isNaN(idParam)) {
                   this.id = idParam;
-                  console.log(this.id)
                   this.token = map.get('token');
-                  console.log(this.token)
                   this.userConfirmationData = {
                       'id':this.id,
                       'token': this.token};
-                  console.log(this.userConfirmationData);
                   this.userService.sendConfirmation(this.userConfirmationData).subscribe(
                       ()=>{},
                       error =>this.confirmation = 'Wrong token or id',

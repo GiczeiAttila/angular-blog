@@ -29,7 +29,7 @@ public class UserFormDtoValidator implements Validator {
         validateUserFirstName(userFormDto.getFirstName(), errors);
         validateUserLastName(userFormDto.getLastName(), errors);
         validateUserEmail(userFormDto.getEmail(), errors);
-        validateUserPassword(userFormDto.getPassword(), errors);
+//        validateUserPassword(userFormDto.getPassword(), errors);
         validateUserPhoneNumber(userFormDto.getPhoneNumber(), errors);
     }
 
@@ -63,11 +63,11 @@ public class UserFormDtoValidator implements Validator {
         }
     }
 
-    private void validateUserPassword(String password, Errors errors) {
-        if (!password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
-            errors.rejectValue("password", "userFormDto.wrong-password");
-        }
-    }
+//    private void validateUserPassword(String password, Errors errors) {
+//        if (!password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
+//            errors.rejectValue("password", "userFormDto.wrong-password");
+//        }
+//    }
 
     private void validateUserPhoneNumber(String phoneNumber, Errors errors) {
         if (!phoneNumber.matches("\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\d{1,14}$")){
