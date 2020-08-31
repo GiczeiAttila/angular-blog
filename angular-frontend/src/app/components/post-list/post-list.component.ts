@@ -10,7 +10,7 @@ import {PostListItemModel} from "../../models/postListItem.model";
 export class PostListComponent implements OnInit {
 
     posts: Array<PostListItemModel>;
-    category;
+    category = 'ALL';
     showAllPost = false;
 
     constructor(private blogService: BlogService) {
