@@ -15,6 +15,7 @@ export class UserPasswordFormComponent implements OnInit {
     id: number;
     passwordForm = this.formBuilder.group(
         {
+            oldPassword: [''],
             password: [''],
             password2: [''],
         });
@@ -37,6 +38,7 @@ export class UserPasswordFormComponent implements OnInit {
     submitPassword() {
         let data: PasswordModel = {
             'id': this.id,
+            'oldPassword': this.passwordForm.get('oldPassword').value,
             'password': this.passwordForm.get('password').value,
             'password2': this.passwordForm.get('password2').value
         };

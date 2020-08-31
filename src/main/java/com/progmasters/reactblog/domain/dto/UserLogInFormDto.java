@@ -1,14 +1,14 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class UserLogInFormDto {
-    private String id;
+    private Long id;
     private String password;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,6 +4,7 @@ import {Observable, Subject} from 'rxjs';
 import {UserRegistrationFormModel} from "../models/userRegistrationForm.model";
 import {UserConfirmationModel} from "../models/userConfirmation.model";
 import {PasswordModel} from "../models/password.model";
+import {UserLoginModel} from "../models/userLogin.model";
 
 const BASE_URL: string = 'http://localhost:8080/api/users';
 
@@ -23,11 +24,15 @@ export class UserService {
         return this.http.post(BASE_URL + '/create', userData);
     }
 
-    sendConfirmation(confirmationData: UserConfirmationModel){
+    savePassword(data: PasswordModel) {
+        return this.http.post(BASE_URL + '/password', data);
+    }
+
+    finalizeRegistration(confirmationData: UserConfirmationModel) {
         return this.http.post(BASE_URL + '/confirmation', confirmationData);
     }
 
-    savePassword(data: PasswordModel) {
-        return this.http.post(BASE_URL + '/password', data);
+    login(loginData: UserLoginModel) {
+        return this.http.post(BASE_URL + '/login', loginData);
     }
 }

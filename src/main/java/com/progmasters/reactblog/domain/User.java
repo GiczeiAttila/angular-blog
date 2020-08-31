@@ -18,6 +18,7 @@ public class User {
     private String password;
     private String phoneNumber;
     private String token;
+    private Long numberOfLoginAttempts;
 
     @Enumerated(EnumType.STRING)
     private UserStatusEnum userStatus;
@@ -43,6 +44,7 @@ public class User {
         this.token =  UUID.randomUUID().toString();
         this.myPosts = new ArrayList<>();
         this.myComments = new ArrayList<>();
+        this.numberOfLoginAttempts = 0L;
     }
 
     public Long getId() {
@@ -123,5 +125,13 @@ public class User {
 
     public void setMyComments(List<Comment> myComments) {
         this.myComments = myComments;
+    }
+
+    public Long getNumberOfLoginAttempts() {
+        return numberOfLoginAttempts;
+    }
+
+    public void setNumberOfLoginAttempts(Long numberOfLoginAttempts) {
+        this.numberOfLoginAttempts = numberOfLoginAttempts;
     }
 }
