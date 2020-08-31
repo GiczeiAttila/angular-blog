@@ -7,7 +7,7 @@ import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
 import com.progmasters.reactblog.validator.PasswordValidator;
-import com.progmasters.reactblog.validator.TokenValidator;
+import com.progmasters.reactblog.validator.RegistrationConfirmationValidator;
 import com.progmasters.reactblog.validator.UserFormDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +25,15 @@ public class UserController {
     private final UserService userService;
     private final UserFormDtoValidator userFormDtoValidator;
     private final EmailSenderService emailSenderService;
-    private final TokenValidator tokenValidator;
+    private final RegistrationConfirmationValidator registrationConfirmationValidator;
     private final PasswordValidator passwordValidator;
 
     @Autowired
-    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, TokenValidator tokenValidator) {
+    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, RegistrationConfirmationValidator registrationConfirmationValidator) {
         this.userService = userService;
         this.userFormDtoValidator = userFormDtoValidator;
         this.emailSenderService = emailSenderService;
-        this.tokenValidator = tokenValidator;
+        this.registrationConfirmationValidator = registrationConfirmationValidator;
         this.passwordValidator = passwordValidator;
     }
 
@@ -44,7 +44,7 @@ public class UserController {
 
     @InitBinder("userConfirmationDto")
     private void initTokenValidator(WebDataBinder binder) {
-        binder.addValidators(tokenValidator);
+        binder.addValidators(registrationConfirmationValidator);
     }
 
     @InitBinder("passwordDto")
@@ -62,7 +62,7 @@ public class UserController {
     @PostMapping("confirmation")
     @Async
     public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
-        userService.confirmRegistration(userConfirmationDto.getId());
+        userService.confirmRegistration(userConfirmationDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
@@ -71,6 +71,4 @@ public class UserController {
         userService.savePassword(passwordDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
-
 }

@@ -28,11 +28,15 @@ public class PasswordValidator implements Validator {
     public void validate(Object target, Errors errors) {
         PasswordDto passwordDto = (PasswordDto) target;
         User user = userService.findById(passwordDto.getId());
-        if (!passwordDto.getPassword().matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")) {
+        if (user == null) {
+            errors.rejectValue("password", "userFormDto.id-error");
+        }else if (!user.getPassword().equals(passwordDto.getOldPassword())) {
+            errors.rejectValue("password", "userFormDto.wrong-old-password");
+        }else if (!passwordDto.getPassword().matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")) {
             errors.rejectValue("password", "userFormDto.wrong-password");
         }else if (!passwordDto.getPassword().equals(passwordDto.getPassword2())){
             errors.rejectValue("password2", "userFormDto.not-same-password");
-        }else if (user.getUserStatus()!= UserStatusEnum.RESET && user.getUserStatus()!=UserStatusEnum.CONFIRMED){
+        }else if (user.getUserStatus() != UserStatusEnum.ACTIVE){
             errors.rejectValue("password", "userFormDto.not-authorised");
         }
     }
