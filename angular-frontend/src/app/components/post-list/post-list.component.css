@@ -2,7 +2,20 @@
     min-width: 300px;
     width: 300px;
     text-align: center;
+
+    margin: 40px;
+    margin-right: auto;
+    margin-left: auto;
 }
+
+.button-group {
+    text-align: center;
+}
+
+.btn btn-outline-info {
+    margin-left: 10px;
+}
+
 
 .card-text {
     text-align: justify;
@@ -21,3 +34,4 @@
 .card-body-text {
     min-height: 208px;
 }
+

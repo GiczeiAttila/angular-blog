@@ -13,6 +13,7 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,6 +30,7 @@ public class PostListItem {
     private String createdAt;
     private Integer numberOfComments;
     private PostCategories category;
+    private PostTypes type;
 
     public PostListItem(Post post) {
         this.id = post.getId();
@@ -67,6 +69,7 @@ public class PostListItem {
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
         this.category = post.getCategory();
+        this.type = post.getType();
     }
 
     public Long getId() {
@@ -99,5 +102,9 @@ public class PostListItem {
 
     public PostCategories getCategory() {
         return category;
+    }
+
+    public PostTypes getType() {
+        return type;
     }
 }

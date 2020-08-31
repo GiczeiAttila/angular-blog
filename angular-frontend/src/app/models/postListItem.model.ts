@@ -7,4 +7,5 @@ export interface PostListItemModel {
     createdAt: string;
     numberOfComments: number;
     category: string;
+    type: string;
 }

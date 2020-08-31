@@ -1,5 +1,7 @@
 <div>
     <h3>New Post</h3>
+    <hr/>
+
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="category">Select a category</label>
@@ -7,25 +9,12 @@
                 'is-invalid': postForm.get('category').invalid && postForm.get('category').touched || postForm.get('category').errors?.serverError
                 }" class="form-control" formControlName="category"
                     id="category">
-                <option disabled>Choose...</option>
                 <option *ngFor="let category of categories" value="{{category.name}}">{{category.displayName}}</option>
             </select>
             <small *ngIf="postForm.get('category').invalid && postForm.get('category').touched" class="text-danger">Please
                 choose a category</small>
             <small class="text-danger">{{postForm.get('category').errors?.serverError}}</small>
         </div>
-
-        <!-- <div class="input-group mb-3">
-             <div class="input-group-append">
-                 <label class="input-group-text" for="selectCategory">Select a category: </label>
-             </div>
-             <select class="custom-select" id="selectCategory">
-                 <option selected disabled>Choose...</option>
-                 <option *ngFor="let category of categories" value="{{category.name}}">{{category.displayName}}</option>
-             </select>
-         </div>
-         -->
-
 
         <div class="form-group">
             <label for="type">Select type</label>
@@ -41,11 +30,11 @@
         </div>
 
         <div class="form-group">
+            <label for="title">Title</label>
             <input
                 type="text"
                 id="title"
                 formControlName="title"
-                placeholder="Title"
                 class="form-control"
                 [ngClass]="{
                 'is-invalid': postForm.get('title').invalid && postForm.get('title').touched || postForm.get('title').errors?.serverError
@@ -65,11 +54,12 @@
         </div>
 
         <div class="form-group">
+            <label for="postBody">Text</label>
             <textarea
                 rows="10"
                 id="postBody"
                 formControlName="postBody"
-                placeholder="Text"
+                placeholder="Write something..."
                 class="form-control"
                 [ngClass]="{
                 'is-invalid': postForm.get('postBody').invalid && postForm.get('postBody').touched || postForm.get('postBody').errors?.serverError
@@ -90,6 +80,7 @@
         </div>
 
         <div class="form-group">
+            <label for="picture">Picture (optional)</label>
             <input
                 type="text"
                 [ngClass]="{
@@ -98,7 +89,6 @@
                 formControlName="picture"
                 id="picture"
                 class="form-control"
-                placeholder="Picture (optional)"
             >
         </div>
 

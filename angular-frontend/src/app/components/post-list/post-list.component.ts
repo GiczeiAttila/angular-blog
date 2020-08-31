@@ -10,12 +10,15 @@ import {PostListItemModel} from "../../models/postListItem.model";
 export class PostListComponent implements OnInit {
 
     posts: Array<PostListItemModel>;
+    category;
+    showAllPost = false;
 
-  constructor(private blogService: BlogService) { }
+    constructor(private blogService: BlogService) {
+    }
 
-  ngOnInit() {
-      this.loadPosts();
-  }
+    ngOnInit() {
+        this.loadPosts();
+    }
 
     loadPosts() {
         this.blogService.fetchPosts().subscribe(
@@ -24,4 +27,12 @@ export class PostListComponent implements OnInit {
         );
     }
 
+    changeCategory(category) {
+        if (category == 'ALL') {
+            this.showAllPost = true;
+        } else {
+            this.category = category;
+            this.showAllPost = false;
+        }
+    }
 }
