@@ -12,6 +12,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
+import com.progmasters.reactblog.domain.PostCategories;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,15 +22,20 @@ import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATT
 public class PostListItem {
 
     private Long id;
+    private String author;
     private String title;
     private String postBodyShortened;
     private String picture;
     private String createdAt;
     private Integer numberOfComments;
+    private PostCategories category;
 
     public PostListItem(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
+        if (post.getAuthor() != null) {
+            this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
+        }
 
         this.postBodyShortened = Stream.of(post.getPostBody())
                 .map(string -> string.substring(0, Math.min(200, string.length())))
@@ -60,6 +66,7 @@ public class PostListItem {
         this.picture = post.getPicture();
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
+        this.category = post.getCategory();
     }
 
     public Long getId() {
@@ -84,5 +91,13 @@ public class PostListItem {
 
     public Integer getNumberOfComments() {
         return numberOfComments;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public PostCategories getCategory() {
+        return category;
     }
 }

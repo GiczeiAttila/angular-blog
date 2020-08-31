@@ -1,1 +1,51 @@
+#basicNav {
+    background-color: gainsboro;
+}
+
+/*.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #3FB0AC;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    border-radius: 15px 50px 30px;
+
+}
+
+.sidenav a:hover {
+    background-color: #173e43;
+}
+
+.navbar {
+    margin-left: 160px;
+}
+
+.navbar a{
+    color: #17252a;
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+    border-radius: 15px 50px 30px;
+}
+
+.navbar a:hover{
+    background-color: #3AAFA9;
+}
+
+ */
+
+
 
