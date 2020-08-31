@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit {
     loadPosts() {
         this.blogService.fetchPosts().subscribe(
             data => this.posts = data,
-            console.warn
+            error => console.warn(error)
         );
     }
 
