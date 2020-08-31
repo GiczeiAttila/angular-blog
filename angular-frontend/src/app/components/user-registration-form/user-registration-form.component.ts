@@ -18,8 +18,8 @@ export class UserRegistrationFormComponent implements OnInit {
             lastName: [''],
             email: [''],
             phoneNumber: [''],
-            password: [''],
-            password2: [''],
+            // password: [''],
+            // password2: [''],
         });
 
     constructor(private formBuilder: FormBuilder,
@@ -38,17 +38,7 @@ export class UserRegistrationFormComponent implements OnInit {
             .subscribe(() => {
                 },
                 error => handleValidationErrors(error, this.registrationForm),
-                () => {
-                    this.registrationForm.patchValue({
-                        id: '',
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        phoneNumber: '',
-                        password: '',
-                        password2: ''
-                    });
-                }
+                () => {this.registrationForm.reset()}
             );
     }
 

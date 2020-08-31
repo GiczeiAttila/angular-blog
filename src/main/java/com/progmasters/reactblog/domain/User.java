@@ -2,10 +2,10 @@ package com.progmasters.reactblog.domain;
 
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class User {
@@ -17,12 +17,17 @@ public class User {
     private String email;
     private String password;
     private String phoneNumber;
+    private String token;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatusEnum userStatus;
+
 
     @OneToMany(mappedBy = "author")
     private List<Post> myPosts;
 
-//    @OneToMany(mappedBy = "author")
-//    private List<Comment> myComments;
+    @OneToMany(mappedBy = "author")
+    private List<Comment> myComments;
 
     public User() {
     }
@@ -32,10 +37,12 @@ public class User {
         this.firstName = userFormDto.getFirstName();
         this.lastName = userFormDto.getLastName();
         this.email = userFormDto.getEmail();
-        this.password = userFormDto.getPassword();
+        //this.password = userFormDto.getPassword();
         this.phoneNumber = userFormDto.getPhoneNumber();
-//        this.myPosts = new ArrayList<>();
-//        this.myComments = new ArrayList<>();
+        this.userStatus = UserStatusEnum.REGISTERED;
+        this.token =  UUID.randomUUID().toString();
+        this.myPosts = new ArrayList<>();
+        this.myComments = new ArrayList<>();
     }
 
     public Long getId() {
@@ -86,19 +93,35 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    //    public List<Post> getMyPosts() {
-//        return myPosts;
-//    }
-//
-//    public void setMyPosts(List<Post> myPosts) {
-//        this.myPosts = myPosts;
-//    }
+    public String getToken() {
+        return token;
+    }
 
-//    public List<Comment> getMyComments() {
-//        return myComments;
-//    }
-//
-//    public void setMyComments(List<Comment> myComments) {
-//        this.myComments = myComments;
-//    }
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public UserStatusEnum getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEnum userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public List<Post> getMyPosts() {
+        return myPosts;
+    }
+
+    public void setMyPosts(List<Post> myPosts) {
+        this.myPosts = myPosts;
+    }
+
+    public List<Comment> getMyComments() {
+        return myComments;
+    }
+
+    public void setMyComments(List<Comment> myComments) {
+        this.myComments = myComments;
+    }
 }

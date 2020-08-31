@@ -13,6 +13,8 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
 import { UserRegistrationFormComponent } from './components/user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './components/user-login-form/user-login-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { UserRegistrationConfirmationComponent } from './components/user-registration-confirmation/user-registration-confirmation.component';
+import { UserPasswordFormComponent } from './components/user-password-form/user-password-form.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     CommentFormComponent,
     UserRegistrationFormComponent,
     UserLoginFormComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    UserRegistrationConfirmationComponent,
+    UserPasswordFormComponent
   ],
     imports: [
         BrowserModule,

@@ -27,7 +27,7 @@
         <input class="form-control" formControlName="phoneNumber" id="phoneNumber" type="text">
         <small class="text-danger">{{registrationForm.get('phoneNumber').errors?.serverError}}</small>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <label for="password">Password</label>
         <input class="form-control" formControlName="password" id="password" type="password">
         <small class="text-danger">{{registrationForm.get('password').errors?.serverError}}</small>
@@ -37,7 +37,7 @@
         <input class="form-control" formControlName="password2" id="password2" type="password">
         <small class="text-danger">{{registrationForm.get('password2').errors?.serverError}}</small>
         <small *ngIf="registrationForm.get('password2').touched && registrationForm.get('password').value!==registrationForm.get('password2').value" class="text-danger">the password confirmation is incorrect</small>
-    </div>
+    </div>-->
 
     <button class="btn btn-primary" type="submit">Submit</button>
 </form>
