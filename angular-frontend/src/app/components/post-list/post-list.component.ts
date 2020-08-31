@@ -11,7 +11,7 @@ export class PostListComponent implements OnInit {
 
     posts: Array<PostListItemModel>;
     category = 'ALL';
-    showAllPost = false;
+    showAllPost = true;
 
     constructor(private blogService: BlogService) {
     }
