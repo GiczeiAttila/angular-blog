@@ -16,16 +16,19 @@
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" id="post-list-link" routerLink="/posts">Posts</a>
+                <a class="nav-link" *ngIf="isLoggedIn" id="post-list-link" routerLink="/posts">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="post-form-link" routerLink="/postForm">New Post</a>
+                <a class="nav-link" *ngIf="isLoggedIn" id="post-form-link" routerLink="/postForm">New Post</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="registration" routerLink="/registration">Registration</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="login" routerLink="/login">Login</a>
+                <a class="nav-link" *ngIf="isLoggedIn" id="login" routerLink="/login" (click)="logout()" >Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" *ngIf="!isLoggedIn" id="logout" routerLink="/login">Login</a>
             </li>
         </ul>
     </div>

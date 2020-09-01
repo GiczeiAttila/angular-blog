@@ -15,10 +15,6 @@ export class UserService {
 
     constructor(private http: HttpClient) {}
 
-    authenticate(loginFormData): Observable<any> {
-        return this.http.get(BASE_URL + '/me', loginFormData);
-    }
-
 
     saveUser(userData: UserRegistrationFormModel) {
         return this.http.post(BASE_URL + '/create', userData);
@@ -34,5 +30,9 @@ export class UserService {
 
     login(loginData: UserLoginModel) {
         return this.http.post(BASE_URL + '/login', loginData);
+    }
+
+    logout() {
+        return this.http.post(BASE_URL + '/logout', null);
     }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {handleValidationErrors} from "../../shared/validation.handler";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {HttpClient} from '@angular/common/http';
 import {Router} from "@angular/router";
@@ -19,11 +19,11 @@ export class UserLoginFormComponent implements OnInit {
                 id: ['', Validators.required],
                 password: ['', Validators.required]
             });
-       /*
-        this.loginForm = new FormGroup({
-            'id': new FormControl('', Validators.required),
-            'password': new FormControl('', Validators.required),
-        });*/
+        /*
+         this.loginForm = new FormGroup({
+             'id': new FormControl('', Validators.required),
+             'password': new FormControl('', Validators.required),
+         });*/
     }
 
     ngOnInit(): void {
@@ -32,12 +32,18 @@ export class UserLoginFormComponent implements OnInit {
     submitLogin() {
         let loginData = this.loginForm.value;
         this.userService.login(loginData)
-            .subscribe(() => {localStorage.setItem('auth', 'true')},
-                error => {
-                console.log(error);
-                handleValidationErrors(error, this.loginForm);
+            .subscribe(() => {
+                    localStorage.setItem('auth', 'true');
+                    localStorage.setItem('userId', loginData.id);
                 },
-                () => {this.router.navigate(['/posts'])},
+                error => {
+                    console.log(error);
+                    handleValidationErrors(error, this.loginForm);
+                },
+                () => {
+                    this.userService.loginSubject.next();
+                    this.router.navigate(['/posts'])
+                },
             );
     }
 }

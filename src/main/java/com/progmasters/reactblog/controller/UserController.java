@@ -93,5 +93,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

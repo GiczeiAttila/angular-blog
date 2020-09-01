@@ -20,8 +20,8 @@ const routes: Routes = [
     {path: 'confirmation/:token/:id', component: UserRegistrationConfirmationComponent},
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
-    {path: '**', component: PageNotFoundComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+    {path: '**', component: PageNotFoundComponent},
 ];
 
 @NgModule({
