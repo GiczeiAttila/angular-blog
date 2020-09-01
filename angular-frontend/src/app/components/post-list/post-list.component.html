@@ -75,12 +75,12 @@
         </div>
     </div>
 
-    <div [ngClass]="commentStatus ? true : false" class="container app__container">
+    <div class="container app__container">
         <app-comment-details [postId]="postIdForComments"></app-comment-details>
     </div>
 
     <div class="container app__container">
-        <app-comment-form></app-comment-form>
+        <app-comment-form [postId]="postIdForComments"></app-comment-form>
     </div>
 
 </div>
