@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UserService} from "../../services/user.service";
 
 @Component({
              selector   : 'app-page-not-found',
@@ -7,10 +8,13 @@ import {Component, OnInit} from '@angular/core';
            })
 export class PageNotFoundComponent implements OnInit {
 
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
+      if (localStorage.getItem('auth')) {
+          this.userService.loginSubject.next();
+      }
   }
 
 }

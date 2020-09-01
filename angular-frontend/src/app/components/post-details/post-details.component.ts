@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {PostDetailsModel} from "../../models/postDetails.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-post-details',
@@ -13,7 +14,7 @@ export class PostDetailsComponent implements OnInit {
     id: number;
     postDetails: PostDetailsModel;
 
-    constructor(private blogService: BlogService, private route: ActivatedRoute) {
+    constructor(private blogService: BlogService, private route: ActivatedRoute, private userService: UserService) {
         this.route.paramMap.subscribe(
             map => {
                 const idParam = +map.get('id');
@@ -26,6 +27,9 @@ export class PostDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     loadPostDetails() {

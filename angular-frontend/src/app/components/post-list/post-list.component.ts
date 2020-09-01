@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BlogService} from '../../services/blog.service';
 import {PostListItemModel} from "../../models/postListItem.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-post-list',
@@ -13,11 +14,14 @@ export class PostListComponent implements OnInit {
     category = 'ALL';
     showAllPost = true;
 
-    constructor(private blogService: BlogService) {
+    constructor(private blogService: BlogService, private userService: UserService) {
     }
 
     ngOnInit() {
         this.loadPosts();
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     loadPosts() {

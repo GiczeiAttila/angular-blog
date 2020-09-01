@@ -32,7 +32,9 @@ export class UserPasswordFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     submitPassword() {

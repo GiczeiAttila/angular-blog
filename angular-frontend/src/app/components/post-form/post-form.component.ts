@@ -6,6 +6,7 @@ import {handleValidationErrors} from '../../shared/validation.handler';
 import {CategoryOptionModel} from "../../models/categoryOption.model";
 import {TypeOptionModel} from "../../models/typeOption.model";
 import {PostFormInitDataModel} from "../../models/postFormInitData.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-post-form',
@@ -22,6 +23,7 @@ export class PostFormComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
+                private userService: UserService,
                 private router: Router) {
         this.postForm = formBuilder.group({
             category: [null, Validators.required],
@@ -41,6 +43,9 @@ export class PostFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
         this.blogService.fetchPostFormInitData().subscribe(
             (data: PostFormInitDataModel) => {
                 this.categories = data.categories;
