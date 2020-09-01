@@ -40,6 +40,6 @@ export class BlogService {
     }
 
     fetchComments(id: number): Observable<Array<CommentDetailsModel>> {
-        return this.http.get<Array<CommentDetailsModel>>(COMMENTS_BASE_URL + "/" + id);
+        return this.http.get<Array<CommentDetailsModel>>(POSTS_BASE_URL);
     }
 }
