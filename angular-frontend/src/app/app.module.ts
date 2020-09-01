@@ -16,7 +16,7 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {UserRegistrationConfirmationComponent} from './components/user-registration-confirmation/user-registration-confirmation.component';
 import {UserPasswordFormComponent} from './components/user-password-form/user-password-form.component';
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
-
+import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 
 @NgModule({
     declarations: [
@@ -31,7 +31,8 @@ import {CommentDetailsComponent} from "./components/comment-details/comment-deta
         WelcomeComponent,
         UserRegistrationConfirmationComponent,
         UserPasswordFormComponent,
-        CommentDetailsComponent
+        CommentDetailsComponent,
+        PageNotFoundComponent
     ],
     imports: [
         BrowserModule,
@@ -39,7 +40,8 @@ import {CommentDetailsComponent} from "./components/comment-details/comment-deta
         HttpClientModule,
         ReactiveFormsModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

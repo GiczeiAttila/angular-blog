@@ -1,5 +1,8 @@
 package com.progmasters.reactblog.service;
 
+import com.progmasters.reactblog.controller.UserController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service("emailSenderService")
 public class EmailSenderService {
-
+    private static final Logger logger = LoggerFactory.getLogger(EmailSenderService.class);
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -28,8 +31,20 @@ public class EmailSenderService {
                         " http://localhost:4200/confirmation/" + token + "/" + id;
         mailMessage.setSubject("Confirmation!");
         mailMessage.setText(mailBody);
-//        mailMessage.setText("To confirm your account, please click here : "
-        //              + "http://localhost:4200/confirmation/" + token + "/" + id);
         javaMailSender.send(mailMessage);
+        logger.info("confirmation e-mail sent to user with id: " + id);
+    }
+
+    @Async
+    public void sendConfirmationSuccessfulEmail(String toMail, Long id) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(toMail);
+        String mailBody =
+                "You Successfully confirmed your registration with \n" +
+                        "Id: " + id + "\n";
+        mailMessage.setSubject("Successful confirmation!");
+        mailMessage.setText(mailBody);
+        javaMailSender.send(mailMessage);
+        logger.info("Successful confirmation e-mail sent to user with id: " + id);
     }
 }
