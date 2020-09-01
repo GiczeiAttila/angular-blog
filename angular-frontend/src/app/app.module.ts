@@ -15,6 +15,7 @@ import {UserLoginFormComponent} from './components/user-login-form/user-login-fo
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {UserRegistrationConfirmationComponent} from './components/user-registration-confirmation/user-registration-confirmation.component';
 import {UserPasswordFormComponent} from './components/user-password-form/user-password-form.component';
+import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 
 @NgModule({
@@ -30,6 +31,7 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
         WelcomeComponent,
         UserRegistrationConfirmationComponent,
         UserPasswordFormComponent,
+        CommentDetailsComponent,
         PageNotFoundComponent
     ],
     imports: [

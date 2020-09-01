@@ -5,7 +5,7 @@
             formControlName="commentBody"
             rows="4"
             class="form-control"
-            placeholder="Text"
+            placeholder="Write something here..."
             [ngClass]="{
                 'is-invalid': commentForm.get('commentBody').invalid && commentForm.get('commentBody').touched || commentForm.get('commentBody').errors?.serverError
                 }"
@@ -22,5 +22,9 @@
             {{commentForm.get('commentBody').errors['serverError']}}
         </small>
     </div>
-    <button type="submit" class="btn btn-info">Submit</button>
+    <button class="btn btn-info" type="submit">Send</button>
 </form>
+
+
+
+
