@@ -11,6 +11,8 @@ import com.progmasters.reactblog.validator.LoginValidator;
 import com.progmasters.reactblog.validator.PasswordValidator;
 import com.progmasters.reactblog.validator.RegistrationConfirmationValidator;
 import com.progmasters.reactblog.validator.UserFormDtoValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final UserFormDtoValidator userFormDtoValidator;
     private final EmailSenderService emailSenderService;
@@ -66,13 +69,15 @@ public class UserController {
     public ResponseEntity<Void> createUser(@Valid @RequestBody UserFormDto userFormDto) {
         User user = userService.createUser(userFormDto);
         emailSenderService.sendRegistrationConfirmationEmail(user.getEmail(), user.getToken(), user.getId());
+        logger.info("User created with id: " + user.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("confirmation")
     @Async
     public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
-        userService.confirmRegistration(userConfirmationDto);
+        User user = userService.confirmRegistration(userConfirmationDto);
+        emailSenderService.sendConfirmationSuccessfulEmail(user.getEmail(), user.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
@@ -84,7 +89,7 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<Void> login(@Valid @RequestBody UserLogInFormDto userLogInFormDto, HttpSession session) {
-        session.setAttribute("customer_id", userLogInFormDto.getId());
+        session.setAttribute("user_id", userLogInFormDto.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

@@ -8,6 +8,7 @@ import {UserRegistrationFormComponent} from "./components/user-registration-form
 import {WelcomeComponent} from "./components/welcome/welcome.component";
 import {UserPasswordFormComponent} from "./components/user-password-form/user-password-form.component";
 import {UserRegistrationConfirmationComponent} from "./components/user-registration-confirmation/user-registration-confirmation.component";
+import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     {path: 'confirmation/:token/:id', component: UserRegistrationConfirmationComponent},
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
+    {path: '**', component: PageNotFoundComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
 ];
 

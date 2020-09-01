@@ -31,12 +31,13 @@ public class UserService {
         return userRepository.findById(id).isPresent();
     }
 
-    public void confirmRegistration(UserConfirmationDto userConfirmationDto) {
+    public User confirmRegistration(UserConfirmationDto userConfirmationDto) {
         Optional<User> userOptional = userRepository.findById(userConfirmationDto.getId());
         User user = userOptional.get();
         user.setUserStatus(UserStatusEnum.ACTIVE);
         user.setPassword(userConfirmationDto.getPassword());
         user.setToken(null);
+        return user;
     }
 
     public void savePassword(PasswordDto passwordDto) {
