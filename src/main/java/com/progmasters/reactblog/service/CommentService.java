@@ -13,12 +13,17 @@ package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Comment;
 import com.progmasters.reactblog.domain.Post;
+import com.progmasters.reactblog.domain.dto.CommentDetails;
 import com.progmasters.reactblog.domain.dto.CommentFormData;
 import com.progmasters.reactblog.repository.CommentRepository;
 import com.progmasters.reactblog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,5 +46,24 @@ public class CommentService {
             result = commentRepository.save(new Comment(commentFormData, postToComment));
         }
         return result;
+    }
+
+    public Post findPostById(Long id) {
+        Optional<Post> optionalPost = this.postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post actualPost = optionalPost.get();
+            return actualPost;
+        } else {
+            return null;
+        }
+
+    }
+
+
+    public List<CommentDetails> findAllComments(Long id) {
+        return this.commentRepository.findCommentsByPostId(id)
+                .stream()
+                .map(CommentDetails::new)
+                .collect(Collectors.toList());
     }
 }

@@ -12,6 +12,9 @@ export class PostListComponent implements OnInit {
     posts: Array<PostListItemModel>;
     category = 'ALL';
     showAllPost = true;
+    postIdForComments: number;
+    commentStatus: boolean = false;
+
 
     constructor(private blogService: BlogService) {
     }
@@ -35,4 +38,15 @@ export class PostListComponent implements OnInit {
             this.showAllPost = false;
         }
     }
+
+    showCommentsById(id: number) {
+        this.postIdForComments = id;
+        this.clickOnComments();
+    }
+
+    clickOnComments() {
+        this.commentStatus = !this.commentStatus;
+    }
+
+
 }

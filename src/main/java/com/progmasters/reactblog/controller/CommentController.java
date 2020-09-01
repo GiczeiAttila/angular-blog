@@ -12,6 +12,8 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.Comment;
+import com.progmasters.reactblog.domain.Post;
+import com.progmasters.reactblog.domain.dto.CommentDetails;
 import com.progmasters.reactblog.domain.dto.CommentFormData;
 import com.progmasters.reactblog.service.CommentService;
 import com.progmasters.reactblog.validator.CommentFormDetailsValidator;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
@@ -55,6 +58,20 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.CREATED);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<CommentDetails>> findAllCommentsByPostId(@PathVariable Long id) {
+        Post actualPost = this.commentService.findPostById(id);
+        List<CommentDetails> comments;
+        if (actualPost != null) {
+            comments = this.commentService.findAllComments(id);
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
 

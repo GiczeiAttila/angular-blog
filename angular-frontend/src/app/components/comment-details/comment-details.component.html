@@ -1,0 +1,16 @@
+<div>
+    <ul *ngFor="let comment of postComments" class="comment-section">
+
+        <li class="comment user-comment">
+            <div class="info">
+                <a>{{comment.author}}</a>
+                <span>{{comment.createdAt}}</span>
+            </div>
+            <a class="avatar" href="#">
+                <img alt="Profile Avatar" src="images/avatar_user_1.jpg" title="Anie Silverston" width="35"/>
+            </a>
+            <p>{{comment.commentBody}}</p>
+        </li>
+
+    </ul>
+</div>

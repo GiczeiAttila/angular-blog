@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PostFormComponent } from './components/post-form/post-form.component';
-import { PostListComponent } from './components/post-list/post-list.component';
-import { PostDetailsComponent } from './components/post-details/post-details.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {PostFormComponent} from './components/post-form/post-form.component';
+import {PostListComponent} from './components/post-list/post-list.component';
+import {PostDetailsComponent} from './components/post-details/post-details.component';
 import {UserLoginFormComponent} from "./components/user-login-form/user-login-form.component";
 import {UserRegistrationFormComponent} from "./components/user-registration-form/user-registration-form.component";
 import {WelcomeComponent} from "./components/welcome/welcome.component";
 import {UserPasswordFormComponent} from "./components/user-password-form/user-password-form.component";
 import {UserRegistrationConfirmationComponent} from "./components/user-registration-confirmation/user-registration-confirmation.component";
+import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path: 'confirmation/:token/:id', component: UserRegistrationConfirmationComponent},
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
-    {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+    {path: 'posts/:id', component: CommentDetailsComponent},
+    {path: '', redirectTo: 'welcome', pathMatch: 'full'}
 ];
 
 @NgModule({

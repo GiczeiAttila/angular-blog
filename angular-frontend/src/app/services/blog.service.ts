@@ -6,6 +6,7 @@ import {PostDetailsModel} from "../models/postDetails.model";
 import {PostFormDataModel} from "../models/postFormData.model";
 import {PostListItemModel} from "../models/postListItem.model";
 import {PostFormInitDataModel} from "../models/postFormInitData.model";
+import {CommentDetailsModel} from "../models/commentDetails.model";
 
 const POSTS_BASE_URL = 'http://localhost:8080/api/posts';
 const COMMENTS_BASE_URL = 'http://localhost:8080/api/comments';
@@ -36,5 +37,9 @@ export class BlogService {
 
     createComment(commentData: CommentFormDataModel): Observable<any> {
         return this.http.post(COMMENTS_BASE_URL, commentData);
+    }
+
+    fetchComments(id: number): Observable<Array<CommentDetailsModel>> {
+        return this.http.get<Array<CommentDetailsModel>>(COMMENTS_BASE_URL + "/" + id);
     }
 }
