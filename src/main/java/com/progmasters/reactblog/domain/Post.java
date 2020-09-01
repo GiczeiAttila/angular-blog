@@ -41,7 +41,7 @@ public class Post {
     @Column(name = "creation_at")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
 
