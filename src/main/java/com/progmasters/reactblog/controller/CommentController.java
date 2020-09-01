@@ -61,7 +61,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<CommentDetails>> findAllCommentsByPostId(@PathVariable Long id) {
+    public ResponseEntity<List<CommentDetails>> findAllCommentsByPostId(@PathVariable("id") Long id) {
         Post actualPost = this.commentService.findPostById(id);
         List<CommentDetails> comments;
         if (actualPost != null) {
