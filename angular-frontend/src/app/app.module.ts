@@ -1,5 +1,5 @@
 import {HttpClientModule} from '@angular/common/http';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -17,7 +17,10 @@ import {UserRegistrationConfirmationComponent} from './components/user-registrat
 import {UserPasswordFormComponent} from './components/user-password-form/user-password-form.component';
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
-
+import { SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MaterialModule} from "./material-modul";
 @NgModule({
     declarations: [
         AppComponent,
@@ -32,15 +35,23 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
         UserRegistrationConfirmationComponent,
         UserPasswordFormComponent,
         CommentDetailsComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        SuggestionBoxComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule
+
+
     ],
-    providers: [],
+    entryComponents: [AppComponent],
+    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
     bootstrap: [AppComponent]
 })
 export class AppModule {

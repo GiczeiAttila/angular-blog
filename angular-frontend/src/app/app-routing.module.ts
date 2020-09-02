@@ -10,6 +10,7 @@ import {UserPasswordFormComponent} from "./components/user-password-form/user-pa
 import {UserRegistrationConfirmationComponent} from "./components/user-registration-confirmation/user-registration-confirmation.component";
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
+import {SuggestionBoxComponent} from "./components/suggestion-box/suggestion-box.component";
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     {path: 'confirmation/:token/:id', component: UserRegistrationConfirmationComponent},
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
+    {path: 'suggestion-box', component: SuggestionBoxComponent},
     {path: 'posts/:id', component: CommentDetailsComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent},
