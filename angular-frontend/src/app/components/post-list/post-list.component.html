@@ -33,7 +33,7 @@
     <div *ngIf="showAllPost || post.category == category">
         <img alt="Picture" class="card-img-top" maxlength="250px" src="{{post.picture}}" width="35rem">
         <div class="card-body">
-            <h5 class="card-title">{{post.title}}</h5>
+            <h4 class="card-title">{{post.title}}</h4>
             <p class="card-text">{{post.postBodyShortened}}</p>
         </div>
         <ul class="list-group list-group-flush">
@@ -41,14 +41,17 @@
         </ul>
         <div class="card-body">
 
-            <svg class="bi bi-grid-3x3-gap-fill" fill="currentColor" height="1.5em" viewBox="0 0 16 16" width="1.5em"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z"/>
-            </svg>
-            <a>Read more</a>
+            <a class="btn btn-info" id="readMore">
+                <svg class="bi bi-grid-3x3-gap-fill" fill="currentColor" height="1.5em" viewBox="0 0 16 16"
+                     width="1.5em"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z"/>
+                </svg>
+                Read more</a>
 
-            <div *ngIf="post.type == 'EVENT'">
+
+            <div *ngIf="post.type == 'EVENT'" class="btn btn-info">
                 <svg class="bi bi-arrow-right-circle-fill" fill="currentColor" height="1.5em" viewBox="0 0 16 16"
                      width="1.5em" xmlns="http://www.w3.org/2000/svg">
                     <path
