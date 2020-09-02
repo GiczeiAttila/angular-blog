@@ -30,6 +30,12 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Comment> myComments;
 
+    @OneToMany(mappedBy = "user")
+    private List<Suggestion> suggestionList;
+
+    @OneToMany(mappedBy = "user")
+    private List<SuggestionVote> suggestionVoteList;
+
     public User() {
     }
 

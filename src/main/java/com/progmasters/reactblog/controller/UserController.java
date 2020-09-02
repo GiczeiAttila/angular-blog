@@ -1,10 +1,8 @@
 package com.progmasters.reactblog.controller;
 
+import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.PasswordDto;
-import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
-import com.progmasters.reactblog.domain.dto.UserFormDto;
-import com.progmasters.reactblog.domain.dto.UserLogInFormDto;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
 import com.progmasters.reactblog.validator.LoginValidator;
@@ -99,5 +97,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @PostMapping("suggestion")
+    public ResponseEntity<Void> createSuggestion(@RequestBody SuggestionFormDto suggestionFormDto) {
+        Suggestion suggestion = userService.saveSuggestion(suggestionFormDto);
+        //emailSenderService.sendRegistrationConfirmationEmail(user.getEmail(), user.getToken(), user.getId());
+        logger.info("User with user id:" + suggestion.getUser().getId()+ "created a suggestion with suggestion id: "+ suggestion.getId() + "and suggestion title:" + suggestion.getTitle());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

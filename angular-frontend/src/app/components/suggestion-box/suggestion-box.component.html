@@ -1,0 +1,73 @@
+<div class="mat-app-background basic-container">
+    <mat-tab-group [selectedIndex]="activeIndex" dynamicHeight animationDuration="200ms">
+        <mat-tab label="Suggestion List">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let suggestion of suggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{suggestion.title}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            +{{suggestion.countUp}}/-{{suggestion.countDown}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>{{suggestion.description}}</p>
+                    <mat-action-row>
+                        <button mat-button color="success" (click)="upVote('UP', suggestion.userId)">Up</button>
+                        <button mat-button color="warn" (click)="downVote('DOWN', suggestion.userId)">Down</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="My suggestions">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let mySuggestion of mySuggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{mySuggestion.title}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            + {{mySuggestion.countUp}}/- {{mySuggestion.countDown}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>{{mySuggestion.description}}</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="New suggestion">
+            <form class="example-form" [formGroup]="suggestionForm" (ngSubmit)="Submit()">
+                <mat-form-field class="suggestion-full-width">
+                    <mat-label>Suggestion title</mat-label>
+                    <input matInput placeholder="Suggestion title" formControlName="title">
+                    <mat-hint>Suggestion title is required</mat-hint>
+                    <mat-error>
+                        {{suggestionForm.get('title').errors?.serverError}}
+                    </mat-error>
+                    <mat-error *ngIf="suggestionForm.get('title').invalid && suggestionForm.get('title').touched">
+                        Suggestion title is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="suggestion-full-width">
+                    <mat-label>Suggestion description</mat-label>
+                    <textarea matInput placeholder="Suggestion description" formControlName="description"></textarea>
+                    <mat-hint>Suggestion description is required</mat-hint>
+                    <mat-error>
+                        {{suggestionForm.get('description').errors?.serverError}}
+                    </mat-error>
+                    <mat-error
+                        *ngIf="suggestionForm.get('description').invalid && suggestionForm.get('description').touched">
+                        Suggestion description is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-card-actions>
+                    <button mat-raised-button type="submit" color="primary">Submit</button>
+                </mat-card-actions>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+</div>

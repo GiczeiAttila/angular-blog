@@ -1,10 +1,13 @@
 package com.progmasters.reactblog.service;
 
+import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.PasswordDto;
+import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
+import com.progmasters.reactblog.repository.SuggestionRepository;
 import com.progmasters.reactblog.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +19,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SuggestionRepository suggestionRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository) {
         this.userRepository = userRepository;
+        this.suggestionRepository = suggestionRepository;
     }
 
     public User createUser(UserFormDto userFormDto) {
@@ -58,5 +63,10 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    public Suggestion saveSuggestion(SuggestionFormDto suggestionFormDto){
+        User user = findById(suggestionFormDto.getUserId());
+        return suggestionRepository.save(new Suggestion(suggestionFormDto, user));
     }
 }
