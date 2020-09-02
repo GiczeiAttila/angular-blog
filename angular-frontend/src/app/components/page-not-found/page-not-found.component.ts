@@ -16,5 +16,4 @@ export class PageNotFoundComponent implements OnInit {
           this.userService.loginSubject.next();
       }
   }
-
 }

@@ -32,6 +32,7 @@ export class CommentFormComponent implements OnInit {
 
     onSubmit() {
         const commentData = {...this.commentForm.value};
+        console.log(commentData);
         commentData.postId = this.postId;
         commentData.authorId = this.authorId;
         this.blogService.createComment(commentData).subscribe(
