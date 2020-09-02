@@ -27,6 +27,9 @@ export class UserRegistrationFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     submitRegistration() {

@@ -50,5 +50,8 @@ export class UserRegistrationConfirmationComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 }

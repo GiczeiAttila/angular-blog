@@ -18,15 +18,14 @@ export class UserLoginFormComponent implements OnInit {
             {
                 id: ['', Validators.required],
                 password: ['', Validators.required]
-            });
-        /*
-         this.loginForm = new FormGroup({
-             'id': new FormControl('', Validators.required),
-             'password': new FormControl('', Validators.required),
-         });*/
+            }
+        );
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     submitLogin() {

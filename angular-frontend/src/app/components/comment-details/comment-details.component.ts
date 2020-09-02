@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BlogService} from "../../services/blog.service";
 import {CommentDetailsModel} from "../../models/commentDetails.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-comment-details',
@@ -13,7 +14,10 @@ export class CommentDetailsComponent implements OnInit {
     @Input()
     postId: number;
 
-    constructor(private blogService: BlogService) {
+    constructor(private blogService: BlogService, private userService: UserService) {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
     }
 
     ngOnInit(): void {
