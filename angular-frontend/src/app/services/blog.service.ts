@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {CommentFormDataModel} from "../models/commentFormData.model";
 import {PostDetailsModel} from "../models/postDetails.model";
 import {PostFormDataModel} from "../models/postFormData.model";
@@ -15,6 +15,8 @@ const COMMENTS_BASE_URL = 'http://localhost:8080/api/comments';
     providedIn: 'root'
 })
 export class BlogService {
+
+    refresh = new Subject();
 
     constructor(private http: HttpClient) {
     }

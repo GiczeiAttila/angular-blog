@@ -13,10 +13,12 @@ package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Comment;
 import com.progmasters.reactblog.domain.Post;
+import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.CommentDetails;
 import com.progmasters.reactblog.domain.dto.CommentFormData;
 import com.progmasters.reactblog.repository.CommentRepository;
 import com.progmasters.reactblog.repository.PostRepository;
+import com.progmasters.reactblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +33,22 @@ public class CommentService {
 
     private CommentRepository commentRepository;
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public CommentService(CommentRepository commentRepository,
-                          PostRepository postRepository) {
+                          PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public Comment createComment(CommentFormData commentFormData) {
         Comment result = null;
         Post postToComment = postRepository.findById(commentFormData.getPostId()).orElse(null);
-        if (postToComment != null) {
-            result = commentRepository.save(new Comment(commentFormData, postToComment));
+        User user = userRepository.findById(commentFormData.getAuthorId()).orElse(null);
+        if (postToComment != null && user != null) {
+            result = commentRepository.save(new Comment(commentFormData, postToComment, user));
         }
         return result;
     }

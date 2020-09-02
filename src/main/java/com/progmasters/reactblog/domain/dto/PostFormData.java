@@ -17,6 +17,7 @@ import com.progmasters.reactblog.domain.PostTypes;
 public class PostFormData {
 
     private String title;
+    private Long authorId;
     private String postBody;
     private String picture;
     private PostCategories category;
@@ -26,6 +27,10 @@ public class PostFormData {
 
     public String getTitle() {
         return title;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
     }
 
     public String getPostBody() {

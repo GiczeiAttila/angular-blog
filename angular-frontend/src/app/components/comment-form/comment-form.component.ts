@@ -31,7 +31,6 @@ export class CommentFormComponent implements OnInit {
         }
 
         this.authorId = +localStorage.getItem('userId');
-        console.log(this.authorId);
     }
 
     onSubmit() {

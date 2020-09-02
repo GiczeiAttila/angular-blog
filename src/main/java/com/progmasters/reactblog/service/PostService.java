@@ -14,8 +14,10 @@ package com.progmasters.reactblog.service;
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostTypes;
+import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
+import com.progmasters.reactblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,21 +31,27 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public Post createPost(PostFormData postFormData) {
-        return postRepository.save(new Post(postFormData));
+        User user = this.userRepository.findById(postFormData.getAuthorId()).orElse(null);
+        if (user != null) {
+            return postRepository.save(new Post(postFormData, user));
+        }
+        return null;
     }
 
     public List<PostListItem> getPostListItems() {
-       return postRepository.findAllByOrderByCreatedAtDesc()
-               .stream()
-               .map(PostListItem::new)
-               .collect(Collectors.toList());
+        return postRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(PostListItem::new)
+                .collect(Collectors.toList());
     }
 
     public PostDetails getPostDetailsById(Long id) {

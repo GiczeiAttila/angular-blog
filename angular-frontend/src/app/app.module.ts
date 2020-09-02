@@ -17,6 +17,9 @@ import {UserRegistrationConfirmationComponent} from './components/user-registrat
 import {UserPasswordFormComponent} from './components/user-password-form/user-password-form.component';
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSliderModule} from "@angular/material/slider";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
     declarations: [
@@ -38,7 +41,10 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatExpansionModule
     ],
     providers: [],
     bootstrap: [AppComponent]

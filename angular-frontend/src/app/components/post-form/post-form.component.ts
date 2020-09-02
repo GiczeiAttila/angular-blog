@@ -16,6 +16,7 @@ import {UserService} from "../../services/user.service";
 export class PostFormComponent implements OnInit {
 
     postForm: FormGroup;
+    authorId: number;
     categories: Array<CategoryOptionModel>;
     types: Array<TypeOptionModel>;
     isEvent: boolean;
@@ -53,10 +54,14 @@ export class PostFormComponent implements OnInit {
             },
             error => console.warn(error)
         )
+
+        this.authorId = +localStorage.getItem('userId');
     }
 
     onSubmit() {
-        this.blogService.createPost(this.postForm.value).subscribe(
+        const post = this.postForm.value;
+        post.authorId = this.authorId;
+        this.blogService.createPost(post).subscribe(
             () => {
                 console.log(this.postForm);
                 this.router.navigate(['/posts'])
