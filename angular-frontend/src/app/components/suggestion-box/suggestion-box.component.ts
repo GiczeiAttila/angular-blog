@@ -50,11 +50,11 @@ export class SuggestionBoxComponent implements OnInit {
             );
     }
 
-    upVote() {
+    upVote(up: string, userId: number) {
 
     }
 
-    downVote() {
+    downVote(down: string, userId: number) {
 
     }
 }
