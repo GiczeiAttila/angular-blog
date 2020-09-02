@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {handleValidationErrors} from "../../shared/validation.handler";
+import {SuggestionFormModel} from "../../models/suggestionForm.model";
+import {SuggestionListItemModel} from "../../models/SuggestionListItem.model";
 
 @Component({
     selector: 'app-suggestion-box',
@@ -7,9 +13,19 @@ import {UserService} from "../../services/user.service";
     styleUrls: ['./suggestion-box.component.css']
 })
 export class SuggestionBoxComponent implements OnInit {
-
+    suggestionForm: FormGroup;
     activeIndex: number = 0;
-    constructor(private userService: UserService) {
+    panelOpenState: boolean;
+    mySuggestionList: Array<SuggestionListItemModel>;
+    suggestionList: Array<SuggestionListItemModel>;
+
+    constructor(private userService: UserService, private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+        this.suggestionForm = this.formBuilder.group(
+            {
+                title: ['', Validators.required],
+                description: ['', Validators.required]
+            }
+        );
     }
 
     ngOnInit(): void {
@@ -18,4 +34,27 @@ export class SuggestionBoxComponent implements OnInit {
         }
     }
 
+    Submit() {
+        let suggestionData: SuggestionFormModel = this.suggestionForm.value;
+        suggestionData.userId = +localStorage.getItem('userId')
+        this.userService.createSuggestion(suggestionData)
+            .subscribe(() => {
+                },
+                error => {
+                    console.log(error);
+                    handleValidationErrors(error, this.suggestionForm);
+                },
+                () => {
+                    this.activeIndex = 0;
+                },
+            );
+    }
+
+    upVote() {
+
+    }
+
+    downVote() {
+
+    }
 }

@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 export class UserLoginFormComponent implements OnInit {
     loginForm: FormGroup;
 
-    constructor(private userService: UserService, private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) {
         this.loginForm = this.formBuilder.group(
             {
                 id: ['', Validators.required],

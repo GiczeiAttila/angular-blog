@@ -25,6 +25,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -57,7 +59,6 @@ public class PostController {
     @PostMapping
     public ResponseEntity createPost(@Valid @RequestBody PostFormData postFormData) {
         logger.info("New post is created");
-
         postService.createPost(postFormData);
         return new ResponseEntity(HttpStatus.CREATED);
     }
