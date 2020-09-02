@@ -73,13 +73,19 @@
                 <a>Going</a>
             </div>
         </div>
-       <!-- <div class="container app__container">
-            <app-comment-details [postId]="postIdForComments"></app-comment-details>
+
+        <div>
+            <div *ngFor="let comment of post.comments" class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{comment.author}}</h5>
+                    <p class="card-text">{{comment.commentBody}}</p>
+                    <p class="card-text"><small class="text-muted">{{comment.createdAt}}</small></p>
+                </div>
+            </div>
         </div>
-        -->
 
         <div class="container app__container">
-            <app-comment-form [postId]="postIdForComments"></app-comment-form>
+            <app-comment-form [postId]="post.id"></app-comment-form>
         </div>
     </div>
 

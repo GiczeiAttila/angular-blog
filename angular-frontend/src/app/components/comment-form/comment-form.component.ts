@@ -12,13 +12,14 @@ import {UserService} from "../../services/user.service";
 export class CommentFormComponent implements OnInit {
 
     @Input() postId: number;
-    @Input() authorId: number;
+
+    // @Input()
+    authorId: number;
     @Output() commentCreated = new EventEmitter();
     commentForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder, private blogService: BlogService, private userService: UserService) {
         this.commentForm = formBuilder.group({
-                author: [],
                 commentBody: ['', Validators.required]
             }
         )
@@ -28,6 +29,9 @@ export class CommentFormComponent implements OnInit {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }
+
+        this.authorId = +localStorage.getItem('userId');
+        console.log(this.authorId);
     }
 
     onSubmit() {

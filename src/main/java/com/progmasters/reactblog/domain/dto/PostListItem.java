@@ -15,6 +15,7 @@ import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostTypes;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,6 +32,7 @@ public class PostListItem {
     private Integer numberOfComments;
     private PostCategories category;
     private PostTypes type;
+    private List<CommentDetails> comments;
 
     public PostListItem(Post post) {
         this.id = post.getId();
@@ -44,6 +46,7 @@ public class PostListItem {
                 .map(string -> string.substring(0, string.contains(" ") && post.getPostBody().length() > 205 ? string.lastIndexOf(" ") : string.length()))
                 .map(string -> string.equals(post.getPostBody()) ? string : string.concat("..."))
                 .collect(Collectors.joining());
+
     /*
         The expression above gets the body of the posts, cuts it at 200 characters if it is longer, cuts off the last
         word (which is probably cut in half already) and puts '...' at the end, than sets this as postBodyShortened.
@@ -70,6 +73,16 @@ public class PostListItem {
         this.numberOfComments = post.getComments().size();
         this.category = post.getCategory();
         this.type = post.getType();
+
+        if (post.getComments().size() < 3) {
+            this.comments = post.getComments().stream()
+                    .map(CommentDetails::new)
+                    .collect(Collectors.toList());
+        } else {
+            for (int i = 0; i < 3; i++) {
+                this.comments.add(new CommentDetails(post.getComments().get(i)));
+            }
+        }
     }
 
     public Long getId() {
@@ -106,5 +119,9 @@ public class PostListItem {
 
     public PostTypes getType() {
         return type;
+    }
+
+    public List<CommentDetails> getComments() {
+        return comments;
     }
 }

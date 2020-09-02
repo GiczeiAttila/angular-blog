@@ -19,7 +19,8 @@ export class CommentDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.blogService.fetchComments(this.postId).subscribe(
             (comments: CommentDetailsModel[]) => this.postComments = comments,
-            error => console.log(error)
+            error => console.log(error),
+            () => console.log(this.postId)
         )
     }
 

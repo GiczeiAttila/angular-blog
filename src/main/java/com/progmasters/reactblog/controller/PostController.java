@@ -65,7 +65,6 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostListItem>> getPostList() {
         logger.info("Post list page is requested");
-
         return new ResponseEntity<>(postService.getPostListItems(), HttpStatus.OK);
     }
 

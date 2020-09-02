@@ -39,7 +39,14 @@ export class BlogService {
         return this.http.post(COMMENTS_BASE_URL, commentData);
     }
 
+    //????
     fetchComments(id: number): Observable<Array<CommentDetailsModel>> {
         return this.http.get<Array<CommentDetailsModel>>(POSTS_BASE_URL);
     }
+
+    fetchAllPost(): Observable<Array<PostListItemModel>> {
+        return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL);
+    }
+
+
 }

@@ -13,7 +13,7 @@ export class PostListComponent implements OnInit {
     category = 'ALL';
     showAllPost = true;
     postIdForComments: number;
-    commentStatus: boolean = false;
+
 
 
     constructor(private blogService: BlogService) {
@@ -24,7 +24,7 @@ export class PostListComponent implements OnInit {
     }
 
     loadPosts() {
-        this.blogService.fetchPosts().subscribe(
+        this.blogService.fetchAllPost().subscribe(
             data => this.posts = data,
             error => console.warn(error)
         );
@@ -41,11 +41,6 @@ export class PostListComponent implements OnInit {
 
     showCommentsById(id: number) {
         this.postIdForComments = id;
-        this.clickOnComments();
-    }
-
-    clickOnComments() {
-        this.commentStatus = !this.commentStatus;
     }
 
 
