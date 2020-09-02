@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class SuggestionVote {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
