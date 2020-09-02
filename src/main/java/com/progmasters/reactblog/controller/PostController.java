@@ -11,6 +11,7 @@
 
 package com.progmasters.reactblog.controller;
 
+import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.dto.PostDetails;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 import com.progmasters.reactblog.domain.dto.PostFormInitData;
@@ -25,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -59,8 +58,13 @@ public class PostController {
     @PostMapping
     public ResponseEntity createPost(@Valid @RequestBody PostFormData postFormData) {
         logger.info("New post is created");
-        postService.createPost(postFormData);
-        return new ResponseEntity(HttpStatus.CREATED);
+
+        Post postForm = postService.createPost(postFormData);
+        if (postForm != null) {
+            return new ResponseEntity(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping

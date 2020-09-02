@@ -14,10 +14,11 @@ export class PostListComponent implements OnInit {
     category = 'ALL';
     showAllPost = true;
     postIdForComments: number;
-
-
+    commentOpenState: boolean;
+    addCommentOpenState: boolean;
 
     constructor(private blogService: BlogService, private userService: UserService) {
+
     }
 
     ngOnInit() {

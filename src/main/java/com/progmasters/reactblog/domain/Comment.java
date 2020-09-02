@@ -44,11 +44,11 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(CommentFormData commentFormData, Post post) {
-        this.id = commentFormData.getAuthorId();
+    public Comment(CommentFormData commentFormData, Post post, User user) {
         this.commentBody = commentFormData.getCommentBody();
         this.createdAt = LocalDateTime.now();
         this.post = post;
+        this.author = user;
     }
 
     public Long getId() {

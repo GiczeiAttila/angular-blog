@@ -35,3 +35,7 @@
     min-height: 208px;
 }
 
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+

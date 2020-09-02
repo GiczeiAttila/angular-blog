@@ -35,7 +35,7 @@ public class Post {
     @Column(name = "post_body", columnDefinition = "TEXT")
     private String postBody;
 
-    @Column(name = "img_url")
+    @Column(name = "img_url", columnDefinition = "TEXT")
     private String picture;
 
     @Column(name = "creation_at")
@@ -60,7 +60,8 @@ public class Post {
     public Post() {
     }
 
-    public Post(PostFormData postFormData) {
+    public Post(PostFormData postFormData, User user) {
+        this.author = user;
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
         this.picture = postFormData.getPicture();
