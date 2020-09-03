@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BlogService} from '../../services/blog.service';
 import {PostListItemModel} from "../../models/postListItem.model";
 import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-post-list',
@@ -13,11 +14,12 @@ export class PostListComponent implements OnInit {
     posts: Array<PostListItemModel>;
     category = 'ALL';
     showAllPost = true;
-    postIdForComments: number;
     commentOpenState: boolean;
     addCommentOpenState: boolean;
 
-    constructor(private blogService: BlogService, private userService: UserService) {
+    constructor(private blogService: BlogService,
+                private userService: UserService,
+                private router: Router) {
 
     }
 
@@ -44,9 +46,7 @@ export class PostListComponent implements OnInit {
         }
     }
 
-    showCommentsById(id: number) {
-        this.postIdForComments = id;
+    readMore(id: number) {
+        this.router.navigate(['posts', id])
     }
-
-
 }

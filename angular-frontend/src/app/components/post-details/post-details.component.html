@@ -1,16 +1,36 @@
 <div class="jumbotron post-details">
-    <h3 class="text-success"><strong>{{postDetails.title}}</strong></h3>
-    <h6 class="text-muted">{{postDetails.createdAt}}</h6>
+    <h3 class="font-weight-bold"><strong>{{postDetails.title}}</strong></h3>
+    <h6 class="text-muted">{{postDetails.author}}  {{postDetails.createdAt}}</h6>
     <div>
         <img *ngIf="postDetails.picture" [src]="postDetails.picture" alt="" class="post-image"/>
         {{postDetails.postBody}}
     </div>
     <br/>
+
     <div class="clearfix">
-        <h4 class="text-success">Comments</h4>
-        <div *ngFor="let comment of postDetails.comments">
-            <h6 class="text-info">{{comment.author + ' - ' + comment.createdAt}}</h6>
-            <p class="text-muted">{{comment.commentBody}}</p>
+        <div *ngIf="postDetails.type == 'EVENT'" class="card-body">
+            <h3 class="card-title">Address</h3>
+            <p class="card-text">{{postDetails.address.country}} {{postDetails.address.zipCode}} {{postDetails.address.city}}
+                ,
+                {{postDetails.address.street}} {{postDetails.address.number}}</p>
+        </div>
+    </div>
+
+
+    <div class="clearfix">
+        <div>
+            <h1>Comments</h1>
+
+            <div *ngFor="let comment of postDetails.comments">
+                <div class="card bg-light mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{comment.author}}</h5>
+                        <p class="card-text">{{comment.commentBody}}</p>
+                        <h6 class="card-text">{{comment.createdAt}}</h6>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <app-comment-form *ngIf="id" [postId]="id" (commentCreated)="loadPostDetails()"></app-comment-form>
