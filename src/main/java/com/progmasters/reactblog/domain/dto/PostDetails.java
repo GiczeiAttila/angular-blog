@@ -12,6 +12,8 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
+import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +23,19 @@ import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATT
 public class PostDetails {
 
     private Long id;
+    private String author;
     private String title;
     private String postBody;
     private String picture;
     private String createdAt;
     private List<CommentDetails> comments;
+    private PostCategories category;
+    private PostTypes type;
+    private AddressDetails address;
 
     public PostDetails(Post post) {
         this.id = post.getId();
+        this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
         this.title = post.getTitle();
         this.postBody = post.getPostBody();
         this.picture = post.getPicture();
@@ -36,6 +43,9 @@ public class PostDetails {
         this.comments = post.getComments().stream()
                 .map(CommentDetails::new)
                 .collect(Collectors.toList());
+        this.category = post.getCategory();
+        this.type = post.getType();
+        this.address = new AddressDetails(post.getAddress());
     }
 
     public Long getId() {
@@ -60,5 +70,21 @@ public class PostDetails {
 
     public List<CommentDetails> getComments() {
         return comments;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public PostCategories getCategory() {
+        return category;
+    }
+
+    public PostTypes getType() {
+        return type;
+    }
+
+    public AddressDetails getAddress() {
+        return address;
     }
 }
