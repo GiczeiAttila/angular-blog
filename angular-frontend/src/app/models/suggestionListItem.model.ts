@@ -5,4 +5,5 @@ export interface SuggestionListItemModel{
     description: string;
     countUp: number;
     countDown: number;
+    status: string;
 }

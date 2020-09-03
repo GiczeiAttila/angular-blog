@@ -4,6 +4,8 @@ import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
+import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
+import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -40,4 +43,14 @@ public class SuggestionService {
         return suggestion;
     }
 
+    public Suggestion saveVote(SuggestionVoteDto suggestionVoteDto) {
+        return null;
+    }
+
+    public List<SuggestionListItemDto> getSuggestions() {
+        List<SuggestionListItemDto> suggestionListItemDtoList = suggestionRepository.findAll()
+                .stream()
+                .map(suggestion -> new SuggestionListItemDto(suggestion)).collect(Collectors.toList());
+        return suggestionListItemDtoList;
+    }
 }

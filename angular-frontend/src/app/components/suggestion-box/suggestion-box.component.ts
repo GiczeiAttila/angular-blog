@@ -5,7 +5,8 @@ import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {SuggestionFormModel} from "../../models/suggestionForm.model";
-import {SuggestionListItemModel} from "../../models/SuggestionListItem.model";
+import {SuggestionListItemModel} from "../../models/suggestionListItem.model";
+import {SuggestionVoteModel} from "../../models/suggestionVote.model";
 
 @Component({
     selector: 'app-suggestion-box',
@@ -14,24 +15,39 @@ import {SuggestionListItemModel} from "../../models/SuggestionListItem.model";
 })
 export class SuggestionBoxComponent implements OnInit {
     suggestionForm: FormGroup;
-    activeIndex: number = 0;
+    index: number;
     panelOpenState: boolean;
-    mySuggestionList: Array<SuggestionListItemModel>;
-    suggestionList: Array<SuggestionListItemModel>;
+    mySuggestionList: Array<SuggestionListItemModel> = [];
+    activeSuggestionList: Array<SuggestionListItemModel> = [];
+    closedSuggestionList: Array<SuggestionListItemModel> = [];
 
     constructor(private userService: UserService, private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
-        this.suggestionForm = this.formBuilder.group(
-            {
-                title: ['', Validators.required],
-                description: ['', Validators.required]
-            }
-        );
     }
 
     ngOnInit(): void {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }
+        this.suggestionForm = this.formBuilder.group(
+            {
+                title: ['', Validators.required],
+                description: ['', Validators.required]
+            }
+        );
+        this.index = 0;
+        this.userService.getSuggestions().subscribe((response) => {
+            console.log(response);
+            response.forEach((suggestionListItemModel) => {
+                if (suggestionListItemModel.userId === +localStorage.getItem('userId')) {
+                    this.mySuggestionList.unshift(suggestionListItemModel);
+                    if (suggestionListItemModel.status == 'ACTIVE') {
+                        this.activeSuggestionList.unshift(suggestionListItemModel);
+                    } else {
+                        this.closedSuggestionList.unshift(suggestionListItemModel);
+                    }
+                }
+            })
+        });
     }
 
     Submit() {
@@ -45,16 +61,18 @@ export class SuggestionBoxComponent implements OnInit {
                     handleValidationErrors(error, this.suggestionForm);
                 },
                 () => {
-                    this.activeIndex = 0;
+                    this.ngOnInit();
                 },
             );
     }
 
-    upVote(up: string, userId: number) {
-
-    }
-
-    downVote(down: string, userId: number) {
-
+    voting(vote: string, userId: number, id: number) {
+        let data: SuggestionVoteModel = {
+            suggestionId: id,
+            userId: userId,
+            vote: vote,
+            votingUserId: +localStorage.getItem('userId')
+        }
+        this.userService.voting(data).subscribe();
     }
 }

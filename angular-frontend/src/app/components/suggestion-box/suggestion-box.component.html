@@ -1,8 +1,8 @@
 <div class="mat-app-background basic-container">
-    <mat-tab-group [selectedIndex]="activeIndex" dynamicHeight animationDuration="200ms">
-        <mat-tab label="Suggestion List">
-            <mat-accordion>
-                <mat-expansion-panel *ngFor="let suggestion of suggestionList"
+    <mat-tab-group [(selectedIndex)]="index" dynamicHeight animationDuration="200ms">
+        <mat-tab  label="Active suggestions">
+            <mat-accordion >
+                <mat-expansion-panel *ngFor="let suggestion of activeSuggestionList"
                                      (opened)="panelOpenState = true"
                                      (closed)="panelOpenState = false">
                     <mat-expansion-panel-header>
@@ -15,8 +15,29 @@
                     </mat-expansion-panel-header>
                     <p>{{suggestion.description}}</p>
                     <mat-action-row>
-                        <button mat-button color="success" (click)="upVote('UP', suggestion.userId)">Up</button>
-                        <button mat-button color="warn" (click)="downVote('DOWN', suggestion.userId)">Down</button>
+                        <button mat-button color="success" (click)="voting('UP', suggestion.userId, suggestion.id)">Up</button>
+                        <button mat-button color="warn" (click)="voting('DOWN',suggestion.userId,suggestion.id)">Down</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab  label="Closed suggestions">
+            <mat-accordion >
+                <mat-expansion-panel *ngFor="let suggestion of closedSuggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{suggestion.title}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            +{{suggestion.countUp}}/-{{suggestion.countDown}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>{{suggestion.description}}</p>
+                    <mat-action-row>
+                        <button mat-button color="success" (click)="voting('UP', suggestion.userId, suggestion.id)">Up</button>
+                        <button mat-button color="warn" (click)="voting('DOWN',suggestion.userId,suggestion.id)">Down</button>
                     </mat-action-row>
                 </mat-expansion-panel>
             </mat-accordion>
@@ -47,7 +68,7 @@
                     <mat-error>
                         {{suggestionForm.get('title').errors?.serverError}}
                     </mat-error>
-                    <mat-error *ngIf="suggestionForm.get('title').invalid && suggestionForm.get('title').touched">
+                    <mat-error *ngIf="suggestionForm.get('title').invalid && suggestionForm.get('title').dirty">
                         Suggestion title is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
@@ -60,7 +81,7 @@
                         {{suggestionForm.get('description').errors?.serverError}}
                     </mat-error>
                     <mat-error
-                        *ngIf="suggestionForm.get('description').invalid && suggestionForm.get('description').touched">
+                        *ngIf="suggestionForm.get('description').invalid && suggestionForm.get('description').dirty">
                         Suggestion description is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>

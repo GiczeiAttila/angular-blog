@@ -1,5 +1,9 @@
 package com.progmasters.reactblog.domain.dto;
 
+import com.progmasters.reactblog.domain.Suggestion;
+import com.progmasters.reactblog.domain.SuggestionStatusEnum;
+import com.progmasters.reactblog.domain.VoteType;
+
 public class SuggestionListItemDto {
     private Long id;
     private Long userId;
@@ -7,6 +11,20 @@ public class SuggestionListItemDto {
     private String description;
     private Long countUp;
     private Long countDown;
+    private SuggestionStatusEnum status;
+
+    public SuggestionListItemDto() {
+    }
+
+    public SuggestionListItemDto(Suggestion suggestion) {
+        this.id = suggestion.getId();
+        this.userId = suggestion.getUser().getId();
+        this.title = suggestion.getTitle();
+        this.description = suggestion.getDescription();
+        this.countUp = suggestion.getVoteList().stream().filter((suggestionVote -> suggestionVote.getVote()== VoteType.UP)).count();
+        this.countDown = suggestion.getVoteList().stream().filter((suggestionVote -> suggestionVote.getVote()== VoteType.Down)).count();
+        this.status = suggestion.getStatus();
+    }
 
     public Long getId() {
         return id;
@@ -54,5 +72,13 @@ public class SuggestionListItemDto {
 
     public void setCountDown(Long countDown) {
         this.countDown = countDown;
+    }
+
+    public SuggestionStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(SuggestionStatusEnum status) {
+        this.status = status;
     }
 }

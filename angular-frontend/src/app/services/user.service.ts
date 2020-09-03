@@ -6,6 +6,8 @@ import {UserConfirmationModel} from "../models/userConfirmation.model";
 import {PasswordModel} from "../models/password.model";
 import {UserLoginModel} from "../models/userLogin.model";
 import {SuggestionFormModel} from "../models/suggestionForm.model";
+import {SuggestionListItemModel} from "../models/suggestionListItem.model";
+import {SuggestionVoteModel} from "../models/suggestionVote.model";
 
 const USER_BASE_URL: string = 'http://localhost:8080/api/users';
 const SUGGESTION_BASE_URL: string = 'http://localhost:8080/api/suggestions';
@@ -41,5 +43,13 @@ export class UserService {
     createSuggestion(suggestionData: SuggestionFormModel) {
         console.log(suggestionData);
         return this.http.post(SUGGESTION_BASE_URL, suggestionData);
+    }
+
+    getSuggestions(): Observable<Array<SuggestionListItemModel>> {
+        return this.http.get<Array<SuggestionListItemModel>>(SUGGESTION_BASE_URL);
+    }
+
+    voting(data: SuggestionVoteModel) {
+        return this.http.post(SUGGESTION_BASE_URL + '/vote', data);
     }
 }

@@ -2,6 +2,8 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
+import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
+import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.service.SuggestionService;
 import com.progmasters.reactblog.validator.SuggestionValidator;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/suggestions")
@@ -35,10 +38,23 @@ public class SuggestionController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createSuggestion(@Valid @RequestBody SuggestionFormDto suggestionFormDto, HttpSession session) {
+    public ResponseEntity<Void> createSuggestion(@Valid @RequestBody SuggestionFormDto suggestionFormDto) {
         logger.info("Create suggestion requested with user id:" + suggestionFormDto.getUserId() + " with suggestion title: " + suggestionFormDto.getTitle());
         Suggestion suggestion = suggestionService.saveSuggestion(suggestionFormDto);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/vote")
+    public ResponseEntity<Void> createVote(@RequestBody SuggestionVoteDto suggestionVoteDto) {
+        logger.info("Create vote requested with user id:" + suggestionVoteDto.getVotingUserId() + " for suggestion with id: " + suggestionVoteDto.getSuggestionId());
+        Suggestion suggestion = suggestionService.saveVote(suggestionVoteDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SuggestionListItemDto>> getSuggestions(){
+        List<SuggestionListItemDto> suggestionListItemDtoList = suggestionService.getSuggestions();
+        return new ResponseEntity<>(suggestionListItemDtoList, HttpStatus.OK);
     }
 
 }
