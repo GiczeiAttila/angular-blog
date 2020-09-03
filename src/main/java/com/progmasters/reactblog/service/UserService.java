@@ -76,7 +76,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> findAllUsers() {
-        return userRepository.findAllByWithActiveStatus();
+    public List<User> findAllUsersWithStatus(UserStatusEnum status) {
+        return userRepository.findAllByWithActiveStatus(status);
     }
 }

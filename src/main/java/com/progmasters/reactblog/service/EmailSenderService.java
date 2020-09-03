@@ -2,6 +2,7 @@ package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.UserStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class EmailSenderService {
                 "Hello! New suggestion was created.\n" +
                 "You can read the suggestions in the link below\n" +
                 "http://localhost:4200/suggestion-box";
-        List<User> userList = userService.findAllUsers();
+        List<User> userList = userService.findAllUsersWithStatus(UserStatusEnum.ACTIVE);
         for (User user: userList) {
             sendMail(user.getEmail(),subject, mailBody);
         }
