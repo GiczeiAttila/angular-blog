@@ -7,7 +7,8 @@ import {PasswordModel} from "../models/password.model";
 import {UserLoginModel} from "../models/userLogin.model";
 import {SuggestionFormModel} from "../models/suggestionForm.model";
 
-const BASE_URL: string = 'http://localhost:8080/api/users';
+const USER_BASE_URL: string = 'http://localhost:8080/api/users';
+const SUGGESTION_BASE_URL: string = 'http://localhost:8080/api/suggestions';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -18,27 +19,27 @@ export class UserService {
 
 
     saveUser(userData: UserRegistrationFormModel) {
-        return this.http.post(BASE_URL + '/create', userData);
+        return this.http.post(USER_BASE_URL + '/create', userData);
     }
 
     savePassword(data: PasswordModel) {
-        return this.http.post(BASE_URL + '/password', data);
+        return this.http.post(USER_BASE_URL + '/password', data);
     }
 
     finalizeRegistration(confirmationData: UserConfirmationModel) {
-        return this.http.post(BASE_URL + '/confirmation', confirmationData);
+        return this.http.post(USER_BASE_URL + '/confirmation', confirmationData);
     }
 
     login(loginData: UserLoginModel) {
-        return this.http.post(BASE_URL + '/login', loginData);
+        return this.http.post(USER_BASE_URL + '/login', loginData);
     }
 
     logout() {
-        return this.http.post(BASE_URL + '/logout', null);
+        return this.http.post(USER_BASE_URL + '/logout', null);
     }
 
     createSuggestion(suggestionData: SuggestionFormModel) {
         console.log(suggestionData);
-        return this.http.post(BASE_URL + '/suggestion',suggestionData);
+        return this.http.post(SUGGESTION_BASE_URL, suggestionData);
     }
 }

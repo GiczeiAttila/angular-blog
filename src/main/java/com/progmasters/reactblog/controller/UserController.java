@@ -65,43 +65,38 @@ public class UserController {
 
     @PostMapping("create")
     public ResponseEntity<Void> createUser(@Valid @RequestBody UserFormDto userFormDto) {
+        logger.info("User creation requested with id: " + userFormDto.getId());
         User user = userService.createUser(userFormDto);
-        emailSenderService.sendRegistrationConfirmationEmail(user.getEmail(), user.getToken(), user.getId());
-        logger.info("User created with id: " + user.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("confirmation")
     @Async
     public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
+        logger.info("User confirmation requested with id: " + userConfirmationDto.getId() + "and with token: " + userConfirmationDto.getToken());
         User user = userService.confirmRegistration(userConfirmationDto);
-        emailSenderService.sendConfirmationSuccessfulEmail(user.getEmail(), user.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("password")
     public ResponseEntity<Void> savePassword(@Valid @RequestBody PasswordDto passwordDto) {
+        logger.info("Save new password requested with id: " + passwordDto.getId());
         userService.savePassword(passwordDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("login")
     public ResponseEntity<Void> login(@Valid @RequestBody UserLogInFormDto userLogInFormDto, HttpSession session) {
-        session.setAttribute("user_id", userLogInFormDto.getId());
+        //session.setAttribute("user_id", userLogInFormDto.getId());
+        logger.info("User login requested with id: " + userLogInFormDto.getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("logout")
     public ResponseEntity<Void> logout(HttpSession session) {
-        session.invalidate();
+//        session.invalidate();
+        logger.info("User logged out");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("suggestion")
-    public ResponseEntity<Void> createSuggestion(@RequestBody SuggestionFormDto suggestionFormDto) {
-        Suggestion suggestion = userService.saveSuggestion(suggestionFormDto);
-        //emailSenderService.sendRegistrationConfirmationEmail(user.getEmail(), user.getToken(), user.getId());
-        logger.info("User with user id:" + suggestion.getUser().getId()+ "created a suggestion with suggestion id: "+ suggestion.getId() + "and suggestion title:" + suggestion.getTitle());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

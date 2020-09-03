@@ -44,13 +44,14 @@ public class User {
         this.firstName = userFormDto.getFirstName();
         this.lastName = userFormDto.getLastName();
         this.email = userFormDto.getEmail();
-        //this.password = userFormDto.getPassword();
         this.phoneNumber = userFormDto.getPhoneNumber();
         this.userStatus = UserStatusEnum.REGISTERED;
         this.token =  UUID.randomUUID().toString();
         this.myPosts = new ArrayList<>();
         this.myComments = new ArrayList<>();
         this.numberOfLoginAttempts = 0L;
+        this.suggestionList = new ArrayList<>();
+        this.suggestionVoteList = new ArrayList<>();
     }
 
     public Long getId() {
@@ -139,5 +140,21 @@ public class User {
 
     public void setNumberOfLoginAttempts(Long numberOfLoginAttempts) {
         this.numberOfLoginAttempts = numberOfLoginAttempts;
+    }
+
+    public List<Suggestion> getSuggestionList() {
+        return suggestionList;
+    }
+
+    public void setSuggestionList(List<Suggestion> suggestionList) {
+        this.suggestionList = suggestionList;
+    }
+
+    public List<SuggestionVote> getSuggestionVoteList() {
+        return suggestionVoteList;
+    }
+
+    public void setSuggestionVoteList(List<SuggestionVote> suggestionVoteList) {
+        this.suggestionVoteList = suggestionVoteList;
     }
 }

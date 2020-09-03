@@ -27,7 +27,7 @@ public class RegistrationConfirmationValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserConfirmationDto userConfirmationDto = (UserConfirmationDto) target;
         Long id = userConfirmationDto.getId();
-        User user = userService.findById(userConfirmationDto.getId());
+        User user = userService.findById(id);
         if (user == null) {
             errors.rejectValue("id", "confirmationDto.wrong-id");
         } else if (!userConfirmationDto.getToken().equals(user.getToken())) {

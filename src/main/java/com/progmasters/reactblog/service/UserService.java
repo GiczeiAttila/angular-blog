@@ -1,5 +1,6 @@
 package com.progmasters.reactblog.service;
 
+import com.progmasters.reactblog.controller.UserController;
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
@@ -9,26 +10,33 @@ import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import com.progmasters.reactblog.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final SuggestionRepository suggestionRepository;
+    private final EmailSenderService emailSenderService;
 
-    public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository) {
+    public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService) {
         this.userRepository = userRepository;
         this.suggestionRepository = suggestionRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     public User createUser(UserFormDto userFormDto) {
         User user = new User(userFormDto);
         userRepository.save(user);
+        emailSenderService.sendRegistrationConfirmationEmail(user.getEmail(), user.getToken(), user.getId());
+        logger.info("User created with id: " + user.getId());
         return user;
     }
 
@@ -42,6 +50,8 @@ public class UserService {
         user.setUserStatus(UserStatusEnum.ACTIVE);
         user.setPassword(userConfirmationDto.getPassword());
         user.setToken(null);
+        logger.info("User confirmed with id: " + userConfirmationDto.getId() + "and with token: " + userConfirmationDto.getToken());
+        emailSenderService.sendConfirmationSuccessfulEmail(user.getEmail(), user.getId());
         return user;
     }
 
@@ -49,9 +59,10 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(passwordDto.getId());
         if (userOptional.isPresent()){
             User user = userOptional.get();
-            if (user.getToken() == null && user.getUserStatus()==UserStatusEnum.ACTIVE){
+            if (user.getPassword() == passwordDto.getOldPassword() && user.getUserStatus()==UserStatusEnum.BLOCKED){
                 user.setPassword(passwordDto.getPassword());
                 user.setUserStatus(UserStatusEnum.ACTIVE);
+                logger.info("New password saved for id: " + passwordDto.getId());
             }
         }
     }
@@ -65,8 +76,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Suggestion saveSuggestion(SuggestionFormDto suggestionFormDto){
-        User user = findById(suggestionFormDto.getUserId());
-        return suggestionRepository.save(new Suggestion(suggestionFormDto, user));
+    public List<User> findAllUsers() {
+        return userRepository.findAllByWithActiveStatus();
     }
 }
