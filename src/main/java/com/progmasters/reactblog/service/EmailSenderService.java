@@ -17,12 +17,10 @@ import java.util.List;
 public class EmailSenderService {
     private static final Logger logger = LoggerFactory.getLogger(EmailSenderService.class);
     private final JavaMailSender javaMailSender;
-    private final UserService userService;
 
     @Autowired
-    public EmailSenderService(JavaMailSender javaMailSender, UserService userService) {
+    public EmailSenderService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
-        this.userService = userService;
     }
 
     @Async
@@ -49,13 +47,12 @@ public class EmailSenderService {
     }
 
     @Async
-    public void sendNewSuggestionNotificationEmail(Suggestion suggestion) {
+    public void sendNewSuggestionNotificationEmail(Suggestion suggestion,List<User> userList ) {
         String subject = "New suggestion";
         String mailBody = "" +
                 "Hello! New suggestion was created.\n" +
                 "You can read the suggestions in the link below\n" +
                 "http://localhost:4200/suggestion-box";
-        List<User> userList = userService.findAllUsersWithStatus(UserStatusEnum.ACTIVE);
         for (User user: userList) {
             sendMail(user.getEmail(),subject, mailBody);
         }
