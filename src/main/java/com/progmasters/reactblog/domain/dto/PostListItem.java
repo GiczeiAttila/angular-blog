@@ -37,9 +37,9 @@ public class PostListItem {
     public PostListItem(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
-        if (post.getAuthor() != null) {
-            this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
-        }
+
+        this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
+
 
         this.postBodyShortened = Stream.of(post.getPostBody())
                 .map(string -> string.substring(0, Math.min(200, string.length())))
@@ -47,26 +47,6 @@ public class PostListItem {
                 .map(string -> string.equals(post.getPostBody()) ? string : string.concat("..."))
                 .collect(Collectors.joining());
 
-    /*
-        The expression above gets the body of the posts, cuts it at 200 characters if it is longer, cuts off the last
-        word (which is probably cut in half already) and puts '...' at the end, than sets this as postBodyShortened.
-        An alternative method for this without lambda expressions would look like this:
-
-        String postBody = post.getPostBody();
-        boolean isPostBodyChanged = false;
-        if (postBody.length() > 210) {
-            postBody = postBody.substring(0, 200);
-            if (postBody.contains(" ")) {
-                int lastSpaceIndex = postBody.lastIndexOf(" ");
-                postBody = postBody.substring(0, lastSpaceIndex);
-            }
-            isPostBodyChanged = true;
-        }
-        if (isPostBodyChanged) {
-            postBody = postBody.concat("...");
-        }
-        this.postBodyShortened = postBody;
-    */
 
         this.picture = post.getPicture();
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
@@ -74,7 +54,7 @@ public class PostListItem {
         this.category = post.getCategory();
         this.type = post.getType();
 
-        if (post.getComments().size() < 3) {
+        if (post.getComments().size() < 4) {
             this.comments = post.getComments().stream()
                     .map(CommentDetails::new)
                     .collect(Collectors.toList());

@@ -77,9 +77,12 @@ public class PostController {
     public ResponseEntity<PostDetails> getPost(@PathVariable("id") Long id) {
         PostDetails postDetails = postService.getPostDetailsById(id);
         if (postDetails != null) {
+            logger.info("Details page requested for blog id: " + id);
             return new ResponseEntity<>(postDetails, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 }
