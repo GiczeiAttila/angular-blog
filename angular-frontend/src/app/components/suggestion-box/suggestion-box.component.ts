@@ -40,11 +40,11 @@ export class SuggestionBoxComponent implements OnInit {
             response.forEach((suggestionListItemModel) => {
                 if (suggestionListItemModel.userId === +localStorage.getItem('userId')) {
                     this.mySuggestionList.unshift(suggestionListItemModel);
-                    if (suggestionListItemModel.status == 'ACTIVE') {
-                        this.activeSuggestionList.unshift(suggestionListItemModel);
-                    } else {
-                        this.closedSuggestionList.unshift(suggestionListItemModel);
-                    }
+                }
+                if (suggestionListItemModel.status == 'ACTIVE') {
+                    this.activeSuggestionList.unshift(suggestionListItemModel);
+                } else {
+                    this.closedSuggestionList.unshift(suggestionListItemModel);
                 }
             })
         });
