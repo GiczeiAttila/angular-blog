@@ -56,7 +56,7 @@ public class EmailSenderService {
         String subject = "New suggestion";
         String mailBodyEnd =
                 "You can read the suggestions in the link below\n" +
-                "http://localhost:4200/suggestion-box";
+                        "http://localhost:4200/suggestion-box";
         for (User user : userList) {
             String mailBodyStart = suggestion.getUser().getId().equals(user.getId()) ? "Hello! Your suggestion have been registered.\n"
                     : "Hello! New suggestion was created.\n";
@@ -101,5 +101,13 @@ public class EmailSenderService {
         String toAddress = author.getEmail();
         sendMail(toAddress, subject, mailBody);
         logger.info("New comment notification email sent to user with id: " + author.getId());
+    }
+
+    public void sendNewSuggestionStatusChangeNotificationEmail(Suggestion suggestion) {
+        String subject = "Suggestion status changed";
+        String mailBody = "Hello! Your suggestion with id: " + suggestion.getId() + " has been given a new status: " + suggestion.getStatus().getDisplayName();
+        String toAddress = suggestion.getUser().getEmail();
+        sendMail(toAddress, subject, mailBody);
+        logger.info("Suggestion status change notification email sent to user with id: " + suggestion.getUser().getId());
     }
 }

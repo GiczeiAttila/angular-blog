@@ -63,6 +63,10 @@ public class SuggestionService {
         if (optionalSuggestion.isPresent()){
             Suggestion suggestion = optionalSuggestion.get();
             suggestion.setStatus(SuggestionStatusEnum.valueOf(suggestionStatusChangeDto.getStatus()));
+            logger.info("Suggestion with id: " + suggestion.getId() +
+                    " has been changed.The suggestion status is now: " +
+                    suggestion.getStatus()+" New status set by user with id: " + suggestionStatusChangeDto.getCurrentUserId());
+            emailSenderService.sendNewSuggestionStatusChangeNotificationEmail(suggestion);
         }
     }
 }
