@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("emailSenderService")
+@EnableAsync
 public class EmailSenderService {
     private static final Logger logger = LoggerFactory.getLogger(EmailSenderService.class);
     private final JavaMailSender javaMailSender;

@@ -7,6 +7,7 @@ import {handleValidationErrors} from "../../shared/validation.handler";
 import {SuggestionFormModel} from "../../models/suggestionForm.model";
 import {SuggestionListItemModel} from "../../models/suggestionListItem.model";
 import {SuggestionVoteModel} from "../../models/suggestionVote.model";
+import {SuggestionStatusChangeModel} from "../../models/suggestionStatusChange.model";
 
 @Component({
     selector: 'app-suggestion-box',
@@ -17,16 +18,21 @@ export class SuggestionBoxComponent implements OnInit {
     suggestionForm: FormGroup;
     index: number;
     panelOpenState: boolean;
-    mySuggestionList: Array<SuggestionListItemModel> = [];
-    activeSuggestionList: Array<SuggestionListItemModel> = [];
-    closedSuggestionList: Array<SuggestionListItemModel> = [];
+    mySuggestionList: Array<SuggestionListItemModel>;
+    activeSuggestionList: Array<SuggestionListItemModel>;
+    closedSuggestionList: Array<SuggestionListItemModel>;
+    currentUserId: number;
 
     constructor(private userService: UserService, private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
     }
 
     ngOnInit(): void {
+        this.mySuggestionList = [];
+        this.activeSuggestionList = [];
+        this.closedSuggestionList = [];
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+            this.currentUserId = +localStorage.getItem("userId");
         }
         this.suggestionForm = this.formBuilder.group(
             {
@@ -38,6 +44,7 @@ export class SuggestionBoxComponent implements OnInit {
         this.userService.getSuggestions().subscribe((response) => {
             console.log(response);
             response.forEach((suggestionListItemModel) => {
+
                 if (suggestionListItemModel.userId === +localStorage.getItem('userId')) {
                     this.mySuggestionList.unshift(suggestionListItemModel);
                 }
@@ -74,5 +81,28 @@ export class SuggestionBoxComponent implements OnInit {
             votingUserId: +localStorage.getItem('userId')
         }
         this.userService.voting(data).subscribe();
+    }
+
+    reactivateSuggestion(suggestionId: number) {
+        this.changeSuggestionStatus('ACTIVE', suggestionId)
+    }
+
+    rejectSuggestion(suggestionId: number) {
+        this.changeSuggestionStatus('REJECTED', suggestionId)
+    }
+
+    acceptSuggestion(suggestionId: number) {
+        this.changeSuggestionStatus('ACCEPTED', suggestionId)
+    }
+
+    changeSuggestionStatus(status: string, suggestionId: number){
+        let suggestionStatusChangeData: SuggestionStatusChangeModel = {
+            status: status,
+            currentUserId: this.currentUserId,
+            suggestionId: suggestionId
+        };
+        this.userService.changeSuggestionStatus(suggestionStatusChangeData).subscribe(()=>{
+            this.ngOnInit();
+        });
     }
 }
