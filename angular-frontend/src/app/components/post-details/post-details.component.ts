@@ -13,6 +13,8 @@ export class PostDetailsComponent implements OnInit {
 
     id: number;
     postDetails: PostDetailsModel;
+    commentOpenState: boolean;
+    addressOpenState: boolean;
 
     constructor(private blogService: BlogService, private route: ActivatedRoute, private userService: UserService) {
         this.route.paramMap.subscribe(

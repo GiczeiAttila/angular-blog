@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,12 +58,20 @@ public class PostService {
     }
 
     public PostDetails getPostDetailsById(Long id) {
-        PostDetails details = null;
+        Optional<Post> optionalPostDetails = postRepository.findById(id);
+        if (optionalPostDetails.isPresent()) {
+            return new PostDetails(optionalPostDetails.get());
+        }
+        return null;
+
+       /* PostDetails details = null;
         Post post = postRepository.findById(id).orElse(null);
         if (post != null) {
             details = new PostDetails(postRepository.getOne(id));
         }
         return details;
+
+        */
     }
 
     public PostFormInitData createFormInitData() {
