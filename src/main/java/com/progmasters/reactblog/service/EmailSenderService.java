@@ -1,8 +1,8 @@
 package com.progmasters.reactblog.service;
 
+import com.progmasters.reactblog.domain.Comment;
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.UserStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class EmailSenderService {
                         "You can confirm your registration by clicking the link below\n" +
                         " http://localhost:4200/confirmation/" + token + "/" + id;
         String subject = "Confirmation!";
-        sendMail(toAddress,subject,mailBody);
+        sendMail(toAddress, subject, mailBody);
         logger.info("confirmation e-mail sent to user with id: " + id);
     }
 
@@ -42,24 +42,24 @@ public class EmailSenderService {
                 "You Successfully confirmed your registration with \n" +
                         "Id: " + id + "\n";
         String subject = "Successful confirmation!";
-        sendMail(toAddress,subject,mailBody);
+        sendMail(toAddress, subject, mailBody);
         logger.info("Successful confirmation e-mail sent to user with id: " + id);
     }
 
     @Async
-    public void sendNewSuggestionNotificationEmail(Suggestion suggestion,List<User> userList ) {
+    public void sendNewSuggestionNotificationEmail(Suggestion suggestion, List<User> userList) {
         String subject = "New suggestion";
         String mailBody = "" +
                 "Hello! New suggestion was created.\n" +
                 "You can read the suggestions in the link below\n" +
                 "http://localhost:4200/suggestion-box";
-        for (User user: userList) {
-            sendMail(user.getEmail(),subject, mailBody);
+        for (User user : userList) {
+            sendMail(user.getEmail(), subject, mailBody);
         }
         logger.info("New suggestion notification emails sent");
     }
 
-    public void sendMail(String toAddress, String subject, String mailBody){
+    public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toAddress);
         mailMessage.setSubject(subject);
@@ -67,4 +67,15 @@ public class EmailSenderService {
         javaMailSender.send(mailMessage);
     }
 
+    public void sendNewCommentNotification(Comment comment) {
+        String subject = "New comment";
+        String mailBody = "" +
+                "Hello! New comment was added to your post.\n" +
+                "You can read the open your post details page in the link below\n" +
+                "http://localhost:4200/posts/" + comment.getPost().getId();
+        User author = comment.getPost().getAuthor();
+        String toAddress = author.getEmail();
+        sendMail(toAddress, subject, mailBody);
+        logger.info("New comment notification email sent to user with id: " + author.getId());
+    }
 }

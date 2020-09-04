@@ -34,13 +34,15 @@ public class CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
     private UserRepository userRepository;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
     public CommentService(CommentRepository commentRepository,
-                          PostRepository postRepository, UserRepository userRepository) {
+                          PostRepository postRepository, UserRepository userRepository, EmailSenderService emailSenderService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     public Comment createComment(CommentFormData commentFormData) {
@@ -49,6 +51,7 @@ public class CommentService {
         User user = userRepository.findById(commentFormData.getAuthorId()).orElse(null);
         if (postToComment != null && user != null) {
             result = commentRepository.save(new Comment(commentFormData, postToComment, user));
+            emailSenderService.sendNewCommentNotification(result);
         }
         return result;
     }
