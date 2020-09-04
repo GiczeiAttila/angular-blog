@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Comment;
+import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
 import org.slf4j.Logger;
@@ -40,7 +41,9 @@ public class EmailSenderService {
     public void sendConfirmationSuccessfulEmail(String toAddress, Long id) {
         String mailBody =
                 "You Successfully confirmed your registration with \n" +
-                        "Id: " + id + "\n";
+                        "Id: " + id + "\n" +
+                        "You can read the suggestions in the link below\n" +
+                        "http://localhost:4200/login";
         String subject = "Successful confirmation!";
         sendMail(toAddress, subject, mailBody);
         logger.info("Successful confirmation e-mail sent to user with id: " + id);
@@ -56,8 +59,24 @@ public class EmailSenderService {
         for (User user : userList) {
             sendMail(user.getEmail(), subject, mailBody);
         }
-        logger.info("New suggestion notification emails sent");
+        logger.info("New suggestion notification emails sent for suggestion id: " + suggestion.getId());
     }
+
+    @Async
+    public void sendNewPostNotificationEmail(Long postId, List<User> userList) {
+        String subject = "New post";
+        String mailBody = "" +
+                "Hello! New post was created.\n" +
+                "You can read the post details in the link below\n" +
+                "http://localhost:4200/posts/" + postId + "\n" +
+                "Or you can read all the posts in the link below\n" +
+                "http://localhost:4200/posts";
+        for (User user : userList) {
+            sendMail(user.getEmail(), subject, mailBody);
+        }
+        logger.info("New suggestion notification emails sent for post id: " + postId);
+    }
+
 
     public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -67,11 +86,12 @@ public class EmailSenderService {
         javaMailSender.send(mailMessage);
     }
 
+    @Async
     public void sendNewCommentNotification(Comment comment) {
         String subject = "New comment";
         String mailBody = "" +
                 "Hello! New comment was added to your post.\n" +
-                "You can read the open your post details page in the link below\n" +
+                "You can open your post details page in the link below\n" +
                 "http://localhost:4200/posts/" + comment.getPost().getId();
         User author = comment.getPost().getAuthor();
         String toAddress = author.getEmail();

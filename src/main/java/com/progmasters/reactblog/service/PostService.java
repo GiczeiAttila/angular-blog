@@ -11,10 +11,7 @@
 
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.Post;
-import com.progmasters.reactblog.domain.PostCategories;
-import com.progmasters.reactblog.domain.PostTypes;
-import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
 import com.progmasters.reactblog.repository.UserRepository;
@@ -32,17 +29,22 @@ public class PostService {
 
     private PostRepository postRepository;
     private UserRepository userRepository;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, EmailSenderService emailSenderService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     public Post createPost(PostFormData postFormData) {
         User user = this.userRepository.findById(postFormData.getAuthorId()).orElse(null);
         if (user != null) {
-            return postRepository.save(new Post(postFormData, user));
+            Post post = postRepository.save(new Post(postFormData, user));
+            List<User> userList = userRepository.findAllByWithActiveStatus(UserStatusEnum.ACTIVE);
+            emailSenderService.sendNewPostNotificationEmail(post.getId(),userList);
+            return post;
         }
         return null;
     }
