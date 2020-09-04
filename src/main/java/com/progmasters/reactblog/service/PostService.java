@@ -44,7 +44,7 @@ public class PostService {
         if (user != null) {
             Post post = postRepository.save(new Post(postFormData, user));
             List<User> userList = userRepository.findAllByWithActiveStatus(UserStatusEnum.ACTIVE);
-            emailSenderService.sendNewPostNotificationEmail(post.getId(),userList);
+            emailSenderService.sendNewPostNotificationEmail(post,userList);
             return post;
         }
         return null;

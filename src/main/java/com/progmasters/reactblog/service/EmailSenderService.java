@@ -52,29 +52,31 @@ public class EmailSenderService {
     @Async
     public void sendNewSuggestionNotificationEmail(Suggestion suggestion, List<User> userList) {
         String subject = "New suggestion";
-        String mailBody = "" +
-                "Hello! New suggestion was created.\n" +
+        String mailBodyEnd =
                 "You can read the suggestions in the link below\n" +
                 "http://localhost:4200/suggestion-box";
         for (User user : userList) {
+            String mailBodyStart = suggestion.getUser().getId().equals(user.getId()) ? "Hello! Your suggestion have been registered.\n"
+                    : "Hello! New suggestion was created.\n";
+            String mailBody = mailBodyStart + mailBodyEnd;
             sendMail(user.getEmail(), subject, mailBody);
         }
         logger.info("New suggestion notification emails sent for suggestion id: " + suggestion.getId());
     }
 
     @Async
-    public void sendNewPostNotificationEmail(Long postId, List<User> userList) {
+    public void sendNewPostNotificationEmail(Post post, List<User> userList) {
         String subject = "New post";
-        String mailBody = "" +
-                "Hello! New post was created.\n" +
-                "You can read the post details in the link below\n" +
-                "http://localhost:4200/posts/" + postId + "\n" +
+        String mailBodyEnd = "You can read the post details in the link below\n" +
+                "http://localhost:4200/posts/" + post.getId() + "\n" +
                 "Or you can read all the posts in the link below\n" +
                 "http://localhost:4200/posts";
         for (User user : userList) {
+            String mailBodyStart = post.getAuthor().getId().equals(user.getId()) ? "Hello! Your post have been saved.\n" : "Hello! New post was created.\n";
+            String mailBody = mailBodyStart + mailBodyEnd;
             sendMail(user.getEmail(), subject, mailBody);
         }
-        logger.info("New suggestion notification emails sent for post id: " + postId);
+        logger.info("New suggestion notification emails sent for post id: " + post.getId());
     }
 
 
