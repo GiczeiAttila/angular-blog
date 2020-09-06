@@ -12,8 +12,6 @@ import {UserService} from "../../services/user.service";
 export class CommentFormComponent implements OnInit {
 
     @Input() postId: number;
-
-    // @Input()
     authorId: number;
     @Output() commentCreated = new EventEmitter();
     commentForm: FormGroup;

@@ -11,6 +11,7 @@ import {UserRegistrationConfirmationComponent} from "./components/user-registrat
 
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 import {SuggestionBoxComponent} from "./components/suggestion-box/suggestion-box.component";
+import {TimeOffFormComponent} from "./components/time-off-form/time-off-form.component";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
     {path: 'suggestion-box', component: SuggestionBoxComponent},
+    {path: 'timeOffForm', component: TimeOffFormComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent},
 ];

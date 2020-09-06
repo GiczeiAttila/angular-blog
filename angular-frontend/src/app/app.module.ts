@@ -21,7 +21,8 @@ import {SuggestionBoxComponent} from './components/suggestion-box/suggestion-box
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 import {MaterialModule} from "./material-modul";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {TimeOffFormComponent} from './components/time-off-form/time-off-form.component';
+import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
         UserPasswordFormComponent,
         CommentDetailsComponent,
         PageNotFoundComponent,
-        SuggestionBoxComponent
+        SuggestionBoxComponent,
+        TimeOffFormComponent
     ],
     imports: [
         BrowserModule,
@@ -49,7 +51,7 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        BsDatepickerModule.forRoot()
+        NgxDaterangepickerMd.forRoot()
     ],
     entryComponents: [AppComponent],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],

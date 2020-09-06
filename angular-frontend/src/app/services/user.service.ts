@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {UserRegistrationFormModel} from "../models/userRegistrationForm.model";
 import {UserConfirmationModel} from "../models/userConfirmation.model";
@@ -8,6 +8,7 @@ import {UserLoginModel} from "../models/userLogin.model";
 import {SuggestionFormModel} from "../models/suggestionForm.model";
 import {SuggestionListItemModel} from "../models/suggestionListItem.model";
 import {SuggestionVoteModel} from "../models/suggestionVote.model";
+import {TimeOffDateRangeDataModel} from "../models/timeOffDateRangeData.model";
 
 const USER_BASE_URL: string = 'http://localhost:8080/api/users';
 const SUGGESTION_BASE_URL: string = 'http://localhost:8080/api/suggestions';
@@ -51,5 +52,9 @@ export class UserService {
 
     voting(data: SuggestionVoteModel) {
         return this.http.post(SUGGESTION_BASE_URL + '/vote', data);
+    }
+
+    saveTimeOffDateRange(dateData: TimeOffDateRangeDataModel) {
+        return this.http.post(USER_BASE_URL + '/timeoff', dateData);
     }
 }

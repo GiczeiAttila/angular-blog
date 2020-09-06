@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.progmasters.reactblog.domain.dto.TimeOffFormData;
 
 import javax.persistence.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -32,7 +34,8 @@ public class TimeOffDateRange {
     }
 
     public TimeOffDateRange(TimeOffFormData timeOffFormData, User user) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM.dd");
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.startDate = format.parse(timeOffFormData.getStartDate());
             this.endDate = format.parse(timeOffFormData.getEndDate());
@@ -75,4 +78,6 @@ public class TimeOffDateRange {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }
