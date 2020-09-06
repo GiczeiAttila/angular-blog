@@ -1,14 +1,14 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.controller.UserController;
-import com.progmasters.reactblog.domain.Suggestion;
+import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.PasswordDto;
-import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
+import com.progmasters.reactblog.domain.dto.TimeOffFormData;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
+import com.progmasters.reactblog.repository.TimeOffDateRangeRepository;
 import com.progmasters.reactblog.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +25,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final SuggestionRepository suggestionRepository;
     private final EmailSenderService emailSenderService;
+    private final TimeOffDateRangeRepository timeOffDateRangeRepository;
 
-    public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService) {
+    public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService, TimeOffDateRangeRepository timeOffDateRangeRepository) {
         this.userRepository = userRepository;
         this.suggestionRepository = suggestionRepository;
         this.emailSenderService = emailSenderService;
+        this.timeOffDateRangeRepository = timeOffDateRangeRepository;
     }
 
     public User createUser(UserFormDto userFormDto) {
@@ -78,5 +80,13 @@ public class UserService {
 
     public List<User> findAllUsersWithStatus(UserStatusEnum status) {
         return userRepository.findAllByWithActiveStatus(status);
+    }
+
+    public void saveTimeOffDate(TimeOffFormData timeOffFormData) {
+        Optional<User> optionalUser = userRepository.findById(timeOffFormData.getUserId());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            timeOffDateRangeRepository.save(new TimeOffDateRange(timeOffFormData, user));
+        }
     }
 }

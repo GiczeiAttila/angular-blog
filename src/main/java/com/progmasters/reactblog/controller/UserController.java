@@ -1,6 +1,5 @@
 package com.progmasters.reactblog.controller;
 
-import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.EmailSenderService;
@@ -97,6 +96,13 @@ public class UserController {
 //        session.invalidate();
         logger.info("User logged out");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("timeoff")
+    public ResponseEntity saveTimeOff(@RequestBody TimeOffFormData timeOffFormData) {
+        logger.info("Save new time off date range with user id: " + timeOffFormData.getUserId());
+        userService.saveTimeOffDate(timeOffFormData);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 }

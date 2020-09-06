@@ -17,10 +17,12 @@ import {UserRegistrationConfirmationComponent} from './components/user-registrat
 import {UserPasswordFormComponent} from './components/user-password-form/user-password-form.component';
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
-import { SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {SuggestionBoxComponent} from './components/suggestion-box/suggestion-box.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 import {MaterialModule} from "./material-modul";
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -46,7 +48,8 @@ import {MaterialModule} from "./material-modul";
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        BsDatepickerModule.forRoot()
     ],
     entryComponents: [AppComponent],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],

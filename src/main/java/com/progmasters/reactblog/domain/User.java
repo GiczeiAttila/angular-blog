@@ -36,6 +36,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<SuggestionVote> suggestionVoteList;
 
+    @OneToMany(mappedBy = "user")
+    private List<TimeOffDateRange> timeOffDateRangeList;
+
     public User() {
     }
 
@@ -46,12 +49,13 @@ public class User {
         this.email = userFormDto.getEmail();
         this.phoneNumber = userFormDto.getPhoneNumber();
         this.userStatus = UserStatusEnum.REGISTERED;
-        this.token =  UUID.randomUUID().toString();
+        this.token = UUID.randomUUID().toString();
         this.myPosts = new ArrayList<>();
         this.myComments = new ArrayList<>();
         this.numberOfLoginAttempts = 0L;
         this.suggestionList = new ArrayList<>();
         this.suggestionVoteList = new ArrayList<>();
+        this.timeOffDateRangeList = new ArrayList<>();
     }
 
     public Long getId() {
@@ -156,5 +160,13 @@ public class User {
 
     public void setSuggestionVoteList(List<SuggestionVote> suggestionVoteList) {
         this.suggestionVoteList = suggestionVoteList;
+    }
+
+    public List<TimeOffDateRange> getTimeOffDateRangeList() {
+        return timeOffDateRangeList;
+    }
+
+    public void setTimeOffDateRangeList(List<TimeOffDateRange> timeOffDateRangeList) {
+        this.timeOffDateRangeList = timeOffDateRangeList;
     }
 }
