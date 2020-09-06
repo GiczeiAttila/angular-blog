@@ -8,6 +8,7 @@ import {UserLoginModel} from "../models/userLogin.model";
 import {SuggestionFormModel} from "../models/suggestionForm.model";
 import {SuggestionListItemModel} from "../models/suggestionListItem.model";
 import {SuggestionVoteModel} from "../models/suggestionVote.model";
+import {SuggestionStatusChangeModel} from "../models/suggestionStatusChange.model";
 import {TimeOffDateRangeDataModel} from "../models/timeOffDateRangeData.model";
 
 const USER_BASE_URL: string = 'http://localhost:8080/api/users';
@@ -52,6 +53,10 @@ export class UserService {
 
     voting(data: SuggestionVoteModel) {
         return this.http.post(SUGGESTION_BASE_URL + '/vote', data);
+    }
+
+    changeSuggestionStatus(suggestionStatusChangeData: SuggestionStatusChangeModel) {
+        return this.http.put(SUGGESTION_BASE_URL, suggestionStatusChangeData);
     }
 
     saveTimeOffDateRange(dateData: TimeOffDateRangeDataModel) {

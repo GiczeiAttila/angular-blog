@@ -3,6 +3,7 @@ package com.progmasters.reactblog.controller;
 import com.progmasters.reactblog.domain.Suggestion;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
+import com.progmasters.reactblog.domain.dto.SuggestionStatusChangeDto;
 import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.service.SuggestionService;
 import com.progmasters.reactblog.validator.SuggestionValidator;
@@ -55,6 +56,12 @@ public class SuggestionController {
     public ResponseEntity<List<SuggestionListItemDto>> getSuggestions(){
         List<SuggestionListItemDto> suggestionListItemDtoList = suggestionService.getSuggestions();
         return new ResponseEntity<>(suggestionListItemDtoList, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> changeSuggestionStatus(@RequestBody SuggestionStatusChangeDto suggestionStatusChangeDto){
+        suggestionService.changeSuggestionStatus(suggestionStatusChangeDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

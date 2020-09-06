@@ -1,10 +1,12 @@
 package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.Suggestion;
+import com.progmasters.reactblog.domain.SuggestionStatusEnum;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
+import com.progmasters.reactblog.domain.dto.SuggestionStatusChangeDto;
 import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,5 +55,18 @@ public class SuggestionService {
                 .stream()
                 .map(suggestion -> new SuggestionListItemDto(suggestion)).collect(Collectors.toList());
         return suggestionListItemDtoList;
+    }
+
+    public void changeSuggestionStatus(SuggestionStatusChangeDto suggestionStatusChangeDto) {
+        Long suggestionId = suggestionStatusChangeDto.getSuggestionId();
+        Optional<Suggestion> optionalSuggestion = suggestionRepository.findById(suggestionId);
+        if (optionalSuggestion.isPresent()){
+            Suggestion suggestion = optionalSuggestion.get();
+            suggestion.setStatus(SuggestionStatusEnum.valueOf(suggestionStatusChangeDto.getStatus()));
+            logger.info("Suggestion with id: " + suggestion.getId() +
+                    " has been changed.The suggestion status is now: " +
+                    suggestion.getStatus()+" New status set by user with id: " + suggestionStatusChangeDto.getCurrentUserId());
+            emailSenderService.sendNewSuggestionStatusChangeNotificationEmail(suggestion);
+        }
     }
 }
