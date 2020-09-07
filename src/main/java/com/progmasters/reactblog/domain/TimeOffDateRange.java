@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -34,7 +33,6 @@ public class TimeOffDateRange {
     }
 
     public TimeOffDateRange(TimeOffFormData timeOffFormData, User user) {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/uuuu");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.startDate = format.parse(timeOffFormData.getStartDate());
