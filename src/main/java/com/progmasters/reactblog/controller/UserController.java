@@ -96,8 +96,8 @@ public class UserController {
 
     @PostMapping("timeoff")
     public ResponseEntity saveTimeOff(@RequestBody TimeOffFormData timeOffFormData) {
-        logger.info("Save new time off date range with user id: " + timeOffFormData.getUserId());
         userService.saveTimeOffDate(timeOffFormData);
+        logger.info("Save new time off date range with user id: " + timeOffFormData.getUserId());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

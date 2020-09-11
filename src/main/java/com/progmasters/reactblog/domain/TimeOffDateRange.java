@@ -7,8 +7,9 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "timeOffDateRange")
@@ -30,12 +31,15 @@ public class TimeOffDateRange {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "weekDays")
+    private Integer weekDays;
+
     public TimeOffDateRange() {
     }
 
     public TimeOffDateRange(TimeOffFormData timeOffFormData, User user) {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/uuuu");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
             this.startDate = format.parse(timeOffFormData.getStartDate());
             this.endDate = format.parse(timeOffFormData.getEndDate());
@@ -43,7 +47,28 @@ public class TimeOffDateRange {
             e.printStackTrace();
         }
 
+        this.weekDays = calculateWeekDays(startDate, endDate);
         this.user = user;
+
+    }
+
+    //doesnt work yet
+    private Integer calculateWeekDays(Date startDate, Date endDate) {
+        Integer weekDays = 0;
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.setTime(startDate);
+        end.setTime(endDate);
+        end.add(Calendar.DATE, 1);
+
+        while (start.before(end)) {
+            if (Calendar.SATURDAY != start.get(Calendar.DAY_OF_WEEK)
+                    || Calendar.SUNDAY != start.get(Calendar.DAY_OF_WEEK)) {
+                weekDays++;
+            }
+            start.add(Calendar.DATE, 1);
+        }
+        return weekDays;
     }
 
 
@@ -77,6 +102,14 @@ public class TimeOffDateRange {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getWeekDays() {
+        return weekDays;
+    }
+
+    public void setWeekDays(Integer weekDays) {
+        this.weekDays = weekDays;
     }
 
 

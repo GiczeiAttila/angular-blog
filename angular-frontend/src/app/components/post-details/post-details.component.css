@@ -1,14 +1,3 @@
-.post-details {
-    text-align: justify;
-}
-
-.post-image {
-    max-width: 30%;
-    height: auto;
-    float: left;
-    margin: 10px;
-}
-
 .clearfix {
     clear: both;
 }
