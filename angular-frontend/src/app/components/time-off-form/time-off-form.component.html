@@ -1,12 +1,15 @@
-<div>
+<div class="jumbotron">
+    <label>Choose dates</label>
     <input [(ngModel)]="selected"
            class="form-control"
            endKey="endDate"
            matInput
            ngxDaterangepickerMd
            startKey="startDate"
-           type="text"/>
+           type="text"
+           width="50px"/>
     <button (click)="saveDate()" class="btn btn-info" type=button>Save Date</button>
-
+    <br/>
 </div>
+<app-full-calendar></app-full-calendar>
 
