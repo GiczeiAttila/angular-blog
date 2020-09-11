@@ -36,8 +36,8 @@ export class SuggestionBoxComponent implements OnInit {
         }
         this.suggestionForm = this.formBuilder.group(
             {
-                title: ['', Validators.required],
-                description: ['', Validators.required]
+                title: [''],
+                description: ['']
             }
         );
         this.index = 0;
@@ -68,6 +68,7 @@ export class SuggestionBoxComponent implements OnInit {
                     handleValidationErrors(error, this.suggestionForm);
                 },
                 () => {
+                    this.suggestionForm.reset();
                     this.ngOnInit();
                 },
             );
@@ -80,7 +81,11 @@ export class SuggestionBoxComponent implements OnInit {
             vote: vote,
             votingUserId: +localStorage.getItem('userId')
         }
-        this.userService.voting(data).subscribe();
+        this.userService.voting(data).subscribe(
+            ()=>{},
+            ()=>{},
+            ()=>{this.ngOnInit()}
+        );
     }
 
     reactivateSuggestion(suggestionId: number) {

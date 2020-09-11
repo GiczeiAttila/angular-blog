@@ -14,11 +14,12 @@
                     </mat-expansion-panel-header>
                     <p>{{suggestion.description}}</p>
                     <mat-action-row>
-                        <button mat-raised-button color="success"
+                        <button *ngIf="suggestion.userId !== currentUserId" mat-raised-button color="success"
                                 (click)="voting('UP', suggestion.userId, suggestion.id)">
                             Vote +
                         </button>
-                        <button mat-raised-button color="warn" (click)="voting('DOWN',suggestion.userId,suggestion.id)">
+                        <button *ngIf="suggestion.userId !== currentUserId" mat-raised-button color="warn"
+                                (click)="voting('DOWN',suggestion.userId,suggestion.id)">
                             Vote -
                         </button>
                         <button mat-raised-button color="success" (click)="acceptSuggestion(suggestion.id)">
@@ -41,7 +42,7 @@
                         <mat-panel-title>
                             {{suggestion.title}}
                         </mat-panel-title>
-                        +{{suggestion.countUp}}/-{{suggestion.countDown}}
+                        {{suggestion.status}}
                     </mat-expansion-panel-header>
                     <p>{{suggestion.description}}</p>
                     <mat-action-row>
@@ -60,7 +61,7 @@
                                      hideToggle>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{mySuggestion.title}}
+                            {{mySuggestion.title}}  /  {{mySuggestion.status}}
                         </mat-panel-title>
                         + {{mySuggestion.countUp}}/- {{mySuggestion.countDown}}
                     </mat-expansion-panel-header>

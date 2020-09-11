@@ -2,7 +2,6 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.*;
-import com.progmasters.reactblog.service.EmailSenderService;
 import com.progmasters.reactblog.service.UserService;
 import com.progmasters.reactblog.validator.LoginValidator;
 import com.progmasters.reactblog.validator.PasswordValidator;
@@ -27,16 +26,14 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final UserFormDtoValidator userFormDtoValidator;
-    private final EmailSenderService emailSenderService;
     private final RegistrationConfirmationValidator registrationConfirmationValidator;
     private final PasswordValidator passwordValidator;
     private final LoginValidator loginValidator;
 
     @Autowired
-    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, EmailSenderService emailSenderService, RegistrationConfirmationValidator registrationConfirmationValidator, LoginValidator loginValidator) {
+    public UserController(UserService userService, PasswordValidator passwordValidator, UserFormDtoValidator userFormDtoValidator, RegistrationConfirmationValidator registrationConfirmationValidator, LoginValidator loginValidator) {
         this.userService = userService;
         this.userFormDtoValidator = userFormDtoValidator;
-        this.emailSenderService = emailSenderService;
         this.registrationConfirmationValidator = registrationConfirmationValidator;
         this.passwordValidator = passwordValidator;
         this.loginValidator = loginValidator;
@@ -70,7 +67,6 @@ public class UserController {
     }
 
     @PostMapping("confirmation")
-    @Async
     public ResponseEntity<Void> confirmUserAccount(@Valid @RequestBody UserConfirmationDto userConfirmationDto) {
         logger.info("User confirmation requested with id: " + userConfirmationDto.getId() + "and with token: " + userConfirmationDto.getToken());
         User user = userService.confirmRegistration(userConfirmationDto);
