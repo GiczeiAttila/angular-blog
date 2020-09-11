@@ -22,7 +22,7 @@ public class SuggestionListItemDto {
         this.title = suggestion.getTitle();
         this.description = suggestion.getDescription();
         this.countUp = suggestion.getVoteList().stream().filter((suggestionVote -> suggestionVote.getVote()== VoteType.UP)).count();
-        this.countDown = suggestion.getVoteList().stream().filter((suggestionVote -> suggestionVote.getVote()== VoteType.Down)).count();
+        this.countDown = suggestion.getVoteList().stream().filter((suggestionVote -> suggestionVote.getVote()== VoteType.DOWN)).count();
         this.status = suggestion.getStatus();
     }
 

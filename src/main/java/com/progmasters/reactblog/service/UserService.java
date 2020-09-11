@@ -76,6 +76,7 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+        logger.info("New user saved with id: " + user.getId());
     }
 
     public List<User> findAllUsersWithStatus(UserStatusEnum status) {

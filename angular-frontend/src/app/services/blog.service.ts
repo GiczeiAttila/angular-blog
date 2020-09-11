@@ -1,19 +1,20 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {CommentFormDataModel} from "../models/commentFormData.model";
-import {PostDetailsModel} from "../models/postDetails.model";
-import {PostFormDataModel} from "../models/postFormData.model";
-import {PostListItemModel} from "../models/postListItem.model";
-import {PostFormInitDataModel} from "../models/postFormInitData.model";
-import {CommentDetailsModel} from "../models/commentDetails.model";
+import {CommentFormDataModel} from '../models/commentFormData.model';
+import {PostDetailsModel} from '../models/postDetails.model';
+import {PostFormDataModel} from '../models/postFormData.model';
+import {PostListItemModel} from '../models/postListItem.model';
+import {PostFormInitDataModel} from '../models/postFormInitData.model';
+import {CommentDetailsModel} from '../models/commentDetails.model';
+import {environment} from '../../environments/environment';
 
-const POSTS_BASE_URL = 'http://localhost:8080/api/posts';
-const COMMENTS_BASE_URL = 'http://localhost:8080/api/comments';
+const POSTS_BASE_URL = environment.BASE_URL + '/api/posts';
+const COMMENTS_BASE_URL = environment.BASE_URL + '/api/comments';
 
 @Injectable({
-    providedIn: 'root'
-})
+                providedIn: 'root',
+            })
 export class BlogService {
 
     refresh = new Subject();
@@ -26,7 +27,7 @@ export class BlogService {
     }
 
     fetchPosts(): Observable<Array<PostListItemModel>> {
-        return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL)
+        return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL);
     }
 
     createPost(postData: PostFormDataModel): Observable<any> {
@@ -34,7 +35,7 @@ export class BlogService {
     }
 
     fetchPostDetails(id: number): Observable<PostDetailsModel> {
-        return this.http.get<PostDetailsModel>(`${POSTS_BASE_URL}/${id}`)
+        return this.http.get<PostDetailsModel>(`${POSTS_BASE_URL}/${id}`);
     }
 
     createComment(commentData: CommentFormDataModel): Observable<any> {
@@ -49,6 +50,5 @@ export class BlogService {
     fetchAllPost(): Observable<Array<PostListItemModel>> {
         return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL);
     }
-
 
 }

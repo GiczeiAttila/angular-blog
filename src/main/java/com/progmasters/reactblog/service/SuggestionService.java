@@ -1,14 +1,12 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.Suggestion;
-import com.progmasters.reactblog.domain.SuggestionStatusEnum;
-import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.UserStatusEnum;
+import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
 import com.progmasters.reactblog.domain.dto.SuggestionStatusChangeDto;
 import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
+import com.progmasters.reactblog.repository.SuggestionVoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,14 @@ public class SuggestionService {
     private final UserService userService;
     private final SuggestionRepository suggestionRepository;
     private final EmailSenderService emailSenderService;
+    private final SuggestionVoteRepository suggestionVoteRepository;
 
     @Autowired
-    public SuggestionService(UserService userService, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService) {
+    public SuggestionService(UserService userService, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService, SuggestionVoteRepository suggestionVoteRepository) {
         this.userService = userService;
         this.suggestionRepository = suggestionRepository;
         this.emailSenderService = emailSenderService;
+        this.suggestionVoteRepository = suggestionVoteRepository;
     }
 
     public Suggestion saveSuggestion(SuggestionFormDto suggestionFormDto) {
@@ -47,13 +47,31 @@ public class SuggestionService {
     }
 
     public Suggestion saveVote(SuggestionVoteDto suggestionVoteDto) {
+        Optional<Suggestion> suggestionOptional = suggestionRepository.findById(suggestionVoteDto.getSuggestionId());
+        if (suggestionOptional.isPresent()){
+            Suggestion suggestion = suggestionOptional.get();
+            Optional<SuggestionVote> optionalSuggestionVote = suggestionVoteRepository.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(), suggestionVoteDto.getSuggestionId());
+            if (optionalSuggestionVote.isPresent()){
+                SuggestionVote suggestionVote = optionalSuggestionVote.get();
+                suggestionVote.setVote(VoteType.valueOf(suggestionVoteDto.getVote()));
+            }else{
+                User user = userService.findById(suggestionVoteDto.getVotingUserId());
+                SuggestionVote suggestionVote = new SuggestionVote(suggestionVoteDto,suggestion,user);
+                suggestionVoteRepository.save(suggestionVote);
+            }
+            logger.info("Suggestion with id: " + suggestion.getId() +
+                    " has received a vote");
+            return suggestion;
+        }
         return null;
     }
+
 
     public List<SuggestionListItemDto> getSuggestions() {
         List<SuggestionListItemDto> suggestionListItemDtoList = suggestionRepository.findAll()
                 .stream()
                 .map(suggestion -> new SuggestionListItemDto(suggestion)).collect(Collectors.toList());
+        logger.info("Suggestion list requested");
         return suggestionListItemDtoList;
     }
 
@@ -65,8 +83,18 @@ public class SuggestionService {
             suggestion.setStatus(SuggestionStatusEnum.valueOf(suggestionStatusChangeDto.getStatus()));
             logger.info("Suggestion with id: " + suggestion.getId() +
                     " has been changed.The suggestion status is now: " +
-                    suggestion.getStatus()+" New status set by user with id: " + suggestionStatusChangeDto.getCurrentUserId());
+                    suggestion.getStatus()+" New status set by user with id: " +
+                    suggestionStatusChangeDto.getCurrentUserId());
             emailSenderService.sendNewSuggestionStatusChangeNotificationEmail(suggestion);
         }
+    }
+
+    public Suggestion findById(Long suggestionId) {
+       Optional<Suggestion> suggestionOptional = suggestionRepository.findById(suggestionId);
+       if (suggestionOptional.isPresent()){
+           return suggestionOptional.get();
+       }else{
+           return null;
+       }
     }
 }

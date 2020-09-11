@@ -82,14 +82,6 @@ public class EmailSenderService {
     }
 
 
-    public void sendMail(String toAddress, String subject, String mailBody) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(toAddress);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(mailBody);
-        javaMailSender.send(mailMessage);
-    }
-
     @Async
     public void sendNewCommentNotification(Comment comment) {
         String subject = "New comment";
@@ -109,5 +101,13 @@ public class EmailSenderService {
         String toAddress = suggestion.getUser().getEmail();
         sendMail(toAddress, subject, mailBody);
         logger.info("Suggestion status change notification email sent to user with id: " + suggestion.getUser().getId());
+    }
+
+    public void sendMail(String toAddress, String subject, String mailBody) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(toAddress);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(mailBody);
+        javaMailSender.send(mailMessage);
     }
 }
