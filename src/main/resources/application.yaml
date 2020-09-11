@@ -42,3 +42,4 @@ logging:
     console: "%cyan(%d{yyyy-MM-dd HH:mm:ss}) [%green(%thread)] %highlight(%-5level) %yellow(%logger{36}) - %msg%n"
 
 cors-policies: http://localhost:4200, http://127.0.0.1:4200
+url-for-mail: http://localhost:4200

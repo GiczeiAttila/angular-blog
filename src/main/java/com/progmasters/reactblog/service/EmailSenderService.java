@@ -7,6 +7,7 @@ import com.progmasters.reactblog.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -21,6 +22,9 @@ public class EmailSenderService {
     private static final Logger logger = LoggerFactory.getLogger(EmailSenderService.class);
     private final JavaMailSender javaMailSender;
 
+    @Value("${url-for-mail}")
+    private String urlForMail;
+
     @Autowired
     public EmailSenderService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -33,7 +37,8 @@ public class EmailSenderService {
                         "Id: " + id + "\n" +
                         "Token: " + token + "\n" +
                         "You can confirm your registration by clicking the link below\n" +
-                        " http://localhost:4200/confirmation/" + token + "/" + id;
+                        urlForMail +
+                        "/confirmation/" + token + "/" + id;
         String subject = "Confirmation!";
         sendMail(toAddress, subject, mailBody);
         logger.info("confirmation e-mail sent to user with id: " + id);
@@ -45,7 +50,8 @@ public class EmailSenderService {
                 "You Successfully confirmed your registration with \n" +
                         "Id: " + id + "\n" +
                         "You can read the suggestions in the link below\n" +
-                        "http://localhost:4200/login";
+                        urlForMail +
+                        "/login";
         String subject = "Successful confirmation!";
         sendMail(toAddress, subject, mailBody);
         logger.info("Successful confirmation e-mail sent to user with id: " + id);
@@ -56,7 +62,8 @@ public class EmailSenderService {
         String subject = "New suggestion";
         String mailBodyEnd =
                 "You can read the suggestions in the link below\n" +
-                        "http://localhost:4200/suggestion-box";
+                        urlForMail +
+                        "/suggestion-box";
         for (User user : userList) {
             String mailBodyStart = suggestion.getUser().getId().equals(user.getId()) ? "Hello! Your suggestion have been registered.\n"
                     : "Hello! New suggestion was created.\n";
@@ -70,9 +77,11 @@ public class EmailSenderService {
     public void sendNewPostNotificationEmail(Post post, List<User> userList) {
         String subject = "New post";
         String mailBodyEnd = "You can read the post details in the link below\n" +
-                "http://localhost:4200/posts/" + post.getId() + "\n" +
+                urlForMail +
+                "/posts/" + post.getId() + "\n" +
                 "Or you can read all the posts in the link below\n" +
-                "http://localhost:4200/posts";
+                urlForMail +
+                "/posts";
         for (User user : userList) {
             String mailBodyStart = post.getAuthor().getId().equals(user.getId()) ? "Hello! Your post have been saved.\n" : "Hello! New post was created.\n";
             String mailBody = mailBodyStart + mailBodyEnd;
@@ -88,7 +97,8 @@ public class EmailSenderService {
         String mailBody = "" +
                 "Hello! New comment was added to your post.\n" +
                 "You can open your post details page in the link below\n" +
-                "http://localhost:4200/posts/" + comment.getPost().getId();
+                urlForMail +
+                "/posts/" + comment.getPost().getId();
         User author = comment.getPost().getAuthor();
         String toAddress = author.getEmail();
         sendMail(toAddress, subject, mailBody);
