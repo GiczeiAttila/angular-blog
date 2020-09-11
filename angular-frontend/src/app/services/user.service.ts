@@ -1,26 +1,27 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {UserRegistrationFormModel} from "../models/userRegistrationForm.model";
-import {UserConfirmationModel} from "../models/userConfirmation.model";
-import {PasswordModel} from "../models/password.model";
-import {UserLoginModel} from "../models/userLogin.model";
-import {SuggestionFormModel} from "../models/suggestionForm.model";
-import {SuggestionListItemModel} from "../models/suggestionListItem.model";
-import {SuggestionVoteModel} from "../models/suggestionVote.model";
-import {SuggestionStatusChangeModel} from "../models/suggestionStatusChange.model";
-import {TimeOffDateRangeDataModel} from "../models/timeOffDateRangeData.model";
+import {UserRegistrationFormModel} from '../models/userRegistrationForm.model';
+import {UserConfirmationModel} from '../models/userConfirmation.model';
+import {PasswordModel} from '../models/password.model';
+import {UserLoginModel} from '../models/userLogin.model';
+import {SuggestionFormModel} from '../models/suggestionForm.model';
+import {SuggestionListItemModel} from '../models/suggestionListItem.model';
+import {SuggestionVoteModel} from '../models/suggestionVote.model';
+import {SuggestionStatusChangeModel} from '../models/suggestionStatusChange.model';
+import {TimeOffDateRangeDataModel} from '../models/timeOffDateRangeData.model';
+import {environment} from '../../environments/environment';
 
-const USER_BASE_URL: string = 'http://localhost:8080/api/users';
-const SUGGESTION_BASE_URL: string = 'http://localhost:8080/api/suggestions';
+const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
+const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
 
     loginSubject: Subject<any> = new Subject<any>();
 
-    constructor(private http: HttpClient) {}
-
+    constructor(private http: HttpClient) {
+    }
 
     saveUser(userData: UserRegistrationFormModel) {
         return this.http.post(USER_BASE_URL + '/create', userData);
