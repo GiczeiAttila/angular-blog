@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {Moment} from "moment";
+import {UserTimeOffListModel} from "../../models/UserTimeOffList.model";
+import {handleValidationErrors} from "../../shared/validation.handler";
 
 @Component({
     selector: 'app-time-off-form',
@@ -13,6 +15,11 @@ export class TimeOffFormComponent implements OnInit {
     userId: number;
     timeOffForm: FormGroup;
     selected: { startDate: Moment, endDate: Moment };
+    acceptedTimeOffList: Array<UserTimeOffListModel>;
+    rejectedTimeOffList: Array<UserTimeOffListModel>;
+    pendingTimeOffList: Array<UserTimeOffListModel>;
+    index: number;
+    displayedColumns: any[] = ['startDate', 'endDate'];
 
 
     constructor(private formBuilder: FormBuilder,
@@ -25,8 +32,12 @@ export class TimeOffFormComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.userId = +localStorage.getItem('userId');
+        this.index = 0;
+        this.acceptedTimeOffList = [];
+        this.rejectedTimeOffList = [];
+        this.pendingTimeOffList = [];
+        this.loadTimeOffList();
     }
 
     saveDate() {
@@ -41,6 +52,23 @@ export class TimeOffFormComponent implements OnInit {
         this.userService.saveTimeOffDateRange(form).subscribe(
             () => {
                 console.log(form)
+            },
+            error => handleValidationErrors(error, this.timeOffForm)
+        )
+    }
+
+    loadTimeOffList() {
+        this.userService.getUserTimeOffList(this.userId).subscribe(
+            (data) => {
+                data.forEach((timeOffListModel) => {
+                    if (timeOffListModel.status == 'ACCEPTED') {
+                        this.acceptedTimeOffList.unshift(timeOffListModel);
+                    } else if (timeOffListModel.status == 'PENDING') {
+                        this.pendingTimeOffList.unshift(timeOffListModel);
+                    } else {
+                        this.rejectedTimeOffList.unshift(timeOffListModel);
+                    }
+                })
             },
             error => console.log(error)
         )

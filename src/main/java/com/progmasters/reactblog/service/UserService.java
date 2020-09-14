@@ -1,10 +1,8 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.PasswordDto;
-import com.progmasters.reactblog.domain.dto.TimeOffFormData;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
@@ -83,11 +81,4 @@ public class UserService {
         return userRepository.findAllByWithActiveStatus(status);
     }
 
-    public void saveTimeOffDate(TimeOffFormData timeOffFormData) {
-        Optional<User> optionalUser = userRepository.findById(timeOffFormData.getUserId());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            timeOffDateRangeRepository.save(new TimeOffDateRange(timeOffFormData, user));
-        }
-    }
 }
