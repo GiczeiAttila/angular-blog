@@ -3,10 +3,15 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Entity
 public class OpenPosition {
@@ -15,7 +20,7 @@ public class OpenPosition {
     private Long id;
     private String positionName;
     private String description;
-    private LocalDate deadline;
+    private Date deadline;
 
     @OneToMany(mappedBy = "openPosition")
     private List<ApplicantForOpenPosition> applicants;
@@ -30,7 +35,13 @@ public class OpenPosition {
         this.positionName = openPositionFormDto.getPositionName();
         this.description = openPositionFormDto.getDescription();
         System.out.println(openPositionFormDto.getDeadline());
-        this.deadline = LocalDate.parse(openPositionFormDto.getDeadline());
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            this.deadline = format.parse(openPositionFormDto.getDeadline());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         System.out.println(this.deadline);
         this.applicants = new ArrayList<>();
         this.user = user;
@@ -60,11 +71,11 @@ public class OpenPosition {
         this.description = description;
     }
 
-    public LocalDate getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
