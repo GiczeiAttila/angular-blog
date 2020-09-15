@@ -19,6 +19,7 @@ public class OpenPosition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String positionName;
+    @Lob
     private String description;
     private Date deadline;
 

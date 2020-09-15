@@ -16,6 +16,7 @@ export class OpenPositionsComponent implements OnInit {
     index: number;
     currentUserId: number;
     minDate;
+    activeOpenPositionList: any;
     constructor(private userService: UserService, private formBuilder: FormBuilder) {
     }
 
@@ -54,5 +55,9 @@ export class OpenPositionsComponent implements OnInit {
                     this.ngOnInit();
                 },
             );
+    }
+
+    apply(id: string) {
+
     }
 }
