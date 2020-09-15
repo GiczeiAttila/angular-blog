@@ -1,9 +1,6 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.Comment;
-import com.progmasters.reactblog.domain.Post;
-import com.progmasters.reactblog.domain.Suggestion;
-import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +102,7 @@ public class EmailSenderService {
         logger.info("New comment notification email sent to user with id: " + author.getId());
     }
 
+    @Async
     public void sendNewSuggestionStatusChangeNotificationEmail(Suggestion suggestion) {
         String subject = "Suggestion status changed";
         String mailBody = "Hello! Your suggestion with id: " + suggestion.getId() + " has been given a new status: " + suggestion.getStatus().getDisplayName();
@@ -113,11 +111,28 @@ public class EmailSenderService {
         logger.info("Suggestion status change notification email sent to user with id: " + suggestion.getUser().getId());
     }
 
+    @Async
     public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toAddress);
         mailMessage.setSubject(subject);
         mailMessage.setText(mailBody);
         javaMailSender.send(mailMessage);
+    }
+
+    @Async
+    public void sendNewOpenPositionNotificationEmail(OpenPosition openPosition, List<User> userList) {
+        String subject = "New open position";
+        String mailBodyEnd =
+                "You can read about the open positions in the link below\n" +
+                        urlForMail +
+                        "/open-position";
+        for (User user : userList) {
+            String mailBodyStart = openPosition.getUser().getId().equals(user.getId()) ? "Hello! Your new open position have been registered.\n"
+                    : "Hello! New open position was created.\n";
+            String mailBody = mailBodyStart + mailBodyEnd;
+            sendMail(user.getEmail(), subject, mailBody);
+        }
+        logger.info("New open position notification emails sent for open position id: " + openPosition.getId());
     }
 }

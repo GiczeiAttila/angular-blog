@@ -36,6 +36,9 @@
                     box</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" *ngIf="isLoggedIn" id="open-position" routerLink="/open-position">Open positions</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" *ngIf="isLoggedIn" id="login" routerLink="/login" (click)="logout()">Logout</a>
             </li>
             <li class="nav-item">

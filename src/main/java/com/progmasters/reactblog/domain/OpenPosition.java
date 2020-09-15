@@ -4,6 +4,7 @@ import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +26,14 @@ public class OpenPosition {
     public OpenPosition() {
     }
 
-    public OpenPosition(OpenPositionFormDto openPositionFormDto) {
+    public OpenPosition(OpenPositionFormDto openPositionFormDto, User user) {
         this.positionName = openPositionFormDto.getPositionName();
         this.description = openPositionFormDto.getDescription();
+        System.out.println(openPositionFormDto.getDeadline());
         this.deadline = LocalDate.parse(openPositionFormDto.getDeadline());
+        System.out.println(this.deadline);
         this.applicants = new ArrayList<>();
-        //this.recommendedPeoplesCVList = new ArrayList<>();
+        this.user = user;
     }
 
     public Long getId() {

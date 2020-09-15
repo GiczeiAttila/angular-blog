@@ -1,11 +1,9 @@
 package com.progmasters.reactblog.domain.dto;
 
-import java.time.LocalDate;
-
 public class OpenPositionFormDto {
     private String positionName;
     private String description;
-    private String  deadline;
+    private String deadline;
     private Long userId;
 
     public String getPositionName() {
@@ -24,7 +22,7 @@ public class OpenPositionFormDto {
         this.description = description;
     }
 
-    public String  getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 

@@ -1,0 +1,14 @@
+.mat-tab-group {
+    padding-top: 20px;
+    margin-bottom: 24px;
+}
+.open-position-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.open-position-full-width {
+    margin-top: 20px;
+    width: 100%;
+}
