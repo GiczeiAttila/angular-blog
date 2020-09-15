@@ -4,6 +4,8 @@ import {UserService} from "../../services/user.service";
 import {Moment} from "moment";
 import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
 import {handleValidationErrors} from "../../shared/validation.handler";
+import {BsDaterangepickerConfig} from "ngx-bootstrap/datepicker";
+
 
 @Component({
     selector: 'app-time-off-form',
@@ -11,6 +13,10 @@ import {handleValidationErrors} from "../../shared/validation.handler";
     styleUrls: ['./time-off-form.component.css']
 })
 export class TimeOffFormComponent implements OnInit {
+
+    today: Date = new Date();
+    bsConfig: Partial<BsDaterangepickerConfig>;
+
 
     userId: number;
     timeOffForm: FormGroup;
@@ -23,6 +29,14 @@ export class TimeOffFormComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService) {
+
+        /* this.bsConfig = Object.assign({},
+             {
+                 minDate: this.today
+             })
+
+         */
+
         this.timeOffForm = this.formBuilder.group({
             userId: [],
             startDate: ['', [Validators.required, this.isDateAfterToday.bind(this)]],

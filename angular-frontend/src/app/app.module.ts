@@ -29,6 +29,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import {FullCalendarComponent} from './components/full-calendar/full-calendar.component';
 import {MatTableModule} from "@angular/material/table";
 import {TimeOffListComponent} from './components/time-off-list/time-off-list.component';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -66,7 +67,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MaterialModule,
         NgxDaterangepickerMd.forRoot(),
         FullCalendarModule,
-        MatTableModule
+        MatTableModule,
+        BsDatepickerModule,
     ],
     entryComponents: [AppComponent],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
