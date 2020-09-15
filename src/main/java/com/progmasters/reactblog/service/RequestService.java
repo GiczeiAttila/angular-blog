@@ -1,8 +1,11 @@
 package com.progmasters.reactblog.service;
 
 import com.progmasters.reactblog.domain.TimeOffDateRange;
+import com.progmasters.reactblog.domain.TimeOffStatusEnum;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.TimeOffFormData;
+import com.progmasters.reactblog.domain.dto.TimeOffListItem;
+import com.progmasters.reactblog.domain.dto.TimeOffStatusChangeDto;
 import com.progmasters.reactblog.domain.dto.UserTimeOffList;
 import com.progmasters.reactblog.repository.TimeOffDateRangeRepository;
 import com.progmasters.reactblog.repository.UserRepository;
@@ -51,5 +54,23 @@ public class RequestService {
                 .map(timeOff -> new UserTimeOffList(timeOff))
                 .collect(Collectors.toList());
         return list;
+    }
+
+
+    public List<TimeOffListItem> getAllTimeOffList() {
+        List<TimeOffListItem> listOfAll = this.timeOffDateRangeRepository.findAll()
+                .stream()
+                .map(timeOff -> new TimeOffListItem(timeOff))
+                .collect(Collectors.toList());
+        return listOfAll;
+    }
+
+    public void changeTimeOffStatus(TimeOffStatusChangeDto timeOffStatusChangeDto) {
+        Long timeOffId = timeOffStatusChangeDto.getDateId();
+        Optional<TimeOffDateRange> optionalTimeOffDateRange = this.timeOffDateRangeRepository.findById(timeOffId);
+        if (optionalTimeOffDateRange.isPresent()) {
+            TimeOffDateRange timeOff = optionalTimeOffDateRange.get();
+            timeOff.setStatus(TimeOffStatusEnum.valueOf(timeOffStatusChangeDto.getStatus()));
+        }
     }
 }

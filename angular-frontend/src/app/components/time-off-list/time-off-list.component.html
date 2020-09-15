@@ -1,0 +1,87 @@
+<div class="mat-app-background basic-container">
+    <mat-tab-group [(selectedIndex)]="index" animationDuration="200ms" dynamicHeight>
+        <mat-tab label="Pending">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">User id</th>
+                        <th scope="col">User name</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let pendingItem of pendingTimeOffList">
+                    <tr>
+                        <td>{{pendingItem.userId}}</td>
+                        <td>{{pendingItem.userName}}</td>
+                        <td>{{pendingItem.startDate}}</td>
+                        <td>{{pendingItem.endDate}}</td>
+                        <td>{{pendingItem.status}}</td>
+                        <button (click)="acceptRequest(pendingItem.dateId)" color="success" mat-raised-button>
+                            Accept
+                        </button>
+                        <button (click)="rejectRequest(pendingItem.dateId)" color="warn" mat-raised-button>
+                            Reject
+                        </button>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="Accepted">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">User id</th>
+                        <th scope="col">User name</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let acceptedDate of acceptedTimeOffList">
+                    <tr>
+                        <td>{{acceptedDate.userId}}</td>
+                        <td>{{acceptedDate.userName}}</td>
+                        <td>{{acceptedDate.startDate}}</td>
+                        <td>{{acceptedDate.endDate}}</td>
+                        <td>{{acceptedDate.status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="Rejected">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">User id</th>
+                        <th scope="col">User name</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let rejectedDate of rejectedTimeOffList">
+                    <tr>
+                        <td>{{rejectedDate.userId}}</td>
+                        <td>{{rejectedDate.userName}}</td>
+                        <td>{{rejectedDate.startDate}}</td>
+                        <td>{{rejectedDate.endDate}}</td>
+                        <td>{{rejectedDate.status}}</td>
+                        <td>
+                            <button (click)="changeToPending(rejectedDate.dateId)" color="warn" mat-raised-button>
+                                Set back to pending
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+    </mat-tab-group>
+</div>

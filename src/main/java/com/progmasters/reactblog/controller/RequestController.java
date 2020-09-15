@@ -2,6 +2,8 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.TimeOffFormData;
+import com.progmasters.reactblog.domain.dto.TimeOffListItem;
+import com.progmasters.reactblog.domain.dto.TimeOffStatusChangeDto;
 import com.progmasters.reactblog.domain.dto.UserTimeOffList;
 import com.progmasters.reactblog.service.RequestService;
 import com.progmasters.reactblog.validator.TimeOffValidator;
@@ -48,11 +50,27 @@ public class RequestController {
         User actualUser = this.requestService.findUserById(id);
         if (actualUser != null) {
             timeOffList = this.requestService.getUserTimeOffListById(id);
-            logger.info("TimeOff List requested");
+            logger.info("TimeOff list requested with user id: " + id);
             return new ResponseEntity<>(timeOffList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
+
+    @GetMapping("/timeOff/all")
+    public ResponseEntity<List<TimeOffListItem>> getAllTimeOffList() {
+        List<TimeOffListItem> list = this.requestService.getAllTimeOffList();
+        logger.info("All timeOff list requested");
+        return new ResponseEntity<List<TimeOffListItem>>(list, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> changeTimeOffStatus(@RequestBody TimeOffStatusChangeDto timeOffStatusChangeDto) {
+        this.requestService.changeTimeOffStatus(timeOffStatusChangeDto);
+        logger.info("Request to change time off status to: " +
+                timeOffStatusChangeDto.getStatus() + "with id: " +
+                timeOffStatusChangeDto.getDateId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

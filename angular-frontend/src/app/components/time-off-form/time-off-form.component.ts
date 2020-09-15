@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {Moment} from "moment";
-import {UserTimeOffListModel} from "../../models/UserTimeOffList.model";
+import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
 import {handleValidationErrors} from "../../shared/validation.handler";
 
 @Component({
@@ -19,7 +19,6 @@ export class TimeOffFormComponent implements OnInit {
     rejectedTimeOffList: Array<UserTimeOffListModel>;
     pendingTimeOffList: Array<UserTimeOffListModel>;
     index: number;
-    displayedColumns: any[] = ['startDate', 'endDate'];
 
 
     constructor(private formBuilder: FormBuilder,
