@@ -1,7 +1,10 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.*;
+import com.progmasters.reactblog.domain.dto.PasswordDto;
+import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
+import com.progmasters.reactblog.domain.dto.UserFormDto;
+import com.progmasters.reactblog.domain.dto.UserLogInFormDto;
 import com.progmasters.reactblog.service.UserService;
 import com.progmasters.reactblog.validator.LoginValidator;
 import com.progmasters.reactblog.validator.PasswordValidator;
@@ -12,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,7 @@ public class UserController {
         this.registrationConfirmationValidator = registrationConfirmationValidator;
         this.passwordValidator = passwordValidator;
         this.loginValidator = loginValidator;
+
     }
 
     @InitBinder("userFormDto")
@@ -58,6 +61,7 @@ public class UserController {
     private void initLoginValidator(WebDataBinder binder) {
         binder.addValidators(loginValidator);
     }
+
 
     @PostMapping("create")
     public ResponseEntity<Void> createUser(@Valid @RequestBody UserFormDto userFormDto) {
@@ -94,11 +98,5 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("timeoff")
-    public ResponseEntity saveTimeOff(@RequestBody TimeOffFormData timeOffFormData) {
-        userService.saveTimeOffDate(timeOffFormData);
-        logger.info("Save new time off date range with user id: " + timeOffFormData.getUserId());
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
 
 }

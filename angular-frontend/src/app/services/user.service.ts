@@ -11,9 +11,13 @@ import {SuggestionVoteModel} from '../models/suggestionVote.model';
 import {SuggestionStatusChangeModel} from '../models/suggestionStatusChange.model';
 import {TimeOffDateRangeDataModel} from '../models/timeOffDateRangeData.model';
 import {environment} from '../../environments/environment';
+import {UserTimeOffListModel} from "../models/userTimeOffList.model";
+import {TimeOffListItemModel} from "../models/timeOffListItem.model";
+import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
+const REQUEST_BASE_URL: string = environment.BASE_URL + '/api/requests'
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -61,6 +65,18 @@ export class UserService {
     }
 
     saveTimeOffDateRange(dateData: TimeOffDateRangeDataModel) {
-        return this.http.post(USER_BASE_URL + '/timeoff', dateData);
+        return this.http.post(REQUEST_BASE_URL + '/timeOffForm', dateData);
+    }
+
+    getUserTimeOffList(id: number): Observable<Array<UserTimeOffListModel>> {
+        return this.http.get<Array<UserTimeOffListModel>>(REQUEST_BASE_URL + '/timeOff/' + id);
+    }
+
+    getAllTimeOffList(): Observable<Array<TimeOffListItemModel>> {
+        return this.http.get<Array<TimeOffListItemModel>>(REQUEST_BASE_URL + '/timeOff/all');
+    }
+
+    changeTimeOffRequestStatus(timeOffStatusChangeDto: TimeOffStatusChangeDto) {
+        return this.http.put(REQUEST_BASE_URL, timeOffStatusChangeDto);
     }
 }

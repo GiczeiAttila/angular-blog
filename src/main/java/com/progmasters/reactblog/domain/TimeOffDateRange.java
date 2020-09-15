@@ -34,6 +34,9 @@ public class TimeOffDateRange {
     @Column(name = "weekDays")
     private Integer weekDays;
 
+    @Enumerated(EnumType.STRING)
+    private TimeOffStatusEnum status;
+
     public TimeOffDateRange() {
     }
 
@@ -49,12 +52,13 @@ public class TimeOffDateRange {
 
         this.weekDays = calculateWeekDays(startDate, endDate);
         this.user = user;
+        this.status = TimeOffStatusEnum.PENDING;
 
     }
 
     //doesnt work yet
     private Integer calculateWeekDays(Date startDate, Date endDate) {
-        Integer weekDays = 0;
+        Integer countWeekDays = 0;
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         start.setTime(startDate);
@@ -64,11 +68,11 @@ public class TimeOffDateRange {
         while (start.before(end)) {
             if (Calendar.SATURDAY != start.get(Calendar.DAY_OF_WEEK)
                     || Calendar.SUNDAY != start.get(Calendar.DAY_OF_WEEK)) {
-                weekDays++;
+                countWeekDays++;
             }
             start.add(Calendar.DATE, 1);
         }
-        return weekDays;
+        return countWeekDays;
     }
 
 
@@ -112,5 +116,11 @@ public class TimeOffDateRange {
         this.weekDays = weekDays;
     }
 
+    public TimeOffStatusEnum getStatus() {
+        return status;
+    }
 
+    public void setStatus(TimeOffStatusEnum status) {
+        this.status = status;
+    }
 }

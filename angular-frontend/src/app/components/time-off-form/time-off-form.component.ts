@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {Moment} from "moment";
+import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
+import {handleValidationErrors} from "../../shared/validation.handler";
 
 @Component({
     selector: 'app-time-off-form',
@@ -13,20 +15,28 @@ export class TimeOffFormComponent implements OnInit {
     userId: number;
     timeOffForm: FormGroup;
     selected: { startDate: Moment, endDate: Moment };
+    acceptedTimeOffList: Array<UserTimeOffListModel>;
+    rejectedTimeOffList: Array<UserTimeOffListModel>;
+    pendingTimeOffList: Array<UserTimeOffListModel>;
+    index: number;
 
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService) {
         this.timeOffForm = this.formBuilder.group({
             userId: [],
-            startDate: [''],
+            startDate: ['', [Validators.required, this.isDateAfterToday.bind(this)]],
             endDate: ['']
         });
     }
 
     ngOnInit() {
-
         this.userId = +localStorage.getItem('userId');
+        this.index = 0;
+        this.acceptedTimeOffList = [];
+        this.rejectedTimeOffList = [];
+        this.pendingTimeOffList = [];
+        this.loadTimeOffList();
     }
 
     saveDate() {
@@ -42,8 +52,30 @@ export class TimeOffFormComponent implements OnInit {
             () => {
                 console.log(form)
             },
+            error => handleValidationErrors(error, this.timeOffForm)
+        )
+    }
+
+    loadTimeOffList() {
+        this.userService.getUserTimeOffList(this.userId).subscribe(
+            (data) => {
+                data.forEach((timeOffListModel) => {
+                    if (timeOffListModel.status == 'ACCEPTED') {
+                        this.acceptedTimeOffList.unshift(timeOffListModel);
+                    } else if (timeOffListModel.status == 'PENDING') {
+                        this.pendingTimeOffList.unshift(timeOffListModel);
+                    } else {
+                        this.rejectedTimeOffList.unshift(timeOffListModel);
+                    }
+                })
+            },
             error => console.log(error)
         )
     }
+
+    isDateAfterToday(date) {
+        return new Date(date).valueOf() > new Date().valueOf();
+    }
+
 
 }

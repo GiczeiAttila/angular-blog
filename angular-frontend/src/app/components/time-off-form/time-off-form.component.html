@@ -7,9 +7,82 @@
            ngxDaterangepickerMd
            startKey="startDate"
            type="text"
+           [ngClass]="{
+                'is-invalid': timeOffForm.get('startDate').invalid && timeOffForm.get('startDate').touched || timeOffForm.get('startDate').errors?.serverError
+                }"
            width="50px"/>
+    <small *ngIf="timeOffForm.get('startDate').invalid
+                        && timeOffForm.get('startDate').touched"
+           class="text-danger">Cant choose today</small>
+    <small class="text-danger">{{timeOffForm.get('startDate').errors?.serverError}}</small>
+
     <button (click)="saveDate()" class="btn btn-info" type=button>Save Date</button>
-    <br/>
 </div>
-<app-full-calendar></app-full-calendar>
+
+
+<div class="mat-app-background basic-container">
+    <mat-tab-group [(selectedIndex)]="index" animationDuration="200ms" dynamicHeight>
+        <mat-tab label="Accepted">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let acceptedDate of acceptedTimeOffList">
+                    <tr>
+                        <td>{{acceptedDate.startDate}}</td>
+                        <td>{{acceptedDate.endDate}}</td>
+                        <td>{{acceptedDate.status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="Pending">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let pendingDate of pendingTimeOffList">
+                    <tr>
+                        <td>{{pendingDate.startDate}}</td>
+                        <td>{{pendingDate.endDate}}</td>
+                        <td>{{pendingDate.status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="Rejected">
+            <mat-accordion>
+                <table class="table table-striped table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let rejectedDate of rejectedTimeOffList">
+                    <tr>
+                        <td>{{rejectedDate.startDate}}</td>
+                        <td>{{rejectedDate.endDate}}</td>
+                        <td>{{rejectedDate.status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </mat-accordion>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
 
