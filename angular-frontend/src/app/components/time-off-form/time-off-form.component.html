@@ -12,9 +12,8 @@
                 }"
            width="50px"/>
     <small *ngIf="timeOffForm.get('startDate').invalid
-                        && timeOffForm.get('startDate').touched
-                        && !timeOffForm.get('startDate').errors?.serverError"
-           class="text-danger">Please choose a date after today</small>
+                        && timeOffForm.get('startDate').touched"
+           class="text-danger">Cant choose today</small>
     <small class="text-danger">{{timeOffForm.get('startDate').errors?.serverError}}</small>
 
     <button (click)="saveDate()" class="btn btn-info" type=button>Save Date</button>

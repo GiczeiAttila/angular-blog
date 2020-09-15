@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {Moment} from "moment";
 import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
@@ -25,7 +25,7 @@ export class TimeOffFormComponent implements OnInit {
                 private userService: UserService) {
         this.timeOffForm = this.formBuilder.group({
             userId: [],
-            startDate: [''],
+            startDate: ['', [Validators.required, this.isDateAfterToday.bind(this)]],
             endDate: ['']
         });
     }
@@ -72,5 +72,10 @@ export class TimeOffFormComponent implements OnInit {
             error => console.log(error)
         )
     }
+
+    isDateAfterToday(date) {
+        return new Date(date).valueOf() > new Date().valueOf();
+    }
+
 
 }

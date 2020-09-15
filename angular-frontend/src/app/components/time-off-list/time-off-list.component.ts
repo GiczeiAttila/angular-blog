@@ -14,6 +14,7 @@ export class TimeOffListComponent implements OnInit {
     rejectedTimeOffList: Array<TimeOffListItemModel>;
     pendingTimeOffList: Array<TimeOffListItemModel>;
     index: number;
+    currentUserId: number
 
     constructor(private userService: UserService) {
     }
@@ -24,6 +25,8 @@ export class TimeOffListComponent implements OnInit {
         this.rejectedTimeOffList = [];
         this.pendingTimeOffList = [];
         this.loadTimeOffList();
+
+        this.currentUserId = +localStorage.getItem('userId');
     }
 
     acceptRequest(dateId: number) {

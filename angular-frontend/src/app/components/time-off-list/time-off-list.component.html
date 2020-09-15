@@ -13,7 +13,7 @@
                     </tr>
                     </thead>
                     <tbody *ngFor="let pendingItem of pendingTimeOffList">
-                    <tr>
+                    <tr *ngIf="pendingItem.userId!= currentUserId">
                         <td>{{pendingItem.userId}}</td>
                         <td>{{pendingItem.userName}}</td>
                         <td>{{pendingItem.startDate}}</td>
@@ -43,7 +43,7 @@
                     </tr>
                     </thead>
                     <tbody *ngFor="let acceptedDate of acceptedTimeOffList">
-                    <tr>
+                    <tr *ngIf="acceptedDate.userId!= currentUserId">
                         <td>{{acceptedDate.userId}}</td>
                         <td>{{acceptedDate.userName}}</td>
                         <td>{{acceptedDate.startDate}}</td>
@@ -67,7 +67,7 @@
                     </tr>
                     </thead>
                     <tbody *ngFor="let rejectedDate of rejectedTimeOffList">
-                    <tr>
+                    <tr *ngIf="rejectedDate.userId!= currentUserId">
                         <td>{{rejectedDate.userId}}</td>
                         <td>{{rejectedDate.userName}}</td>
                         <td>{{rejectedDate.startDate}}</td>

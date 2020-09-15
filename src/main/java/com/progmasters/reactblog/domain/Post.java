@@ -15,6 +15,7 @@ import com.progmasters.reactblog.domain.dto.PostFormData;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Entity
@@ -65,7 +66,7 @@ public class Post {
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
         this.picture = postFormData.getPicture();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
         this.category = postFormData.getCategory();
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
