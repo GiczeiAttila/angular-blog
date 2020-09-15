@@ -13,6 +13,7 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
 import {SuggestionBoxComponent} from "./components/suggestion-box/suggestion-box.component";
 import {TimeOffFormComponent} from "./components/time-off-form/time-off-form.component";
 import {TimeOffListComponent} from "./components/time-off-list/time-off-list.component";
+import {OpenPositionsComponent} from "./components/open-positions/open-positions.component";
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
     {path: 'suggestion-box', component: SuggestionBoxComponent},
+    {path: 'open-position', component: OpenPositionsComponent},
     {path: 'timeOffForm', component: TimeOffFormComponent},
     {path: 'timeOff-list', component: TimeOffListComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},

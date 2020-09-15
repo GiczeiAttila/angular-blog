@@ -1,0 +1,111 @@
+<div class="mat-app-background basic-container">
+    <mat-tab-group [(selectedIndex)]="index" dynamicHeight animationDuration="200ms">
+ <!--       <mat-tab label="Active suggestions">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let suggestion of activeSuggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false"
+                                     hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{suggestion.title}}
+                        </mat-panel-title>
+                        + {{suggestion.countUp}} / - {{suggestion.countDown}}
+                    </mat-expansion-panel-header>
+                    <p>{{suggestion.description}}</p>
+                    <mat-action-row>
+                        <button *ngIf="suggestion.userId !== currentUserId" mat-raised-button color="success"
+                                (click)="voting('UP', suggestion.userId, suggestion.id)">
+                            Vote +
+                        </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="Closed suggestions">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let suggestion of closedSuggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false"
+                                     hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{suggestion.title}}
+                        </mat-panel-title>
+                        {{suggestion.status}}
+                    </mat-expansion-panel-header>
+                    <p>{{suggestion.description}}</p>
+                    <mat-action-row>
+                        <button mat-raised-button color="primary" (click)="reactivateSuggestion(suggestion.id)">
+                            Reactivate
+                        </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="My suggestions">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let mySuggestion of mySuggestionList"
+                                     (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false"
+                                     hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{mySuggestion.title}}  /  {{mySuggestion.status}}
+                        </mat-panel-title>
+                        + {{mySuggestion.countUp}}/- {{mySuggestion.countDown}}
+                    </mat-expansion-panel-header>
+                    <p>{{mySuggestion.description}}</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>-->
+        <mat-tab label="Create new open position">
+            <form class="example-form" [formGroup]="openPositionForm" (ngSubmit)="Submit()">
+                <mat-form-field class="open-position-full-width">
+                    <mat-label>Open position name</mat-label>
+                    <input matInput placeholder="Open position name" formControlName="positionName" required="true">
+                    <mat-hint>Open position title is required</mat-hint>
+                    <mat-error>
+                        {{openPositionForm.get('positionName').errors?.serverError}}
+                    </mat-error>
+                    <mat-error *ngIf="openPositionForm.get('positionName').invalid && openPositionForm.get('positionName').dirty">
+                        Open position title is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="open-position-full-width">
+                    <mat-label>Open position description</mat-label>
+                    <textarea matInput placeholder="Open position description" formControlName="description" required="true"></textarea>
+                    <mat-hint>Open position description is required</mat-hint>
+                    <mat-error>
+                        {{openPositionForm.get('description').errors?.serverError}}
+                    </mat-error>
+                    <mat-error
+                        *ngIf="openPositionForm.get('description').invalid && openPositionForm.get('description').dirty">
+                        Open position description is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="open-position-full-width" appearance="fill">
+                    <mat-label>Pick the deadline</mat-label>
+                    <!-- #docregion toggle -->
+                    <input matInput type="date"
+                           [min]="minDate" disabled placeholder="start date"
+                           required formControlName="deadline">
+                    <mat-hint>Open position deadline is required</mat-hint>
+                    <mat-error *ngIf="openPositionForm.get('deadline').hasError('matDatepickerParse')">
+                        "{{openPositionForm.get('deadline').getError('matDatepickerParse').text}}"
+                        is not a valid date!
+                    </mat-error>
+                    <mat-error *ngIf="openPositionForm.get('deadline').hasError('matDatepickerMin')">
+                        Minimum date should be {{minDate | date }}</mat-error>
+                    <!-- #enddocregion toggle -->
+                </mat-form-field>
+
+                <mat-card-actions>
+                    <button *ngIf="openPositionForm.valid" mat-raised-button type="submit" color="primary">Submit</button>
+                </mat-card-actions>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+</div>

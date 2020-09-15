@@ -39,6 +39,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<TimeOffDateRange> timeOffDateRangeList;
 
+    @OneToMany(mappedBy = "user")
+    private List<OpenPosition> openPositionList;
+
+    @OneToMany(mappedBy = "applicant")
+    private List<ApplicantForOpenPosition> applicantForOpenPositionList;
+
     public User() {
     }
 

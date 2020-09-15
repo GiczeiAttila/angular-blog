@@ -14,10 +14,12 @@ import {environment} from '../../environments/environment';
 import {UserTimeOffListModel} from "../models/userTimeOffList.model";
 import {TimeOffListItemModel} from "../models/timeOffListItem.model";
 import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
+import {OpenPositionFormModel} from "../models/openPositionForm.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
 const REQUEST_BASE_URL: string = environment.BASE_URL + '/api/requests'
+const OPEN_POSITION_URL: string = environment.BASE_URL + '/api/open-positions';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -78,5 +80,10 @@ export class UserService {
 
     changeTimeOffRequestStatus(timeOffStatusChangeDto: TimeOffStatusChangeDto) {
         return this.http.put(REQUEST_BASE_URL, timeOffStatusChangeDto);
+    }
+
+    createOpenPosition(openPositionData: OpenPositionFormModel) {
+        console.log(openPositionData);
+        return this.http.post(OPEN_POSITION_URL, openPositionData);
     }
 }

@@ -36,6 +36,8 @@ public class UserFormDtoValidator implements Validator {
     private void validateUserId(Long id, Errors errors) {
         if(id == null){
             errors.rejectValue("id", "userFormDto.id-error");
+        }else if (id<=0){
+            errors.rejectValue("id", "userFormDto.negative-id");
         }else if (userService.idIsTaken(id)){
             errors.rejectValue("id", "userFormDto.id-already-taken");
         }
