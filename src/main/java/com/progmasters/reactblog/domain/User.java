@@ -45,6 +45,12 @@ public class User {
     @OneToMany(mappedBy = "applicant")
     private List<ApplicantForOpenPosition> applicantForOpenPositionList;
 
+    @OneToMany(mappedBy = "creator")
+    private List<MeetingReservation> ownReservation;
+
+    @OneToMany(mappedBy = "meetingReservation")
+    private List<MeetingParticipent> allMeeting;
+
     public User() {
     }
 
@@ -61,7 +67,7 @@ public class User {
         this.numberOfLoginAttempts = 0L;
         this.suggestionList = new ArrayList<>();
         this.suggestionVoteList = new ArrayList<>();
-        this.timeOffDateRangeList = new ArrayList<>();
+
     }
 
     public Long getId() {
@@ -150,6 +156,38 @@ public class User {
 
     public void setNumberOfLoginAttempts(Long numberOfLoginAttempts) {
         this.numberOfLoginAttempts = numberOfLoginAttempts;
+    }
+
+    public List<OpenPosition> getOpenPositionList() {
+        return openPositionList;
+    }
+
+    public void setOpenPositionList(List<OpenPosition> openPositionList) {
+        this.openPositionList = openPositionList;
+    }
+
+    public List<ApplicantForOpenPosition> getApplicantForOpenPositionList() {
+        return applicantForOpenPositionList;
+    }
+
+    public void setApplicantForOpenPositionList(List<ApplicantForOpenPosition> applicantForOpenPositionList) {
+        this.applicantForOpenPositionList = applicantForOpenPositionList;
+    }
+
+    public List<MeetingReservation> getOwnReservation() {
+        return ownReservation;
+    }
+
+    public void setOwnReservation(List<MeetingReservation> ownReservation) {
+        this.ownReservation = ownReservation;
+    }
+
+    public List<MeetingParticipent> getAllMeeting() {
+        return allMeeting;
+    }
+
+    public void setAllMeeting(List<MeetingParticipent> allMeeting) {
+        this.allMeeting = allMeeting;
     }
 
     public List<Suggestion> getSuggestionList() {

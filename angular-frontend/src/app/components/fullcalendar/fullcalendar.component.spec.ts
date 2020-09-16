@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {FullCalendarComponent} from './full-calendar.component';
+import {FullcalendarComponent} from './fullcalendar.component';
 
-describe('FullCalendarComponent', () => {
-    let component: FullCalendarComponent;
-    let fixture: ComponentFixture<FullCalendarComponent>;
+describe('FullcalendarComponent', () => {
+    let component: FullcalendarComponent;
+    let fixture: ComponentFixture<FullcalendarComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [FullCalendarComponent]
+            declarations: [FullcalendarComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FullCalendarComponent);
+        fixture = TestBed.createComponent(FullcalendarComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
