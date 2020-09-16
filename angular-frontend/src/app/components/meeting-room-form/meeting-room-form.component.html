@@ -1,0 +1,56 @@
+<div>
+    <h3>New meeting room</h3>
+    <hr/>
+
+    <form (ngSubmit)="saveRoom()" [formGroup]="meetingRoomForm">
+        <div class="form-group">
+            <label for="name">Room name</label>
+            <input
+                [ngClass]="{
+                'is-invalid': meetingRoomForm.get('name').invalid && meetingRoomForm.get('name').touched || meetingRoomForm.get('name').errors?.serverError
+                }"
+                class="form-control"
+                formControlName="name"
+                id="name"
+                type="text"
+            >
+            <small
+                *ngIf="meetingRoomForm.get('name').invalid
+                        && meetingRoomForm.get('name').touched
+                        && !meetingRoomForm.get('name').errors?.serverError"
+                class="text-danger"
+            >
+                Please enter a room name
+            </small>
+            <small *ngIf="meetingRoomForm.get('name').errors?.serverError" class="text-danger">
+                {{meetingRoomForm.get('name').errors['serverError']}}
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="seats">Number of seats</label>
+            <input
+                [ngClass]="{
+                'is-invalid': meetingRoomForm.get('seats').invalid && meetingRoomForm.get('seats').touched || meetingRoomForm.get('seats').errors?.serverError
+                }"
+                class="form-control"
+                formControlName="seats"
+                id="seats"
+                type="number"
+            >
+            <small
+                *ngIf="meetingRoomForm.get('seats').invalid
+                        && meetingRoomForm.get('seats').touched
+                        && !meetingRoomForm.get('seats').errors?.serverError"
+                class="text-danger"
+            >
+                Please enter the number of seats
+            </small>
+            <small *ngIf="meetingRoomForm.get('seats').errors?.serverError" class="text-danger">
+                {{meetingRoomForm.get('seats').errors['serverError']}}
+            </small>
+        </div>
+        <button class="btn btn-info" type="submit">Save</button>
+    </form>
+</div>
+
