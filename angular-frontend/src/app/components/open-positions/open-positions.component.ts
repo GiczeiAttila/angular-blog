@@ -82,7 +82,9 @@ export class OpenPositionsComponent implements OnInit {
             applicantId: this.currentUserId,
             openPositionId: openPositionId
         }
-        this.userService.applyToOpenPosition(applicationForOpenPositionModel).subscribe();
+        this.userService.applyToOpenPosition(applicationForOpenPositionModel).subscribe(()=>{},
+            ()=>{},
+            ()=>{this.ngOnInit()});
     }
 
     applicantList(id: number) {
