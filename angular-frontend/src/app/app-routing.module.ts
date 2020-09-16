@@ -14,6 +14,7 @@ import {SuggestionBoxComponent} from "./components/suggestion-box/suggestion-box
 import {TimeOffFormComponent} from "./components/time-off-form/time-off-form.component";
 import {TimeOffListComponent} from "./components/time-off-list/time-off-list.component";
 import {OpenPositionsComponent} from "./components/open-positions/open-positions.component";
+import {FullcalendarComponent} from "./components/fullcalendar/fullcalendar.component";
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
     {path: 'open-position', component: OpenPositionsComponent},
     {path: 'timeOffForm', component: TimeOffFormComponent},
     {path: 'timeOff-list', component: TimeOffListComponent},
+    {path: 'fullcalendar', component: FullcalendarComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent},
 ];

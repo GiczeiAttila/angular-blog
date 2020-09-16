@@ -29,6 +29,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import {MatTableModule} from "@angular/material/table";
 import {TimeOffListComponent} from './components/time-off-list/time-off-list.component';
 import {OpenPositionsComponent} from "./components/open-positions/open-positions.component";
+import {FullcalendarComponent} from "./components/fullcalendar/fullcalendar.component";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -54,7 +55,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         SuggestionBoxComponent,
         TimeOffFormComponent,
         TimeOffListComponent,
-        OpenPositionsComponent
+        OpenPositionsComponent,
+        FullcalendarComponent,
     ],
     imports: [
         BrowserModule,
@@ -62,6 +64,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         HttpClientModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        FullCalendarModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,

@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 public class CalendarTimeOffListDto {
 
     private String title;
-    private String startDate;
-    private String endDate;
+    private String start;
+    private String end;
 
     public CalendarTimeOffListDto() {
     }
@@ -17,8 +17,8 @@ public class CalendarTimeOffListDto {
     public CalendarTimeOffListDto(TimeOffDateRange timeOff) {
         this.title = "Time off";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.startDate = dateFormat.format(timeOff.getStartDate());
-        this.endDate = dateFormat.format(timeOff.getEndDate());
+        this.start = dateFormat.format(timeOff.getStartDate());
+        this.end = dateFormat.format(timeOff.getEndDate());
     }
 
 
@@ -30,19 +30,19 @@ public class CalendarTimeOffListDto {
         this.title = title;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart() {
+        return start;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnd(String end) {
+        this.end = end;
     }
 }
