@@ -16,11 +16,13 @@ import {TimeOffListItemModel} from "../models/timeOffListItem.model";
 import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
 import {OpenPositionFormModel} from "../models/openPositionForm.model";
 import {CalendarTimeOffListDtoModel} from "../models/calendarTimeOffListDto.model";
+import {MeetingRoomFormDataModel} from "../models/meetingRoomFormData.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
 const REQUEST_BASE_URL: string = environment.BASE_URL + '/api/requests'
 const OPEN_POSITION_URL: string = environment.BASE_URL + '/api/open-positions';
+const MEETING_URL: string = environment.BASE_URL + '/api/meetings';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -90,5 +92,9 @@ export class UserService {
 
     getTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarTimeOffListDtoModel>> {
         return this.http.get<Array<CalendarTimeOffListDtoModel>>(REQUEST_BASE_URL + '/calendar/' + id);
+    }
+
+    createMeetingRoom(meetingRoomFormData: MeetingRoomFormDataModel) {
+        return this.http.post(MEETING_URL + '/createRoom', meetingRoomFormData);
     }
 }
