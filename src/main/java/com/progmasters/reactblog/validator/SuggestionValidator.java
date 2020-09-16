@@ -32,7 +32,7 @@ public class SuggestionValidator implements Validator {
         if (user == null) {
             errors.rejectValue("id", "suggestionFormDto.not-authorised");
         }else if (user.getUserStatus() != UserStatusEnum.ACTIVE) {
-            errors.rejectValue("password", "suggestionFormDto.not-authorised");
+            errors.rejectValue("id", "suggestionFormDto.not-authorised");
         }
         if (suggestionFormDto.getTitle() == null || suggestionFormDto.getTitle().isEmpty()) {
             errors.rejectValue("title", "suggestionFormDto.title.empty");

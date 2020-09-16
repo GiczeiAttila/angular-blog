@@ -9,12 +9,15 @@ import com.progmasters.reactblog.domain.dto.OpenPositionListItemDto;
 import com.progmasters.reactblog.service.ApplicantForOpenPositionService;
 import com.progmasters.reactblog.service.OpenPositionService;
 import com.progmasters.reactblog.service.UserService;
+import com.progmasters.reactblog.validator.OpenPositionFormDtoValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,15 +27,22 @@ public class OpenPositionController {
     private final OpenPositionService openPositionService;
     private final UserService userService;
     private final ApplicantForOpenPositionService applicantForOpenPositionService;
+    private final OpenPositionFormDtoValidator openPositionFormDtoValidator;
 
-    public OpenPositionController(OpenPositionService openPositionService, UserService userService, ApplicantForOpenPositionService applicantForOpenPositionService) {
+    public OpenPositionController(OpenPositionService openPositionService, UserService userService, ApplicantForOpenPositionService applicantForOpenPositionService, OpenPositionFormDtoValidator openPositionFormDtoValidator) {
         this.openPositionService = openPositionService;
         this.userService = userService;
         this.applicantForOpenPositionService = applicantForOpenPositionService;
+        this.openPositionFormDtoValidator = openPositionFormDtoValidator;
+    }
+
+    @InitBinder("openPositionFormDto")
+    private void initOpenPositionFormDtoValidator(WebDataBinder binder) {
+        binder.addValidators(openPositionFormDtoValidator);
     }
 
     @PostMapping
-    public ResponseEntity<Void> createSuggestion(@RequestBody OpenPositionFormDto openPositionFormDto) {
+    public ResponseEntity<Void> createOpenPosition(@Valid @RequestBody OpenPositionFormDto openPositionFormDto) {
         logger.info("Create open position requested with user id:" + openPositionFormDto.getUserId() +
                 " with open position name: " + openPositionFormDto.getPositionName() +
                 " deadline: " + openPositionFormDto.getDeadline());
