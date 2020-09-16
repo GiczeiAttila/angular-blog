@@ -1,10 +1,7 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.TimeOffFormData;
-import com.progmasters.reactblog.domain.dto.TimeOffListItem;
-import com.progmasters.reactblog.domain.dto.TimeOffStatusChangeDto;
-import com.progmasters.reactblog.domain.dto.UserTimeOffList;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.RequestService;
 import com.progmasters.reactblog.validator.TimeOffValidator;
 import org.slf4j.Logger;
@@ -71,6 +68,19 @@ public class RequestController {
                 timeOffStatusChangeDto.getStatus() + "with id: " +
                 timeOffStatusChangeDto.getDateId());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("calendar/{id}")
+    public ResponseEntity<List<CalendarTimeOffListDto>> getTimeOffDatesForCalendar(@PathVariable Long id) {
+        List<CalendarTimeOffListDto> timeOffList;
+        User actualUser = this.requestService.findUserById(id);
+        if (actualUser != null) {
+            timeOffList = this.requestService.getTimeOffDates(id);
+            logger.info("Time off list for calendar is requested with id: " + id);
+            return new ResponseEntity<>(timeOffList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

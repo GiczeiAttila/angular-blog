@@ -26,10 +26,10 @@ import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import {FullCalendarComponent} from './components/full-calendar/full-calendar.component';
 import {MatTableModule} from "@angular/material/table";
 import {TimeOffListComponent} from './components/time-off-list/time-off-list.component';
 import {OpenPositionsComponent} from "./components/open-positions/open-positions.component";
+
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -53,7 +53,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         PageNotFoundComponent,
         SuggestionBoxComponent,
         TimeOffFormComponent,
-        FullCalendarComponent,
         TimeOffListComponent,
         OpenPositionsComponent
     ],
@@ -67,8 +66,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         ReactiveFormsModule,
         MaterialModule,
         NgxDaterangepickerMd.forRoot(),
-        FullCalendarModule,
         MatTableModule
+
     ],
     entryComponents: [AppComponent],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],

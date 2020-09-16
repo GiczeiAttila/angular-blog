@@ -15,6 +15,7 @@ import {UserTimeOffListModel} from "../models/userTimeOffList.model";
 import {TimeOffListItemModel} from "../models/timeOffListItem.model";
 import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
 import {OpenPositionFormModel} from "../models/openPositionForm.model";
+import {CalendarTimeOffListDtoModel} from "../models/calendarTimeOffListDto.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -85,5 +86,9 @@ export class UserService {
     createOpenPosition(openPositionData: OpenPositionFormModel) {
         console.log(openPositionData);
         return this.http.post(OPEN_POSITION_URL, openPositionData);
+    }
+
+    getTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarTimeOffListDtoModel>> {
+        return this.http.get<Array<CalendarTimeOffListDtoModel>>(REQUEST_BASE_URL + '/calendar/' + id);
     }
 }

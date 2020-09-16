@@ -3,10 +3,7 @@ package com.progmasters.reactblog.service;
 import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.TimeOffStatusEnum;
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.TimeOffFormData;
-import com.progmasters.reactblog.domain.dto.TimeOffListItem;
-import com.progmasters.reactblog.domain.dto.TimeOffStatusChangeDto;
-import com.progmasters.reactblog.domain.dto.UserTimeOffList;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.TimeOffDateRangeRepository;
 import com.progmasters.reactblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +69,13 @@ public class RequestService {
             TimeOffDateRange timeOff = optionalTimeOffDateRange.get();
             timeOff.setStatus(TimeOffStatusEnum.valueOf(timeOffStatusChangeDto.getStatus()));
         }
+    }
+
+    public List<CalendarTimeOffListDto> getTimeOffDates(Long id) {
+        List<CalendarTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findAll()
+                .stream()
+                .map(timeOff -> new CalendarTimeOffListDto(timeOff))
+                .collect(Collectors.toList());
+        return listOfAll;
     }
 }
