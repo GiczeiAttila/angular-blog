@@ -1,19 +1,39 @@
 <div class="mat-app-background basic-container">
-    <mat-tab-group [(selectedIndex)]="index" dynamicHeight animationDuration="200ms">
-        <mat-tab label="Active suggestions">
+    <mat-tab-group (selectedTabChange)="tabChanged($event)" [(selectedIndex)]="index" dynamicHeight animationDuration="200ms">
+        <mat-tab label="Active open positions">
             <mat-accordion>
                 <mat-expansion-panel *ngFor="let openPosition of activeOpenPositionList"
                                      hideToggle>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{openPosition.title}}
+                            {{openPosition.positionName}}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <p>{{openPosition.description}}</p>
+                    <p>{{openPosition.description}}</p><br><hr>
+                    <p>Application deadline: {{openPosition.deadline}}</p>
                     <mat-action-row>
                         <button *ngIf="openPosition.userId !== currentUserId" mat-raised-button color="success" (click)="apply(openPosition.id)">
                             Apply
                         </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+        <mat-tab label="my open positions">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let openPosition of myOpenPositionList"
+                                     hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{openPosition.positionName}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>{{openPosition.description}}</p><br><hr>
+                    <p>Application deadline: {{openPosition.deadline}}</p>
+                    <mat-action-row>
+<!--                        <button *ngIf="openPosition.userId === currentUserId" mat-raised-button color="success" (click)="applicantList(openPosition.id)">-->
+<!--                            Applicants list-->
+<!--                        </button>-->
                     </mat-action-row>
                 </mat-expansion-panel>
             </mat-accordion>

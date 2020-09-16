@@ -1,10 +1,13 @@
 package com.progmasters.reactblog.domain;
 
+import com.progmasters.reactblog.domain.dto.ApplicationForOpenPositionDto;
+
 import javax.persistence.*;
 
 @Entity
 public class ApplicantForOpenPosition {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -13,8 +16,17 @@ public class ApplicantForOpenPosition {
     @ManyToOne
     private OpenPosition openPosition;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
+
+    public ApplicantForOpenPosition() {
+    }
+
+    public ApplicantForOpenPosition(User applicant, OpenPosition openPosition) {
+        this.applicant = applicant;
+        this.openPosition = openPosition;
+        this.applicationStatus = ApplicationStatus.PENDING;
+    }
 
     public Long getId() {
         return id;
