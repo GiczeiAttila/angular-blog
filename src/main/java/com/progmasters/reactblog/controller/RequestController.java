@@ -3,7 +3,7 @@ package com.progmasters.reactblog.controller;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.RequestService;
-import com.progmasters.reactblog.validator.TimeOffValidator;
+import com.progmasters.reactblog.validator.TimeOffFormDataValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,17 @@ public class RequestController {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
     private final RequestService requestService;
-    private final TimeOffValidator timeOffValidator;
+    private final TimeOffFormDataValidator timeOffFormDataValidator;
 
     @Autowired
-    public RequestController(RequestService requestService, TimeOffValidator timeOffValidator) {
+    public RequestController(RequestService requestService, TimeOffFormDataValidator timeOffFormDataValidator) {
         this.requestService = requestService;
-        this.timeOffValidator = timeOffValidator;
+        this.timeOffFormDataValidator = timeOffFormDataValidator;
     }
 
     @InitBinder("timeOffFormData")
     private void initTimeOffValidator(WebDataBinder binder) {
-        binder.addValidators(timeOffValidator);
+        binder.addValidators(timeOffFormDataValidator);
     }
 
     @PostMapping("timeOffForm")

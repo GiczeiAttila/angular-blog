@@ -7,10 +7,10 @@ import java.text.SimpleDateFormat;
 
 public class CalendarTimeOffListDto {
 
+    private String color;
     private String title;
     private String start;
     private String end;
-    private String color;
 
     public CalendarTimeOffListDto() {
     }
@@ -46,5 +46,13 @@ public class CalendarTimeOffListDto {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
