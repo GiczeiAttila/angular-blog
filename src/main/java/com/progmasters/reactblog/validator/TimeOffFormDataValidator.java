@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -33,9 +34,7 @@ public class TimeOffFormDataValidator implements Validator {
 
         if (date.getEndDate() == null || date.getEndDate().isEmpty()) {
             errors.rejectValue("endDate", "timeOff.endDate.required");
-        }
-
-       /*else {
+        } else {
             try {
                 today = format.parse(String.valueOf(new Date()));
                 startDate = format.parse(date.getStartDate());
@@ -46,8 +45,5 @@ public class TimeOffFormDataValidator implements Validator {
                 errors.rejectValue("startDate", "timeOff.startDate.wrongDate");
             }
         }
-
-        */
-
     }
 }

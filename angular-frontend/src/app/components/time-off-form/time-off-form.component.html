@@ -1,26 +1,4 @@
-<!--<div class="jumbotron">
-    <label>Choose dates</label>
-    <input [(ngModel)]="selected"
-           class="form-control"
-           endKey="endDate"
-           matInput
-           ngxDaterangepickerMd
-           placeholder="Choose date range"
-           date-date-today-highlight="true"
-           startKey="startDate"
-           type="text"
-           [ngClass]="{
-                'is-invalid': timeOffForm.get('startDate').invalid && timeOffForm.get('startDate').touched || timeOffForm.get('startDate').errors?.serverError
-                }"
-           width="50px"/><br>
-    <small *ngIf="timeOffForm.get('startDate').invalid
-                        && timeOffForm.get('startDate').touched"
-           class="text-danger">Can't choose today</small>
-    <small class="text-danger">{{timeOffForm.get('startDate').errors?.serverError}}</small>
 
-    <button (click)="saveDate()" class="btn btn-info" type=button>Save Date</button>
-</div>
--->
 
 <div class="mat-app-background basic-container">
     <mat-tab-group [(selectedIndex)]="index" animationDuration="200ms" dynamicHeight>

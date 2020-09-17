@@ -1,10 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {TimeOffDateRangeDataModel} from "../../models/timeOffDateRangeData.model";
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 
 @Component({
@@ -14,20 +13,14 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 })
 export class TimeOffFormComponent implements OnInit {
 
-    @Output()
-    dateChange: EventEmitter<MatDatepickerInputEvent<Date>>
-
-
     userId: number;
     timeOffForm: FormGroup;
     minDate;
     minDateForEndDate;
-    //selected: { startDate: Moment, endDate: Moment };
     acceptedTimeOffList: Array<UserTimeOffListModel>;
     rejectedTimeOffList: Array<UserTimeOffListModel>;
     pendingTimeOffList: Array<UserTimeOffListModel>;
     index: number;
-
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService) {
@@ -55,17 +48,6 @@ export class TimeOffFormComponent implements OnInit {
     }
 
     saveDate() {
-        /*  this.selected.startDate.format('yyyy-MM-DD');
-          this.selected.endDate.format('yyyy-MM-DD');
-          const form = {
-              userId: this.userId,
-              startDate: this.selected.startDate.format('yyyy-MM-DD'),
-              endDate: this.selected.endDate.format('yyyy-MM-DD')
-          }
-
-         */
-
-
         let actualForm: TimeOffDateRangeDataModel = this.timeOffForm.value;
         actualForm.userId = this.userId;
         this.userService.saveTimeOffDateRange(actualForm).subscribe(
