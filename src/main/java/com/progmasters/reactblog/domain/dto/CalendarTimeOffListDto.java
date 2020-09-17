@@ -10,6 +10,7 @@ public class CalendarTimeOffListDto {
     private String title;
     private String start;
     private String end;
+    private String color;
 
     public CalendarTimeOffListDto() {
     }
@@ -19,6 +20,7 @@ public class CalendarTimeOffListDto {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.start = dateFormat.format(timeOff.getStartDate());
         this.end = dateFormat.format(timeOff.getEndDate());
+        this.color = "#2398AB";
     }
 
 

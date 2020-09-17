@@ -30,6 +30,8 @@ import {MatTableModule} from "@angular/material/table";
 import {TimeOffListComponent} from './components/time-off-list/time-off-list.component';
 import {OpenPositionsComponent} from "./components/open-positions/open-positions.component";
 import {FullcalendarComponent} from "./components/fullcalendar/fullcalendar.component";
+import {MeetingReservationFormComponent} from './components/meeting-reservation-form/meeting-reservation-form.component';
+import {MeetingRoomFormComponent} from './components/meeting-room-form/meeting-room-form.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -57,6 +59,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         TimeOffListComponent,
         OpenPositionsComponent,
         FullcalendarComponent,
+        MeetingReservationFormComponent,
+        MeetingRoomFormComponent,
     ],
     imports: [
         BrowserModule,

@@ -3,6 +3,7 @@ import {CalendarOptions} from '@fullcalendar/angular';
 import {UserService} from "../../services/user.service";
 import {CalendarTimeOffListDtoModel} from "../../models/calendarTimeOffListDto.model";
 
+
 @Component({
     selector: 'app-fullcalendar',
     templateUrl: './fullcalendar.component.html',
@@ -12,19 +13,7 @@ export class FullcalendarComponent implements OnInit {
 
     userId: number;
     timeOffList: CalendarTimeOffListDtoModel[];
-
-    calendarOptions: CalendarOptions = {
-        initialView: 'dayGridMonth',
-        dateClick: this.handleDateClick.bind(this),
-        timeZone: 'UTC',
-
-        //events: [this.timeOffList],
-        events: [{
-            title: 'lalalala',
-            start: '2020-09-10',
-            end: '2020-09-14'
-        }]
-    };
+    calendarOptions: CalendarOptions;
 
 
     constructor(private userService: UserService) {
@@ -32,20 +21,31 @@ export class FullcalendarComponent implements OnInit {
 
     ngOnInit(): void {
         this.userId = +localStorage.getItem('userId');
-        this.loadTimeOffEvents();
+        this.loadTimeOffList();
+        this.loadCalendar()
     }
 
     handleDateClick(arg) {
         alert('date click! ' + arg.dateStr)
+
     }
 
-    loadTimeOffEvents() {
+    loadTimeOffList() {
         this.userService.getTimeOffListForCalendarByUserId(this.userId).subscribe(
             (list: CalendarTimeOffListDtoModel[]) => this.timeOffList = list,
             error => console.log(error),
-            () => console.log(this.timeOffList)
+            () => this.loadCalendar()
         )
     }
 
+    loadCalendar() {
+        this.calendarOptions = {
+            initialView: 'dayGridMonth',
+            dateClick: this.handleDateClick.bind(this),
+            timeZone: 'UTC',
+            events: this.timeOffList,
+
+        };
+    }
 
 }

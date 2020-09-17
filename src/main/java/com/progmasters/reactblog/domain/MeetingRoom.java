@@ -1,6 +1,9 @@
 package com.progmasters.reactblog.domain;
 
+import com.progmasters.reactblog.domain.dto.MeetingRoomFormData;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +23,15 @@ public class MeetingRoom {
 
     @OneToMany(mappedBy = "meetingRoom")
     private List<MeetingReservation> meetingList;
+
+    public MeetingRoom() {
+    }
+
+    public MeetingRoom(MeetingRoomFormData meetingRoomFormData) {
+        this.name = meetingRoomFormData.getName();
+        this.seats = meetingRoomFormData.getSeats();
+        this.meetingList = new ArrayList<>();
+    }
 
 
     public Long getId() {
