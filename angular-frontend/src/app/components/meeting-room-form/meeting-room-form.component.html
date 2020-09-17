@@ -44,7 +44,7 @@
                         && !meetingRoomForm.get('seats').errors?.serverError"
                 class="text-danger"
             >
-                Please enter the number of seats
+                Please enter the number of seats (minimum 2)
             </small>
             <small *ngIf="meetingRoomForm.get('seats').errors?.serverError" class="text-danger">
                 {{meetingRoomForm.get('seats').errors['serverError']}}

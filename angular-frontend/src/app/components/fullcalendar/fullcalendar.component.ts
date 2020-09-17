@@ -27,7 +27,7 @@ export class FullcalendarComponent implements OnInit {
 
     handleDateClick(arg) {
         alert('date click! ' + arg.dateStr)
-        console.log(this.calendarOptions.events)
+
     }
 
     loadTimeOffList() {
@@ -40,13 +40,12 @@ export class FullcalendarComponent implements OnInit {
 
     loadCalendar() {
         this.calendarOptions = {
-            initialView: 'dayGridWeek',
+            initialView: 'dayGridMonth',
             dateClick: this.handleDateClick.bind(this),
             timeZone: 'UTC',
             events: this.timeOffList,
 
         };
     }
-
 
 }
