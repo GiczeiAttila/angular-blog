@@ -52,7 +52,7 @@ public class OpenPositionFormDtoValidator implements Validator {
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date today;
         Date deadline;
-        if (openPositionFormDto.getDescription() == null || openPositionFormDto.getDescription().isEmpty()) {
+        if (openPositionFormDto.getDeadline() == null || openPositionFormDto.getDeadline().isEmpty()) {
             errors.rejectValue("deadline", "openPositionFormDto.deadline.required");
         }else {
             try {
