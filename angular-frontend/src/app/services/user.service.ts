@@ -15,6 +15,8 @@ import {UserTimeOffListModel} from "../models/userTimeOffList.model";
 import {TimeOffListItemModel} from "../models/timeOffListItem.model";
 import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
 import {OpenPositionFormModel} from "../models/openPositionForm.model";
+import {OpenPositionListItemModel} from "../models/openPositionListItem.model";
+import {ApplicationForOpenPositionModel} from "../models/applicationForOpenPosition.model";
 import {CalendarTimeOffListDtoModel} from "../models/calendarTimeOffListDto.model";
 import {MeetingRoomFormDataModel} from "../models/meetingRoomFormData.model";
 
@@ -88,6 +90,23 @@ export class UserService {
     createOpenPosition(openPositionData: OpenPositionFormModel) {
         console.log(openPositionData);
         return this.http.post(OPEN_POSITION_URL, openPositionData);
+    }
+
+    getActiveOpenPositions(currentUserId: number): Observable<Array<OpenPositionListItemModel>> {
+        return this.http.get<Array<OpenPositionListItemModel>>(OPEN_POSITION_URL + '/open-positions/' + currentUserId);
+    }
+
+    getMyOpenPositions(currentUserId: number): Observable<Array<OpenPositionListItemModel>> {
+        return this.http.get<Array<OpenPositionListItemModel>>(OPEN_POSITION_URL + '/my-open-positions/' + currentUserId);
+    }
+
+  /*  getMyApplications(currentUserId: number): Observable<Array<OpenPositionListItemModel>> {
+        return this.http.get<Array<OpenPositionListItemModel>>(OPEN_POSITION_URL + '/my-applications/' + currentUserId);
+    }
+*/
+    applyToOpenPosition(applicationForOpenPositionModel: ApplicationForOpenPositionModel) {
+        console.log(applicationForOpenPositionModel);
+        return this.http.post(OPEN_POSITION_URL + '/apply', applicationForOpenPositionModel);
     }
 
     getTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarTimeOffListDtoModel>> {

@@ -4,6 +4,9 @@ import {Moment} from "moment";
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {OpenPositionFormModel} from "../../models/openPositionForm.model";
+import {OpenPositionListItemModel} from "../../models/openPositionListItem.model";
+import {MatTabChangeEvent} from "@angular/material/tabs";
+import {ApplicationForOpenPositionModel} from "../../models/applicationForOpenPosition.model";
 
 @Component({
   selector: 'app-open-positions',
@@ -16,6 +19,9 @@ export class OpenPositionsComponent implements OnInit {
     index: number;
     currentUserId: number;
     minDate;
+    activeOpenPositionList: Array<OpenPositionListItemModel>;
+    myOpenPositionList: Array<OpenPositionListItemModel>;
+
     constructor(private userService: UserService, private formBuilder: FormBuilder) {
     }
 
@@ -37,6 +43,12 @@ export class OpenPositionsComponent implements OnInit {
         this.minDate = new Date(tomorrow).toLocaleString("en-CA").substring(0,10);
         console.log(this.minDate);
         this.index = 0;
+        this.myOpenPositionList = [];
+        this.activeOpenPositionList = [];
+        this.userService.getActiveOpenPositions(this.currentUserId).subscribe((response) => {
+            console.log(response);
+            this.activeOpenPositionList = response;
+        });
     }
 
     Submit() {
@@ -50,9 +62,38 @@ export class OpenPositionsComponent implements OnInit {
                     handleValidationErrors(error, this.openPositionForm);
                 },
                 () => {
-                    this.openPositionForm.reset();
                     this.ngOnInit();
                 },
             );
+    }
+
+    tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+        console.log('tabChangeEvent => ', tabChangeEvent);
+        console.log('index => ', tabChangeEvent.index);
+        if (tabChangeEvent.index===1){
+            this.getMyOpenPositions();
+        }else if (tabChangeEvent.index===0){
+            this.ngOnInit();
+        }
+    }
+
+    apply(openPositionId: number) {
+        let applicationForOpenPositionModel: ApplicationForOpenPositionModel = {
+            applicantId: this.currentUserId,
+            openPositionId: openPositionId
+        }
+        this.userService.applyToOpenPosition(applicationForOpenPositionModel).subscribe(()=>{},
+            ()=>{},
+            ()=>{this.ngOnInit()});
+    }
+
+    applicantList(id: number) {
+
+    }
+
+    getMyOpenPositions() {
+        this.userService.getMyOpenPositions(this.currentUserId).subscribe((response) => {
+            console.log(response);
+            this.myOpenPositionList = response});
     }
 }

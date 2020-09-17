@@ -1,29 +1,34 @@
 package com.progmasters.reactblog.controller;
 
+import com.progmasters.reactblog.domain.ApplicantForOpenPosition;
 import com.progmasters.reactblog.domain.OpenPosition;
-import com.progmasters.reactblog.domain.Suggestion;
+import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.dto.ApplicationForOpenPositionDto;
 import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
-import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
+import com.progmasters.reactblog.domain.dto.OpenPositionListItemDto;
+import com.progmasters.reactblog.service.ApplicantForOpenPositionService;
 import com.progmasters.reactblog.service.OpenPositionService;
+import com.progmasters.reactblog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/open-positions")
 public class OpenPositionController {
     private static final Logger logger = LoggerFactory.getLogger(OpenPositionController.class);
     private final OpenPositionService openPositionService;
+    private final UserService userService;
+    private final ApplicantForOpenPositionService applicantForOpenPositionService;
 
-    public OpenPositionController(OpenPositionService openPositionService) {
+    public OpenPositionController(OpenPositionService openPositionService, UserService userService, ApplicantForOpenPositionService applicantForOpenPositionService) {
         this.openPositionService = openPositionService;
+        this.userService = userService;
+        this.applicantForOpenPositionService = applicantForOpenPositionService;
     }
 
     @PostMapping
@@ -34,5 +39,39 @@ public class OpenPositionController {
         OpenPosition openPosition = openPositionService.saveOpenPosition(openPositionFormDto);
         System.out.println(openPosition.getDeadline());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/apply")
+    public ResponseEntity<Void> applyForOpenPosition(@RequestBody ApplicationForOpenPositionDto applicationForOpenPositionDto) {
+        logger.info("User with id:" + applicationForOpenPositionDto.getApplicantId() +
+                " applied for open position with id: " + applicationForOpenPositionDto.getOpenPositionId());
+        OpenPosition openPosition = openPositionService.findById(applicationForOpenPositionDto.getOpenPositionId());
+        User user = userService.findById(applicationForOpenPositionDto.getApplicantId());
+        ApplicantForOpenPosition applicantForOpenPosition = new ApplicantForOpenPosition(user,openPosition);
+        applicantForOpenPositionService.saveApplicant(applicantForOpenPosition);
+        logger.info("Application requested by user with id:" + user.getId() +
+                " to open position with id: " + openPosition.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/open-positions/{id}")
+    public ResponseEntity<List<OpenPositionListItemDto>> getActiveOpenPositions(@PathVariable("id") Long id) {
+        logger.info("Open position list requested");
+        List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getActiveOpenPositions(id);
+        return new ResponseEntity<>(openPositionListItemDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/my-open-positions/{id}")
+    public ResponseEntity<List<OpenPositionListItemDto>> getOpenPositionsWithUserId(@PathVariable("id") Long id) {
+        logger.info("Open position list requested with user id: " + id);
+        List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getOpenPositionsByUserId(id);
+        return new ResponseEntity<>(openPositionListItemDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/my-applications/{id}")
+    public ResponseEntity<List<OpenPositionListItemDto>> getMyApplications(@PathVariable("id") Long id) {
+        logger.info("Open position list requested with user id: " + id);
+        List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getOpenPositionsByUserId(id);
+        return new ResponseEntity<>(openPositionListItemDtos, HttpStatus.OK);
     }
 }
