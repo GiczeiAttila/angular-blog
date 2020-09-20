@@ -1,0 +1,77 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
+    <button aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="mat-app-background basic-container">
+    <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
+        <mat-form-field class="meeting-full-width">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput placeholder="Title">
+
+        </mat-form-field>
+
+        <mat-form-field class="meeting-full-width">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput placeholder="Meeting description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input [matAutocomplete]="auto"
+                   aria-label="Number"
+                   formControlName="participantsId"
+                   matInput
+                   placeholder="Type name"
+                   type="text">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let user of filteredOptions | async">
+                    {{user}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <label>Selected Users:</label>
+        <mat-list dense>
+            <mat-list-item *ngIf="selectedUsers?.length === 0">(None)</mat-list-item>
+            <mat-list-item *ngFor="let user of selectedUsers">
+                {{ user.userName }}
+            </mat-list-item>
+        </mat-list>
+
+
+        <mat-form-field class="meeting-full-width">
+            <mat-label>Select room</mat-label>
+            <mat-select formControlName="meetingRoomId" id="select-room">
+                <mat-option
+                    *ngFor="let room of meetingRoomList"
+                    [value]="room.roomId"
+                >{{room.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="request">
+            <mat-label>Pick start date</mat-label>
+            <input [placeholder]="startDate"
+                   disabled
+                   formControlName="startDate"
+                   matInput
+                   required
+                   type="date">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="request">
+            <mat-label class="endDate">Pick end date</mat-label>
+            <input formControlName="endDate"
+                   matInput
+                   placeholder="end date"
+                   required
+                   type="date">
+        </mat-form-field>
+
+
+        <div class="modal-footer">
+            <button mat-button mat-dialog-close type="button">Save</button>
+        </div>
+    </form>
+</div>
