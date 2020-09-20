@@ -17,12 +17,11 @@ import {TimeOffStatusChangeDto} from "../models/timeOffStatusChangeDto";
 import {OpenPositionFormModel} from "../models/openPositionForm.model";
 import {OpenPositionListItemModel} from "../models/openPositionListItem.model";
 import {ApplicationForOpenPositionModel} from "../models/applicationForOpenPosition.model";
-import {CalendarAcceptedTimeOffListDtoModel} from "../models/calendarAcceptedTimeOffListDto.model";
+import {CalendarTimeOffListDtoModel} from "../models/calendarTimeOffListDto.model";
 import {MeetingRoomFormDataModel} from "../models/meetingRoomFormData.model";
 import {MeetingReservationFormDataModel} from "../models/meetingReservationFormData.model";
 import {MeetingRoomOptionDtoModel} from "../models/meetingRoomOptionDto.model";
 import {UserForMeetingOptionDtoModel} from "../models/userForMeetingOptionDto.model";
-import {CalendarPendingTimeOffListDtoModel} from "../models/calendarPendingTimeOffListDto.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -114,12 +113,8 @@ export class UserService {
         return this.http.post(OPEN_POSITION_URL + '/apply', applicationForOpenPositionModel);
     }
 
-    getAcceptedTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarAcceptedTimeOffListDtoModel>> {
-        return this.http.get<Array<CalendarAcceptedTimeOffListDtoModel>>(REQUEST_BASE_URL + '/calendarAccepted/' + id);
-    }
-
-    getPendingTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarAcceptedTimeOffListDtoModel>> {
-        return this.http.get<Array<CalendarPendingTimeOffListDtoModel>>(REQUEST_BASE_URL + '/calendarPending/' + id);
+    getTimeOffListForCalendarByUserId(id: number): Observable<Array<CalendarTimeOffListDtoModel>> {
+        return this.http.get<Array<CalendarTimeOffListDtoModel>>(REQUEST_BASE_URL + '/calendar/' + id);
     }
 
     createMeetingRoom(meetingRoomFormData: MeetingRoomFormDataModel) {

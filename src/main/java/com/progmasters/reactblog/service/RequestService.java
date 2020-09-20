@@ -71,21 +71,15 @@ public class RequestService {
         }
     }
 
-    public List<CalendarAcceptedTimeOffListDto> getAcceptedTimeOffDates(Long id) {
-        TimeOffStatusEnum status = TimeOffStatusEnum.valueOf("ACCEPTED");
-        List<CalendarAcceptedTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findAccepted(status)
+    public List<CalendarTimeOffListDto> getAcceptedTimeOffDates(Long id) {
+        TimeOffStatusEnum status1 = TimeOffStatusEnum.valueOf("ACCEPTED");
+        TimeOffStatusEnum status2 = TimeOffStatusEnum.valueOf("PENDING");
+        List<CalendarTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findAccepted(status1, status2)
                 .stream()
-                .map(timeOff -> new CalendarAcceptedTimeOffListDto(timeOff))
+                .map(timeOff -> new CalendarTimeOffListDto(timeOff))
                 .collect(Collectors.toList());
         return listOfAll;
     }
 
-    public List<CalendarPendingTimeOffListDto> getPendingTimeOffDates(Long id) {
-        TimeOffStatusEnum status = TimeOffStatusEnum.valueOf("PENDING");
-        List<CalendarPendingTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findPending(status)
-                .stream()
-                .map(timeOff -> new CalendarPendingTimeOffListDto(timeOff))
-                .collect(Collectors.toList());
-        return listOfAll;
-    }
+
 }
