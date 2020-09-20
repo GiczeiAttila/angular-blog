@@ -23,7 +23,6 @@ export class FullcalendarComponent implements OnInit {
     ngOnInit(): void {
         this.userId = +localStorage.getItem('userId');
         this.loadTimeOffList();
-        //this.loadCalendar();
     }
 
     handleDateClick(arg) {
@@ -46,27 +45,21 @@ export class FullcalendarComponent implements OnInit {
             },
             error => console.log(error),
             () => {
-                this.calendarOptions = {
-                    initialView: 'dayGridMonth',
-                    dateClick: this.handleDateClick.bind(this),
-                    timeZone: 'UTC',
-                    events: this.timeOffList,
-                };
+                this.loadCalendar()
 
             }
         )
     }
 
-    /* loadCalendar() {
-         this.calendarOptions = {
-             initialView: 'dayGridMonth',
-             dateClick: this.handleDateClick.bind(this),
-             timeZone: 'UTC',
-             events: this.timeOffList,
-         };
-     }
+    loadCalendar() {
+        this.calendarOptions = {
+            initialView: 'dayGridMonth',
+            dateClick: this.handleDateClick.bind(this),
+            timeZone: 'UTC',
+            events: this.timeOffList,
+        };
+    }
 
-     */
 
 
 }
