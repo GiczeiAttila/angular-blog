@@ -20,7 +20,7 @@ public class TimeOffFormDataValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        TimeOffFormData date = (TimeOffFormData) o;
+        TimeOffFormData formData = (TimeOffFormData) o;
 
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -28,16 +28,17 @@ public class TimeOffFormDataValidator implements Validator {
         Date today;
         Date startDate;
 
-        if (date.getStartDate() == null || date.getStartDate().isEmpty()) {
+        if (formData.getStartDate() == null || formData.getStartDate().isEmpty()) {
             errors.rejectValue("startDate", "timeOff.startDate.required");
         }
 
-        if (date.getEndDate() == null || date.getEndDate().isEmpty()) {
+        if (formData.getEndDate() == null || formData.getEndDate().isEmpty()) {
             errors.rejectValue("endDate", "timeOff.endDate.required");
         } else {
             try {
-                today = format.parse(String.valueOf(new Date()));
-                startDate = format.parse(date.getStartDate());
+                String date = format.format(new Date());
+                today = format.parse(date);
+                startDate = format.parse(formData.getStartDate());
                 if (!startDate.after(today)) {
                     errors.rejectValue("startDate", "timeOff.startDate.beforeNow");
                 }

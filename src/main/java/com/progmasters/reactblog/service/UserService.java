@@ -4,6 +4,7 @@ import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
 import com.progmasters.reactblog.domain.dto.PasswordDto;
 import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
+import com.progmasters.reactblog.domain.dto.UserForMeetingOptionDto;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import com.progmasters.reactblog.repository.TimeOffDateRangeRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -81,4 +83,11 @@ public class UserService {
         return userRepository.findAllByWithActiveStatus(status);
     }
 
+    public List<UserForMeetingOptionDto> getUsers() {
+        List<UserForMeetingOptionDto> users = this.userRepository.findAll()
+                .stream()
+                .map(user -> new UserForMeetingOptionDto(user))
+                .collect(Collectors.toList());
+        return users;
+    }
 }

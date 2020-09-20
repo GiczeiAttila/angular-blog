@@ -70,14 +70,27 @@ public class RequestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("calendar/{id}")
-    public ResponseEntity<List<CalendarTimeOffListDto>> getTimeOffDatesForCalendar(@PathVariable Long id) {
-        List<CalendarTimeOffListDto> timeOffList;
+    @GetMapping("calendarAccepted/{id}")
+    public ResponseEntity<List<CalendarAcceptedTimeOffListDto>> getAcceptedTimeOffDates(@PathVariable Long id) {
+        List<CalendarAcceptedTimeOffListDto> acceptedTimeOffList;
         User actualUser = this.requestService.findUserById(id);
         if (actualUser != null) {
-            timeOffList = this.requestService.getTimeOffDates(id);
-            logger.info("Time off list for calendar is requested with id: " + id);
-            return new ResponseEntity<>(timeOffList, HttpStatus.OK);
+            acceptedTimeOffList = this.requestService.getAcceptedTimeOffDates(id);
+            logger.info("Accepted time off list for calendar is requested with id: " + id);
+            return new ResponseEntity<>(acceptedTimeOffList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("calendarPending/{id}")
+    public ResponseEntity<List<CalendarPendingTimeOffListDto>> getPendingTimeOffDates(@PathVariable Long id) {
+        List<CalendarPendingTimeOffListDto> pendingTimeOffList;
+        User actualUser = this.requestService.findUserById(id);
+        if (actualUser != null) {
+            pendingTimeOffList = this.requestService.getPendingTimeOffDates(id);
+            logger.info("Pending time off list for calendar is requested with id: " + id);
+            return new ResponseEntity<>(pendingTimeOffList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

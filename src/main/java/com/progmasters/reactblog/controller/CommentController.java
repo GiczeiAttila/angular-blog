@@ -66,13 +66,11 @@ public class CommentController {
         List<CommentDetails> comments;
         if (actualPost != null) {
             comments = this.commentService.findAllComments(id);
+            logger.info("Requested comments by post id: " + id);
             return new ResponseEntity<>(comments, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
     }
-
 
 }

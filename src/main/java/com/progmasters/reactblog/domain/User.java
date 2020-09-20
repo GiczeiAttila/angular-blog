@@ -48,8 +48,9 @@ public class User {
     @OneToMany(mappedBy = "creator")
     private List<MeetingReservation> ownReservation;
 
-    @OneToMany(mappedBy = "meetingReservation")
-    private List<MeetingParticipent> allMeeting;
+    @OneToMany(mappedBy = "user")
+    private List<MeetingParticipant> meetingParticipantList;
+
 
     public User() {
     }
@@ -67,6 +68,8 @@ public class User {
         this.numberOfLoginAttempts = 0L;
         this.suggestionList = new ArrayList<>();
         this.suggestionVoteList = new ArrayList<>();
+        this.ownReservation = new ArrayList<>();
+        this.meetingParticipantList = new ArrayList<>();
 
     }
 
@@ -182,14 +185,6 @@ public class User {
         this.ownReservation = ownReservation;
     }
 
-    public List<MeetingParticipent> getAllMeeting() {
-        return allMeeting;
-    }
-
-    public void setAllMeeting(List<MeetingParticipent> allMeeting) {
-        this.allMeeting = allMeeting;
-    }
-
     public List<Suggestion> getSuggestionList() {
         return suggestionList;
     }
@@ -212,5 +207,13 @@ public class User {
 
     public void setTimeOffDateRangeList(List<TimeOffDateRange> timeOffDateRangeList) {
         this.timeOffDateRangeList = timeOffDateRangeList;
+    }
+
+    public List<MeetingParticipant> getMeetingParticipantList() {
+        return meetingParticipantList;
+    }
+
+    public void setMeetingParticipantList(List<MeetingParticipant> meetingParticipantList) {
+        this.meetingParticipantList = meetingParticipantList;
     }
 }

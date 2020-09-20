@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendarOptions} from '@fullcalendar/angular';
 import {UserService} from "../../services/user.service";
-import {CalendarTimeOffListDtoModel} from "../../models/calendarTimeOffListDto.model";
+import {CalendarAcceptedTimeOffListDtoModel} from "../../models/calendarAcceptedTimeOffListDto.model";
+import {CalendarPendingTimeOffListDtoModel} from "../../models/calendarPendingTimeOffListDto.model";
 
 
 @Component({
@@ -12,8 +13,11 @@ import {CalendarTimeOffListDtoModel} from "../../models/calendarTimeOffListDto.m
 export class FullcalendarComponent implements OnInit {
 
     userId: number;
-    timeOffList: CalendarTimeOffListDtoModel[];
+    //timeOffList = [];
+    acceptedTimeOffList: CalendarAcceptedTimeOffListDtoModel[];
+    pendingTimeOffList: CalendarAcceptedTimeOffListDtoModel[];
     calendarOptions: CalendarOptions;
+    calendarEvents = [];
 
 
     constructor(private userService: UserService) {
@@ -22,7 +26,7 @@ export class FullcalendarComponent implements OnInit {
     ngOnInit(): void {
         this.userId = +localStorage.getItem('userId');
         this.loadTimeOffList();
-        this.loadCalendar()
+        this.loadCalendar();
     }
 
     handleDateClick(arg) {
@@ -31,11 +35,26 @@ export class FullcalendarComponent implements OnInit {
     }
 
     loadTimeOffList() {
-        this.userService.getTimeOffListForCalendarByUserId(this.userId).subscribe(
-            (list: CalendarTimeOffListDtoModel[]) => this.timeOffList = list,
+        this.userService.getAcceptedTimeOffListForCalendarByUserId(this.userId).subscribe(
+            (list: CalendarAcceptedTimeOffListDtoModel[]) => {
+                list.forEach(timeOffData => {
+                    if (timeOffData.title.includes("Accepted")) {
+
+                    }
+                })
+            },
             error => console.log(error),
             () => this.loadCalendar()
         )
+
+        this.userService.getPendingTimeOffListForCalendarByUserId(this.userId).subscribe(
+            (list: CalendarPendingTimeOffListDtoModel[]) => {
+                this.pendingTimeOffList = list;
+            },
+            error => console.log(error)
+        )
+
+        this.concatEvents();
     }
 
     loadCalendar() {
@@ -43,9 +62,13 @@ export class FullcalendarComponent implements OnInit {
             initialView: 'dayGridMonth',
             dateClick: this.handleDateClick.bind(this),
             timeZone: 'UTC',
-            events: this.timeOffList,
-
+            events: this.calendarEvents,
         };
+    }
+
+    concatEvents() {
+        this.calendarEvents = this.acceptedTimeOffList;
+        this.calendarEvents = this.calendarEvents.concat(this.pendingTimeOffList);
     }
 
 }
