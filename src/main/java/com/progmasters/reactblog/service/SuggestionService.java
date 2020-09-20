@@ -50,22 +50,23 @@ public class SuggestionService {
         return suggestion;
     }
 
-    public Suggestion saveVote(SuggestionVoteDto suggestionVoteDto) {
+    public SuggestionVote saveVote(SuggestionVoteDto suggestionVoteDto) {
         Optional<Suggestion> suggestionOptional = suggestionRepository.findById(suggestionVoteDto.getSuggestionId());
         if (suggestionOptional.isPresent()){
+            SuggestionVote suggestionVote;
             Suggestion suggestion = suggestionOptional.get();
             Optional<SuggestionVote> optionalSuggestionVote = suggestionVoteRepository.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(), suggestionVoteDto.getSuggestionId());
             if (optionalSuggestionVote.isPresent()){
-                SuggestionVote suggestionVote = optionalSuggestionVote.get();
+                suggestionVote = optionalSuggestionVote.get();
                 suggestionVote.setVote(VoteType.valueOf(suggestionVoteDto.getVote()));
             }else{
                 User user = userService.findById(suggestionVoteDto.getVotingUserId());
-                SuggestionVote suggestionVote = new SuggestionVote(suggestionVoteDto,suggestion,user);
+                suggestionVote = new SuggestionVote(suggestionVoteDto,suggestion,user);
                 suggestionVoteRepository.save(suggestionVote);
             }
             logger.info("Suggestion with id: " + suggestion.getId() +
                     " has received a vote");
-            return suggestion;
+            return suggestionVote;
         }
         return null;
     }

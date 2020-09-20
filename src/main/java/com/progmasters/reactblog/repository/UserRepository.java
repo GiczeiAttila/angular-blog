@@ -16,5 +16,5 @@ import java.util.List;
 @Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.userStatus = :status")
-    List<User> findAllByWithActiveStatus(@Param("status") UserStatusEnum status);
+    List<User> findAllByStatus(@Param("status") UserStatusEnum status);
 }

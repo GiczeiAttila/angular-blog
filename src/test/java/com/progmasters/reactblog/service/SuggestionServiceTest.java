@@ -82,23 +82,45 @@ class SuggestionServiceTest {
         verifyNoMoreInteractions(userServiceMock);
     }
 
-   /* @Test
-    void saveVoteWithoutPreviousVote() {
+    @ParameterizedTest
+    @EnumSource(VoteType.class)
+    void saveVoteWithoutPreviousVote(VoteType voteType) {
         SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
         suggestionVoteDto.setSuggestionId(1L);
         suggestionVoteDto.setVotingUserId(1L);
+        suggestionVoteDto.setVote(voteType.toString());
+     //   User user = UserFactory.getUser(1L);
+        SuggestionVote suggestionVote = new SuggestionVote();
+        Suggestion suggestion = new Suggestion();
+        suggestion.setId(1L);
+        when(suggestionRepositoryMock.findById(suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestion));
+        when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestionVote));
+    //    when(userServiceMock.findById(suggestionVoteDto.getVotingUserId())).thenReturn(user);
+
+        SuggestionVote savedSuggestionVote = suggestionService.saveVote(suggestionVoteDto);
+
+        Assertions.assertEquals(voteType, savedSuggestionVote.getVote());
+    }
+
+    @ParameterizedTest
+    @EnumSource(VoteType.class)
+    void saveVoteWithPreviousVote(VoteType voteType) {
+        SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
+        suggestionVoteDto.setSuggestionId(1L);
+        suggestionVoteDto.setVotingUserId(1L);
+        suggestionVoteDto.setVote(voteType.toString());
         User user = UserFactory.getUser(1L);
         SuggestionVote suggestionVote = new SuggestionVote();
         Suggestion suggestion = new Suggestion();
+        suggestion.setId(1L);
         when(suggestionRepositoryMock.findById(suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestion));
-        when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestionVote));
+        when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.empty());
         when(userServiceMock.findById(suggestionVoteDto.getVotingUserId())).thenReturn(user);
 
-        Suggestion resultSuggestion = suggestionService.saveVote(suggestionVoteDto);
+        SuggestionVote savedSuggestionVote = suggestionService.saveVote(suggestionVoteDto);
 
-        Assertions.assertEquals();
-
-    }*/
+        Assertions.assertEquals(voteType, savedSuggestionVote.getVote());
+    }
 
 
 
