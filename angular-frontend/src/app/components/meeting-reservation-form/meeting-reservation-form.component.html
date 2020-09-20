@@ -53,7 +53,7 @@
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
         (dayHeaderClicked)="clickedDate = $event.day.date"
-        (hourSegmentClicked)="clickOnHourSegment($event.date, mymodal)"
+        (hourSegmentClicked)="clickOnHourSegment($event.date)"
         *ngSwitchCase="'week'"
         [events]="events"
         [viewDate]="viewDate"
@@ -69,7 +69,7 @@
 </div>
 
 
-<ng-template #mymodal class="normal-form" let-modal>
+<!--<ng-template #mymodal class="normal-form" let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
         <button aria-label="Close" class="close" type="button">
@@ -89,17 +89,11 @@
                 <textarea formControlName="description" matInput placeholder="Meeting description"></textarea>
             </mat-form-field>
 
-            <!--<mat-form-field>
-                <mat-label>Number of participants</mat-label>
-                <input matInput type="number" formControlName="seats">
 
-            </mat-form-field>
-            -->
-
-            <mat-form-field class="meeting-full-width">
-                <mat-label>Select room</mat-label>
-                <mat-select formControlName="meetingRoomId">
-                    <mat-option
+            <mat-form-field class="meeting-full-width" >
+                <mat-label>Select room</mat-label >
+                <mat-select formControlName="meetingRoomId" id="select-room">
+                    <mat-option i
                         *ngFor="let room of meetingRoomList"
                         [value]="room.roomId"
                     >{{room.name}}</mat-option>
@@ -111,7 +105,7 @@
     </div>
 
 
-    <!--</div>
+    </div>
     <form [formGroup]="meetingRequestForm" (ngSubmit)="saveMeeting()">
         <div class="form-group">
             <label for="title">Title</label>
@@ -129,9 +123,9 @@
 
 
 
-    </form>-->
+    </form>
     <div class="modal-footer">
         <button (click)="modal.close('Save click')" class="btn btn-outline-dark" type="button">Save</button>
     </div>
-</ng-template>
+</ng-template>-->
 

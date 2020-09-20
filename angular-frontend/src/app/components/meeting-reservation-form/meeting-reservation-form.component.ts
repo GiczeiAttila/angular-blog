@@ -5,6 +5,10 @@ import {CalendarEvent, CalendarEventTitleFormatter, CalendarView} from 'angular-
 import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto.model";
 import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {MatDialog} from '@angular/material/dialog';
+import {MeetingDialodComponent} from "../meeting-dialod/meeting-dialod.component";
+import * as moment from 'moment';
+
 
 @Injectable()
 export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
@@ -36,6 +40,7 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
 })
 export class MeetingReservationFormComponent implements OnInit {
 
+
     meetingRequestForm: FormGroup;
     userList: UserForMeetingOptionDtoModel[];
     meetingRoomList: MeetingRoomOptionDtoModel[];
@@ -48,12 +53,12 @@ export class MeetingReservationFormComponent implements OnInit {
     events: CalendarEvent[] = [];
     clickedDate: Date;
     clickedColumn: number;
-    meetingFormIsOpen: boolean = false;
 
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                private dialog: MatDialog) {
         this.meetingRequestForm = formBuilder.group({
             title: [''],
             description: [''],
@@ -88,13 +93,20 @@ export class MeetingReservationFormComponent implements OnInit {
         )
     }
 
-
-    clickOnHourSegment(date: Date, content) {
+    clickOnHourSegment(date: Date) {
         this.clickedDate = date;
-        this.modalService.open(content);
+        const format = "YYYY-MM-DD HH:mm:ss";
+        let usingDate = moment(date).format(format);
+        this.userService.clickedDateSubject.next(usingDate);
+        console.log(date);
+        console.log(usingDate);
+        //this.modalService.open(content);
+
+        const dialogRef = this.dialog.open(MeetingDialodComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 
-    saveMeeting() {
-
-    }
 }

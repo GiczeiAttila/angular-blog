@@ -34,6 +34,7 @@ const MEETING_URL: string = environment.BASE_URL + '/api/meetings';
 export class UserService {
 
     loginSubject: Subject<any> = new Subject<any>();
+    clickedDateSubject: Subject<any> = new Subject<any>();
 
     constructor(private http: HttpClient) {
     }
