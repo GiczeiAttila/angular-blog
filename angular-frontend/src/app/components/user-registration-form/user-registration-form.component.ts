@@ -18,8 +18,6 @@ export class UserRegistrationFormComponent implements OnInit {
             lastName: [''],
             email: [''],
             phoneNumber: [''],
-            // password: [''],
-            // password2: [''],
         });
 
     constructor(private formBuilder: FormBuilder,

@@ -30,7 +30,7 @@ public class EmailSenderService {
     @Async
     public void sendRegistrationConfirmationEmail(String toAddress, String token, Long id) {
         String mailBody =
-                "You registration information for confirmation: \n" +
+                "Your registration information for confirmation: \n" +
                         "Id: " + id + "\n" +
                         "Token: " + token + "\n" +
                         "You can confirm your registration by clicking the link below\n" +
@@ -112,15 +112,6 @@ public class EmailSenderService {
     }
 
     @Async
-    public void sendMail(String toAddress, String subject, String mailBody) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(toAddress);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(mailBody);
-        javaMailSender.send(mailMessage);
-    }
-
-    @Async
     public void sendNewOpenPositionNotificationEmail(OpenPosition openPosition, List<User> userList) {
         String subject = "New open position";
         String mailBodyEnd =
@@ -134,5 +125,14 @@ public class EmailSenderService {
             sendMail(user.getEmail(), subject, mailBody);
         }
         logger.info("New open position notification emails sent for open position id: " + openPosition.getId());
+    }
+
+    @Async
+    public void sendMail(String toAddress, String subject, String mailBody) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(toAddress);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(mailBody);
+        javaMailSender.send(mailMessage);
     }
 }

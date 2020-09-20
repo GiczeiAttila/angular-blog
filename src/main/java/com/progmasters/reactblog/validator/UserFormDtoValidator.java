@@ -29,7 +29,6 @@ public class UserFormDtoValidator implements Validator {
         validateUserFirstName(userFormDto.getFirstName(), errors);
         validateUserLastName(userFormDto.getLastName(), errors);
         validateUserEmail(userFormDto.getEmail(), errors);
-//        validateUserPassword(userFormDto.getPassword(), errors);
         validateUserPhoneNumber(userFormDto.getPhoneNumber(), errors);
     }
 
