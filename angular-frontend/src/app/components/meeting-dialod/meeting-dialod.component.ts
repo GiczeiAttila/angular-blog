@@ -58,11 +58,16 @@ export class MeetingDialodComponent implements OnInit {
                 this.userList = userList;
                 console.log(userList)
             },
-            error => console.log(error)
+            error => console.log(error),
+            ()=>{
+                this.userList.forEach((user) => {
+                    this.options.unshift(user.userName);
+                });
+                console.log(this.userList);
+                console.log(this.options);
+            }
         )
-        this.userList.forEach((user) => {
-            this.options.unshift(user.userName);
-        })
+
     }
 
     loadMeetingRoomList() {
