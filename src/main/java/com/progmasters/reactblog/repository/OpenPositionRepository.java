@@ -19,7 +19,7 @@ public interface OpenPositionRepository extends JpaRepository<OpenPosition, Long
 //
     @Query("SELECT NEW com.progmasters.reactblog.domain.dto.OpenPositionListItemDto(o) " +
             " FROM OpenPosition o WHERE :today < o.deadline AND o.user.id <>:userId AND" +
-            " 0 = (SELECT COUNT(a) FROM o.applicants a where a.applicant.id = :userId) ")
+            " 0 = (SELECT COUNT(a) FROM o.applicants a WHERE a.applicant.id = :userId) ")
     List<OpenPositionListItemDto> findAllActiveOpenPosition(@Param("today") Date today, @Param("userId") Long userId);
 
     @Query("SELECT  NEW com.progmasters.reactblog.domain.dto.OpenPositionListItemDto(o) " +

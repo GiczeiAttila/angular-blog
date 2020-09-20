@@ -25,35 +25,33 @@ public class User {
 
 
     @OneToMany(mappedBy = "author")
-    private List<Post> myPosts;
+    private List<Post> myPosts  = new ArrayList<>();
 
     @OneToMany(mappedBy = "author")
-    private List<Comment> myComments;
+    private List<Comment> myComments  = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Suggestion> suggestionList;
+    private List<Suggestion> suggestionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<SuggestionVote> suggestionVoteList;
+    private List<SuggestionVote> suggestionVoteList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<TimeOffDateRange> timeOffDateRangeList;
+    private List<TimeOffDateRange> timeOffDateRangeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<OpenPosition> openPositionList;
+    private List<OpenPosition> openPositionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "applicant")
-    private List<ApplicantForOpenPosition> applicantForOpenPositionList;
+    private List<ApplicantForOpenPosition> applicantForOpenPositionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "creator")
-    private List<MeetingReservation> ownReservation;
+    private List<MeetingReservation> ownReservation = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<MeetingParticipant> meetingParticipantList;
+    private List<MeetingParticipant> meetingParticipantList = new ArrayList<>();
 
-
-    public User() {
-    }
+    public User() {}
 
     public User(UserFormDto userFormDto) {
         this.id = userFormDto.getId();
@@ -63,8 +61,6 @@ public class User {
         this.phoneNumber = userFormDto.getPhoneNumber();
         this.userStatus = UserStatusEnum.REGISTERED;
         this.token = UUID.randomUUID().toString();
-        this.myPosts = new ArrayList<>();
-        this.myComments = new ArrayList<>();
         this.numberOfLoginAttempts = 0L;
         this.suggestionList = new ArrayList<>();
         this.suggestionVoteList = new ArrayList<>();

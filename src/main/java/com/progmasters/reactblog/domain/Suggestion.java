@@ -23,13 +23,12 @@ public class Suggestion {
     private SuggestionStatusEnum status;
 
     @OneToMany(mappedBy = "suggestion")
-    private List<SuggestionVote> voteList;
+    private List<SuggestionVote> voteList = new ArrayList<>();
     
     public Suggestion(SuggestionFormDto suggestionFormDto, User user) {
         this.title = suggestionFormDto.getTitle();
         this.description = suggestionFormDto.getDescription();
         this.status = SuggestionStatusEnum.ACTIVE;
-        this.voteList = new ArrayList<>();
         this.user = user;
     }
 

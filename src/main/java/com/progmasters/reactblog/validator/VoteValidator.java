@@ -32,7 +32,7 @@ public class VoteValidator implements Validator {
         SuggestionVoteDto suggestionVoteDto = (SuggestionVoteDto) target;
         Long votingUserId = suggestionVoteDto.getVotingUserId();
         User votingUser = userService.findById(votingUserId);
-        Suggestion suggestion = suggestionService.findById(suggestionVoteDto.getSuggestionId());
+        Suggestion suggestion = suggestionService.findSuggestionById(suggestionVoteDto.getSuggestionId());
         if (suggestion == null){
             errors.reject("voteDto.wrong-suggestion-id");
         }else if (suggestion.getStatus() != SuggestionStatusEnum.ACTIVE){

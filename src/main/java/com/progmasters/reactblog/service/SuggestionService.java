@@ -37,6 +37,10 @@ public class SuggestionService {
 
     public Suggestion saveSuggestion(SuggestionFormDto suggestionFormDto) {
         User user = userService.findById(suggestionFormDto.getUserId());
+        if (user==null){
+            logger.info("Creat suggestion with user id: " + suggestionFormDto.getUserId() + " failed because there are no user with given id");
+            return null;
+        }
         Suggestion suggestion = suggestionRepository.save(new Suggestion(suggestionFormDto, user));
         if (suggestion.getId() != null) {
             List<User> userList = userService.findAllUsersWithStatus(UserStatusEnum.ACTIVE);
@@ -89,7 +93,7 @@ public class SuggestionService {
         }
     }
 
-    public Suggestion findById(Long suggestionId) {
+    public Suggestion findSuggestionById(Long suggestionId) {
        Optional<Suggestion> suggestionOptional = suggestionRepository.findById(suggestionId);
        if (suggestionOptional.isPresent()){
            return suggestionOptional.get();
