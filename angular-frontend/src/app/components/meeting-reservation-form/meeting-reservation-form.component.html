@@ -1,3 +1,137 @@
-<full-calendar>
-    [options]="calendarOptions"
-</full-calendar>
+<div class="row">
+    <div class="col-md-6">
+        <div class="btn-group">
+            <div
+                [(viewDate)]="viewDate"
+                [view]="'week'"
+                class="btn btn-primary"
+                mwlCalendarPreviousView
+            >
+                Previous
+            </div>
+            <div
+                [(viewDate)]="viewDate"
+                class="btn btn-outline-secondary"
+                mwlCalendarToday
+            >
+                Today
+            </div>
+            <div
+                [(viewDate)]="viewDate"
+                [view]="'week'"
+                class="btn btn-primary"
+                mwlCalendarNextView
+            >
+                Next
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 text-right">
+        <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
+    </div>
+</div>
+<br/>
+
+<div class="alert alert-info">
+    Click on a day or time slot on the view.
+    <strong *ngIf="clickedDate"
+    >You clicked on this time: {{ clickedDate | date:'medium' }}</strong
+    >
+    <strong *ngIf="clickedColumn != null"
+    >You clicked on this column: {{ clickedColumn }}</strong
+    >
+</div>
+
+<div [ngSwitch]="view">
+    <mwl-calendar-month-view
+        (columnHeaderClicked)="clickedColumn = $event.isoDayNumber"
+        (dayClicked)="clickedDate = $event.day.date"
+        *ngSwitchCase="'month'"
+        [events]="events"
+        [viewDate]="viewDate"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+        (dayHeaderClicked)="clickedDate = $event.day.date"
+        (hourSegmentClicked)="clickOnHourSegment($event.date, mymodal)"
+        *ngSwitchCase="'week'"
+        [events]="events"
+        [viewDate]="viewDate"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+        (hourSegmentClicked)="clickedDate = $event.date"
+        *ngSwitchCase="'day'"
+        [events]="events"
+        [viewDate]="viewDate"
+    >
+    </mwl-calendar-day-view>
+</div>
+
+
+<ng-template #mymodal class="normal-form" let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
+        <button aria-label="Close" class="close" type="button">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="mat-app-background basic-container">
+        <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" matInput placeholder="Title">
+
+            </mat-form-field>
+
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput placeholder="Meeting description"></textarea>
+            </mat-form-field>
+
+            <!--<mat-form-field>
+                <mat-label>Number of participants</mat-label>
+                <input matInput type="number" formControlName="seats">
+
+            </mat-form-field>
+            -->
+
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Select room</mat-label>
+                <mat-select formControlName="meetingRoomId">
+                    <mat-option
+                        *ngFor="let room of meetingRoomList"
+                        [value]="room.roomId"
+                    >{{room.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        </form>
+    </div>
+
+
+    <!--</div>
+    <form [formGroup]="meetingRequestForm" (ngSubmit)="saveMeeting()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input
+                type="text"
+                id="title"
+                formControlName="title"
+                class="form-control"
+            >
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+        </div>
+
+
+
+    </form>-->
+    <div class="modal-footer">
+        <button (click)="modal.close('Save click')" class="btn btn-outline-dark" type="button">Save</button>
+    </div>
+</ng-template>
+

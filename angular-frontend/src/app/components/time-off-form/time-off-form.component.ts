@@ -25,11 +25,7 @@ export class TimeOffFormComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService) {
 
-        this.timeOffForm = this.formBuilder.group({
-            userId: [],
-            startDate: [''],
-            endDate: ['']
-        });
+        this.createForm();
     }
 
     ngOnInit() {
@@ -47,6 +43,14 @@ export class TimeOffFormComponent implements OnInit {
         this.startDateChanged();
     }
 
+    createForm() {
+        this.timeOffForm = this.formBuilder.group({
+            userId: [],
+            startDate: [''],
+            endDate: ['']
+        });
+    }
+
     saveDate() {
         let actualForm: TimeOffDateRangeDataModel = this.timeOffForm.value;
         actualForm.userId = this.userId;
@@ -57,6 +61,12 @@ export class TimeOffFormComponent implements OnInit {
             error => {
                 console.log(error);
                 handleValidationErrors(error, this.timeOffForm)
+            },
+            () => {
+                this.pendingTimeOffList = [];
+                this.timeOffForm.reset();
+                this.ngOnInit();
+                this.index = 2;
             }
         )
     }
@@ -69,7 +79,7 @@ export class TimeOffFormComponent implements OnInit {
                         this.acceptedTimeOffList.unshift(timeOffListModel);
                     } else if (timeOffListModel.status == 'PENDING') {
                         this.pendingTimeOffList.unshift(timeOffListModel);
-                    } else {
+                    } else if (timeOffListModel.status == 'REJECTED') {
                         this.rejectedTimeOffList.unshift(timeOffListModel);
                     }
                 })

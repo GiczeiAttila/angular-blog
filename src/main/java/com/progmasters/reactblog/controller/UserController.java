@@ -1,10 +1,7 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.PasswordDto;
-import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
-import com.progmasters.reactblog.domain.dto.UserFormDto;
-import com.progmasters.reactblog.domain.dto.UserLogInFormDto;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.UserService;
 import com.progmasters.reactblog.validator.LoginValidator;
 import com.progmasters.reactblog.validator.PasswordValidator;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -96,6 +94,16 @@ public class UserController {
 //        session.invalidate();
         logger.info("User logged out");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserForMeetingOptionDto>> getAllUser() {
+        List<UserForMeetingOptionDto> users = this.userService.getUsers();
+        if (users != null) {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

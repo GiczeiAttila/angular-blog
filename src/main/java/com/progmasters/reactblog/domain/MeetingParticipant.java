@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "meeting_participent")
-public class MeetingParticipent {
+public class MeetingParticipant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,14 @@ public class MeetingParticipent {
     @ManyToOne
     @JoinColumn(name = "meeting_id")
     private MeetingReservation meetingReservation;
+
+    public MeetingParticipant() {
+    }
+
+    public MeetingParticipant(User user, MeetingReservation meetingReservation) {
+        this.user = user;
+        this.meetingReservation = meetingReservation;
+    }
 
 
     public Long getId() {
@@ -43,4 +51,5 @@ public class MeetingParticipent {
     public void setMeetingReservation(MeetingReservation meetingReservation) {
         this.meetingReservation = meetingReservation;
     }
+
 }

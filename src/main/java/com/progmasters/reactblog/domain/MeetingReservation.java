@@ -1,7 +1,11 @@
 package com.progmasters.reactblog.domain;
 
+import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,12 +33,24 @@ public class MeetingReservation {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToMany(mappedBy = "user")
-    private List<MeetingParticipent> participants;
+    @OneToMany(mappedBy = "meetingReservation")
+    private List<MeetingParticipant> participants = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "meeting_room_id")
     private MeetingRoom meetingRoom;
+
+    public MeetingReservation() {
+    }
+
+    public MeetingReservation(MeetingReservationFormData meetingReservationFormData, User creator, MeetingRoom meetingRoom) {
+        this.title = meetingReservationFormData.getTitle();
+        this.description = meetingReservationFormData.getDescription();
+        this.startDate = LocalDateTime.parse(meetingReservationFormData.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.endDate = LocalDateTime.parse(meetingReservationFormData.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.creator = creator;
+        this.meetingRoom = meetingRoom;
+    }
 
 
     public Long getId() {
@@ -85,11 +101,11 @@ public class MeetingReservation {
         this.creator = creator;
     }
 
-    public List<MeetingParticipent> getParticipants() {
+    public List<MeetingParticipant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<MeetingParticipent> participants) {
+    public void setParticipants(List<MeetingParticipant> participants) {
         this.participants = participants;
     }
 
@@ -100,4 +116,6 @@ public class MeetingReservation {
     public void setMeetingRoom(MeetingRoom meetingRoom) {
         this.meetingRoom = meetingRoom;
     }
+
+
 }

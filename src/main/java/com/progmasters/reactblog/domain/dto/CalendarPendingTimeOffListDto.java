@@ -5,22 +5,22 @@ import com.progmasters.reactblog.domain.TimeOffDateRange;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class CalendarTimeOffListDto {
+public class CalendarPendingTimeOffListDto {
 
     private String color;
     private String title;
     private String start;
     private String end;
 
-    public CalendarTimeOffListDto() {
+    public CalendarPendingTimeOffListDto() {
     }
 
-    public CalendarTimeOffListDto(TimeOffDateRange timeOff) {
-        this.title = "Time off";
+    public CalendarPendingTimeOffListDto(TimeOffDateRange timeOff) {
+        this.title = "Time off - Pending";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.start = dateFormat.format(timeOff.getStartDate());
         this.end = dateFormat.format(timeOff.getEndDate());
-        this.color = "#2398AB";
+        this.color = "#939598";
     }
 
 
@@ -55,4 +55,5 @@ public class CalendarTimeOffListDto {
     public void setColor(String color) {
         this.color = color;
     }
+
 }

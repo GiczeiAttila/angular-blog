@@ -1,4 +1,4 @@
-export interface CalendarTimeOffListDtoModel {
+export interface CalendarAcceptedTimeOffListDtoModel {
 
     color: string;
     title: string;
