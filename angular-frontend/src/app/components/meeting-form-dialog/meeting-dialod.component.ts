@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto.model";
 import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 import {UserService} from "../../services/user.service";
@@ -19,6 +19,7 @@ export class MeetingDialodComponent implements OnInit {
     startDate;
     countParticipants = 1;
     selectedUsers: Array<number>;
+    showSelectedUsers: Array<string>;
     filteredOptions: Observable<string[]>;
     options: Array<string> = [];
     userId: number;
@@ -31,7 +32,7 @@ export class MeetingDialodComponent implements OnInit {
             startDate: [''],
             endDate: [''],
             creatorId: [],
-            participantsId: FormControl,
+            participantsId: [''],
             meetingRoomId: []
         })
 
@@ -99,9 +100,6 @@ export class MeetingDialodComponent implements OnInit {
 
     }
 
-    saveUserId(userId: number) {
-        this.selectedUsers.unshift(userId);
-    }
 
     private filter(value: string): string[] {
         /* const regex = /\b[A-Z]{2,}\b/g;
@@ -111,5 +109,16 @@ export class MeetingDialodComponent implements OnInit {
 
          */
         return this.options.filter(option => option.includes(value));
+    }
+
+    addUserToShow() {
+        if (this.meetingRequestForm.get('participantsId').value !== '') {
+            const actualUser = this.meetingRequestForm.get('participantsId').value;
+            this.showSelectedUsers.unshift(actualUser.userName);
+            this.selectedUsers.unshift(actualUser.userId);
+            console.log(this.showSelectedUsers);
+            console.log(this.selectedUsers);
+            this.meetingRequestForm.get('participantsId').setValue('');
+        }
     }
 }

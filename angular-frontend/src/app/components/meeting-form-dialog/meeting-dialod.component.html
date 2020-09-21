@@ -20,17 +20,21 @@
         <mat-form-field class="example-full-width">
             <mat-label>Select participants</mat-label>
             <mat-select placeholder="Type a name">
-                <mat-option (onSelectionChange)="saveUserId(user.userId)" *ngFor="let user of userList"
-                            [value]="user.userName">
+                <mat-option *ngFor="let user of userList"
+                            [value]="user">
                     {{user.userName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <span (click)="addUserToShow()" class="material-icons">
+        add
+        </span>
 
+        <br>
         <label>Selected Users:</label>
         <mat-list dense>
-            <mat-list-item *ngIf="selectedUsers?.length === 0">(None)</mat-list-item>
-            <mat-list-item *ngFor="let user of selectedUsers">
+            <mat-list-item *ngIf="showSelectedUsers?.length === 0">(None)</mat-list-item>
+            <mat-list-item *ngFor="let user of showSelectedUsers">
                 {{ user }}
             </mat-list-item>
         </mat-list>

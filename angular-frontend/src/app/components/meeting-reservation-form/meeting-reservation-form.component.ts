@@ -6,7 +6,7 @@ import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto
 import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {MatDialog} from '@angular/material/dialog';
-import {MeetingDialodComponent} from "../meeting-dialod/meeting-dialod.component";
+import {MeetingDialodComponent} from "../meeting-form-dialog/meeting-dialod.component";
 import * as moment from 'moment';
 
 
