@@ -20,12 +20,18 @@
 </div>
 -->
 <div class="button-group">
-    <button (click)="changeCategory('ALL')" class="btn btn-outline-info" type="button">All</button>&nbsp;
-    <button (click)="changeCategory('CORPORATE')" class="btn btn-outline-info" type="button">Corporate News</button>&nbsp;
-    <button (click)="changeCategory('FREE_TIME_ACTIVITIES')" class="btn btn-outline-info" type="button">Free Time
+    <button (click)="changeCategory('ALL')" aria-checked="true" aria-pressed="true" class="btn btn-outline-info active"
+            type="button">All
+    </button>&nbsp;
+    <button (click)="changeCategory('CORPORATE')" aria-pressed="true" class="btn btn-outline-info active" type="button">
+        Corporate News
+    </button>&nbsp;
+    <button (click)="changeCategory('FREE_TIME_ACTIVITIES')" aria-pressed="true" class="btn btn-outline-info active"
+            type="button">Free Time
         Activities
     </button>&nbsp;
-    <button (click)="changeCategory('PROFESSIONAL')" class="btn btn-outline-info" type="button">Professional News
+    <button (click)="changeCategory('PROFESSIONAL')" aria-pressed="true" class="btn btn-outline-info active"
+            type="button">Professional News
     </button>
 </div>
 

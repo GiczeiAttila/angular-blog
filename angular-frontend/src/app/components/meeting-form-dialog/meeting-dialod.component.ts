@@ -4,7 +4,7 @@ import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto
 import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 import {UserService} from "../../services/user.service";
 import {Observable} from "rxjs";
-import {map, startWith} from 'rxjs/operators';
+import {handleValidationErrors} from "../../shared/validation.handler";
 
 @Component({
     selector: 'app-meeting-dialod',
@@ -18,7 +18,8 @@ export class MeetingDialodComponent implements OnInit {
     meetingRoomList: MeetingRoomOptionDtoModel[];
     startDate;
     countParticipants = 1;
-    selectedUsers: UserForMeetingOptionDtoModel[];
+    selectedUsers: Array<number>;
+    showSelectedUsers: Array<string>;
     filteredOptions: Observable<string[]>;
     options: Array<string> = [];
     userId: number;
@@ -31,25 +32,31 @@ export class MeetingDialodComponent implements OnInit {
             startDate: [''],
             endDate: [''],
             creatorId: [],
-            participantsId: [],
+            participantsId: [''],
             meetingRoomId: []
         })
 
     }
 
+
     ngOnInit(): void {
         this.userId = +localStorage.getItem('userId');
 
         this.userService.clickedDateSubject.subscribe(
-            time => this.startDate = time
-        )
+            time => {
+                this.startDate = time;
+                console.log(this.startDate)
+            }
+        );
         this.loadUserList();
         this.loadMeetingRoomList();
-        this.filteredOptions = this.meetingRequestForm.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this.filter(value))
-            );
+        /* this.filteredOptions = this.meetingRequestForm.get('participantsId').valueChanges
+             .pipe(
+                 startWith(''),
+                 map(value => this.filter(value))
+             );
+
+         */
     }
 
     loadUserList() {
@@ -59,12 +66,11 @@ export class MeetingDialodComponent implements OnInit {
                 console.log(userList)
             },
             error => console.log(error),
-            ()=>{
+            () => {
                 this.userList.forEach((user) => {
                     this.options.unshift(user.userName);
                 });
-                console.log(this.userList);
-                console.log(this.options);
+                console.log(this.options)
             }
         )
 
@@ -80,12 +86,39 @@ export class MeetingDialodComponent implements OnInit {
         )
     }
 
+
     saveMeeting() {
+        const meeting = this.meetingRequestForm.value;
+        meeting.creatorId = this.userId;
+        meeting.participantsId = this.selectedUsers;
+        meeting.startDate = this.startDate;
+
+        this.userService.saveNewMeeting(meeting).subscribe(
+            () => console.log(meeting),
+            error => handleValidationErrors(error, meeting)
+        )
 
     }
 
+
     private filter(value: string): string[] {
-        const filterValue = value.toLowerCase();
-        return this.options.filter(option => option.toLowerCase().includes(filterValue));
+        /* const regex = /\b[A-Z]{2,}\b/g;
+         let modified = value.replace(regex, function(match) {
+             return match.toLowerCase();
+         });
+
+         */
+        return this.options.filter(option => option.includes(value));
+    }
+
+    addUserToShow() {
+        if (this.meetingRequestForm.get('participantsId').value !== '') {
+            const actualUser = this.meetingRequestForm.get('participantsId').value;
+            this.showSelectedUsers.unshift(actualUser.userName);
+            this.selectedUsers.unshift(actualUser.userId);
+            console.log(this.showSelectedUsers);
+            console.log(this.selectedUsers);
+            this.meetingRequestForm.get('participantsId').setValue('');
+        }
     }
 }

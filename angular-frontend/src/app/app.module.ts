@@ -35,7 +35,7 @@ import {MeetingRoomFormComponent} from './components/meeting-room-form/meeting-r
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MeetingDialodComponent} from './components/meeting-dialod/meeting-dialod.component';
+import {MeetingDialodComponent} from './components/meeting-form-dialog/meeting-dialod.component';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 
 
