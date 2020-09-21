@@ -11,19 +11,25 @@ import {Router} from "@angular/router";
 })
 export class PostListComponent implements OnInit {
 
-    posts: Array<PostListItemModel>;
-    category = 'ALL';
-    showAllPost = true;
+    allPost: Array<PostListItemModel>;
+    corporateNews: Array<PostListItemModel>;
+    freeTimeActivities: Array<PostListItemModel>;
+    professionalNews: Array<PostListItemModel>;
+
     commentOpenState: boolean;
     addCommentOpenState: boolean;
+    index: number;
 
     constructor(private blogService: BlogService,
                 private userService: UserService,
                 private router: Router) {
-
     }
 
     ngOnInit() {
+        this.index = 0;
+        this.corporateNews = [];
+        this.freeTimeActivities = [];
+        this.professionalNews = [];
         this.loadPosts();
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
@@ -32,18 +38,20 @@ export class PostListComponent implements OnInit {
 
     loadPosts() {
         this.blogService.fetchAllPost().subscribe(
-            data => this.posts = data,
+            data => {
+                this.allPost = data;
+                data.forEach((post) => {
+                    if (post.category == 'CORPORATE') {
+                        this.corporateNews.push(post);
+                    } else if (post.category == 'FREE_TIME_ACTIVITIES') {
+                        this.freeTimeActivities.push(post);
+                    } else {
+                        this.professionalNews.push(post);
+                    }
+                })
+            },
             error => console.warn(error)
         );
-    }
-
-    changeCategory(category) {
-        if (category == 'ALL') {
-            this.showAllPost = true;
-        } else {
-            this.category = category;
-            this.showAllPost = false;
-        }
     }
 
     readMore(id: number) {

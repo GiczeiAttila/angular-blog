@@ -18,16 +18,15 @@ public class MeetingRoomFormDataValidator implements Validator {
         String name = meetingRoomFormData.getName();
         int seats = meetingRoomFormData.getSeats();
 
-        if (name.isEmpty()) {
+        if (name.isEmpty() || name == null) {
             errors.rejectValue("name", "meetingRoomFormData.name.empty");
         } else if (Character.isLowerCase(name.charAt(1))) {
             errors.rejectValue("name", "meetingRoomFormData.name.lowercase");
         }
 
-        if (seats < 2) {
+        if (seats < 2 || meetingRoomFormData.getSeats() == null) {
             errors.rejectValue("seats", "meetingRoomFormData.seats.not-enough");
         }
-
 
     }
 }
