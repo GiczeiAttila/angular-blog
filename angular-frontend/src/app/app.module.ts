@@ -37,6 +37,7 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeetingDialodComponent} from './components/meeting-form-dialog/meeting-dialod.component';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
+import {MatTimepickerModule} from "mat-timepicker";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MaterialModule,
         NgxMatDatetimePickerModule,
         NgxDaterangepickerMd.forRoot(),
+        MatTimepickerModule,
         MatTableModule,
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         NgbModule,
