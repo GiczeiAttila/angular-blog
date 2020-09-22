@@ -17,7 +17,7 @@
             <textarea formControlName="description" matInput placeholder="Meeting description"></textarea>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
+       <!-- <mat-form-field class="example-full-width">
             <mat-label>Select participants</mat-label>
             <mat-select placeholder="Type a name">
                 <mat-option *ngFor="let user of userList"
@@ -38,7 +38,25 @@
                 {{ user }}
             </mat-list-item>
         </mat-list>
+        -->
 
+        <mat-form-field>
+            <mat-label>Participants</mat-label>
+            <mat-select [formControl]="participantsIdControl" multiple>
+                <mat-select-trigger>
+                    <mat-chip-list>
+                        <mat-chip (removed)="onUserRemoved(user)"
+                                  *ngFor="let user of participantsIdControl.value" [removable]="true">
+                            {{ user }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+
+                <mat-option *ngFor="let user of userList" [value]="user.userName">{{user.userName}}</mat-option>
+
+            </mat-select>
+        </mat-form-field>
 
         <mat-form-field class="meeting-full-width">
             <mat-label>Select room</mat-label>
@@ -50,12 +68,25 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <input [defaultValue]="startDate" formControlName="startDate" matInput type="datetime-local">
+        <!--  <mat-form-field appearance="fill">
+              <mat-label>Selected start date</mat-label>
+              <input matInput placeholder="startDate">
+          </mat-form-field>
+          <mat-form-field>
+              <input formControlName="endDate" matInput type="datetime-local">
+          </mat-form-field>
+          -->
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>TIMEPICKER</mat-label>
+            <input #t="matTimepicker" formControlName="endDate"
+                   id="timepicker-example" matTimepicker
+                   mode="24h"
+                   name="time" placeholder="Please select time..." required>
+            <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
         </mat-form-field>
-        <mat-form-field>
-            <input formControlName="endDate" matInput type="datetime-local">
-        </mat-form-field>
+
 
         <button mat-button>Save</button>
     </form>

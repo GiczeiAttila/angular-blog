@@ -1,5 +1,6 @@
 package com.progmasters.reactblog.domain.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingReservationFormData {
@@ -9,7 +10,7 @@ public class MeetingReservationFormData {
     private String startDate;
     private String endDate;
     private Long creatorId;
-    private List<Long> participantsId;
+    private List<Long> participantsId = new ArrayList<>();
     private Long meetingRoomId;
 
 
