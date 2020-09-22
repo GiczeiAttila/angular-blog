@@ -56,7 +56,8 @@ public class OpenPositionFormDtoValidator implements Validator {
             errors.rejectValue("deadline", "openPositionFormDto.deadline.required");
         }else {
             try {
-                today = format.parse(String.valueOf(new Date()));
+                String date = format.format(new Date());
+                today = format.parse(date);
                 deadline = format.parse(openPositionFormDto.getDeadline());
                 if (!deadline.after(today)){
                     errors.rejectValue("deadline", "openPositionFormDto.deadline");
@@ -65,6 +66,5 @@ public class OpenPositionFormDtoValidator implements Validator {
                 errors.rejectValue("deadline", "openPositionFormDto.deadline.wrongDate");
             }
         }
-
     }
 }

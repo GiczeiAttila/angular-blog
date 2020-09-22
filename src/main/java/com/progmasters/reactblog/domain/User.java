@@ -62,11 +62,6 @@ public class User {
         this.userStatus = UserStatusEnum.REGISTERED;
         this.token = UUID.randomUUID().toString();
         this.numberOfLoginAttempts = 0L;
-        this.suggestionList = new ArrayList<>();
-        this.suggestionVoteList = new ArrayList<>();
-        this.ownReservation = new ArrayList<>();
-        this.meetingParticipantList = new ArrayList<>();
-
     }
 
     public Long getId() {

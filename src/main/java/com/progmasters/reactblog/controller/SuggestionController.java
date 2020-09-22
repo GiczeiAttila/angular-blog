@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.Suggestion;
+import com.progmasters.reactblog.domain.SuggestionVote;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.SuggestionListItemDto;
 import com.progmasters.reactblog.domain.dto.SuggestionStatusChangeDto;
@@ -55,7 +56,7 @@ public class SuggestionController {
     @PostMapping("/vote")
     public ResponseEntity<Void> createVote(@Valid @RequestBody SuggestionVoteDto suggestionVoteDto) {
         logger.info("Create vote requested with user id:" + suggestionVoteDto.getVotingUserId() + " for suggestion with id: " + suggestionVoteDto.getSuggestionId());
-        Suggestion suggestion = suggestionService.saveVote(suggestionVoteDto);
+        SuggestionVote suggestionVote = suggestionService.saveVote(suggestionVoteDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

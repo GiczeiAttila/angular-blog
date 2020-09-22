@@ -96,7 +96,8 @@ export class MeetingReservationFormComponent implements OnInit {
         this.clickedDate = date;
         const format = "YYYY-MM-DD HH:mm:ss";
         let usingDate = moment(date).format(format).toString();
-        this.userService.clickedDateSubject.next(usingDate);
+        this.userService.addStartDate(usingDate);
+        // this.userService.clickedDateSubject.next(usingDate);
         console.log(date);
         console.log(usingDate);
         //this.modalService.open(content);

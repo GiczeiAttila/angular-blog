@@ -80,7 +80,7 @@ public class UserService {
     }
 
     public List<User> findAllUsersWithStatus(UserStatusEnum status) {
-        return userRepository.findAllByWithActiveStatus(status);
+        return userRepository.findAllByStatus(status);
     }
 
     public List<UserForMeetingOptionDto> getUsers() {

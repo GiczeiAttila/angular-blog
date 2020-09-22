@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Moment} from "moment";
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {OpenPositionFormModel} from "../../models/openPositionForm.model";
@@ -58,7 +57,6 @@ export class OpenPositionsComponent implements OnInit {
             .subscribe(() => {
                 },
                 error => {
-                    console.log(error);
                     handleValidationErrors(error, this.openPositionForm);
                 },
                 () => {
