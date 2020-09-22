@@ -47,6 +47,8 @@ public class UserFormDtoValidator implements Validator {
             errors.rejectValue("firstName", "userFormDto.empty-firstName");
         }else if (firstName.length()<2 || firstName.length()>200){
             errors.rejectValue("firstName", "userFormDto.firstName-length");
+        }else if (!firstName.matches("^((([A-Z]|[ÁÉÍÓÖŐÚÜŰ])[ '-]{0,1}(([a-z]|[áéíóöőúüű]))*[.]{0,1}))([ -]([A-Z]|[ÁÉÍÓÖŐÚÜŰ])[ '-]{0,}([a-z]|[áéíóöőúüű])*){0,}([ ][a-z][.]){0,1}$")){
+            errors.rejectValue("firstName", "userFormDto.wrong-firstName");
         }
     }
 
@@ -55,6 +57,8 @@ public class UserFormDtoValidator implements Validator {
             errors.rejectValue("lastName", "userFormDto.empty-lastName");
         }else if (lastName.length()<2 || lastName.length()>200){
             errors.rejectValue("lastName", "userFormDto.lastName-length");
+        }else if (!lastName.matches("^((([A-Z]|[ÁÉÍÓÖŐÚÜŰ])[ '-]{0,1}(([a-z]|[áéíóöőúüű]))+))([ -]([A-Z]|[ÁÉÍÓÖŐÚÜŰ])[ '-]{0,}([a-z]|[áéíóöőúüű])+){0,}([ ][a-z][.]){0,1}(([ ][0-9]){0,1}|([ ][a-zA-z]+[.]){0,1})$")){
+            errors.rejectValue("lastName", "userFormDto.wrong-lastName");
         }
     }
 
@@ -68,11 +72,6 @@ public class UserFormDtoValidator implements Validator {
         }
     }
 
-//    private void validateUserPassword(String password, Errors errors) {
-//        if (!password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
-//            errors.rejectValue("password", "userFormDto.wrong-password");
-//        }
-//    }
 
     private void validateUserPhoneNumber(String phoneNumber, Errors errors) {
         if (!phoneNumber.matches("\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\d{1,14}$")){
