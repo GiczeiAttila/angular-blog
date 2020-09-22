@@ -1,0 +1,10 @@
+.example-full-width {
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.example-width-half {
+    width: 39.5%;
+    margin-bottom: 20px;
+    margin-right: 1%;
+}
