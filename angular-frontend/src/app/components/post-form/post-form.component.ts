@@ -7,6 +7,7 @@ import {CategoryOptionModel} from "../../models/categoryOption.model";
 import {TypeOptionModel} from "../../models/typeOption.model";
 import {PostFormInitDataModel} from "../../models/postFormInitData.model";
 import {UserService} from "../../services/user.service";
+import {FileUploadService} from "../../services/file-upload.service";
 
 @Component({
     selector: 'app-post-form',
@@ -22,16 +23,18 @@ export class PostFormComponent implements OnInit {
     isEvent: boolean;
 
 
+
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
                 private userService: UserService,
-                private router: Router) {
+                private router: Router,
+                private fileService: FileUploadService) {
         this.postForm = formBuilder.group({
             category: [null, Validators.required],
             type: [null, Validators.required],
             title: ['', Validators.required],
             postBody: ['', Validators.required],
-            picture: [''],
+            picture: [null],
             address: formBuilder.group({
                 country: [''],
                 zipCode: [''],
@@ -58,6 +61,17 @@ export class PostFormComponent implements OnInit {
         this.authorId = +localStorage.getItem('userId');
     }
 
+    onFileChange($event: Event) {
+        // @ts-ignore
+        if (event.target.files.length > 0) {
+            // @ts-ignore
+            const picture = event.target.files[0];
+            this.postForm.patchValue({
+                picture
+            });
+        }
+    }
+
     onSubmit() {
         const post = this.postForm.value;
         post.authorId = this.authorId;
@@ -68,6 +82,7 @@ export class PostFormComponent implements OnInit {
             },
             error => handleValidationErrors(error, this.postForm)
         )
+
     }
 
 
@@ -78,5 +93,14 @@ export class PostFormComponent implements OnInit {
         } else {
             this.isEvent = false;
         }
+    }
+
+    upload() {
+        const formData = new FormData();
+        formData.append('picture', this.postForm.get('picture').value);
+        this.fileService.uploadFile(formData).subscribe(
+            console.log,
+            console.warn
+        );
     }
 }

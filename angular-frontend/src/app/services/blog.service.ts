@@ -13,8 +13,8 @@ const POSTS_BASE_URL = environment.BASE_URL + '/api/posts';
 const COMMENTS_BASE_URL = environment.BASE_URL + '/api/comments';
 
 @Injectable({
-                providedIn: 'root',
-            })
+    providedIn: 'root',
+})
 export class BlogService {
 
     refresh = new Subject();

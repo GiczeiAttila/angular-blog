@@ -82,14 +82,16 @@
         <div class="form-group">
             <label for="picture">Picture (optional)</label>
             <input
-                type="text"
+                (change)="onFileChange($event)" type="file"
                 [ngClass]="{
                 'is-invalid': postForm.get('picture').invalid && postForm.get('picture').touched || postForm.get('picture').errors?.serverError
                 }"
                 formControlName="picture"
                 id="picture"
                 class="form-control"
+                name="file"
             >
+            <button (click)="upload()">upload</button>
         </div>
 
         <div *ngIf="isEvent" formGroupName="address">

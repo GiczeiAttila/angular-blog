@@ -3,6 +3,7 @@ import {BlogService} from '../../services/blog.service';
 import {PostListItemModel} from "../../models/postListItem.model";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {FileUploadService} from "../../services/file-upload.service";
 
 @Component({
     selector: 'app-post-list',
@@ -19,6 +20,7 @@ export class PostListComponent implements OnInit {
 
     constructor(private blogService: BlogService,
                 private userService: UserService,
+                private fileService: FileUploadService,
                 private router: Router) {
 
     }

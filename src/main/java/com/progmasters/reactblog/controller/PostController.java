@@ -17,6 +17,7 @@ import com.progmasters.reactblog.domain.dto.PostFormData;
 import com.progmasters.reactblog.domain.dto.PostFormInitData;
 import com.progmasters.reactblog.domain.dto.PostListItem;
 import com.progmasters.reactblog.service.PostService;
+import com.progmasters.reactblog.service.cloudinary.CloudinaryFileUploader;
 import com.progmasters.reactblog.validator.PostFormDataValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ public class PostController {
 
     private PostService postService;
     private PostFormDataValidator postFormDataValidator;
+    private CloudinaryFileUploader fileUploader;
 
     @Autowired
     public PostController(PostService postService,

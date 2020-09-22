@@ -13,6 +13,7 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class PostListItem {
     private String author;
     private String title;
     private String postBodyShortened;
-    private String picture;
+    private PostPictureRegistry picture;
     private String createdAt;
     private Integer numberOfComments;
     private PostCategories category;
@@ -77,7 +78,7 @@ public class PostListItem {
         return postBodyShortened;
     }
 
-    public String getPicture() {
+    public PostPictureRegistry getPicture() {
         return picture;
     }
 

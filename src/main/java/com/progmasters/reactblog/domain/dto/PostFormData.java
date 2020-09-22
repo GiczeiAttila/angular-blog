@@ -12,6 +12,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 public class PostFormData {
@@ -19,7 +20,7 @@ public class PostFormData {
     private String title;
     private Long authorId;
     private String postBody;
-    private String picture;
+    private PostPictureRegistry picture;
     private PostCategories category;
     private PostTypes type;
     private AddressFormData address;
@@ -37,7 +38,7 @@ public class PostFormData {
         return postBody;
     }
 
-    public String getPicture() {
+    public PostPictureRegistry getPicture() {
         return picture;
     }
 

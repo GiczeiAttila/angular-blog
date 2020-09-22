@@ -36,8 +36,10 @@ public class Post {
     @Column(name = "post_body", columnDefinition = "TEXT")
     private String postBody;
 
-    @Column(name = "img_url", columnDefinition = "TEXT")
-    private String picture;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
+    private PostPictureRegistry picture;
 
     @Column(name = "creation_at")
     private LocalDateTime createdAt;
@@ -96,11 +98,11 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public String getPicture() {
+    public PostPictureRegistry getPicture() {
         return picture;
     }
 
-    public void setPicture(String imgUrl) {
+    public void setPicture(PostPictureRegistry imgUrl) {
         this.picture = imgUrl;
     }
 
