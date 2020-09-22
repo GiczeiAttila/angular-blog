@@ -190,7 +190,7 @@
             <hr>
             <mat-form-field class="example-full-width">
                 <mat-label>Phone number(example: +36301234567)</mat-label>
-                <input matInput type="number" formControlName="phoneNumber" required>
+                <input matInput type="text" formControlName="phoneNumber" required>
                 <mat-hint>Phone number is required</mat-hint>
                 <mat-error>
                     {{registrationForm.get('phoneNumber').errors?.serverError}}
