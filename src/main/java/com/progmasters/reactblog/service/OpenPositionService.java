@@ -53,7 +53,7 @@ public class OpenPositionService {
         return openPositionRepository.findAllByUserId(userId);
     }
 
-    public OpenPosition findById(Long openPositionId) {
+    public OpenPosition findOpenPositionById(Long openPositionId) {
         Optional<OpenPosition> optionalOpenPosition = openPositionRepository.findById(openPositionId);
         return optionalOpenPosition.orElse(null);
     }

@@ -1,17 +1,18 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.Suggestion;
-import com.progmasters.reactblog.domain.SuggestionStatusEnum;
-import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.UserStatusEnum;
+import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.SuggestionFormDto;
 import com.progmasters.reactblog.domain.dto.SuggestionStatusChangeDto;
+import com.progmasters.reactblog.domain.dto.SuggestionVoteDto;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import com.progmasters.reactblog.repository.SuggestionVoteRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -81,11 +82,68 @@ class SuggestionServiceTest {
         verifyNoMoreInteractions(userServiceMock);
     }
 
-    @Test
-    void saveVote() {
+    @ParameterizedTest
+    @EnumSource(VoteType.class)
+    void saveVoteWithoutPreviousVote(VoteType voteType) {
+        SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
+        suggestionVoteDto.setSuggestionId(1L);
+        suggestionVoteDto.setVotingUserId(1L);
+        suggestionVoteDto.setVote(voteType.toString());
+     //   User user = UserFactory.getUser(1L);
+        SuggestionVote suggestionVote = new SuggestionVote();
+        Suggestion suggestion = new Suggestion();
+        suggestion.setId(1L);
+        when(suggestionRepositoryMock.findById(suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestion));
+        when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestionVote));
+    //    when(userServiceMock.findById(suggestionVoteDto.getVotingUserId())).thenReturn(user);
+
+        SuggestionVote savedSuggestionVote = suggestionService.saveVote(suggestionVoteDto);
+
+        Assertions.assertEquals(voteType, savedSuggestionVote.getVote());
     }
 
-    @Test
+    @ParameterizedTest
+    @EnumSource(VoteType.class)
+    void saveVoteWithPreviousVote(VoteType voteType) {
+        SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
+        suggestionVoteDto.setSuggestionId(1L);
+        suggestionVoteDto.setVotingUserId(1L);
+        suggestionVoteDto.setVote(voteType.toString());
+        User user = UserFactory.getUser(1L);
+        SuggestionVote suggestionVote = new SuggestionVote();
+        Suggestion suggestion = new Suggestion();
+        suggestion.setId(1L);
+        when(suggestionRepositoryMock.findById(suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestion));
+        when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.empty());
+        when(userServiceMock.findById(suggestionVoteDto.getVotingUserId())).thenReturn(user);
+
+        SuggestionVote savedSuggestionVote = suggestionService.saveVote(suggestionVoteDto);
+
+        Assertions.assertEquals(voteType, savedSuggestionVote.getVote());
+    }
+
+
+
+    @ParameterizedTest
+    @EnumSource(SuggestionStatusEnum.class)
+    void changeSuggestionStatusToAccepted(SuggestionStatusEnum suggestionStatusEnum) {
+        Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
+        SuggestionStatusChangeDto suggestionStatusChangeDto = SuggestionStatusChangeDtoFactory.getSuggestionStatusChangeDto(1L,suggestionStatusEnum);
+        when(suggestionRepositoryMock.findById(1L)).thenReturn(Optional.of(suggestion));
+
+        suggestionService.changeSuggestionStatus(suggestionStatusChangeDto);
+
+        Assertions.assertEquals(suggestionStatusEnum,suggestion.getStatus());
+
+        verify(suggestionRepositoryMock, times(1)).findById(1L);
+        verify(emailSenderServiceMock, times(1)).sendNewSuggestionStatusChangeNotificationEmail(suggestion);
+        verifyNoMoreInteractions(suggestionRepositoryMock);
+        verifyNoMoreInteractions(suggestionVoteRepositoryMock);
+        verifyNoMoreInteractions(userServiceMock);
+        verifyNoMoreInteractions(emailSenderServiceMock);
+    }
+
+/*    @Test
     void changeSuggestionStatusToRejected() {
         Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
         SuggestionStatusChangeDto suggestionStatusChangeDto = SuggestionStatusChangeDtoFactory.getSuggestionStatusChangeDto(1L,SuggestionStatusEnum.REJECTED);
@@ -97,23 +155,12 @@ class SuggestionServiceTest {
 
         verify(suggestionRepositoryMock, times(1)).findById(1L);
         verifyNoMoreInteractions(suggestionRepositoryMock);
-    }
+        verifyNoMoreInteractions(suggestionVoteRepositoryMock);
+        verifyNoMoreInteractions(userServiceMock);
+        verifyNoMoreInteractions(emailSenderServiceMock);
+    }*/
 
-    @Test
-    void changeSuggestionStatusToAccepted() {
-        Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
-        SuggestionStatusChangeDto suggestionStatusChangeDto = SuggestionStatusChangeDtoFactory.getSuggestionStatusChangeDto(1L,SuggestionStatusEnum.ACCEPTED);
-        when(suggestionRepositoryMock.findById(1L)).thenReturn(Optional.of(suggestion));
-
-        suggestionService.changeSuggestionStatus(suggestionStatusChangeDto);
-
-        Assertions.assertEquals(SuggestionStatusEnum.ACCEPTED,suggestion.getStatus());
-
-        verify(suggestionRepositoryMock, times(1)).findById(1L);
-        verifyNoMoreInteractions(suggestionRepositoryMock);
-    }
-
-    @Test
+    /*@Test
     void changeSuggestionStatusToActive() {
         Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
         suggestion.setStatus(SuggestionStatusEnum.REJECTED);
@@ -126,7 +173,10 @@ class SuggestionServiceTest {
 
         verify(suggestionRepositoryMock, times(1)).findById(1L);
         verifyNoMoreInteractions(suggestionRepositoryMock);
-    }
+        verifyNoMoreInteractions(suggestionVoteRepositoryMock);
+        verifyNoMoreInteractions(userServiceMock);
+        verifyNoMoreInteractions(emailSenderServiceMock);
+    }*/
 
     private static class UserFactory {
         public static User getUser(Long userId) {

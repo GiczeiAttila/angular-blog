@@ -55,7 +55,7 @@ public class OpenPositionController {
     public ResponseEntity<Void> applyForOpenPosition(@RequestBody ApplicationForOpenPositionDto applicationForOpenPositionDto) {
         logger.info("User with id:" + applicationForOpenPositionDto.getApplicantId() +
                 " applied for open position with id: " + applicationForOpenPositionDto.getOpenPositionId());
-        OpenPosition openPosition = openPositionService.findById(applicationForOpenPositionDto.getOpenPositionId());
+        OpenPosition openPosition = openPositionService.findOpenPositionById(applicationForOpenPositionDto.getOpenPositionId());
         User user = userService.findById(applicationForOpenPositionDto.getApplicantId());
         ApplicantForOpenPosition applicantForOpenPosition = new ApplicantForOpenPosition(user,openPosition);
         applicantForOpenPositionService.saveApplicant(applicantForOpenPosition);

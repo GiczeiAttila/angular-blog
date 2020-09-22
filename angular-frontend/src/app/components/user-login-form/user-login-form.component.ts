@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
-import {HttpClient} from '@angular/common/http';
 import {Router} from "@angular/router";
 
 @Component({
@@ -12,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class UserLoginFormComponent implements OnInit {
     loginForm: FormGroup;
+    hide: boolean;
 
     constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) {
         this.loginForm = this.formBuilder.group(
@@ -26,6 +26,7 @@ export class UserLoginFormComponent implements OnInit {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }
+        this.hide = true;
     }
 
     submitLogin() {

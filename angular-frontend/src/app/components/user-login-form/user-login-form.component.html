@@ -1,3 +1,4 @@
+<!--
 <div>
     <h3>Login form</h3>
     <hr/>
@@ -55,3 +56,49 @@
         <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success" (click)="submitLogin()">Login</button>
     </form>
 </div>
+-->
+
+<div class="mat-app-background basic-container">
+    <mat-card class="basic-container">
+        <mat-card-header>
+            <mat-card-title>Log in</mat-card-title>
+        </mat-card-header>
+
+        <form  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+            <mat-form-field class="example-full-width">
+                <mat-label>Id</mat-label>
+                <input matInput type="number" formControlName="id" required>
+                <mat-hint>Id is required</mat-hint>
+                <mat-error>
+                    {{loginForm.get('id').errors?.serverError}}
+                </mat-error>
+                <mat-error
+                    *ngIf="loginForm.get('id').invalid && loginForm.get('id').touched && !loginForm.get('id').errors?.serverError"
+                    class="text-danger">
+                    Id is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-hint>Password is required</mat-hint>
+                <mat-error>
+                    {{loginForm.get('password').errors?.serverError}}
+                </mat-error>
+                <mat-error
+                    *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" color="primary">Login</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
+

@@ -44,13 +44,14 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.clickedDateSubject.subscribe(
-            time => {
-                this.startDate = time;
-                this.meetingRequestForm.get('startDate').setValue(time);
-                console.log(this.startDate);
-            }
-        );
+        // this.userService.clickedDateSubject.subscribe(
+        //     time => {
+        //         this.startDate = time;
+        //         this.meetingRequestForm.get('startDate').setValue(time);
+        //         console.log(this.startDate);
+        //     }
+        // );
+        this.startDate = this.userService.getStartDate();
         this.loadUserList();
         this.loadMeetingRoomList();
     }
