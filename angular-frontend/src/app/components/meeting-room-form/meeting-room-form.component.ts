@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
 
 @Component({
@@ -15,8 +15,8 @@ export class MeetingRoomFormComponent implements OnInit {
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder) {
         this.meetingRoomForm = formBuilder.group({
-            name: ['', Validators.required],
-            seats: ['', Validators.required]
+            name: [''],
+            seats: []
         })
     }
 
@@ -27,7 +27,10 @@ export class MeetingRoomFormComponent implements OnInit {
     saveRoom() {
         this.userService.createMeetingRoom(this.meetingRoomForm.value).subscribe(
             () => console.log(this.meetingRoomForm),
-            error => handleValidationErrors(error, this.meetingRoomForm),
+            error => {
+                handleValidationErrors(error, this.meetingRoomForm);
+                console.log(error)
+            },
             () => this.meetingRoomForm.reset()
         )
     }

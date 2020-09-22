@@ -1,4 +1,40 @@
-<div>
+<div class="mat-app-background basic-container">
+    <h4 class="modal-title">New meeting room</h4>
+    <br>
+
+    <form (ngSubmit)="saveRoom()" [formGroup]="meetingRoomForm">
+        <mat-form-field appearance="fill" class="example-width-half">
+            <mat-label>Room name</mat-label>
+            <input formControlName="name" matInput required>
+            <mat-error *ngIf="meetingRoomForm.get('name').invalid
+                        && meetingRoomForm.get('name').touched
+                        && !meetingRoomForm.get('name').errors?.serverError">
+                Please enter a room name
+            </mat-error>
+            <mat-error>{{meetingRoomForm.get('name').errors?.serverError}}</mat-error>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="fill" class="example-width-half">
+            <mat-label>Number of seats</mat-label>
+            <input formControlName="seats" matInput required type="number">
+            <mat-error *ngIf="meetingRoomForm.get('seats').invalid
+            && meetingRoomForm.get('seats').touched
+            && !meetingRoomForm.get('seats').errors?.serverError">
+                Please enter the number of seats (minimum 2)
+            </mat-error>
+            <mat-error>{{meetingRoomForm.get('seats').errors?.serverError}}</mat-error>
+        </mat-form-field>
+        <br>
+
+        <mat-card-actions>
+            <button color="primary" mat-raised-button type="submit">Save room</button>
+        </mat-card-actions>
+    </form>
+</div>
+
+
+<!--<div>
     <h3>New meeting room</h3>
     <hr/>
 
@@ -23,7 +59,7 @@
                 Please enter a room name
             </small>
             <small *ngIf="meetingRoomForm.get('name').errors?.serverError" class="text-danger">
-                {{meetingRoomForm.get('name').errors['serverError']}}
+                {{meetingRoomForm.get('name').errors.serverError}}
             </small>
         </div>
 
@@ -53,4 +89,7 @@
         <button class="btn btn-info" type="submit">Save</button>
     </form>
 </div>
+-->
+
+
 

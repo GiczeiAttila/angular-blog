@@ -13,7 +13,6 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
-import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.List;
@@ -50,7 +49,10 @@ public class PostListItem {
 
 
         this.picture = post.getPicture();
-        this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
+
+        this.createdAt = post.getCreatedAt()
+                .toLocalDate();
+        //this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
         this.category = post.getCategory();
         this.type = post.getType();
@@ -82,7 +84,7 @@ public class PostListItem {
         return picture;
     }
 
-    public String getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 

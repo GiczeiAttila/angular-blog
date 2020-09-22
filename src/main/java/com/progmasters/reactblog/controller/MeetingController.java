@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class MeetingController {
     }
 
     @PostMapping("createRoom")
-    public ResponseEntity<Void> createMeetingRoom(@RequestBody MeetingRoomFormData meetingRoomFormData) {
+    public ResponseEntity<Void> createMeetingRoom(@Valid @RequestBody MeetingRoomFormData meetingRoomFormData) {
         MeetingRoom meetingRoom = this.meetingService.saveMeetingRoom(meetingRoomFormData);
         if (meetingRoom != null) {
             logger.info("Create new meeting room");

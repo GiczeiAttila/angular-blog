@@ -32,11 +32,12 @@ import {OpenPositionsComponent} from "./components/open-positions/open-positions
 import {FullcalendarComponent} from "./components/fullcalendar/fullcalendar.component";
 import {MeetingReservationFormComponent} from './components/meeting-reservation-form/meeting-reservation-form.component';
 import {MeetingRoomFormComponent} from './components/meeting-room-form/meeting-room-form.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeetingDialodComponent} from './components/meeting-form-dialog/meeting-dialod.component';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
-import {CalendarModule, DateAdapter} from "angular-calendar";
-import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {MatTimepickerModule} from "mat-timepicker";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MaterialModule,
         NgxMatDatetimePickerModule,
         NgxDaterangepickerMd.forRoot(),
+        MatTimepickerModule,
         MatTableModule,
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         NgbModule,

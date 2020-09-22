@@ -96,7 +96,7 @@ export class MeetingReservationFormComponent implements OnInit {
     clickOnHourSegment(date: Date) {
         this.clickedDate = date;
         const format = "YYYY-MM-DD HH:mm:ss";
-        let usingDate = moment(date).format(format);
+        let usingDate = moment(date).format(format).toString();
         this.userService.clickedDateSubject.next(usingDate);
         console.log(date);
         console.log(usingDate);
