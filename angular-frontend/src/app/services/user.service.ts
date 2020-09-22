@@ -32,6 +32,16 @@ const MEETING_URL: string = environment.BASE_URL + '/api/meetings';
 @Injectable({providedIn: 'root'})
 export class UserService {
 
+    private startDate: string = '';
+
+    addStartDate(clickedStartDate: string){
+        this.startDate = clickedStartDate;
+    }
+
+    getStartDate(): string{
+        return this.startDate;
+    }
+
     loginSubject: Subject<any> = new Subject<any>();
     clickedDateSubject: Subject<any> = new Subject<any>();
 

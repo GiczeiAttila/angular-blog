@@ -16,7 +16,7 @@ export class MeetingRoomFormComponent implements OnInit {
                 private formBuilder: FormBuilder) {
         this.meetingRoomForm = formBuilder.group({
             name: [''],
-            seats: []
+            seats: ['']
         })
     }
 

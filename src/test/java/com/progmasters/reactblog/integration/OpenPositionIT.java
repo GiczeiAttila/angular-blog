@@ -33,7 +33,7 @@ public class OpenPositionIT {
     private UserService userService;
 
     @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
-    //CsvSource helyileg megadva
+
 //    @CsvSource({
 //            "1,2,3,4,3",
 //            "0,1,2,3,2",
@@ -42,7 +42,7 @@ public class OpenPositionIT {
 //            "0,1,0,0,0"
 //    })
 
-    //CsvFileSource fileban megadva
+
 //    @CsvFileSource(resources = "/open-position-test.csv")
 
     @MethodSource("parameterCreator")
