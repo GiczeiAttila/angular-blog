@@ -44,9 +44,12 @@ export class UserRegistrationConfirmationComponent implements OnInit {
     }
 
     submitPassword() {
+        console.log(this.passwordForm.value);
         this.userService.finalizeRegistration(this.passwordForm.value)
             .subscribe(() => {},
-                error => {handleValidationErrors(error, this.passwordForm)},
+                error => {
+                console.log(this.passwordForm.value)
+                handleValidationErrors(error, this.passwordForm);},
                 () => this.router.navigate(['login'])
             );
     }
