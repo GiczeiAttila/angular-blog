@@ -21,7 +21,7 @@ export class MeetingDialodComponent implements OnInit {
 
     userList: UserForMeetingOptionDtoModel[];
     meetingRoomList: MeetingRoomOptionDtoModel[];
-    startDate;
+    startDate: string = 'wow';
     participantsId: Array<number> = [];
     countParticipants = 1;
     time = {hour: 13, minute: 30};
@@ -39,11 +39,15 @@ export class MeetingDialodComponent implements OnInit {
             participantsId: [],
             meetingRoomId: []
         })
-
-
     }
 
     ngOnInit(): void {
+        this.loadStartDate();
+        this.loadUserList();
+        this.loadMeetingRoomList();
+    }
+
+    loadStartDate() {
         this.userService.clickedDateSubject.subscribe(
             time => {
                 this.startDate = time;
@@ -51,8 +55,6 @@ export class MeetingDialodComponent implements OnInit {
                 console.log(this.startDate);
             }
         );
-        this.loadUserList();
-        this.loadMeetingRoomList();
     }
 
     loadUserList() {

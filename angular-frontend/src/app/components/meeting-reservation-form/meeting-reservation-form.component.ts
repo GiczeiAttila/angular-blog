@@ -47,7 +47,6 @@ export class MeetingReservationFormComponent implements OnInit {
 
     actualSeats: number;
 
-
     view: CalendarView = CalendarView.Week;
     viewDate: Date = new Date();
     events: CalendarEvent[] = [];
@@ -105,7 +104,7 @@ export class MeetingReservationFormComponent implements OnInit {
         const dialogRef = this.dialog.open(MeetingDialodComponent);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+        console.log(`Dialog result: ${result}`);
         });
     }
 
