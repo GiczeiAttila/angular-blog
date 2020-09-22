@@ -16,6 +16,8 @@ export class UserRegistrationConfirmationComponent implements OnInit {
     confirmation: string;
     id: number;
     token: string;
+    hide1: boolean;
+    hide2: boolean;
     passwordForm = this.formBuilder.group(
         {
             id: [''],
@@ -53,5 +55,7 @@ export class UserRegistrationConfirmationComponent implements OnInit {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }
+        this.hide1 = true;
+        this.hide2 = true;
     }
 }

@@ -1,26 +1,142 @@
-<h1>{{confirmation}}</h1>
-<h1>Create password</h1>
-<form (ngSubmit)="submitPassword()" [formGroup]="passwordForm">
-    <div class="form-group">
-        <label for="id">Id</label>
-        <input class="form-control" formControlName="id" id="id" type="number" disabled>
-        <small class="text-danger">{{passwordForm.get('id').errors?.serverError}}</small>
-    </div>
-    <div class="form-group">
-        <label for="token">Token</label>
-        <input class="form-control" formControlName="token" id="token" type="text" disabled>
-        <small class="text-danger">{{passwordForm.get('token').errors?.serverError}}</small>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input class="form-control" formControlName="password" id="password" type="password">
-        <small class="text-danger">{{passwordForm.get('password').errors?.serverError}}</small>
-    </div>
-    <div class="form-group">
-        <label for="password2">Password confirmation</label>
-        <input class="form-control" formControlName="password2" id="password2" type="password">
-        <small class="text-danger">{{passwordForm.get('password2').errors?.serverError}}</small>
-    </div>
+<!--<h1>{{confirmation}}</h1>-->
+<!--<div layout="row" layout-align="center center" class="mat-app-background basic-container">-->
+<!--    <mat-card class="basic-container">-->
+<!--        <mat-card-header>-->
+<!--            <mat-card-title>Log in</mat-card-title>-->
+<!--        </mat-card-header>-->
+<!--        <form (ngSubmit)="submitPassword()" [formGroup]="passwordForm">-->
+<!--            <mat-form-field class="example-full-width">-->
+<!--                <mat-label for="id">Id</mat-label>-->
+<!--                <input class="form-control" formControlName="id" id="id" type="number" disabled required="true">-->
+<!--                <mat-hint>Id is required</mat-hint>-->
+<!--                <mat-error>-->
+<!--                    {{passwordForm.get('id').errors?.serverError}}-->
+<!--                </mat-error>-->
+<!--                <mat-error-->
+<!--                    *ngIf="passwordForm.get('id').invalid && passwordForm.get('id').touched"-->
+<!--                    class="text-danger">-->
+<!--                    Please enter an id-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field class="example-full-width">-->
+<!--                <mat-label for="token">Token</mat-label>-->
+<!--                <input class="form-control" formControlName="token" id="token" type="text" disabled required="true">-->
+<!--                <mat-hint>Id is required</mat-hint>-->
+<!--                <mat-error>-->
+<!--                    {{passwordForm.get('token').errors?.serverError}}-->
+<!--                </mat-error>-->
+<!--                <mat-error-->
+<!--                    *ngIf="passwordForm.get('token').invalid && passwordForm.get('token').touched"-->
+<!--                    class="text-danger">-->
+<!--                    Please enter the token-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field class="example-full-width">-->
+<!--                <mat-label>Password</mat-label>-->
+<!--                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>-->
+<!--                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>-->
+<!--                <mat-hint>Password is required</mat-hint>-->
+<!--                <mat-error>-->
+<!--                    {{passwordForm.get('password').errors?.serverError}}-->
+<!--                </mat-error>-->
+<!--                <mat-error-->
+<!--                    *ngIf="passwordForm.get('password').invalid && passwordForm.get('password').touched">-->
+<!--                    Password is <strong>required</strong>-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field class="example-full-width">-->
+<!--                <mat-label for="password2">Password</mat-label>-->
+<!--                <input class="form-control" formControlName="password2" id="password2" type="password" required="true">-->
+<!--                <mat-hint>Enter password again</mat-hint>-->
+<!--                <mat-error>-->
+<!--                    {{passwordForm.get('password2').errors?.serverError}}-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="passwordForm.get('description').invalid && passwordForm.get('description').dirty">-->
+<!--                    Password is <strong>required</strong>>-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="passwordForm.get('token').touched && passwordForm.get('token').dirty-->
+<!--            && passwordForm.get('password')!==passwordForm.get('password2')">-->
+<!--                    Password confirmation does not match password-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-card-actions>-->
+<!--                <button mat-raised-button type="submit" color="primary">Submit</button>-->
+<!--            </mat-card-actions>-->
+<!--        </form>-->
+<!--    </mat-card>-->
+<!--</div>-->
 
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+
+<div layout="row" layout-align="center center" class="mat-app-background basic-container">
+    <mat-card class="basic-container">
+        <mat-card-header>
+            <mat-card-title>Confirm your registration with setting your password</mat-card-title>
+        </mat-card-header>
+
+        <form  layout="row" layout-align="center center" [formGroup]="passwordForm" (ngSubmit)="submitPassword()" >
+            <mat-form-field class="example-full-width">
+                <mat-label>Id</mat-label>
+                <input matInput type="number" formControlName="id" required readonly>
+                <mat-hint>Id is required</mat-hint>
+                <mat-error>
+                    {{passwordForm.get('id').errors?.serverError}}
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordForm.get('id').invalid && passwordForm.get('id').touched && !passwordForm.get('id').errors?.serverError"
+                    class="text-danger">
+                    Id is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-form-field class="example-full-width">
+                <mat-label>Token</mat-label>
+                <input matInput type="text" formControlName="token" required readonly>
+                <mat-hint>Token is required</mat-hint>
+                <mat-error>
+                    {{passwordForm.get('token').errors?.serverError}}
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordForm.get('token').invalid && passwordForm.get('token').touched && !passwordForm.get('token').errors?.serverError"
+                    class="text-danger">
+                    Id is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="password" required>
+                <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-hint>Password is required</mat-hint>
+                <mat-error>
+                    {{passwordForm.get('password').errors?.passwordForm}}
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordForm.get('password').invalid && passwordForm.get('password').touched">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password confirmation</mat-label>
+                <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="password" required>
+                <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-hint>Password is required</mat-hint>
+                <mat-error>
+                    {{passwordForm.get('password2').errors?.passwordForm}}
+                </mat-error>
+                <mat-error
+                    *ngIf="passwordForm.get('password2').invalid && passwordForm.get('password2').touched">
+                    Password confirmation is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <hr/>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" color="primary">Confirm</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
