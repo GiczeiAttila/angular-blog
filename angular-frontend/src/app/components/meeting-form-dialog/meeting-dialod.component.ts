@@ -22,7 +22,6 @@ export class MeetingDialodComponent implements OnInit {
     userList: UserForMeetingOptionDtoModel[];
     meetingRoomList: MeetingRoomOptionDtoModel[];
     startDate;
-    startDateString: string;
     participantsId: Array<number> = [];
     countParticipants = 1;
     time = {hour: 13, minute: 30};
@@ -41,14 +40,15 @@ export class MeetingDialodComponent implements OnInit {
             meetingRoomId: []
         })
 
+
     }
 
     ngOnInit(): void {
         this.userService.clickedDateSubject.subscribe(
             time => {
                 this.startDate = time;
-                console.log(this.startDate)
-                this.startDateString = this.startDate.toString();
+                this.meetingRequestForm.get('startDate').setValue(time);
+                console.log(this.startDate);
             }
         );
         this.loadUserList();
@@ -59,7 +59,6 @@ export class MeetingDialodComponent implements OnInit {
         this.userService.fetchUserListInitData().subscribe(
             (userList) => {
                 this.userList = userList;
-                console.log(userList)
             },
             error => console.log(error)
         )
@@ -69,7 +68,6 @@ export class MeetingDialodComponent implements OnInit {
         this.userService.fetchMeetingRoomListInitData().subscribe(
             (roomList) => {
                 this.meetingRoomList = roomList;
-                console.log(roomList)
             },
             error => console.log(error)
         )
@@ -77,42 +75,42 @@ export class MeetingDialodComponent implements OnInit {
 
     saveMeeting() {
         this.userId = +localStorage.getItem('userId');
-        const meeting = this.meetingRequestForm.value;
-        meeting.creatorId = this.userId;
-        meeting.startDate = this.startDate;
+        const meetingForm = this.meetingRequestForm.value;
+        meetingForm.creatorId = this.userId;
+        console.log(this.meetingRequestForm.value);
         console.log(this.startDate);
+
         this.participantsId = [];
         this.participantsIdControl.value.forEach(participant => {
             this.userList.forEach(user => {
                 if (participant == user.userName) {
-                    this.participantsId.unshift(user.userId);
+                    this.participantsId.push(user.userId);
                 }
             })
             console.log(this.participantsId);
         })
-        meeting.participantsId = this.participantsId;
-
+        meetingForm.participrantsId = this.participantsId;
 
         const format = "YYYY-MM-DD HH:mm:ss";
-        const value = this.meetingRequestForm.get('endData').value;
-
-        console.log(value);
-        console.log(this.startDate);
-
+        const value = this.meetingRequestForm.get('endDate').value;
         let actualEndDate = moment(value).format(format);
-        const actualDay = this.startDate.substring(0, 12);
-        const actualEndTime = actualEndDate.substring(12);
-        const allEndDate = actualDay.concat(actualEndTime);
-        meeting.endDate = allEndDate;
-        meeting.startDate = this.startDate;
+        meetingForm.endDate = actualEndDate;
+        console.log(actualEndDate);
 
 
-        //meeting.startDate='2020-09-20 10:00:00';
-        //meeting.endDate='2020-09-20 11:00:00';
+        // const actualDay = this.startDate.substring(0, 12);
+        // const actualEndTime = actualEndDate.substring(12);
+        //const allEndDate = actualDay.concat(actualEndTime);
+        //meetingForm.endDate = allEndDate;
+        //meetingForm.startDate = this.startDate;
 
-        this.userService.saveNewMeeting(meeting).subscribe(
-            () => console.log(meeting),
-            error => handleValidationErrors(error, meeting)
+
+        //meetingForm.startDate='2020-09-20 10:00:00';
+        //meetingForm.endDate='2020-09-20 11:00:00';
+
+        this.userService.saveNewMeeting(meetingForm).subscribe(
+            () => console.log(meetingForm),
+            error => handleValidationErrors(error, meetingForm)
         )
 
     }
