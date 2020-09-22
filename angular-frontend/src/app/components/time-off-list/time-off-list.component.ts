@@ -15,6 +15,7 @@ export class TimeOffListComponent implements OnInit {
     pendingTimeOffList: Array<TimeOffListItemModel>;
     index: number;
     currentUserId: number
+    displayedColumns: string[] = ['Id', 'User name', 'Start date', 'End date', 'Status'];
 
     constructor(private userService: UserService) {
     }
@@ -62,7 +63,7 @@ export class TimeOffListComponent implements OnInit {
                         this.acceptedTimeOffList.unshift(timeOffListItemModel);
                     } else if (timeOffListItemModel.status == 'PENDING') {
                         this.pendingTimeOffList.unshift(timeOffListItemModel);
-                    } else {
+                    } else if (timeOffListItemModel.status == 'REJECTED') {
                         this.rejectedTimeOffList.unshift(timeOffListItemModel);
                     }
                 })

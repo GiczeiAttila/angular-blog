@@ -22,7 +22,7 @@
         <mat-form-field appearance="fill" class="example-width-half">
             <mat-label>Select type</mat-label>
             <mat-select formControlName="type" required>
-                <mat-option (onSelectionChange)="getTypeValue()" *ngFor="let type of types" [value]="type.name">
+                <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [value]="type.name">
                     {{type.displayName}}
                 </mat-option>
             </mat-select>
@@ -45,7 +45,7 @@
             >
                 Please enter a title
             </mat-error>
-            <mat-error>{{postForm.get('title').errors['serverError']}}</mat-error>
+            <mat-error>{{postForm.get('title').errors?.serverError}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field class="example-full-width">
@@ -59,7 +59,7 @@
             >
                 Please enter the body of the post
             </mat-error>
-            <mat-error>{{postForm.get('postBody').errors['serverError']}}</mat-error>
+            <mat-error>{{postForm.get('postBody').errors?.serverError}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill" class="example-full-width">
