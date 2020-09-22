@@ -15,7 +15,7 @@ import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostTypes;
 
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,7 +27,7 @@ public class PostListItem {
     private String title;
     private String postBodyShortened;
     private String picture;
-    private LocalDate createdAt;
+    private String createdAt;
     private Integer numberOfComments;
     private PostCategories category;
     private PostTypes type;
@@ -44,8 +44,11 @@ public class PostListItem {
                 .collect(Collectors.joining());
         this.picture = post.getPicture();
 
-        this.createdAt = post.getCreatedAt()
-                .toLocalDate();
+        // this.createdAt = post.getCreatedAt()
+        //         .toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createdAt = post.getCreatedAt().format(formatter);
+
         //this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
         this.category = post.getCategory();
@@ -78,7 +81,7 @@ public class PostListItem {
         return picture;
     }
 
-    public LocalDate getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
