@@ -57,13 +57,14 @@
     </form>
 </div>
 -->
-<div layout="row" layout-align="center center" class="mat-app-background basic-container">
+
+<div class="mat-app-background basic-container">
     <mat-card class="basic-container">
         <mat-card-header>
             <mat-card-title>Log in</mat-card-title>
         </mat-card-header>
 
-        <form  layout="row" layout-align="center center" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <form  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
             <mat-form-field class="example-full-width">
                 <mat-label>Id</mat-label>
                 <input matInput type="number" formControlName="id" required>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {UserRegistrationFormModel} from "../../models/userRegistrationForm.model";
@@ -13,11 +13,11 @@ export class UserRegistrationFormComponent implements OnInit {
 
     registrationForm = this.formBuilder.group(
         {
-            id: [''],
-            firstName: [''],
-            lastName: [''],
-            email: [''],
-            phoneNumber: [''],
+            id: ['',Validators.required],
+            firstName: ['',Validators.required],
+            lastName: ['',Validators.required],
+            email: ['',Validators.required],
+            phoneNumber: ['',Validators.required],
         });
 
     constructor(private formBuilder: FormBuilder,
