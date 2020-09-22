@@ -52,6 +52,7 @@ export class MeetingDialodComponent implements OnInit {
         //     }
         // );
         this.startDate = this.userService.getStartDate();
+        this.meetingRequestForm.get('startDate').setValue(this.startDate);
         this.loadUserList();
         this.loadMeetingRoomList();
     }
@@ -90,7 +91,7 @@ export class MeetingDialodComponent implements OnInit {
             })
             console.log(this.participantsId);
         })
-        meetingForm.participrantsId = this.participantsId;
+        meetingForm.participantsId = this.participantsId;
 
         const format = "YYYY-MM-DD HH:mm:ss";
         const value = this.meetingRequestForm.get('endDate').value;
