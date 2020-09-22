@@ -23,7 +23,7 @@ public class MeetingRoomFormDataValidator implements Validator {
             errors.rejectValue("name", "meetingRoomFormData.name.lowercase");
         }
 
-        if (meetingRoomFormData.getSeats() < 2 || meetingRoomFormData.getSeats() == null) {
+        if (meetingRoomFormData.getSeats() == null || meetingRoomFormData.getSeats() < 2) {
             errors.rejectValue("seats", "meetingRoomFormData.seats.not-enough");
         }
 

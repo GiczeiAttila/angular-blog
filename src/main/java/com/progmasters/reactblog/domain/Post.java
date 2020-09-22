@@ -14,8 +14,10 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -39,8 +41,10 @@ public class Post {
     @Column(name = "img_url", columnDefinition = "TEXT")
     private String picture;
 
-    @Column(name = "creation_at")
-    private LocalDateTime createdAt;
+    //@Column(name = "creation_at")
+    //private LocalDateTime createdAt;
+
+    private ZonedDateTime createdAt;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @OrderBy(value = "createdAt desc")
@@ -66,7 +70,22 @@ public class Post {
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
         this.picture = postFormData.getPicture();
-        this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
+
+
+        this.createdAt = ZonedDateTime.of(
+                LocalDate.now(),
+                LocalTime.MIN,
+                ZoneId.of("UTC")
+        );
+
+
+       /* LocalDateTime now = LocalDateTime.now();
+        OffsetDateTime timeUtc = now.atOffset(ZoneOffset.UTC);
+        this.createdAt = timeUtc.withOffsetSameInstant(ZoneOffset.UTC);
+
+        */
+
+        //this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
         this.category = postFormData.getCategory();
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
@@ -104,11 +123,11 @@ public class Post {
         this.picture = imgUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

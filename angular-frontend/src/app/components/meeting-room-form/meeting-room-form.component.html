@@ -1,10 +1,9 @@
-<
 <div class="mat-app-background basic-container">
     <h4 class="modal-title">New meeting room</h4>
     <br>
 
     <form (ngSubmit)="saveRoom()" [formGroup]="meetingRoomForm">
-        <mat-form-field appearance="fill" class="example-full-width" class="example-width-half">
+        <mat-form-field appearance="fill" class="example-width-half">
             <mat-label>Room name</mat-label>
             <input formControlName="name" matInput required>
             <mat-error *ngIf="meetingRoomForm.get('name').invalid
@@ -16,7 +15,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field appearance="fill" class="example-full-width" class="example-width-half">
+        <mat-form-field appearance="fill" class="example-width-half">
             <mat-label>Number of seats</mat-label>
             <input formControlName="seats" matInput required type="number">
             <mat-error *ngIf="meetingRoomForm.get('seats').invalid
@@ -24,9 +23,8 @@
             && !meetingRoomForm.get('seats').errors?.serverError">
                 Please enter the number of seats (minimum 2)
             </mat-error>
-            <mat-error class="text-info">{{meetingRoomForm.get('seats').errors?.serverError}}</mat-error>
+            <mat-error>{{meetingRoomForm.get('seats').errors?.serverError}}</mat-error>
         </mat-form-field>
-        <br>
         <br>
 
         <mat-card-actions>
@@ -34,7 +32,6 @@
         </mat-card-actions>
     </form>
 </div>
--
 
 
 <!--<div>
