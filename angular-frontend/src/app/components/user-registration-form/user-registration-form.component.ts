@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {UserRegistrationFormModel} from "../../models/userRegistrationForm.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-user-registration-form',
@@ -11,23 +12,25 @@ import {UserRegistrationFormModel} from "../../models/userRegistrationForm.model
 })
 export class UserRegistrationFormComponent implements OnInit {
 
-    registrationForm = this.formBuilder.group(
-        {
-            id: ['',Validators.required],
-            firstName: ['',Validators.required],
-            lastName: ['',Validators.required],
-            email: ['',Validators.required],
-            phoneNumber: ['',Validators.required],
-        });
+    registrationForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder,
-                private userService: UserService) {
+                private userService: UserService,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit(): void {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }
+        this.registrationForm = this.formBuilder.group(
+            {
+                id: ['',Validators.required],
+                firstName: ['',Validators.required],
+                lastName: ['',Validators.required],
+                email: ['',Validators.required],
+                phoneNumber: ['',Validators.required],
+            });
     }
 
     submitRegistration() {
@@ -39,8 +42,28 @@ export class UserRegistrationFormComponent implements OnInit {
             .subscribe(() => {
                 },
                 error => handleValidationErrors(error, this.registrationForm),
-                () => {this.registrationForm.reset()}
+                () => {
+                this.resetForm(this.registrationForm);
+                this.openSnackBar('Registration completed','ok');
+            }
             );
+    }
+
+    openSnackBar(message: string, action: string) {
+        console.log('snackBar');
+        this.snackBar.open(message, action, {
+            duration: 500,
+            panelClass: ['green-snackbar']
+        });
+    }
+
+    resetForm(form: FormGroup) {
+
+        form.reset();
+
+        Object.keys(form.controls).forEach(key => {
+            form.get(key).setErrors(null) ;
+        });
     }
 
 }

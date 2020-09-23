@@ -17,3 +17,8 @@ body {
     float: right;
     margin: 8px;
 }
+
+
+.green-snackbar{
+    background: #58ee08;
+}

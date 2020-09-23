@@ -73,13 +73,10 @@
                            [min]="minDate" disabled placeholder="start date"
                            required formControlName="deadline">
                     <mat-hint>Open position deadline is required</mat-hint>
-                    <mat-error>
+                    <mat-error *ngIf="openPositionForm.get('deadline').errors?.serverError">
                         {{openPositionForm.get('deadline').errors?.serverError}}
                     </mat-error>
-                    <mat-error
-                        *ngIf="openPositionForm.get('deadline').invalid && openPositionForm.get('deadline').dirty">
-                        Open position description is <strong>required</strong>
-                    </mat-error>
+
 <!--                    <mat-error *ngIf="openPositionForm.get('deadline').hasError('matDatepickerParse')">-->
 <!--                        "{{openPositionForm.get('deadline').getError('matDatepickerParse').text}}"-->
 <!--                        is not a valid date!-->

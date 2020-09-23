@@ -189,22 +189,22 @@
             </mat-form-field>
             <hr>
             <mat-form-field class="example-full-width">
-                <mat-label>Phone number(example: +36301234567)</mat-label>
+                <mat-label>Mobil phone number(example: +36301234567)</mat-label>
                 <input matInput type="text" formControlName="phoneNumber" required>
-                <mat-hint>Phone number is required</mat-hint>
+                <mat-hint>Mobil phone number is required</mat-hint>
                 <mat-error>
                     {{registrationForm.get('phoneNumber').errors?.serverError}}
                 </mat-error>
                 <mat-error
                     *ngIf="registrationForm.get('phoneNumber').invalid && registrationForm.get('phoneNumber').touched && !registrationForm.get('phoneNumber').errors?.serverError"
                     class="text-danger">
-                    Phone number is <strong>required</strong>
+                    Mobil phone number is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <br>
             <hr/>
             <mat-card-actions>
-                <button mat-raised-button type="submit" color="primary">Login</button>
+                <button mat-raised-button type="submit" color="primary">Submit</button>
             </mat-card-actions>
         </form>
     </mat-card>
