@@ -26,13 +26,6 @@ export class OpenPositionsComponent implements OnInit {
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
                 private helperService: HelperService) {
-    }
-
-    ngOnInit(): void {
-        if (localStorage.getItem('auth')) {
-            this.userService.loginSubject.next();
-            this.currentUserId = +localStorage.getItem("userId");
-        }
         this.openPositionForm = this.formBuilder.group(
             {
                 positionName: [''],
@@ -40,6 +33,14 @@ export class OpenPositionsComponent implements OnInit {
                 deadline: ['']
             }
         );
+    }
+
+    ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+            this.currentUserId = +localStorage.getItem("userId");
+        }
+
         const today = new Date()
         const tomorrow = new Date(today)
         tomorrow.setDate(tomorrow.getDate() + 1)
@@ -63,6 +64,7 @@ export class OpenPositionsComponent implements OnInit {
         openPositionData.userId = +localStorage.getItem('userId')
         this.userService.createOpenPosition(openPositionData)
             .subscribe(() => {
+
                 },
                 error => {
                     handleValidationErrors(error, this.openPositionForm);
