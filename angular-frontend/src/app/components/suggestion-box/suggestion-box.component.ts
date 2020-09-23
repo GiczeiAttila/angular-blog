@@ -8,6 +8,7 @@ import {SuggestionFormModel} from "../../models/suggestionForm.model";
 import {SuggestionListItemModel} from "../../models/suggestionListItem.model";
 import {SuggestionVoteModel} from "../../models/suggestionVote.model";
 import {SuggestionStatusChangeModel} from "../../models/suggestionStatusChange.model";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
     selector: 'app-suggestion-box',
@@ -23,7 +24,11 @@ export class SuggestionBoxComponent implements OnInit {
     closedSuggestionList: Array<SuggestionListItemModel>;
     currentUserId: number;
 
-    constructor(private userService: UserService, private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private userService: UserService,
+                private http: HttpClient,
+                private router: Router,
+                private formBuilder: FormBuilder,
+                private helperService: HelperService) {
     }
 
     ngOnInit(): void {
@@ -68,7 +73,7 @@ export class SuggestionBoxComponent implements OnInit {
                     handleValidationErrors(error, this.suggestionForm);
                 },
                 () => {
-                    this.suggestionForm.reset();
+                    this.helperService.resetForm(this.suggestionForm);
                     this.ngOnInit();
                 },
             );

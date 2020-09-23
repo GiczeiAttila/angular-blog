@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,19 +34,13 @@ public class OpenPositionIT {
     private UserService userService;
 
     @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
-
-//    @CsvSource({
-//            "1,2,3,4,3",
-//            "0,1,2,3,2",
-//            "-1,0,1,2,2",
-//            "-2,-1,0,1,1",
-//            "0,1,0,0,0"
-//    })
-
-
-//    @CsvFileSource(resources = "/open-position-test.csv")
-
-    @MethodSource("parameterCreator")
+    @CsvSource({
+            "1,2,3,4,3",
+            "0,1,2,3,2",
+            "-1,0,1,2,2",
+            "-2,-1,0,1,1",
+            "0,1,0,0,0"
+    })
     void testGetActiveOpenPositions(int plusDay1, int plusDay2, int plusDay3, int plusDay4, int expectedNumber) {
         OpenPositionFormDto openPositionFormDto1 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay1);
         OpenPositionFormDto openPositionFormDto2 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay2);
@@ -61,15 +56,81 @@ public class OpenPositionIT {
         userService.saveUser(user4);
         int offset = openPositionService.getActiveOpenPositions(user2.getId()).size();
         expectedNumber = expectedNumber + offset;
-        OpenPosition openPosition1 = openPositionService.saveOpenPosition(openPositionFormDto1);
-        OpenPosition openPosition2 = openPositionService.saveOpenPosition(openPositionFormDto2);
-        OpenPosition openPosition3 = openPositionService.saveOpenPosition(openPositionFormDto3);
-        OpenPosition openPosition4 = openPositionService.saveOpenPosition(openPositionFormDto4);
+        openPositionService.saveOpenPosition(openPositionFormDto1);
+        openPositionService.saveOpenPosition(openPositionFormDto2);
+        openPositionService.saveOpenPosition(openPositionFormDto3);
+        openPositionService.saveOpenPosition(openPositionFormDto4);
 
         List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getActiveOpenPositions(user2.getId());
 
         Assertions.assertEquals(expectedNumber, openPositionListItemDtos.size());
 
+    }
+
+    @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
+    @CsvFileSource(resources = "/open-position-test.csv")
+    void testGetActiveOpenPositionsWithCsvFile(int plusDay1, int plusDay2, int plusDay3, int plusDay4, int expectedNumber) {
+        OpenPositionFormDto openPositionFormDto1 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay1);
+        OpenPositionFormDto openPositionFormDto2 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay2);
+        OpenPositionFormDto openPositionFormDto3 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay3);
+        OpenPositionFormDto openPositionFormDto4 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay4);
+        User user1 = UserFactory.getUser(openPositionFormDto1.getUserId());
+        User user2 = UserFactory.getUser(openPositionFormDto2.getUserId());
+        User user3 = UserFactory.getUser(openPositionFormDto3.getUserId());
+        User user4 = UserFactory.getUser(openPositionFormDto4.getUserId());
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
+        userService.saveUser(user4);
+        int offset = openPositionService.getActiveOpenPositions(user2.getId()).size();
+        expectedNumber = expectedNumber + offset;
+        openPositionService.saveOpenPosition(openPositionFormDto1);
+        openPositionService.saveOpenPosition(openPositionFormDto2);
+        openPositionService.saveOpenPosition(openPositionFormDto3);
+        openPositionService.saveOpenPosition(openPositionFormDto4);
+
+        List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getActiveOpenPositions(user2.getId());
+
+        Assertions.assertEquals(expectedNumber, openPositionListItemDtos.size());
+
+    }
+
+    @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
+    @MethodSource("parameterCreator")
+    void testGetActiveOpenPositionsWithMethodSource(int plusDay1, int plusDay2, int plusDay3, int plusDay4, int expectedNumber) {
+        OpenPositionFormDto openPositionFormDto1 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay1);
+        OpenPositionFormDto openPositionFormDto2 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay2);
+        OpenPositionFormDto openPositionFormDto3 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay3);
+        OpenPositionFormDto openPositionFormDto4 = OpenPositionFormDtoFactory.getOpenPositionFormDto(plusDay4);
+        User user1 = UserFactory.getUser(openPositionFormDto1.getUserId());
+        User user2 = UserFactory.getUser(openPositionFormDto2.getUserId());
+        User user3 = UserFactory.getUser(openPositionFormDto3.getUserId());
+        User user4 = UserFactory.getUser(openPositionFormDto4.getUserId());
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
+        userService.saveUser(user4);
+        int offset = openPositionService.getActiveOpenPositions(user2.getId()).size();
+        expectedNumber = expectedNumber + offset;
+        openPositionService.saveOpenPosition(openPositionFormDto1);
+        openPositionService.saveOpenPosition(openPositionFormDto2);
+        openPositionService.saveOpenPosition(openPositionFormDto3);
+        openPositionService.saveOpenPosition(openPositionFormDto4);
+
+        List<OpenPositionListItemDto> openPositionListItemDtos = openPositionService.getActiveOpenPositions(user2.getId());
+
+        Assertions.assertEquals(expectedNumber, openPositionListItemDtos.size());
+
+    }
+
+    private static Stream<Arguments> parameterCreator(){
+        return Stream.of(
+                Arguments.of(1,2,3,4,3),
+                Arguments.of(0,1,2,3,2),
+                Arguments.of(-1,0,1,2,2),
+                Arguments.of(-2,-1,0,1,1),
+                Arguments.of(0,1,0,0,0)
+        );
     }
 
 
@@ -100,13 +161,5 @@ public class OpenPositionIT {
         }
     }
 
-    private static Stream<Arguments> parameterCreator(){
-        return Stream.of(
-                Arguments.of(1,2,3,4,3),
-                Arguments.of(0,1,2,3,2),
-                Arguments.of(-1,0,1,2,2),
-                Arguments.of(-2,-1,0,1,1),
-                Arguments.of(0,1,0,0,0)
-        );
-    }
+
 }
