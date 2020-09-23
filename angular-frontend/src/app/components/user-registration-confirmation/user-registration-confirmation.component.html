@@ -107,7 +107,7 @@
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
                 <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="password" required>
-                <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-icon matSuffix class="show-hide" (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-hint>Password is required</mat-hint>
                 <mat-error>
                     {{passwordForm.get('password').errors?.passwordForm}}
@@ -122,7 +122,7 @@
             <mat-form-field class="example-full-width">
                 <mat-label>Password confirmation</mat-label>
                 <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="password2" required>
-                <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-icon class="show-hide" matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-hint>Password is required</mat-hint>
                 <mat-error>
                     {{passwordForm.get('password2').errors?.passwordForm}}

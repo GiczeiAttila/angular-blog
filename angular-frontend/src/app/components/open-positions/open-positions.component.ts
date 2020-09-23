@@ -6,6 +6,7 @@ import {OpenPositionFormModel} from "../../models/openPositionForm.model";
 import {OpenPositionListItemModel} from "../../models/openPositionListItem.model";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {ApplicationForOpenPositionModel} from "../../models/applicationForOpenPosition.model";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
   selector: 'app-open-positions',
@@ -18,10 +19,13 @@ export class OpenPositionsComponent implements OnInit {
     index: number;
     currentUserId: number;
     minDate;
+    maxDate;
     activeOpenPositionList: Array<OpenPositionListItemModel>;
     myOpenPositionList: Array<OpenPositionListItemModel>;
 
-    constructor(private userService: UserService, private formBuilder: FormBuilder) {
+    constructor(private userService: UserService,
+                private formBuilder: FormBuilder,
+                private helperService: HelperService) {
     }
 
     ngOnInit(): void {
@@ -40,6 +44,10 @@ export class OpenPositionsComponent implements OnInit {
         const tomorrow = new Date(today)
         tomorrow.setDate(tomorrow.getDate() + 1)
         this.minDate = new Date(tomorrow).toLocaleString("en-CA").substring(0,10);
+        let year = today.getFullYear();
+        let month = today.getMonth();
+        let day = today.getDate();
+        this.maxDate = new Date(year + 1, month, day).toLocaleString("en-CA").substring(0,10);
         console.log(this.minDate);
         this.index = 0;
         this.myOpenPositionList = [];
@@ -58,8 +66,12 @@ export class OpenPositionsComponent implements OnInit {
                 },
                 error => {
                     handleValidationErrors(error, this.openPositionForm);
+                    console.log(error);
+                    console.log(this.openPositionForm.errors);
+
                 },
                 () => {
+                    this.helperService.resetForm(this.openPositionForm);
                     this.ngOnInit();
                 },
             );

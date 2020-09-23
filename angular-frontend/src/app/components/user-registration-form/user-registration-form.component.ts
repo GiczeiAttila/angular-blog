@@ -4,6 +4,7 @@ import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {UserRegistrationFormModel} from "../../models/userRegistrationForm.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
     selector: 'app-user-registration-form',
@@ -16,7 +17,8 @@ export class UserRegistrationFormComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private helperService: HelperService) {
     }
 
     ngOnInit(): void {
@@ -43,7 +45,7 @@ export class UserRegistrationFormComponent implements OnInit {
                 },
                 error => handleValidationErrors(error, this.registrationForm),
                 () => {
-                this.resetForm(this.registrationForm);
+                this.helperService.resetForm(this.registrationForm);
                 this.openSnackBar('Registration completed','ok');
             }
             );
@@ -56,14 +58,4 @@ export class UserRegistrationFormComponent implements OnInit {
             panelClass: ['green-snackbar']
         });
     }
-
-    resetForm(form: FormGroup) {
-
-        form.reset();
-
-        Object.keys(form.controls).forEach(key => {
-            form.get(key).setErrors(null) ;
-        });
-    }
-
 }

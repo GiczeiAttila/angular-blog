@@ -46,4 +46,8 @@ export class UserLoginFormComponent implements OnInit {
                 },
             );
     }
+
+    // toggleShowPassword(){
+    //     this.hide= !this.hide;
+    // }
 }
