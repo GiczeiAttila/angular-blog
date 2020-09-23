@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class SuggestionFormDto {
+
     private Long userId;
     private String title;
     private String description;
@@ -28,4 +29,5 @@ public class SuggestionFormDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

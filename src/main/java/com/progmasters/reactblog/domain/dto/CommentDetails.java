@@ -17,9 +17,9 @@ import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATT
 
 public class CommentDetails {
 
-    private String author;
-    private String commentBody;
-    private String createdAt;
+    private final String author;
+    private final String commentBody;
+    private final String createdAt;
 
     public CommentDetails(Comment comment) {
         this.author = comment.getAuthor().getFirstName() + " " + comment.getAuthor().getLastName();
@@ -38,4 +38,5 @@ public class CommentDetails {
     public String getCreatedAt() {
         return createdAt;
     }
+
 }

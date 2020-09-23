@@ -2,7 +2,6 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.PostCategories;
 
-
 public class CategoryOption {
 
     private String name;
@@ -28,4 +27,5 @@ public class CategoryOption {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
 }

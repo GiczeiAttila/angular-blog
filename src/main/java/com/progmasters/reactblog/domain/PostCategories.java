@@ -6,7 +6,7 @@ public enum PostCategories {
     FREE_TIME_ACTIVITIES("Free time activities"),
     PROFESSIONAL("Professional news");
 
-    private String displayName;
+    private final String displayName;
 
     PostCategories(String displayName) {
         this.displayName = displayName;

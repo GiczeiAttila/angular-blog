@@ -5,7 +5,6 @@ public class MeetingRoomFormData {
     private String name;
     private Integer seats;
 
-
     public String getName() {
         return name;
     }
@@ -21,4 +20,5 @@ public class MeetingRoomFormData {
     public void setSeats(Integer seats) {
         this.seats = seats;
     }
+
 }

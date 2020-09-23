@@ -3,10 +3,11 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.progmasters.reactblog.utils.DateUtils.convertLocalDateTimeToZonedDateTime;
 
 @Entity
 @Table(name = "meetingReservation")
@@ -20,14 +21,15 @@ public class MeetingReservation {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description",
+            columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private ZonedDateTime startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private ZonedDateTime endDate;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
@@ -46,12 +48,11 @@ public class MeetingReservation {
     public MeetingReservation(MeetingReservationFormData meetingReservationFormData, User creator, MeetingRoom meetingRoom) {
         this.title = meetingReservationFormData.getTitle();
         this.description = meetingReservationFormData.getDescription();
-        this.startDate = LocalDateTime.parse(meetingReservationFormData.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.endDate = LocalDateTime.parse(meetingReservationFormData.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.startDate = convertLocalDateTimeToZonedDateTime(meetingReservationFormData.getStartDateTime());
+        this.endDate = convertLocalDateTimeToZonedDateTime(meetingReservationFormData.getEndDateTime());
         this.creator = creator;
         this.meetingRoom = meetingRoom;
     }
-
 
     public Long getId() {
         return id;
@@ -77,19 +78,19 @@ public class MeetingReservation {
         this.description = description;
     }
 
-    public LocalDateTime getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -116,6 +117,5 @@ public class MeetingReservation {
     public void setMeetingRoom(MeetingRoom meetingRoom) {
         this.meetingRoom = meetingRoom;
     }
-
 
 }

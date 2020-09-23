@@ -14,9 +14,10 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
+
+import static com.progmasters.reactblog.utils.DateUtils.getCurrentServerTime;
 
 @Entity
 @Table(name = "post")
@@ -33,18 +34,21 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "post_body", columnDefinition = "TEXT")
+    @Column(name = "post_body",
+            columnDefinition = "TEXT")
     private String postBody;
 
-    @Column(name = "img_url", columnDefinition = "TEXT")
+    @Column(name = "img_url",
+            columnDefinition = "TEXT")
     private String picture;
 
     @Column(name = "creation_at")
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     //private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post",
+               fetch = FetchType.EAGER)
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
 
@@ -58,7 +62,6 @@ public class Post {
 
     @Embedded
     private Address address;
-
 
     public Post() {
     }
@@ -78,7 +81,7 @@ public class Post {
 
          */
 
-        this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
+        this.createdAt = getCurrentServerTime();
         this.category = postFormData.getCategory();
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
@@ -116,11 +119,11 @@ public class Post {
         this.picture = imgUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -165,17 +168,22 @@ public class Post {
     }
 
     @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Post post = (Post) o;
 
         return id != null ? id.equals(post.id) : post.id == null;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

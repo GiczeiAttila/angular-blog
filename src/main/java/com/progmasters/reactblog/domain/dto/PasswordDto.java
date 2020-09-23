@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class PasswordDto {
+
     private Long id;
     private String oldPassword;
     private String password;
@@ -37,4 +38,5 @@ public class PasswordDto {
     public void setPassword2(String password2) {
         this.password2 = password2;
     }
+
 }

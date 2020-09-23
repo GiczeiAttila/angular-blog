@@ -2,26 +2,25 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.TimeOffStatusEnum;
+import com.progmasters.reactblog.utils.DateUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class TimeOffListItem {
 
     private Long userId;
     private Long dateId;
     private String userName;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private TimeOffStatusEnum status;
 
     public TimeOffListItem(TimeOffDateRange timeOff) {
         this.userId = timeOff.getUser().getId();
         this.dateId = timeOff.getId();
         this.userName = timeOff.getUser().getFirstName() + " " + timeOff.getUser().getLastName();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.startDate = dateFormat.format(timeOff.getStartDate());
-        this.endDate = dateFormat.format(timeOff.getEndDate());
+        this.startDate = DateUtils.localizeDateFromZonedDateTime(timeOff.getStartDate());
+        this.endDate = DateUtils.localizeDateFromZonedDateTime(timeOff.getEndDate());
         this.status = timeOff.getStatus();
     }
 
@@ -49,19 +48,19 @@ public class TimeOffListItem {
         this.userName = userName;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -72,4 +71,5 @@ public class TimeOffListItem {
     public void setStatus(TimeOffStatusEnum status) {
         this.status = status;
     }
+
 }

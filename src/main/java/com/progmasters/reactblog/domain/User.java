@@ -23,12 +23,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatusEnum userStatus;
 
+    @OneToMany(mappedBy = "author")
+    private List<Post> myPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "author")
-    private List<Post> myPosts  = new ArrayList<>();
-
-    @OneToMany(mappedBy = "author")
-    private List<Comment> myComments  = new ArrayList<>();
+    private List<Comment> myComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Suggestion> suggestionList = new ArrayList<>();
@@ -51,7 +50,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<MeetingParticipant> meetingParticipantList = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(UserFormDto userFormDto) {
         this.id = userFormDto.getId();
@@ -207,4 +207,5 @@ public class User {
     public void setMeetingParticipantList(List<MeetingParticipant> meetingParticipantList) {
         this.meetingParticipantList = meetingParticipantList;
     }
+
 }

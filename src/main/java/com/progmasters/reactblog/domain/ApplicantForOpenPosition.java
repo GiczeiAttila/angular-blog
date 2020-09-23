@@ -1,11 +1,10 @@
 package com.progmasters.reactblog.domain;
 
-import com.progmasters.reactblog.domain.dto.ApplicationForOpenPositionDto;
-
 import javax.persistence.*;
 
 @Entity
 public class ApplicantForOpenPosition {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,4 +58,5 @@ public class ApplicantForOpenPosition {
     public void setApplicationStatus(ApplicationStatus applicationStatus) {
         this.applicationStatus = applicationStatus;
     }
+
 }

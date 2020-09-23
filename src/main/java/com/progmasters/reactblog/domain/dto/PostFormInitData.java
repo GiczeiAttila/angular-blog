@@ -27,4 +27,5 @@ public class PostFormInitData {
     public void setTypes(List<TypeOption> types) {
         this.types = types;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class SuggestionStatusChangeDto {
+
     private Long currentUserId;
     private Long suggestionId;
     private String status;
@@ -28,4 +29,5 @@ public class SuggestionStatusChangeDto {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

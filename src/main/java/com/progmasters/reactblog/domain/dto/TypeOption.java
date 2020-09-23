@@ -27,4 +27,5 @@ public class TypeOption {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
 }

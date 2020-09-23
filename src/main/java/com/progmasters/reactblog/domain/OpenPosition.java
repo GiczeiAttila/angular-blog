@@ -3,25 +3,22 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+
+import static com.progmasters.reactblog.utils.DateUtils.convertLocalDateToZonedDateTime;
 
 @Entity
 public class OpenPosition {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String positionName;
     @Lob
     private String description;
-    private Date deadline;
+    private ZonedDateTime deadline;
 
     @OneToMany(mappedBy = "openPosition")
     private List<ApplicantForOpenPosition> applicants;
@@ -35,15 +32,7 @@ public class OpenPosition {
     public OpenPosition(OpenPositionFormDto openPositionFormDto, User user) {
         this.positionName = openPositionFormDto.getPositionName();
         this.description = openPositionFormDto.getDescription();
-        System.out.println(openPositionFormDto.getDeadline());
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            this.deadline = format.parse(openPositionFormDto.getDeadline());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(this.deadline);
+        this.deadline = convertLocalDateToZonedDateTime(openPositionFormDto.getDeadline());
         this.applicants = new ArrayList<>();
         this.user = user;
     }
@@ -72,11 +61,11 @@ public class OpenPosition {
         this.description = description;
     }
 
-    public Date getDeadline() {
+    public ZonedDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(ZonedDateTime deadline) {
         this.deadline = deadline;
     }
 
@@ -95,4 +84,5 @@ public class OpenPosition {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

@@ -4,12 +4,12 @@ import com.progmasters.reactblog.domain.Address;
 
 public class AddressDetails {
 
-    private String country;
-    private String zipCode;
-    private String city;
-    private String street;
-    private String number;
-    private String coordinate;
+    private final String country;
+    private final String zipCode;
+    private final String city;
+    private final String street;
+    private final String number;
+    private final String coordinate;
 
     public AddressDetails(Address address) {
         this.country = address.getCountry();
@@ -19,7 +19,6 @@ public class AddressDetails {
         this.number = address.getNumber();
         this.coordinate = address.getCoordinate();
     }
-
 
     public String getCountry() {
         return country;
@@ -44,4 +43,5 @@ public class AddressDetails {
     public String getCoordinate() {
         return coordinate;
     }
+
 }

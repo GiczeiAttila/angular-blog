@@ -10,14 +10,13 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.TimeZone;
 
 @Component
 public class OpenPositionFormDtoValidator implements Validator {
+
     private final UserService userService;
 
     @Autowired
@@ -36,11 +35,10 @@ public class OpenPositionFormDtoValidator implements Validator {
 
         Long id = openPositionFormDto.getUserId();
         User user = userService.findById(id);
-        if (user == null) {
-            errors.rejectValue("id", "openPositionFormDto.not-authorised");
-        }else if (user.getUserStatus() != UserStatusEnum.ACTIVE) {
+        if (user == null || user.getUserStatus() != UserStatusEnum.ACTIVE) {
             errors.rejectValue("id", "openPositionFormDto.not-authorised");
         }
+
         if (openPositionFormDto.getPositionName() == null || openPositionFormDto.getPositionName().isEmpty()) {
             errors.rejectValue("positionName", "openPositionFormDto.positionName.empty");
         } else if (openPositionFormDto.getPositionName().length() > 250 || openPositionFormDto.getPositionName().length() < 3) {
@@ -51,26 +49,16 @@ public class OpenPositionFormDtoValidator implements Validator {
         }
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date today;
-        Date maxDeadline;
-        Date deadline;
-        if (openPositionFormDto.getDeadline() == null || openPositionFormDto.getDeadline().isEmpty()) {
+        if (openPositionFormDto.getDeadline() == null) {
             errors.rejectValue("deadline", "openPositionFormDto.deadline.required");
-        }else {
-            try {
-                String date = format.format(new Date());
-                today = format.parse(date);
-                Calendar c = Calendar.getInstance();
-                c.setTime(today);
-                c.add(Calendar.YEAR, 1);
-                maxDeadline = c.getTime();
-                deadline = format.parse(openPositionFormDto.getDeadline());
-                if (!deadline.after(today) || deadline.after(maxDeadline)){
-                    errors.rejectValue("deadline", "openPositionFormDto.deadline");
-                }
-            } catch (ParseException e) {
-                errors.rejectValue("deadline", "openPositionFormDto.deadline.wrongDate");
+        } else {
+            LocalDate deadline = openPositionFormDto.getDeadline();
+
+            if (!deadline.isAfter(LocalDate.now()) || deadline.isAfter(LocalDate.now().plusYears(1))) {
+                errors.rejectValue("deadline", "openPositionFormDto.deadline");
             }
+
         }
     }
+
 }

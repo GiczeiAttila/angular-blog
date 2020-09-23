@@ -73,4 +73,5 @@ public class Address {
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate;
     }
+
 }

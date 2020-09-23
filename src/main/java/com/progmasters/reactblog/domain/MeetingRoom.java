@@ -33,7 +33,6 @@ public class MeetingRoom {
         this.meetingList = new ArrayList<>();
     }
 
-
     public Long getId() {
         return id;
     }
@@ -65,4 +64,5 @@ public class MeetingRoom {
     public void setMeetingList(List<MeetingReservation> meetingList) {
         this.meetingList = meetingList;
     }
+
 }

@@ -24,7 +24,6 @@ public class PostFormData {
     private PostTypes type;
     private AddressFormData address;
 
-
     public String getTitle() {
         return title;
     }
@@ -52,6 +51,5 @@ public class PostFormData {
     public AddressFormData getAddress() {
         return address;
     }
-
 
 }

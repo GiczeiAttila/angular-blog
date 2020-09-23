@@ -29,7 +29,6 @@ public class CalendarTimeOffListDto {
 
     }
 
-
     public String getTitle() {
         return title;
     }

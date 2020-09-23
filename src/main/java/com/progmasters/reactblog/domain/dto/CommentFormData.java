@@ -28,4 +28,5 @@ public class CommentFormData {
     public String getCommentBody() {
         return commentBody;
     }
+
 }
