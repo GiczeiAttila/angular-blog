@@ -7,8 +7,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {MeetingDialodComponent} from "../meeting-form-dialog/meeting-dialod.component";
 import * as moment from 'moment';
 import {MeetingListItemModel} from "../../models/meetingListItem.model";
-import {ActivatedRoute} from "@angular/router";
-import {Subject} from "rxjs";
 
 
 const colors: any = {
@@ -39,25 +37,21 @@ const colors: any = {
     encapsulation: ViewEncapsulation.None,
 })
 export class MeetingReservationFormComponent implements OnInit {
-
     meetingList: Array<MeetingListItemModel>;
     displayingMeetingList: Array<CalendarEvent>;
     userId: number;
-
-    refresh: Subject<any> = new Subject();
 
     view: CalendarView;
     viewDate: Date;
     events: CalendarEvent[];
     clickedDate: Date;
-    clickedColumn: number;
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
                 private modalService: NgbModal,
-                private dialog: MatDialog,
-                private activatedRoute: ActivatedRoute) {
-        userService.refreshCalendar.subscribe(
+                private dialog: MatDialog,) {
+
+        this.userService.refreshCalendar.subscribe(
             () => this.ngOnInit()
         )
     }

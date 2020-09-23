@@ -5,6 +5,7 @@ import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import * as moment from "moment";
+import {MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class MeetingDialodComponent implements OnInit {
     userId: number;
 
     constructor(private userService: UserService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private dialogRef: MatDialogRef<MeetingDialodComponent>) {
         this.meetingRequestForm = formBuilder.group({
             title: [''],
             description: [''],
@@ -65,7 +67,6 @@ export class MeetingDialodComponent implements OnInit {
     saveMeeting() {
         const meetingForm = this.meetingRequestForm.value;
         meetingForm.creatorId = this.userId;
-        console.log(this.meetingRequestForm.value);
 
         this.actualParticipantsId = [];
         let actualParticipants = this.meetingRequestForm.get('participantsId').value;
@@ -80,17 +81,18 @@ export class MeetingDialodComponent implements OnInit {
             meetingForm.participantsId = this.actualParticipantsId;
             meetingForm.participantsId.push(this.userId);
         }
-
         const format = "YYYY-MM-DD HH:mm:ss";
         const value = this.meetingRequestForm.get('endDate').value;
         let actualEndDate = moment(value).format(format);
         meetingForm.endDate = actualEndDate;
-        console.log(actualEndDate);
 
         this.userService.saveNewMeeting(meetingForm).subscribe(
             () => console.log(meetingForm),
             error => handleValidationErrors(error, this.meetingRequestForm),
-            () => this.userService.refreshCalendar.next()
+            () => {
+                this.userService.refreshCalendar.next();
+                this.dialogRef.close()
+            }
         )
     }
 

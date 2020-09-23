@@ -3,7 +3,7 @@
 </div>
 <div class="mat-app-background basic-container">
     <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
-        <mat-form-field class="meeting-width-half">
+        <mat-form-field class="meeting-full-width">
             <mat-label>Title</mat-label>
             <input formControlName="title" matInput placeholder="Title" required>
             <mat-hint>Title is requires</mat-hint>
@@ -26,7 +26,7 @@
         </mat-form-field>
 
 
-        <mat-form-field class="meeting-width-half">
+        <mat-form-field class="meeting-full-width">
             <mat-label>Participants</mat-label>
             <mat-select formControlName="participantsId" multiple>
                 <mat-select-trigger>
@@ -50,7 +50,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="meeting-width-half">
+        <mat-form-field class="meeting-full-width">
             <mat-label>Select room</mat-label>
             <mat-select formControlName="meetingRoomId" id="select-room" required>
                 <ng-container *ngFor="let room of meetingRoomList">
@@ -69,7 +69,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field appearance="fill" class="meeting-width-half">
+        <mat-form-field appearance="fill" class="meeting-full-width">
             <mat-label>TIMEPICKER</mat-label>
             <input #t="matTimepicker" formControlName="endDate"
                    id="timepicker-example" matTimepicker
@@ -85,7 +85,7 @@
         </mat-form-field>
         <br>
 
-        <button class="button" color="primary" mat-raised-button>Save</button>
+        <button color="primary" mat-raised-button>Save</button>
         <button color="primary" mat-button matDialogClose>Close</button>
     </form>
 </div>

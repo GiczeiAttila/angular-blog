@@ -37,6 +37,7 @@ export class UserService {
 
     refreshCalendar = new Subject();
 
+
     addStartDate(clickedStartDate: string) {
         this.startDate = clickedStartDate;
     }
