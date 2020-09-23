@@ -1,3 +1,13 @@
 .meeting-full-width {
     width: 100%;
+    margin-bottom: 10px;
+}
+
+.meeting-width-half {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.button {
+    margin: 10px;
 }

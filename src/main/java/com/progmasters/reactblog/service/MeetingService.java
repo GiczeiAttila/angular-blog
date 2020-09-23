@@ -4,6 +4,7 @@ import com.progmasters.reactblog.domain.MeetingParticipant;
 import com.progmasters.reactblog.domain.MeetingReservation;
 import com.progmasters.reactblog.domain.MeetingRoom;
 import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.dto.MeetingListItem;
 import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
 import com.progmasters.reactblog.domain.dto.MeetingRoomFormData;
 import com.progmasters.reactblog.domain.dto.MeetingRoomOptionDto;
@@ -76,5 +77,19 @@ public class MeetingService {
                 .map(room -> new MeetingRoomOptionDto(room))
                 .collect(Collectors.toList());
         return meetingRooms;
+    }
+
+    public List<MeetingListItem> getMyMeetingList(Long id) {
+
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            List<MeetingListItem> meetingReservations = this.meetingParticipantRepository.findMeetingByUserId(optionalUser.get())
+                    .stream()
+                    .map(meeting -> new MeetingListItem(meeting.getMeetingReservation()))
+                    .collect(Collectors.toList());
+            return meetingReservations;
+        } else {
+            return null;
+        }
     }
 }

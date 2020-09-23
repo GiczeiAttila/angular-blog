@@ -19,7 +19,7 @@ public class MeetingRoomFormDataValidator implements Validator {
 
         if (name.isEmpty() || name == null) {
             errors.rejectValue("name", "meetingRoomFormData.name.empty");
-        } else if (Character.isLowerCase(name.charAt(1))) {
+        } else if (Character.isLowerCase(name.charAt(0))) {
             errors.rejectValue("name", "meetingRoomFormData.name.lowercase");
         }
 

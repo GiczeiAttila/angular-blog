@@ -3,7 +3,7 @@
     <br>
     <form (ngSubmit)="onSubmit()" [formGroup]="postForm" class="example-form" class="example">
 
-        <mat-form-field appearance="fill" class="example-width-half">
+        <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Select a category</mat-label>
             <mat-select formControlName="category" required>
                 <mat-option *ngFor="let category of categories" [value]="category.name">
@@ -20,7 +20,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field appearance="fill" class="example-width-half">
+        <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Select type</mat-label>
             <mat-select formControlName="type" required>
                 <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [value]="type.name">

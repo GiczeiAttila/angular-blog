@@ -17,15 +17,10 @@ import * as moment from "moment";
 export class MeetingDialodComponent implements OnInit {
 
     meetingRequestForm: FormGroup;
-    participantsIdControl = new FormControl([]);
-
     userList: UserForMeetingOptionDtoModel[];
     meetingRoomList: MeetingRoomOptionDtoModel[];
     startDate;
-    participantsId: Array<number> = [];
-    countParticipants = 1;
-    time = {hour: 13, minute: 30};
-
+    actualParticipantsId: Array<number>;
     userId: number;
 
     constructor(private userService: UserService,
@@ -36,21 +31,12 @@ export class MeetingDialodComponent implements OnInit {
             startDate: [''],
             endDate: [''],
             creatorId: [],
-            participantsId: [],
+            participantsId: new FormControl([]),
             meetingRoomId: []
         })
-
-
     }
 
     ngOnInit(): void {
-        // this.userService.clickedDateSubject.subscribe(
-        //     time => {
-        //         this.startDate = time;
-        //         this.meetingRequestForm.get('startDate').setValue(time);
-        //         console.log(this.startDate);
-        //     }
-        // );
         this.startDate = this.userService.getStartDate();
         this.meetingRequestForm.get('startDate').setValue(this.startDate);
         this.loadUserList();
@@ -58,7 +44,8 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     loadUserList() {
-        this.userService.fetchUserListInitData().subscribe(
+        this.userId = +localStorage.getItem('userId');
+        this.userService.fetchUserListInitData(this.userId).subscribe(
             (userList) => {
                 this.userList = userList;
             },
@@ -76,22 +63,23 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     saveMeeting() {
-        this.userId = +localStorage.getItem('userId');
         const meetingForm = this.meetingRequestForm.value;
         meetingForm.creatorId = this.userId;
         console.log(this.meetingRequestForm.value);
-        console.log(this.startDate);
 
-        this.participantsId = [];
-        this.participantsIdControl.value.forEach(participant => {
-            this.userList.forEach(user => {
-                if (participant == user.userName) {
-                    this.participantsId.push(user.userId);
-                }
+        this.actualParticipantsId = [];
+        let actualParticipants = this.meetingRequestForm.get('participantsId').value;
+        if (actualParticipants != []) {
+            actualParticipants.forEach((participant) => {
+                this.userList.forEach(user => {
+                    if (participant == user.userName) {
+                        this.actualParticipantsId.push(user.userId);
+                    }
+                })
             })
-            console.log(this.participantsId);
-        })
-        meetingForm.participantsId = this.participantsId;
+            meetingForm.participantsId = this.actualParticipantsId;
+            meetingForm.participantsId.push(this.userId);
+        }
 
         const format = "YYYY-MM-DD HH:mm:ss";
         const value = this.meetingRequestForm.get('endDate').value;
@@ -99,29 +87,19 @@ export class MeetingDialodComponent implements OnInit {
         meetingForm.endDate = actualEndDate;
         console.log(actualEndDate);
 
-
-        // const actualDay = this.startDate.substring(0, 12);
-        // const actualEndTime = actualEndDate.substring(12);
-        //const allEndDate = actualDay.concat(actualEndTime);
-        //meetingForm.endDate = allEndDate;
-        //meetingForm.startDate = this.startDate;
-
-
-        //meetingForm.startDate='2020-09-20 10:00:00';
-        //meetingForm.endDate='2020-09-20 11:00:00';
-
         this.userService.saveNewMeeting(meetingForm).subscribe(
             () => console.log(meetingForm),
-            error => handleValidationErrors(error, meetingForm)
+            error => handleValidationErrors(error, this.meetingRequestForm),
+            () => this.userService.refreshCalendar.next()
         )
-
     }
 
     onUserRemoved(user: string) {
-        const users = this.participantsIdControl.value as string[];
+        const users = this.meetingRequestForm.get('participantsId').value as string[];
         this.removeFirst(users, user);
-        this.participantsIdControl.setValue(users);
+        this.meetingRequestForm.get('participantsId').setValue(users);
     }
+
 
     private removeFirst<T>(array: T[], toRemove: T): void {
         const index = array.indexOf(toRemove);
@@ -129,4 +107,6 @@ export class MeetingDialodComponent implements OnInit {
             array.splice(index, 1);
         }
     }
+
+
 }

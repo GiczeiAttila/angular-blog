@@ -14,13 +14,14 @@ export class MeetingRoomFormComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder) {
-        this.meetingRoomForm = formBuilder.group({
-            name: [''],
-            seats: ['']
-        })
+
     }
 
     ngOnInit(): void {
+        this.meetingRoomForm = this.formBuilder.group({
+            name: [''],
+            seats: ['']
+        })
 
     }
 
@@ -31,7 +32,10 @@ export class MeetingRoomFormComponent implements OnInit {
                 handleValidationErrors(error, this.meetingRoomForm);
                 console.log(error)
             },
-            () => this.meetingRoomForm.reset()
+            () => {
+                this.meetingRoomForm.reset();
+                this.ngOnInit()
+            }
         )
     }
 

@@ -49,7 +49,7 @@ public class User {
     private List<MeetingReservation> ownReservation = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<MeetingParticipant> meetingParticipantList = new ArrayList<>();
+    private List<MeetingParticipant> meetingList = new ArrayList<>();
 
     public User() {}
 
@@ -200,11 +200,11 @@ public class User {
         this.timeOffDateRangeList = timeOffDateRangeList;
     }
 
-    public List<MeetingParticipant> getMeetingParticipantList() {
-        return meetingParticipantList;
+    public List<MeetingParticipant> getMeetingList() {
+        return meetingList;
     }
 
-    public void setMeetingParticipantList(List<MeetingParticipant> meetingParticipantList) {
-        this.meetingParticipantList = meetingParticipantList;
+    public void setMeetingList(List<MeetingParticipant> meetingParticipantList) {
+        this.meetingList = meetingParticipantList;
     }
 }
