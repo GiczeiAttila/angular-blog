@@ -60,11 +60,10 @@
     <mat-toolbar>
         <mat-toolbar-row>
             <button mat-icon-button   *ngIf="isLoggedIn" (click)="sidenavStart.toggle()" fxShow="true">
-               <span *ngIf="isLoggedIn" align="center" class="nav-item">
-                    id: {{userId}}
-                </span>
+                    <mat-icon>face</mat-icon>
             </button>
-<!--            <span class="menu-spacer"></span>-->
+            <span>id: {{userId}}  </span>
+            <!--            <span class="menu-spacer"></span>-->
             <div fxShow="true" fxHide.lt-md>
 
                 <a href="#" mat-button *ngIf="isLoggedIn" id="post-list-link" routerLink="/posts"
