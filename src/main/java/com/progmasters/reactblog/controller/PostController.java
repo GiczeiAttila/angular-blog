@@ -63,6 +63,8 @@ public class PostController {
         logger.info("New post is created");
         Long postWithImage = postService.createPostWithImage(data);
 
+        System.out.println("\n"+data.getCategory()+"\n");
+
         return new ResponseEntity<>(postWithImage, HttpStatus.CREATED);
     }
 

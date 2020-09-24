@@ -87,7 +87,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MatTableModule,
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         NgbModule,
-        MatProgressBarModule
+
 
     ],
     entryComponents: [AppComponent],

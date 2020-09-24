@@ -86,6 +86,7 @@ public class PostService {
         Long authorId = Long.parseLong(data.getAuthorId());
         User user = this.userRepository.findById(authorId).orElse(null);
         if (user != null) {
+
             Post post = new Post(data, user);
             List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
             emailSenderService.sendNewPostNotificationEmail(post, userList);

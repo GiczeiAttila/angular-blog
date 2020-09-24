@@ -85,6 +85,7 @@ export class PostFormComponent implements OnInit {
     upload() {
         const formData = new FormData();
         formData.append('category', this.postForm.get('category').value);
+        console.log(this.postForm.get('category').value)
         formData.append('type', this.postForm.get('type').value);
         formData.append('title', this.postForm.get('title').value);
         formData.append('postBody', this.postForm.get('postBody').value);

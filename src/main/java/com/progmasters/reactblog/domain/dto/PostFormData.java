@@ -21,7 +21,7 @@ public class PostFormData {
     private String authorId;
     private String postBody;
     private CommonsMultipartFile picture;
-    private PostCategories category;
+    private String category;
     private PostTypes type;
     private AddressFormData address;
 
@@ -57,11 +57,11 @@ public class PostFormData {
         this.picture = picture;
     }
 
-    public PostCategories getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(PostCategories category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

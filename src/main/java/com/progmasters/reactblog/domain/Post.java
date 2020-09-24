@@ -87,7 +87,7 @@ public class Post {
         */
 
         //this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
-        this.category = postFormData.getCategory();
+        this.category = PostCategories.valueOf(postFormData.getCategory());
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
     }

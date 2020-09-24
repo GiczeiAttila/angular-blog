@@ -32,7 +32,7 @@ public class CloudinaryFileUploader {
         this.cloudinary = cloudinary;
     }
 
-    public String processFile(CommonsMultipartFile commonsMultipartFile, String title, PostCategories category) throws IOException {
+    public String processFile(CommonsMultipartFile commonsMultipartFile, String title, String category) throws IOException {
         PostPictureRegistry postPictureRegistry = storeFile(commonsMultipartFile, category);
         postPictureRegistry.setTitle(title);
         String folder = String.valueOf(category);
@@ -41,7 +41,7 @@ public class CloudinaryFileUploader {
         return postPictureRepository.save(postPictureRegistry).getFilePath();
     }
 
-    protected PostPictureRegistry storeFile(CommonsMultipartFile commonsMultipartFile, PostCategories category) {
+    protected PostPictureRegistry storeFile(CommonsMultipartFile commonsMultipartFile, String category) {
         Map params = ObjectUtils.asMap(
                 "folder", category,
                 "access_mode", "authenticated",
