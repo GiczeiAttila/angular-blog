@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit {
 
     isLoggedIn: boolean;
-    userId: string;
+    userId: string = '';
 
     index: number = 0;
     devices = [{path: '/one'}, {path: '/two'}, {path: '/three'}]
@@ -23,6 +23,12 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('auth')) {
+            this.isLoggedIn = true;
+            this.userId= localStorage.getItem('userId')
+        } else {
+            this.isLoggedIn = false;
+        }
     }
 
     logout() {

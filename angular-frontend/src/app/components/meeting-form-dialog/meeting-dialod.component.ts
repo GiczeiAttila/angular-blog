@@ -6,6 +6,7 @@ import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import * as moment from "moment";
 import {MatDialogRef} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class MeetingDialodComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
-                private dialogRef: MatDialogRef<MeetingDialodComponent>) {
+                private dialogRef: MatDialogRef<MeetingDialodComponent>,
+                private router: Router) {
         this.meetingRequestForm = formBuilder.group({
             title: [''],
             description: [''],
@@ -39,6 +41,11 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
+        }
         this.startDate = this.userService.getStartDate();
         this.meetingRequestForm.get('startDate').setValue(this.startDate);
         this.loadUserList();
