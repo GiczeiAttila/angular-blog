@@ -3,10 +3,13 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "meetingReservation")
@@ -24,10 +27,10 @@ public class MeetingReservation {
     private String description;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
@@ -46,8 +49,16 @@ public class MeetingReservation {
     public MeetingReservation(MeetingReservationFormData meetingReservationFormData, User creator, MeetingRoom meetingRoom) {
         this.title = meetingReservationFormData.getTitle();
         this.description = meetingReservationFormData.getDescription();
-        this.startDate = LocalDateTime.parse(meetingReservationFormData.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.endDate = LocalDateTime.parse(meetingReservationFormData.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String endDateDay = meetingReservationFormData.getStartDate().substring(0, 12);
+        String endDateWithTime = endDateDay + meetingReservationFormData.getEndDate().substring(12);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            this.startDate = format.parse(meetingReservationFormData.getStartDate());
+            this.endDate = format.parse(endDateWithTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.creator = creator;
         this.meetingRoom = meetingRoom;
     }
@@ -77,19 +88,19 @@ public class MeetingReservation {
         this.description = description;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

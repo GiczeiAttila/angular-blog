@@ -54,7 +54,11 @@ public class PostListItem {
         this.category = post.getCategory();
         this.type = post.getType();
 
-        if (post.getComments().size() < 4) {
+        this.comments = post.getComments().stream()
+                .map(CommentDetails::new)
+                .collect(Collectors.toList());
+
+      /*  if (post.getComments().size() < 4) {
             this.comments = post.getComments().stream()
                     .map(CommentDetails::new)
                     .collect(Collectors.toList());
@@ -63,6 +67,8 @@ public class PostListItem {
                 this.comments.add(new CommentDetails(post.getComments().get(i)));
             }
         }
+
+       */
     }
 
     public Long getId() {

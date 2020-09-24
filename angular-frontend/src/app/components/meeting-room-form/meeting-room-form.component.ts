@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
-import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-meeting-room-form',
@@ -14,20 +13,16 @@ export class MeetingRoomFormComponent implements OnInit {
     meetingRoomForm: FormGroup;
 
     constructor(private userService: UserService,
-                private formBuilder: FormBuilder,
-                private router: Router) {
-        this.meetingRoomForm = formBuilder.group({
-            name: [''],
-            seats: ['']
-        })
+                private formBuilder: FormBuilder) {
+
     }
 
     ngOnInit(): void {
-        if (localStorage.getItem('auth')) {
-            this.userService.loginSubject.next();
-        }else {
-            this.router.navigate(['']);
-        }
+        this.meetingRoomForm = this.formBuilder.group({
+            name: [''],
+            seats: ['']
+        })
+
     }
 
     saveRoom() {
@@ -37,7 +32,10 @@ export class MeetingRoomFormComponent implements OnInit {
                 handleValidationErrors(error, this.meetingRoomForm);
                 console.log(error)
             },
-            () => this.meetingRoomForm.reset()
+            () => {
+                this.meetingRoomForm.reset();
+                this.ngOnInit()
+            }
         )
     }
 
