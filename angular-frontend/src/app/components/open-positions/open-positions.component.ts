@@ -6,6 +6,8 @@ import {OpenPositionFormModel} from "../../models/openPositionForm.model";
 import {OpenPositionListItemModel} from "../../models/openPositionListItem.model";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {ApplicationForOpenPositionModel} from "../../models/applicationForOpenPosition.model";
+import {HelperService} from "../../services/helper.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-open-positions',
@@ -18,17 +20,14 @@ export class OpenPositionsComponent implements OnInit {
     index: number;
     currentUserId: number;
     minDate;
+    maxDate;
     activeOpenPositionList: Array<OpenPositionListItemModel>;
     myOpenPositionList: Array<OpenPositionListItemModel>;
 
-    constructor(private userService: UserService, private formBuilder: FormBuilder) {
-    }
-
-    ngOnInit(): void {
-        if (localStorage.getItem('auth')) {
-            this.userService.loginSubject.next();
-            this.currentUserId = +localStorage.getItem("userId");
-        }
+    constructor(private userService: UserService,
+                private formBuilder: FormBuilder,
+                private helperService: HelperService,
+                private router: Router) {
         this.openPositionForm = this.formBuilder.group(
             {
                 positionName: [''],
@@ -36,10 +35,24 @@ export class OpenPositionsComponent implements OnInit {
                 deadline: ['']
             }
         );
+    }
+
+    ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+            this.currentUserId = +localStorage.getItem("userId");
+        }else {
+            this.router.navigate(['']);
+        }
+
         const today = new Date()
         const tomorrow = new Date(today)
         tomorrow.setDate(tomorrow.getDate() + 1)
         this.minDate = new Date(tomorrow).toLocaleString("en-CA").substring(0,10);
+        let year = today.getFullYear();
+        let month = today.getMonth();
+        let day = today.getDate();
+        this.maxDate = new Date(year + 1, month, day).toLocaleString("en-CA").substring(0,10);
         console.log(this.minDate);
         this.index = 0;
         this.myOpenPositionList = [];
@@ -55,11 +68,16 @@ export class OpenPositionsComponent implements OnInit {
         openPositionData.userId = +localStorage.getItem('userId')
         this.userService.createOpenPosition(openPositionData)
             .subscribe(() => {
+
                 },
                 error => {
                     handleValidationErrors(error, this.openPositionForm);
+                    console.log(error);
+                    console.log(this.openPositionForm.errors);
+
                 },
                 () => {
+                    this.helperService.resetForm(this.openPositionForm);
                     this.ngOnInit();
                 },
             );

@@ -16,12 +16,10 @@ import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATTER;
 
 public class PostListItem {
 
@@ -39,27 +37,29 @@ public class PostListItem {
     public PostListItem(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
-
         this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
-
-
         this.postBodyShortened = Stream.of(post.getPostBody())
                 .map(string -> string.substring(0, Math.min(200, string.length())))
                 .map(string -> string.substring(0, string.contains(" ") && post.getPostBody().length() > 205 ? string.lastIndexOf(" ") : string.length()))
                 .map(string -> string.equals(post.getPostBody()) ? string : string.concat("..."))
                 .collect(Collectors.joining());
-
-
         this.picture = post.getPictureUrl();
 
-//        this.createdAt = post.getCreatedAt()
-//                .toLocalDate();
-        this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
+        // this.createdAt = post.getCreatedAt()
+        //         .toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createdAt = post.getCreatedAt().format(formatter);
+
+        //this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.numberOfComments = post.getComments().size();
         this.category = post.getCategory();
         this.type = post.getType();
 
-        if (post.getComments().size() < 4) {
+        this.comments = post.getComments().stream()
+                .map(CommentDetails::new)
+                .collect(Collectors.toList());
+
+      /*  if (post.getComments().size() < 4) {
             this.comments = post.getComments().stream()
                     .map(CommentDetails::new)
                     .collect(Collectors.toList());
@@ -68,6 +68,8 @@ public class PostListItem {
                 this.comments.add(new CommentDetails(post.getComments().get(i)));
             }
         }
+
+       */
     }
 
     public Long getId() {

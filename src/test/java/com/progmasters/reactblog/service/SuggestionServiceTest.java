@@ -84,7 +84,7 @@ class SuggestionServiceTest {
 
     @ParameterizedTest
     @EnumSource(VoteType.class)
-    void saveVoteWithoutPreviousVote(VoteType voteType) {
+    void testSaveVoteWithoutPreviousVote(VoteType voteType) {
         SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
         suggestionVoteDto.setSuggestionId(1L);
         suggestionVoteDto.setVotingUserId(1L);
@@ -104,7 +104,7 @@ class SuggestionServiceTest {
 
     @ParameterizedTest
     @EnumSource(VoteType.class)
-    void saveVoteWithPreviousVote(VoteType voteType) {
+    void testSaveVoteWithPreviousVote(VoteType voteType) {
         SuggestionVoteDto suggestionVoteDto = new SuggestionVoteDto();
         suggestionVoteDto.setSuggestionId(1L);
         suggestionVoteDto.setVotingUserId(1L);
@@ -126,7 +126,7 @@ class SuggestionServiceTest {
 
     @ParameterizedTest
     @EnumSource(SuggestionStatusEnum.class)
-    void changeSuggestionStatusToAccepted(SuggestionStatusEnum suggestionStatusEnum) {
+    void testChangeSuggestionStatusWithEnumSource(SuggestionStatusEnum suggestionStatusEnum) {
         Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
         SuggestionStatusChangeDto suggestionStatusChangeDto = SuggestionStatusChangeDtoFactory.getSuggestionStatusChangeDto(1L,suggestionStatusEnum);
         when(suggestionRepositoryMock.findById(1L)).thenReturn(Optional.of(suggestion));
@@ -144,7 +144,7 @@ class SuggestionServiceTest {
     }
 
 /*    @Test
-    void changeSuggestionStatusToRejected() {
+    void testChangeSuggestionStatusWithCustomArgumentConverter() {
         Suggestion suggestion = SuggestionFactory.getSuggestion(SuggestionFormDtoFactory.getSuggestionFormDto(1L));
         SuggestionStatusChangeDto suggestionStatusChangeDto = SuggestionStatusChangeDtoFactory.getSuggestionStatusChangeDto(1L,SuggestionStatusEnum.REJECTED);
         when(suggestionRepositoryMock.findById(1L)).thenReturn(Optional.of(suggestion));

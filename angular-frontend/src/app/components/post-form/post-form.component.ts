@@ -46,6 +46,8 @@ export class PostFormComponent implements OnInit {
     ngOnInit() {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
         }
         this.blogService.fetchPostFormInitData().subscribe(
             (data: PostFormInitDataModel) => {

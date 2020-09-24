@@ -33,6 +33,8 @@ export class PostListComponent implements OnInit {
         this.loadPosts();
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
         }
     }
 

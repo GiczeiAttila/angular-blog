@@ -2,10 +2,12 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.MeetingReservation;
 import com.progmasters.reactblog.domain.MeetingRoom;
+import com.progmasters.reactblog.domain.dto.MeetingListItem;
 import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
 import com.progmasters.reactblog.domain.dto.MeetingRoomFormData;
 import com.progmasters.reactblog.domain.dto.MeetingRoomOptionDto;
 import com.progmasters.reactblog.service.MeetingService;
+import com.progmasters.reactblog.validator.MeetingReservationFormDataValidator;
 import com.progmasters.reactblog.validator.MeetingRoomFormDataValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,18 +27,25 @@ public class MeetingController {
 
     private MeetingService meetingService;
     private MeetingRoomFormDataValidator meetingRoomFormDataValidator;
+    private MeetingReservationFormDataValidator meetingReservationFormDataValidator;
 
     private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
 
     @Autowired
-    public MeetingController(MeetingService meetingService, MeetingRoomFormDataValidator meetingRoomFormDataValidator) {
+    public MeetingController(MeetingService meetingService, MeetingRoomFormDataValidator meetingRoomFormDataValidator, MeetingReservationFormDataValidator meetingReservationFormDataValidator) {
         this.meetingService = meetingService;
         this.meetingRoomFormDataValidator = meetingRoomFormDataValidator;
+        this.meetingReservationFormDataValidator = meetingReservationFormDataValidator;
     }
 
     @InitBinder("meetingRoomFormData")
     public void initMeetingRoomFormValidator(WebDataBinder binder) {
         binder.addValidators(meetingRoomFormDataValidator);
+    }
+
+    @InitBinder("meetingReservationFormData")
+    public void initMeetingReservationFormValidator(WebDataBinder binder) {
+        binder.addValidators(meetingReservationFormDataValidator);
     }
 
     @PostMapping("createRoom")
@@ -51,7 +60,7 @@ public class MeetingController {
     }
 
     @PostMapping("addMeeting")
-    public ResponseEntity<Void> addMeetingReservation(@RequestBody MeetingReservationFormData meetingReservationFormData) {
+    public ResponseEntity<Void> addMeetingReservation(@Valid @RequestBody MeetingReservationFormData meetingReservationFormData) {
         MeetingReservation meetingReservation = this.meetingService.addMeetingReservation(meetingReservationFormData);
         if (meetingReservation != null) {
             logger.info("Add new meeting");
@@ -67,6 +76,17 @@ public class MeetingController {
         if (meetingRooms != null) {
             logger.info("Request all meeting room");
             return new ResponseEntity<>(meetingRooms, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<MeetingListItem>> getMyMeetingList(@PathVariable Long id) {
+        List<MeetingListItem> meetingList = this.meetingService.getMyMeetingList(id);
+        if (meetingList != null) {
+            logger.info("Meeting list is required with id: " + id);
+            return new ResponseEntity<>(meetingList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

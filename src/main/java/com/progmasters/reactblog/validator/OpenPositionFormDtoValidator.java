@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -51,6 +52,7 @@ public class OpenPositionFormDtoValidator implements Validator {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date today;
+        Date maxDeadline;
         Date deadline;
         if (openPositionFormDto.getDeadline() == null || openPositionFormDto.getDeadline().isEmpty()) {
             errors.rejectValue("deadline", "openPositionFormDto.deadline.required");
@@ -58,8 +60,12 @@ public class OpenPositionFormDtoValidator implements Validator {
             try {
                 String date = format.format(new Date());
                 today = format.parse(date);
+                Calendar c = Calendar.getInstance();
+                c.setTime(today);
+                c.add(Calendar.YEAR, 1);
+                maxDeadline = c.getTime();
                 deadline = format.parse(openPositionFormDto.getDeadline());
-                if (!deadline.after(today)){
+                if (!deadline.after(today) || deadline.after(maxDeadline)){
                     errors.rejectValue("deadline", "openPositionFormDto.deadline");
                 }
             } catch (ParseException e) {

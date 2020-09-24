@@ -96,9 +96,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserForMeetingOptionDto>> getAllUser() {
-        List<UserForMeetingOptionDto> users = this.userService.getUsers();
+    @GetMapping("/{id}")
+    public ResponseEntity<List<UserForMeetingOptionDto>> getAllUserToReserveMeeting(@PathVariable Long id) {
+        List<UserForMeetingOptionDto> users = this.userService.getUsers(id);
         if (users != null) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {

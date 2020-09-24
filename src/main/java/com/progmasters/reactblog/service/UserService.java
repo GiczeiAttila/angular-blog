@@ -83,8 +83,9 @@ public class UserService {
         return userRepository.findAllByStatus(status);
     }
 
-    public List<UserForMeetingOptionDto> getUsers() {
-        List<UserForMeetingOptionDto> users = this.userRepository.findAll()
+    public List<UserForMeetingOptionDto> getUsers(Long id) {
+        UserStatusEnum status = UserStatusEnum.ACTIVE;
+        List<UserForMeetingOptionDto> users = this.userRepository.findAllActiveUser(status, id)
                 .stream()
                 .map(user -> new UserForMeetingOptionDto(user))
                 .collect(Collectors.toList());

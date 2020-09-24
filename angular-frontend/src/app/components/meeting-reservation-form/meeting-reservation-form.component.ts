@@ -1,29 +1,29 @@
-import {ChangeDetectionStrategy, Component, Injectable, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {CalendarEvent, CalendarEventTitleFormatter, CalendarView} from 'angular-calendar';
-import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto.model";
-import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {MatDialog} from '@angular/material/dialog';
 import {MeetingDialodComponent} from "../meeting-form-dialog/meeting-dialod.component";
 import * as moment from 'moment';
+import {MeetingListItemModel} from "../../models/meetingListItem.model";
+import {Router} from "@angular/router";
 
 
-@Injectable()
-export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
-    weekTooltip(event: CalendarEvent, title: string) {
-        if (!event.meta.tmpEvent) {
-            return super.weekTooltip(event, title);
-        }
-    }
-
-    dayTooltip(event: CalendarEvent, title: string) {
-        if (!event.meta.tmpEvent) {
-            return super.dayTooltip(event, title);
-        }
-    }
-}
+const colors: any = {
+    red: {
+        primary: '#ad2121',
+        secondary: '#FAE3E3',
+    },
+    blue: {
+        primary: '#1e90ff',
+        secondary: '#D1E8FF',
+    },
+    yellow: {
+        primary: '#e3bc08',
+        secondary: '#FDF1BA',
+    },
+};
 
 @Component({
     selector: 'app-meeting-reservation-form',
@@ -32,64 +32,61 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     providers: [
         {
             provide: CalendarEventTitleFormatter,
-            useClass: CustomEventTitleFormatter,
         },
     ],
     styleUrls: ['./meeting-reservation-form.component.css'],
     encapsulation: ViewEncapsulation.None,
 })
 export class MeetingReservationFormComponent implements OnInit {
+    meetingList: Array<MeetingListItemModel>;
+    displayingMeetingList: Array<CalendarEvent>;
+    userId: number;
 
-
-    meetingRequestForm: FormGroup;
-    userList: UserForMeetingOptionDtoModel[];
-    meetingRoomList: MeetingRoomOptionDtoModel[];
-
-    actualSeats: number;
-
-
-    view: CalendarView = CalendarView.Week;
-    viewDate: Date = new Date();
-    events: CalendarEvent[] = [];
+    view: CalendarView;
+    viewDate: Date;
+    events: CalendarEvent[];
     clickedDate: Date;
-    clickedColumn: number;
-
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
                 private modalService: NgbModal,
-                private dialog: MatDialog) {
-        this.meetingRequestForm = formBuilder.group({
-            title: [''],
-            description: [''],
-            startDate: [''],
-            endDate: [''],
-            creatorId: [],
-            participantsId: [],
-            meetingRoomId: []
-        })
-    }
+                private dialog: MatDialog,
+                private router: Router) {
 
-    ngOnInit(): void {
-        this.loadUserList();
-        this.loadMeetingRoomList();
-
-    }
-
-    loadUserList() {
-        this.userService.fetchUserListInitData().subscribe(
-            (userList) => this.userList = userList,
-            error => console.log(error)
+        this.userService.refreshCalendar.subscribe(
+            () => this.ngOnInit()
         )
     }
 
-    loadMeetingRoomList() {
-        this.userService.fetchMeetingRoomListInitData().subscribe(
-            (roomList) => {
-                this.meetingRoomList = roomList;
-                console.log(roomList)
+    ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
+        }
+        this.loadMeetingList();
+    }
+
+    loadCalendar() {
+        this.view = CalendarView.Week;
+        this.viewDate = new Date();
+    }
+
+    loadMeetingList() {
+        this.userId = +localStorage.getItem('userId');
+        this.meetingList = [];
+        this.displayingMeetingList = [];
+        //this.events = [];
+        this.userService.getMeetingList(this.userId).subscribe(
+            (list) => {
+                this.meetingList = list;
+                this.addToDisplayList();
             },
-            error => console.log(error)
+            error => console.log(error),
+            () => {
+                console.log(this.meetingList);
+                this.loadCalendar()
+            }
         )
     }
 
@@ -98,16 +95,27 @@ export class MeetingReservationFormComponent implements OnInit {
         const format = "YYYY-MM-DD HH:mm:ss";
         let usingDate = moment(date).format(format).toString();
         this.userService.addStartDate(usingDate);
-        // this.userService.clickedDateSubject.next(usingDate);
-        console.log(date);
-        console.log(usingDate);
-        //this.modalService.open(content);
 
         const dialogRef = this.dialog.open(MeetingDialodComponent);
 
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
+    }
+
+    private addToDisplayList() {
+        this.events = [];
+        this.meetingList.forEach(meeting => {
+            const meetingData: CalendarEvent = {
+                title: meeting.title + ' room: ' + meeting.meetingRoomName,
+                start: new Date(meeting.startDate),
+                end: new Date(meeting.endDate),
+                color: colors.blue
+            }
+            this.events.push(meetingData);
+            this.displayingMeetingList.push(meetingData);
+            console.log(this.displayingMeetingList);
+        })
     }
 
 }

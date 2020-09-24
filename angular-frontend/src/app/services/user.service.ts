@@ -22,6 +22,7 @@ import {MeetingRoomFormDataModel} from "../models/meetingRoomFormData.model";
 import {MeetingReservationFormDataModel} from "../models/meetingReservationFormData.model";
 import {MeetingRoomOptionDtoModel} from "../models/meetingRoomOptionDto.model";
 import {UserForMeetingOptionDtoModel} from "../models/userForMeetingOptionDto.model";
+import {MeetingListItemModel} from "../models/meetingListItem.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -34,16 +35,19 @@ export class UserService {
 
     private startDate: string = '';
 
-    addStartDate(clickedStartDate: string){
+    refreshCalendar = new Subject();
+
+
+    addStartDate(clickedStartDate: string) {
         this.startDate = clickedStartDate;
     }
 
-    getStartDate(): string{
+    getStartDate(): string {
         return this.startDate;
     }
 
     loginSubject: Subject<any> = new Subject<any>();
-    clickedDateSubject: Subject<any> = new Subject<any>();
+
 
     constructor(private http: HttpClient) {
     }
@@ -139,7 +143,11 @@ export class UserService {
         return this.http.get<Array<MeetingRoomOptionDtoModel>>(MEETING_URL + '/meetingRoom');
     }
 
-    fetchUserListInitData(): Observable<Array<UserForMeetingOptionDtoModel>> {
-        return this.http.get<Array<UserForMeetingOptionDtoModel>>(USER_BASE_URL);
+    fetchUserListInitData(id: number): Observable<Array<UserForMeetingOptionDtoModel>> {
+        return this.http.get<Array<UserForMeetingOptionDtoModel>>(USER_BASE_URL + '/' + id);
+    }
+
+    getMeetingList(id: number): Observable<Array<MeetingListItemModel>> {
+        return this.http.get<Array<MeetingListItemModel>>(MEETING_URL + '/' + id);
     }
 }

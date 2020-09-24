@@ -1,3 +1,8 @@
 .meeting-full-width {
     width: 100%;
+    margin-bottom: 10px;
+}
+
+.button {
+    margin: 10px;
 }

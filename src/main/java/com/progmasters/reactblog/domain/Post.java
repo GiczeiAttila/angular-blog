@@ -14,10 +14,8 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Entity
@@ -43,10 +41,10 @@ public class Post {
     //   @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
     private String pictureUrl;
 
-    //@Column(name = "creation_at")
-    //private LocalDateTime createdAt;
+    @Column(name = "creation_at")
+    private LocalDateTime createdAt;
 
-    private ZonedDateTime createdAt;
+    //private ZonedDateTime createdAt;
 
     @OneToMany(mappedBy = "post",
                fetch = FetchType.EAGER)
@@ -64,6 +62,7 @@ public class Post {
     @Embedded
     private Address address;
 
+
     public Post() {
     }
 
@@ -73,21 +72,16 @@ public class Post {
         this.postBody = postFormData.getPostBody();
         this.pictureUrl = "https://res.cloudinary.com/blog-img-cloud/image/upload/v1600930449/progmasterslogo_ccgds7.jpg";
 
-        this.createdAt = ZonedDateTime.of(
+        /*this.createdAt = ZonedDateTime.of(
                 LocalDate.now(),
                 LocalTime.MIN,
                 ZoneId.of("UTC")
         );
 
+         */
 
-       /* LocalDateTime now = LocalDateTime.now();
-        OffsetDateTime timeUtc = now.atOffset(ZoneOffset.UTC);
-        this.createdAt = timeUtc.withOffsetSameInstant(ZoneOffset.UTC);
-
-        */
-
-        //this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
-        this.category = PostCategories.valueOf(postFormData.getCategory());
+        this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
+        this.category = PostCategories.valueOf(postFormData.getCategory());;
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
     }
@@ -124,11 +118,11 @@ public class Post {
         this.pictureUrl = imgUrl;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -190,5 +184,6 @@ public class Post {
 
         return id != null ? id.equals(post.id) : post.id == null;
     }
+
 
 }
