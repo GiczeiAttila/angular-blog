@@ -43,7 +43,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-
 import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
@@ -93,8 +92,6 @@ import {FlexLayoutModule} from "@angular/flex-layout";
         PortalModule,
         ScrollingModule,
         MaterialFileInputModule,
-
-
         FlexLayoutModule
     ]
 })

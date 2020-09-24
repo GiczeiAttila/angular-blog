@@ -68,17 +68,20 @@
         <br>
         <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Picture</mat-label>
-            <ngx-mat-file-input  (change)="onFileChange($event)"
+            <ngx-mat-file-input
                    [ngClass]="{
                 'is-invalid': postForm.get('picture').invalid && postForm.get('picture').touched || postForm.get('picture').errors?.serverError
                 }"
+
                    formControlName="picture"
                    id="picture"
-                   class="form-control" ></ngx-mat-file-input>
 
-
+                                 (change)="onFileChange($event)"
+                    ></ngx-mat-file-input>
+            <mat-icon matSuffix>{{uploaded}}</mat-icon>
         </mat-form-field>
         <br>
+
 
         <div *ngIf="isEvent" formGroupName="address">
             <h4 class="modal-title">Address</h4>

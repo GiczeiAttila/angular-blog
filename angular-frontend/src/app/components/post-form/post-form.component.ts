@@ -8,6 +8,7 @@ import {TypeOptionModel} from '../../models/typeOption.model';
 import {PostFormInitDataModel} from '../../models/postFormInitData.model';
 import {UserService} from '../../services/user.service';
 
+
 @Component({
                selector   : 'app-post-form',
                templateUrl: './post-form.component.html',
@@ -20,6 +21,7 @@ export class PostFormComponent implements OnInit {
     categories: Array<CategoryOptionModel>;
     types: Array<TypeOptionModel>;
     isEvent: boolean;
+    uploaded: string
 
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
@@ -58,6 +60,7 @@ export class PostFormComponent implements OnInit {
         );
 
         this.authorId = +localStorage.getItem('userId');
+        this.uploaded='folder'
     }
 
     onFileChange($event: Event) {
@@ -68,6 +71,8 @@ export class PostFormComponent implements OnInit {
             this.postForm.patchValue({
                                          picture,
                                      });
+            this.uploaded='done'
+
         }
     }
 
