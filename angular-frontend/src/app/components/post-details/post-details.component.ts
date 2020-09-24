@@ -42,7 +42,9 @@ export class PostDetailsComponent implements OnInit {
     loadPostDetails() {
         this.blogService.fetchPostDetails(this.id).subscribe(
             (data: PostDetailsModel) => this.postDetails = data,
-            error => console.warn(error),
+            error => {
+                this.router.navigate(['not-found']);
+                console.warn(error);},
         );
     }
 }
