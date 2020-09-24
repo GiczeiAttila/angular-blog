@@ -10,7 +10,10 @@
     flex: 1 1 auto;
 }
 
-
+.mat-button:hover{
+    background-color: #d4d4d4;
+    color: black;
+}
 
 a.mat-list-item.active a.mat-button.active{
     color: #021f09 !important; /* Note: You could also use a custom theme */

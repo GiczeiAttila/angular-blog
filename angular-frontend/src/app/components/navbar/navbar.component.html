@@ -56,11 +56,11 @@
 -->
 
 
-<div style="height: 90vh;">
+<div>
     <mat-toolbar>
         <mat-toolbar-row>
-            <button mat-icon-button   *ngIf="isLoggedIn" (click)="sidenavStart.toggle()" fxShow="true">
-                    <mat-icon>face</mat-icon>
+            <button mat-icon-button *ngIf="isLoggedIn" (click)="sidenavStart.toggle()" fxShow="true">
+                <mat-icon>face</mat-icon>
             </button>
             <span>id: {{userId}}  </span>
             <!--            <span class="menu-spacer"></span>-->
@@ -89,21 +89,22 @@
 
             </div>
             <span class="menu-spacer"></span>
-            <button mat-icon-button  (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
                 <mat-icon>menu</mat-icon>
             </button>
         </mat-toolbar-row>
     </mat-toolbar>
 
     <mat-sidenav-container fxFlexFill style="background-color: #d4d4d4">
-        <mat-sidenav position="end" #sidenav >
+        <mat-sidenav position="end" #sidenav>
             <mat-nav-list>
-<!--                <a (click)="sidenav.toggle()" mat-list-item>Close</a>-->
+                <!--                <a (click)="sidenav.toggle()" mat-list-item>Close</a>-->
 
                 <a (click)="sidenav.toggle()" href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/posts"
                    routerLinkActive="active-link">Posts</a>
 
-                <a href="#" (click)="sidenav.toggle()" mat-list-item routerLink="/registration" routerLinkActive="active-link">Registration</a>
+                <a href="#" (click)="sidenav.toggle()" mat-list-item routerLink="/registration"
+                   routerLinkActive="active-link">Registration</a>
 
                 <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"
                    routerLinkActive="active-link">New meeting
@@ -112,7 +113,8 @@
                 <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"
                    routerLinkActive="active-link">Meeting</a>
 
-                <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested
+                <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list"
+                   routerLinkActive="active-link">Requested
                     Time
                     Off</a>
 
@@ -120,49 +122,60 @@
                    routerLinkActive="active-link">Suggestion
                     box</a>
 
-                <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position" routerLinkActive="active-link">Open
+                <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position"
+                   routerLinkActive="active-link">Open
                     positions</a>
 
                 <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="!isLoggedIn" routerLink="/login"
                    routerLinkActive="active-link">Login</a>
             </mat-nav-list>
         </mat-sidenav>
-        <mat-sidenav position="start" #sidenavStart >
+        <mat-sidenav position="start" #sidenavStart>
             <mat-nav-list>
-<!--                <a (click)="sidenavStart.toggle()" mat-list-item>Close</a>-->
+                <!--                <a (click)="sidenavStart.toggle()" mat-list-item>Close</a>-->
+                <a (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn">My profile</a>
 
-                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/postForm" routerLinkActive="active-link">New
+                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/postForm"
+                   routerLinkActive="active-link">New
                     Post</a>
 
-                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/fullcalendar" routerLinkActive="active-link">Calendar</a>
+                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/fullcalendar"
+                routerLinkActive="active-link">Calendar</a>
 
-<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"-->
-<!--                   routerLinkActive="active-link">New meeting-->
-<!--                    room</a>-->
+                <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"-->
+                <!--                   routerLinkActive="active-link">New meeting-->
+                <!--                    room</a>-->
 
-<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"-->
-<!--                   routerLinkActive="active-link">Meeting</a>-->
+                <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"-->
+                <!--                   routerLinkActive="active-link">Meeting</a>-->
 
-                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOffForm" routerLinkActive="active-link">Request
+                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOffForm"
+                   routerLinkActive="active-link">Request
                     Time Off</a>
 
-<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested-->
-<!--                    Time-->
-<!--                    Off</a>-->
+                <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested-->
+                <!--                    Time-->
+                <!--                    Off</a>-->
 
-<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/suggestion-box"-->
-<!--                   routerLinkActive="active-link">Suggestion-->
-<!--                    box</a>-->
+                <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/suggestion-box"-->
+                <!--                   routerLinkActive="active-link">Suggestion-->
+                <!--                    box</a>-->
 
-<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position" routerLinkActive="active-link">Open-->
-<!--                    positions</a>-->
+                <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position" routerLinkActive="active-link">Open-->
+                <!--                    positions</a>-->
 
-                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/login" routerLinkActive="active-link"
+                <a (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn">My gallery</a>
+                <a (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn">Favorite posts</a>
+
+                <a href="#" (click)="sidenavStart.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/login"
+                   routerLinkActive="active-link"
                    (click)="logout()">Logout</a>
+
+
 
             </mat-nav-list>
         </mat-sidenav>
-        <div  class="container app_container" style="background-color: #4e555b">
+        <div class="container app_container" style="background-color: #4e555b">
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-container>
