@@ -13,6 +13,7 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class PostDetails {
         this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
         this.title = post.getTitle();
         this.postBody = post.getPostBody();
-        this.picture = post.getPicture();
+        this.picture = post.getPictureUrl();
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.comments = post.getComments().stream()
                 .map(CommentDetails::new)

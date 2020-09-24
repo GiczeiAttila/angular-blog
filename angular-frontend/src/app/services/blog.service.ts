@@ -13,8 +13,8 @@ const POSTS_BASE_URL = environment.BASE_URL + '/api/posts';
 const COMMENTS_BASE_URL = environment.BASE_URL + '/api/comments';
 
 @Injectable({
-                providedIn: 'root',
-            })
+    providedIn: 'root',
+})
 export class BlogService {
 
     refresh = new Subject();
@@ -30,9 +30,10 @@ export class BlogService {
         return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL);
     }
 
-    createPost(postData: PostFormDataModel): Observable<any> {
-        return this.http.post(POSTS_BASE_URL, postData);
+    createPost(formData: FormData): Observable<any> {
+        return this.http.post(POSTS_BASE_URL, formData);
     }
+
 
     fetchPostDetails(id: number): Observable<PostDetailsModel> {
         return this.http.get<PostDetailsModel>(`${POSTS_BASE_URL}/${id}`);

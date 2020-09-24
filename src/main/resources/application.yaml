@@ -43,3 +43,7 @@ logging:
 
 cors-policies: http://localhost:4200, http://127.0.0.1:4200
 url-for-mail: http://localhost:4200
+
+cloudinary.cloud_name: blog-img-cloud
+cloudinary.api_key: 386458223794851
+cloudinary.api_secret:  6sVdeG-g9S1-e6VUaNa801PABb0

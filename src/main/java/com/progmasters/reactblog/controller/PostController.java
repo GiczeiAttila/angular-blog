@@ -17,6 +17,7 @@ import com.progmasters.reactblog.domain.dto.PostFormData;
 import com.progmasters.reactblog.domain.dto.PostFormInitData;
 import com.progmasters.reactblog.domain.dto.PostListItem;
 import com.progmasters.reactblog.service.PostService;
+import com.progmasters.reactblog.service.cloudinary.CloudinaryFileUploader;
 import com.progmasters.reactblog.validator.PostFormDataValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,6 +39,7 @@ public class PostController {
 
     private PostService postService;
     private PostFormDataValidator postFormDataValidator;
+    private CloudinaryFileUploader fileUploader;
 
     @Autowired
     public PostController(PostService postService,
@@ -56,16 +59,26 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity createPost(@Valid @RequestBody PostFormData postFormData) {
+    public ResponseEntity<Long> uploadFileWithFormData(@ModelAttribute PostFormData data) throws IOException {
         logger.info("New post is created");
+        Long postWithImage = postService.createPostWithImage(data);
 
-        Post postForm = postService.createPost(postFormData);
-        if (postForm != null) {
-            return new ResponseEntity(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        System.out.println("\n"+data.getCategory()+"\n");
+
+        return new ResponseEntity<>(postWithImage, HttpStatus.CREATED);
     }
+
+//    @PostMapping
+//    public ResponseEntity createPost(@Valid @RequestBody PostFormData postFormData) {
+//        logger.info("New post is created");
+//
+//        Post postForm = postService.createPost(postFormData);
+//        if (postForm != null) {
+//            return new ResponseEntity(HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @GetMapping
     public ResponseEntity<List<PostListItem>> getPostList() {
