@@ -1,16 +1,8 @@
-<div class="jumbotron text-center hoverable p-4">
-    <!--<h2><strong>{{postDetails?.title}}</strong></h2>
-    <h6 class="text-muted">{{postDetails?.author}}  {{postDetails?.createdAt}}</h6>
-    <div>
-        <img *ngIf="postDetails?.picture" [src]="postDetails?.picture" alt="" class="post-image"/>
-        {{postDetails?.postBody}}
-    </div>
-    <br/> -->
-
-    <div class="row">
+<!--<div class="jumbotron text-center hoverable p-4">
+       <div class="row">
         <div class="col-md-4 offset-md-1 mx-3 my-3">
             <div class="view overlay waves-light" mdbWavesEffect>
-                <img alt="Post picture" class="img-fluid" src="{{postDetails.picture}}">
+                <img alt="Post picture" class="img-fluid" src="{{postDetails?.picture}}">
                 <a>
                     <div class="mask rgba-white-slight"></div>
                 </a>
@@ -76,5 +68,82 @@
 
 
     <app-comment-form *ngIf="id" [postId]="id" (commentCreated)="loadPostDetails()"></app-comment-form>
+
+</div>
+-->
+
+<div class="mat-app-background basic-container">
+    <mat-card class="basic-container">
+        <div class="row">
+            <div class="col-md-4 offset-md-1 mx-3 my-3">
+                <div class="view overlay waves-light" mdbWavesEffect>
+                    <img alt="Post picture" class="img-fluid" src="{{postDetails?.picture}}">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-7 text-md-left ml-3 mt-3">
+                <h2 class="h4 mb-4"><b>{{postDetails?.title}} -
+                    <small>{{postDetails?.author}} {{postDetails?.author}}</small></b></h2>
+                <p class="font-weight-normal">{{postDetails?.postBody}}</p>
+            </div>
+        </div>
+
+
+        <div class="clearfix">
+            <mat-accordion *ngIf="postDetails?.type == 'EVENT'">
+                <mat-expansion-panel (closed)="addressOpenState = false"
+                                     (opened)="addressOpenState = true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Address: {{postDetails?.address?.country}} {{postDetails?.address?.zipCode}} {{postDetails?.address?.city}}
+                            ,
+                            {{postDetails?.address?.street}} {{postDetails?.address?.number}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{addressOpenState ? 'Hide map' : 'Open map'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
+            <mat-accordion>
+                <mat-expansion-panel (closed)="commentOpenState = false"
+                                     (opened)="commentOpenState = true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <svg class="bi bi-chat-fill" fill="currentColor" height="1.5em" viewBox="0 0 16 16"
+                                 width="1.5em"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+                            </svg>
+                            Comments
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{commentOpenState ? 'Hide comments' : 'Show all comments'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let comment of postDetails?.comments">
+                        <h5 class="card-title">{{comment?.author}}</h5>
+                        <p class="card-text">{{comment?.commentBody}}</p>
+                        <p class="card-text"><small class="text-muted">{{comment?.createdAt}}</small></p>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <br/>
+
+
+        <app-comment-form (commentCreated)="loadPostDetails()" *ngIf="id" [postId]="id"></app-comment-form>
+
+
+    </mat-card>
+
 
 </div>
