@@ -7,6 +7,7 @@ import {OpenPositionListItemModel} from "../../models/openPositionListItem.model
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {ApplicationForOpenPositionModel} from "../../models/applicationForOpenPosition.model";
 import {HelperService} from "../../services/helper.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-open-positions',
@@ -25,7 +26,8 @@ export class OpenPositionsComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
-                private helperService: HelperService) {
+                private helperService: HelperService,
+                private router: Router) {
         this.openPositionForm = this.formBuilder.group(
             {
                 positionName: [''],
@@ -39,6 +41,8 @@ export class OpenPositionsComponent implements OnInit {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
             this.currentUserId = +localStorage.getItem("userId");
+        }else {
+            this.router.navigate(['']);
         }
 
         const today = new Date()

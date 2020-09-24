@@ -5,6 +5,7 @@ import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model
 import {UserService} from "../../services/user.service";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import * as moment from "moment";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -29,7 +30,8 @@ export class MeetingDialodComponent implements OnInit {
     userId: number;
 
     constructor(private userService: UserService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private router: Router) {
         this.meetingRequestForm = formBuilder.group({
             title: [''],
             description: [''],
@@ -44,6 +46,11 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
+        }
         // this.userService.clickedDateSubject.subscribe(
         //     time => {
         //         this.startDate = time;

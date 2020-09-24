@@ -32,6 +32,12 @@ export class SuggestionBoxComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+            this.currentUserId = +localStorage.getItem("userId");
+        }else {
+            this.router.navigate(['']);
+        }
         this.mySuggestionList = [];
         this.activeSuggestionList = [];
         this.closedSuggestionList = [];

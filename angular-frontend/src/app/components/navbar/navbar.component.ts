@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-navbar',
@@ -11,8 +12,11 @@ export class NavbarComponent implements OnInit {
     isLoggedIn: boolean;
     userId: string;
 
-    constructor(private userService: UserService) {
-        this.userService.loginSubject.subscribe(()=>{
+    index: number = 0;
+    devices = [{path: '/one'}, {path: '/two'}, {path: '/three'}]
+
+    constructor(private userService: UserService, private router: Router) {
+        this.userService.loginSubject.subscribe(() => {
             this.isLoggedIn = localStorage.getItem('auth') ? true : false;
             this.userId = localStorage.getItem('userId');
         })
@@ -30,6 +34,4 @@ export class NavbarComponent implements OnInit {
         );
 
     }
-
-
 }

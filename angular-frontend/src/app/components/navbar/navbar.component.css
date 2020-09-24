@@ -1,8 +1,23 @@
-#basicNav {
-    background-color: gainsboro;
+/*#basicNav {*/
+/*    background-color: gainsboro;*/
+/*}*/
+.app_container {
+    margin-top: 56px;
+    padding: 24px;
 }
 
-/*.sidenav {
+.menu-spacer {
+    flex: 1 1 auto;
+}
+
+a.mat-list-item.active a.mat-button.active{
+    color: #021f09 !important; /* Note: You could also use a custom theme */
+    background: #78b886 !important;
+}
+
+/*
+
+.sidenav {
     height: 100%;
     width: 160px;
     position: fixed;
@@ -45,7 +60,7 @@
     background-color: #3AAFA9;
 }
 
- */
+*/
 
 
 

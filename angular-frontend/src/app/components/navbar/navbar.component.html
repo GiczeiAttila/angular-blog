@@ -1,11 +1,4 @@
-<!--<div class="sidenav">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#clients">Clients</a>
-    <a href="#contact">Contact</a>
-</div>
--->
-
+<!--
 
 <nav class="navbar fixed-top navbar-expand-lg" id="basicNav">
     <a id="nav-index" class="navbar-brand" routerLink="/">PROGblog</a>
@@ -60,3 +53,126 @@
         </ul>
     </div>
 </nav>
+-->
+
+
+<div style="height: 90vh;">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button mat-icon-button   *ngIf="isLoggedIn" (click)="sidenavStart.toggle()" fxShow="true">
+               <span *ngIf="isLoggedIn" align="center" class="nav-item">
+                    id: {{userId}}
+                </span>
+            </button>
+<!--            <span class="menu-spacer"></span>-->
+            <div fxShow="true" fxHide.lt-md>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="post-list-link" routerLink="/posts"
+                   routerLinkActive="active-link">Posts</a>
+
+                <a href="#" mat-button id="registration" routerLink="/registration" routerLinkActive="active-link">Registration</a>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="meetingRoom" routerLink="/meetingRoom-form">New meeting
+                    room</a>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="meeting-form" routerLink="/meetingReservation">Meeting</a>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="timeOff-list" routerLink="/timeOff-list">Requested Time
+                    Off</a>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="suggestion-box" routerLink="/suggestion-box">Suggestion
+                    box</a>
+
+                <a href="#" mat-button *ngIf="isLoggedIn" id="open-position" routerLink="/open-position">Open
+                    positions</a>
+
+                <a href="#" mat-button *ngIf="!isLoggedIn" id="logout" routerLink="/login">Login</a>
+
+            </div>
+            <span class="menu-spacer"></span>
+            <button mat-icon-button  (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-sidenav-container fxFlexFill style="background-color: #d4d4d4">
+        <mat-sidenav position="end" #sidenav >
+            <mat-nav-list>
+                <a (click)="sidenav.toggle()" mat-list-item>Close</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/posts"
+                   routerLinkActive="active-link">Posts</a>
+
+                <a href="#" mat-list-item routerLink="/registration" routerLinkActive="active-link">Registration</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"
+                   routerLinkActive="active-link">New meeting
+                    room</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"
+                   routerLinkActive="active-link">Meeting</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested
+                    Time
+                    Off</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/suggestion-box"
+                   routerLinkActive="active-link">Suggestion
+                    box</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position" routerLinkActive="active-link">Open
+                    positions</a>
+
+                <a href="#" mat-list-item *ngIf="!isLoggedIn" routerLink="/login"
+                   routerLinkActive="active-link">Login</a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav position="start" #sidenavStart >
+            <mat-nav-list>
+<!--                <a (click)="sidenavStart.toggle()" mat-list-item>Close</a>-->
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/postForm" routerLinkActive="active-link">New
+                    Post</a>
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/fullcalendar" routerLinkActive="active-link">Calendar</a>
+
+<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"-->
+<!--                   routerLinkActive="active-link">New meeting-->
+<!--                    room</a>-->
+
+<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"-->
+<!--                   routerLinkActive="active-link">Meeting</a>-->
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOffForm" routerLinkActive="active-link">Request
+                    Time Off</a>
+
+<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested-->
+<!--                    Time-->
+<!--                    Off</a>-->
+
+<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/suggestion-box"-->
+<!--                   routerLinkActive="active-link">Suggestion-->
+<!--                    box</a>-->
+
+<!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/open-position" routerLinkActive="active-link">Open-->
+<!--                    positions</a>-->
+
+                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/login" routerLinkActive="active-link"
+                   (click)="logout()">Logout</a>
+
+            </mat-nav-list>
+        </mat-sidenav>
+        <div  class="container app_container" style="background-color: #4e555b">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-container>
+</div>
+
+
+<!--<nav mat-tab-nav-bar  class="basic-container container app_container">-->
+<!--    <a mat-tab-link #rla="routerLinkActive" *ngFor="let device of devices;let i=index" [routerLink]="device.path"-->
+<!--       routerLinkActive="active" [active]="rla.isActive">{{device.path}}-->
+<!--    </a>-->
+<!--</nav>-->
+<!--<router-outlet></router-outlet>-->
