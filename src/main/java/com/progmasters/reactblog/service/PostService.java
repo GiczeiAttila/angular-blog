@@ -15,10 +15,12 @@ import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
 import com.progmasters.reactblog.repository.UserRepository;
+import com.progmasters.reactblog.service.cloudinary.CloudinaryFileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,25 +32,18 @@ public class PostService {
 
     private PostRepository postRepository;
     private UserRepository userRepository;
+    private CloudinaryFileUploader cloudinaryFileUploader;
     private final EmailSenderService emailSenderService;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository, EmailSenderService emailSenderService) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, CloudinaryFileUploader cloudinaryFileUploader, EmailSenderService emailSenderService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.cloudinaryFileUploader = cloudinaryFileUploader;
         this.emailSenderService = emailSenderService;
     }
 
-    public Post createPost(PostFormData postFormData) {
-        User user = this.userRepository.findById(postFormData.getAuthorId()).orElse(null);
-        if (user != null) {
-            Post post = postRepository.save(new Post(postFormData, user));
-            List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
-            emailSenderService.sendNewPostNotificationEmail(post,userList);
-            return post;
-        }
-        return null;
-    }
+
 
     public List<PostListItem> getPostListItems() {
         return postRepository.findAllByOrderByCreatedAtDesc()
@@ -80,5 +75,21 @@ public class PostService {
                 Arrays.stream(PostTypes.values()).map(TypeOption::new).collect(Collectors.toList())
         );
 
+    }
+
+    public Long createPostWithImage(PostFormData data) throws IOException {
+        Long authorId= Long.parseLong(data.getAuthorId());
+        User user = this.userRepository.findById(authorId).orElse(null);
+        if (user != null) {
+            Post post = new Post(data, user);
+            List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
+            emailSenderService.sendNewPostNotificationEmail(post,userList);
+            if (data.getPicture() != null) {
+                String uploadedFileUrl = cloudinaryFileUploader.processFile(data.getPicture(), data.getTitle(), data.getCategory());
+                post.setPictureUrl(uploadedFileUrl);
+            }
+            return postRepository.save(post).getId();
+        }
+        return null;
     }
 }

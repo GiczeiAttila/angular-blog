@@ -7,7 +7,6 @@ import {CategoryOptionModel} from "../../models/categoryOption.model";
 import {TypeOptionModel} from "../../models/typeOption.model";
 import {PostFormInitDataModel} from "../../models/postFormInitData.model";
 import {UserService} from "../../services/user.service";
-import {FileUploadService} from "../../services/file-upload.service";
 
 @Component({
     selector: 'app-post-form',
@@ -27,14 +26,15 @@ export class PostFormComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
                 private userService: UserService,
-                private router: Router,
-                private fileService: FileUploadService) {
+                private router: Router,)
+    {
         this.postForm = formBuilder.group({
             category: [null, Validators.required],
             type: [null, Validators.required],
             title: ['', Validators.required],
             postBody: ['', Validators.required],
             picture: [null],
+  //          pictureUrl: [null],
             address: formBuilder.group({
                 country: [''],
                 zipCode: [''],
@@ -73,15 +73,7 @@ export class PostFormComponent implements OnInit {
     }
 
     onSubmit() {
-        const post = this.postForm.value;
-        post.authorId = this.authorId;
-        this.blogService.createPost(post).subscribe(
-            () => {
-                console.log(this.postForm);
-                this.router.navigate(['/posts'])
-            },
-            error => handleValidationErrors(error, this.postForm)
-        )
+ this.upload()
 
     }
 
@@ -95,10 +87,30 @@ export class PostFormComponent implements OnInit {
 
     upload() {
         const formData = new FormData();
+        formData.append('category', this.postForm.get('category').value)
+        formData.append('type', this.postForm.get('type').value)
+        formData.append('title', this.postForm.get('title').value)
+        formData.append('postBody', this.postForm.get('postBody').value);
         formData.append('picture', this.postForm.get('picture').value);
-        this.fileService.uploadFile(formData).subscribe(
-            console.log,
-            console.warn
-        );
+
+        const addressFormData= JSON.stringify(this.postForm.get('address').value);
+
+        // addressFormData.append('country', this.postForm.get('address.country').value)
+        // addressFormData.append('zipCode', this.postForm.get('address.zipCode').value)
+        // addressFormData.append('city', this.postForm.get('address.city').value)
+        // addressFormData.append('street', this.postForm.get('address.street').value)
+        // addressFormData.append('number', this.postForm.get('address.number').value)
+        // addressFormData.append('coordinate', this.postForm.get('address.coordinate').value)
+
+        formData.append('address', addressFormData);
+
+        formData.append('authorId',''+this.authorId)
+        this.blogService.createPost(formData).subscribe(
+            () => {
+                console.log(this.postForm);
+                this.router.navigate(['/posts'])
+            },
+            error => handleValidationErrors(error, this.postForm)
+        )
     }
 }

@@ -26,22 +26,25 @@ public class PostPictureRegistry {
     private Long fileSize;
     @Column(name = "media_type")
     private String mediaType;
+
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "category")
     private String category = "default";
     @Column(name = "upload_datetime")
     @JsonFormat(locale = "hu", shape = JsonFormat.Shape.STRING, pattern = "yyyy. MM. dd. HH:mm:ss (Z)")
     private ZonedDateTime uploadDateTime = ZonedDateTime.now();
-    @OneToOne(mappedBy = "picture")
-    private Post post;
+    //   @OneToOne(mappedBy = "picture")
+    //   private Post post;
 
-    public Post getPost() {
-        return post;
-    }
+//    public Post getPost() {
+//        return post;
+//    }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
+    //   public void setPost(Post post) {
+    //       this.post = post;
+    //   }
     public PostPictureRegistry() {
 
     }
@@ -98,6 +101,14 @@ public class PostPictureRegistry {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCategory() {

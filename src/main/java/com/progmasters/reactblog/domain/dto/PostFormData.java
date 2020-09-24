@@ -14,32 +14,44 @@ package com.progmasters.reactblog.domain.dto;
 import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PostFormData {
 
     private String title;
-    private Long authorId;
+    private String authorId;
     private String postBody;
-    private PostPictureRegistry picture;
+
+    private CommonsMultipartFile picture;
+
+    private String pictureUrl;
+
     private PostCategories category;
     private PostTypes type;
     private AddressFormData address;
-
 
     public String getTitle() {
         return title;
     }
 
-    public Long getAuthorId() {
+    public String getAuthorId() {
         return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getPostBody() {
         return postBody;
     }
 
-    public PostPictureRegistry getPicture() {
+    public CommonsMultipartFile getPicture() {
         return picture;
+    }
+
+    public void setPicture(CommonsMultipartFile picture) {
+        this.picture = picture;
     }
 
     public PostCategories getCategory() {
@@ -55,4 +67,31 @@ public class PostFormData {
     }
 
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPostBody(String postBody) {
+        this.postBody = postBody;
+    }
+
+    public void setCategory(PostCategories category) {
+        this.category = category;
+    }
+
+    public void setType(PostTypes type) {
+        this.type = type;
+    }
+
+    public void setAddress(AddressFormData address) {
+        this.address = address;
+    }
 }

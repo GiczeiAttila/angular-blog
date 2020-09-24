@@ -3,6 +3,7 @@ package com.progmasters.reactblog.service.cloudinary;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.dto.PostPictureResource;
 import com.progmasters.reactblog.repository.PostPictureRepository;
@@ -31,16 +32,16 @@ public class CloudinaryFileUploader {
         this.cloudinary = cloudinary;
     }
 
-    public Long processFile(CommonsMultipartFile commonsMultipartFile, String category) throws IOException {
+    public String processFile(CommonsMultipartFile commonsMultipartFile, String title, PostCategories category) throws IOException {
         PostPictureRegistry postPictureRegistry = storeFile(commonsMultipartFile, category);
+        postPictureRegistry.setTitle(title);
+        String folder = String.valueOf(category);
+        postPictureRegistry.setCategory(folder);
 
-
-        Long id = postPictureRepository.save(postPictureRegistry).getId();
-
-        return id;
+        return postPictureRepository.save(postPictureRegistry).getFilePath();
     }
 
-    protected PostPictureRegistry storeFile(CommonsMultipartFile commonsMultipartFile, String category) {
+    protected PostPictureRegistry storeFile(CommonsMultipartFile commonsMultipartFile, PostCategories category) {
         Map params = ObjectUtils.asMap(
                 "folder", category,
                 "access_mode", "authenticated",

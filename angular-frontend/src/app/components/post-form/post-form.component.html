@@ -64,16 +64,13 @@
         <br>
         <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Picture</mat-label>
-            <input   (change)="onFileChange($event)" type="file"
+            <ngx-mat-file-input  (change)="onFileChange($event)"
                    [ngClass]="{
                 'is-invalid': postForm.get('picture').invalid && postForm.get('picture').touched || postForm.get('picture').errors?.serverError
                 }"
                    formControlName="picture"
                    id="picture"
-                   class="form-control"
-                   name="file" matInput>
-
-                <button (click)="upload()">upload</button>
+                   class="form-control" ></ngx-mat-file-input>
 
 
         </mat-form-field>

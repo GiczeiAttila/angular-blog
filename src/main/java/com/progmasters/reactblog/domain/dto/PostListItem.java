@@ -29,7 +29,7 @@ public class PostListItem {
     private String author;
     private String title;
     private String postBodyShortened;
-    private PostPictureRegistry picture;
+    private String picture;
     private String createdAt;
     private Integer numberOfComments;
     private PostCategories category;
@@ -50,7 +50,7 @@ public class PostListItem {
                 .collect(Collectors.joining());
 
 
-        this.picture = post.getPicture();
+        this.picture = post.getPictureUrl();
 
 //        this.createdAt = post.getCreatedAt()
 //                .toLocalDate();
@@ -82,7 +82,7 @@ public class PostListItem {
         return postBodyShortened;
     }
 
-    public PostPictureRegistry getPicture() {
+    public String getPicture() {
         return picture;
     }
 

@@ -27,7 +27,7 @@ public class PostDetails {
     private String author;
     private String title;
     private String postBody;
-    private PostPictureRegistry picture;
+    private String picture;
     private String createdAt;
     private List<CommentDetails> comments;
     private PostCategories category;
@@ -39,7 +39,7 @@ public class PostDetails {
         this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
         this.title = post.getTitle();
         this.postBody = post.getPostBody();
-        this.picture = post.getPicture();
+        this.picture = post.getPictureUrl();
         this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
         this.comments = post.getComments().stream()
                 .map(CommentDetails::new)
@@ -61,7 +61,7 @@ public class PostDetails {
         return postBody;
     }
 
-    public PostPictureRegistry getPicture() {
+    public String getPicture() {
         return picture;
     }
 

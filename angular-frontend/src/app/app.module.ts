@@ -38,6 +38,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeetingDialodComponent} from './components/meeting-form-dialog/meeting-dialod.component';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {MatTimepickerModule} from "mat-timepicker";
+import {MatProgressBarHarness} from "@angular/material/progress-bar/testing";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -85,6 +87,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MatTableModule,
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         NgbModule,
+        MatProgressBarModule
 
     ],
     entryComponents: [AppComponent],

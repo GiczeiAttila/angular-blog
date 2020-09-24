@@ -39,9 +39,9 @@ public class Post {
     private String postBody;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
-    private PostPictureRegistry picture;
+  //  @OneToOne(cascade = CascadeType.ALL)
+ //   @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
+    private String pictureUrl;
 
     //@Column(name = "creation_at")
     //private LocalDateTime createdAt;
@@ -71,7 +71,7 @@ public class Post {
         this.author = user;
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
-        this.picture = postFormData.getPicture();
+        this.pictureUrl = "https://res.cloudinary.com/blog-img-cloud/image/upload/v1600930449/progmasterslogo_ccgds7.jpg";
 
 
         this.createdAt = ZonedDateTime.of(
@@ -117,12 +117,12 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public PostPictureRegistry getPicture() {
-        return picture;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPicture(PostPictureRegistry imgUrl) {
-        this.picture = imgUrl;
+    public void setPictureUrl(String imgUrl) {
+        this.pictureUrl = imgUrl;
     }
 
     public ZonedDateTime getCreatedAt() {
