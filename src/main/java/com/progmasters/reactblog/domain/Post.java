@@ -35,12 +35,12 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "post_body", columnDefinition = "TEXT")
+    @Column(name = "post_body",
+            columnDefinition = "TEXT")
     private String postBody;
 
-
-  //  @OneToOne(cascade = CascadeType.ALL)
- //   @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
+    //  @OneToOne(cascade = CascadeType.ALL)
+    //   @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
     private String pictureUrl;
 
     //@Column(name = "creation_at")
@@ -48,7 +48,8 @@ public class Post {
 
     private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post",
+               fetch = FetchType.EAGER)
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
 
@@ -63,7 +64,6 @@ public class Post {
     @Embedded
     private Address address;
 
-
     public Post() {
     }
 
@@ -72,7 +72,6 @@ public class Post {
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
         this.pictureUrl = "https://res.cloudinary.com/blog-img-cloud/image/upload/v1600930449/progmasterslogo_ccgds7.jpg";
-
 
         this.createdAt = ZonedDateTime.of(
                 LocalDate.now(),
@@ -90,6 +89,7 @@ public class Post {
         //this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
         this.category = postFormData.getCategory();
         this.type = postFormData.getType();
+        this.address = new Address(postFormData.getAddress());
     }
 
     public Long getId() {
@@ -173,17 +173,22 @@ public class Post {
     }
 
     @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Post post = (Post) o;
 
         return id != null ? id.equals(post.id) : post.id == null;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

@@ -3,16 +3,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {handleValidationErrors} from '../../shared/validation.handler';
-import {CategoryOptionModel} from "../../models/categoryOption.model";
-import {TypeOptionModel} from "../../models/typeOption.model";
-import {PostFormInitDataModel} from "../../models/postFormInitData.model";
-import {UserService} from "../../services/user.service";
+import {CategoryOptionModel} from '../../models/categoryOption.model';
+import {TypeOptionModel} from '../../models/typeOption.model';
+import {PostFormInitDataModel} from '../../models/postFormInitData.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
-    selector: 'app-post-form',
-    templateUrl: './post-form.component.html',
-    styleUrls: ['./post-form.component.css'],
-})
+               selector   : 'app-post-form',
+               templateUrl: './post-form.component.html',
+               styleUrls  : ['./post-form.component.css'],
+           })
 export class PostFormComponent implements OnInit {
 
     postForm: FormGroup;
@@ -21,29 +21,26 @@ export class PostFormComponent implements OnInit {
     types: Array<TypeOptionModel>;
     isEvent: boolean;
 
-
-
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
                 private userService: UserService,
-                private router: Router,)
-    {
+                private router: Router) {
         this.postForm = formBuilder.group({
-            category: [null, Validators.required],
-            type: [null, Validators.required],
-            title: ['', Validators.required],
-            postBody: ['', Validators.required],
-            picture: [null],
-  //          pictureUrl: [null],
-            address: formBuilder.group({
-                country: [''],
-                zipCode: [''],
-                city: [''],
-                street: [''],
-                number: [''],
-                coordinate: ['']
-            })
-        });
+                                              category: [null, Validators.required],
+                                              type    : [null, Validators.required],
+                                              title   : ['', Validators.required],
+                                              postBody: ['', Validators.required],
+                                              picture : [null],
+                                              //          pictureUrl: [null],
+                                              address : formBuilder.group({
+                                                                              country   : [''],
+                                                                              zipCode   : [''],
+                                                                              city      : [''],
+                                                                              street    : [''],
+                                                                              number    : [''],
+                                                                              coordinate: [''],
+                                                                          }),
+                                          });
     }
 
     ngOnInit() {
@@ -55,8 +52,8 @@ export class PostFormComponent implements OnInit {
                 this.categories = data.categories;
                 this.types = data.types;
             },
-            error => console.warn(error)
-        )
+            error => console.warn(error),
+        );
 
         this.authorId = +localStorage.getItem('userId');
     }
@@ -67,13 +64,13 @@ export class PostFormComponent implements OnInit {
             // @ts-ignore
             const picture = event.target.files[0];
             this.postForm.patchValue({
-                picture
-            });
+                                         picture,
+                                     });
         }
     }
 
     onSubmit() {
- this.upload()
+        this.upload();
 
     }
 
@@ -87,30 +84,26 @@ export class PostFormComponent implements OnInit {
 
     upload() {
         const formData = new FormData();
-        formData.append('category', this.postForm.get('category').value)
-        formData.append('type', this.postForm.get('type').value)
-        formData.append('title', this.postForm.get('title').value)
+        formData.append('category', this.postForm.get('category').value);
+        formData.append('type', this.postForm.get('type').value);
+        formData.append('title', this.postForm.get('title').value);
         formData.append('postBody', this.postForm.get('postBody').value);
-        formData.append('picture', this.postForm.get('picture').value);
+        if (this.postForm.get('picture').value) {
+            formData.append('picture', this.postForm.get('picture').value);
+        }
+        formData.append('address.country', this.postForm.get('address.country').value);
+        formData.append('address.zipCode', this.postForm.get('address.zipCode').value);
+        formData.append('address.city', this.postForm.get('address.city').value);
+        formData.append('address.street', this.postForm.get('address.street').value);
+        formData.append('address.number', this.postForm.get('address.number').value);
 
-        const addressFormData= JSON.stringify(this.postForm.get('address').value);
-
-        // addressFormData.append('country', this.postForm.get('address.country').value)
-        // addressFormData.append('zipCode', this.postForm.get('address.zipCode').value)
-        // addressFormData.append('city', this.postForm.get('address.city').value)
-        // addressFormData.append('street', this.postForm.get('address.street').value)
-        // addressFormData.append('number', this.postForm.get('address.number').value)
-        // addressFormData.append('coordinate', this.postForm.get('address.coordinate').value)
-
-        formData.append('address', addressFormData);
-
-        formData.append('authorId',''+this.authorId)
+        formData.append('authorId', '' + this.authorId);
         this.blogService.createPost(formData).subscribe(
             () => {
                 console.log(this.postForm);
-                this.router.navigate(['/posts'])
+                this.router.navigate(['/posts']);
             },
-            error => handleValidationErrors(error, this.postForm)
-        )
+            error => handleValidationErrors(error, this.postForm),
+        );
     }
 }

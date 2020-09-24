@@ -11,7 +11,6 @@
 
 package com.progmasters.reactblog.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
@@ -83,14 +82,11 @@ public class PostService {
     }
 
     public Long createPostWithImage(PostFormData data) throws IOException {
-        ObjectMapper objectMapper = builder.build();
-        AddressFormData addressFormData = objectMapper.readValue(data.getAddress(), AddressFormData.class);
 
         Long authorId = Long.parseLong(data.getAuthorId());
         User user = this.userRepository.findById(authorId).orElse(null);
         if (user != null) {
             Post post = new Post(data, user);
-            post.setAddress(new Address(addressFormData));
             List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
             emailSenderService.sendNewPostNotificationEmail(post, userList);
             if (data.getPicture() != null) {

@@ -20,19 +20,17 @@ public class PostFormData {
     private String title;
     private String authorId;
     private String postBody;
-
     private CommonsMultipartFile picture;
-
-    private String pictureUrl;
-
     private PostCategories category;
-
     private PostTypes type;
-
-    private String address;
+    private AddressFormData address;
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthorId() {
@@ -47,6 +45,10 @@ public class PostFormData {
         return postBody;
     }
 
+    public void setPostBody(String postBody) {
+        this.postBody = postBody;
+    }
+
     public CommonsMultipartFile getPicture() {
         return picture;
     }
@@ -59,39 +61,24 @@ public class PostFormData {
         return category;
     }
 
-    public PostTypes getType() {
-        return type;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPostBody(String postBody) {
-        this.postBody = postBody;
-    }
-
     public void setCategory(PostCategories category) {
         this.category = category;
+    }
+
+    public PostTypes getType() {
+        return type;
     }
 
     public void setType(PostTypes type) {
         this.type = type;
     }
 
-    public void setAddress(String address) {
+    public AddressFormData getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressFormData address) {
         this.address = address;
     }
+
 }
