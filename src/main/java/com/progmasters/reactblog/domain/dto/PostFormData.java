@@ -12,7 +12,6 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.PostCategories;
-import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -27,8 +26,10 @@ public class PostFormData {
     private String pictureUrl;
 
     private PostCategories category;
+
     private PostTypes type;
-    private AddressFormData address;
+
+    private String address;
 
     public String getTitle() {
         return title;
@@ -62,10 +63,9 @@ public class PostFormData {
         return type;
     }
 
-    public AddressFormData getAddress() {
+    public String getAddress() {
         return address;
     }
-
 
     public String getPictureUrl() {
         return pictureUrl;
@@ -91,7 +91,7 @@ public class PostFormData {
         this.type = type;
     }
 
-    public void setAddress(AddressFormData address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 }
