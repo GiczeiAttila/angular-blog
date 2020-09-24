@@ -12,9 +12,6 @@ export class NavbarComponent implements OnInit {
     isLoggedIn: boolean;
     userId: string = '';
 
-    index: number = 0;
-    devices = [{path: '/one'}, {path: '/two'}, {path: '/three'}]
-
     constructor(private userService: UserService, private router: Router) {
         this.userService.loginSubject.subscribe(() => {
             this.isLoggedIn = localStorage.getItem('auth') ? true : false;

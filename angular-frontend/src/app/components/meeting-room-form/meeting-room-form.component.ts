@@ -3,6 +3,7 @@ import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {Router} from "@angular/router";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
     selector: 'app-meeting-room-form',
@@ -15,8 +16,12 @@ export class MeetingRoomFormComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
-                private router: Router) {
-
+                private router: Router,
+                private helperService: HelperService) {
+        this.meetingRoomForm = this.formBuilder.group({
+            name: [''],
+            seats: ['']
+        })
     }
 
     ngOnInit(): void {
@@ -25,10 +30,7 @@ export class MeetingRoomFormComponent implements OnInit {
         }else {
             this.router.navigate(['']);
         }
-        this.meetingRoomForm = this.formBuilder.group({
-            name: [''],
-            seats: ['']
-        })
+
 
     }
 
@@ -40,8 +42,7 @@ export class MeetingRoomFormComponent implements OnInit {
                 console.log(error)
             },
             () => {
-                this.meetingRoomForm.reset();
-                this.ngOnInit()
+                this.helperService.resetForm(this.meetingRoomForm);
             }
         )
     }
