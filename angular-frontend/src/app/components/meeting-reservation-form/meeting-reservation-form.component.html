@@ -1,17 +1,19 @@
-<div class="row">
+<div class="row" style="color: #1b1e21">
     <div class="col-md-6">
-        <div class="btn-group">
+        <div class="btn-group" style="color: #1b1e21">
             <div
                 [(viewDate)]="viewDate"
                 [view]="'week'"
                 class="btn btn-primary"
                 mwlCalendarPreviousView
+                style="color: #1b1e21"
             >
                 Previous
             </div>
             <div
                 [(viewDate)]="viewDate"
                 class="btn btn-outline-secondary"
+                style="color: #1b1e21"
                 mwlCalendarToday
             >
                 Today
@@ -20,13 +22,14 @@
                 [(viewDate)]="viewDate"
                 [view]="'week'"
                 class="btn btn-primary"
+                style="color: #1b1e21"
                 mwlCalendarNextView
             >
                 Next
             </div>
         </div>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-6 text-right" style="color: #1b1e21">
         <h3>{{ viewDate | calendarDate:('weekViewTitle') }}</h3>
     </div>
 </div>
@@ -44,7 +47,7 @@
 -->
 
 <div [ngSwitch]="view">
-    <mwl-calendar-week-view
+    <mwl-calendar-week-view style="color: #1b1e21"
         (dayHeaderClicked)="clickedDate = $event.day?.date"
         (hourSegmentClicked)="clickOnHourSegment($event?.date)"
         *ngSwitchCase="'week'"
