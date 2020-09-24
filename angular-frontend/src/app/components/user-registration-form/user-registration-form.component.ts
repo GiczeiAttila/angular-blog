@@ -54,7 +54,7 @@ export class UserRegistrationFormComponent implements OnInit {
     openSnackBar(message: string, action: string) {
         console.log('snackBar');
         this.snackBar.open(message, action, {
-            duration: 500,
+            duration: 2000,
             panelClass: ['green-snackbar']
         });
     }
