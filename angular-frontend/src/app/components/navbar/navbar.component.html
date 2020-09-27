@@ -179,6 +179,19 @@
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-container>
+    <mat-toolbar class="footer">
+        <mat-toolbar-row>
+            <div>
+                <small>{{location}} - {{weather}} - wind:{{wind}}</small><br>
+                <span>{{temperature}}, humidity:{{humidity}}</span>
+            </div>
+            <div class="time">
+                <small>{{actualTime.getDate()}}.{{actualTime.getMonth()+1}}.{{actualTime.getFullYear()}}</small>
+                <br>
+                <span class="clock">{{actualTime.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
 </div>
 
 

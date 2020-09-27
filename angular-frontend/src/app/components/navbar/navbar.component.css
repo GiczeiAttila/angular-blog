@@ -20,6 +20,21 @@ a.mat-list-item.active a.mat-button.active{
     background: #78b886 !important;
 }
 
+.time{
+    text-align:center;
+}
+
+.clock{
+    font-size: xx-large;
+}
+
+.footer{
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000;
+}
+
 /*
 
 .sidenav {
