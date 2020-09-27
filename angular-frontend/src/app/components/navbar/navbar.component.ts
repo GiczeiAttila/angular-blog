@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({
     selector: 'app-navbar',
@@ -36,5 +37,10 @@ export class NavbarComponent implements OnInit {
             }
         );
 
+    }
+
+    togleInTs(sidenavStart: MatSidenav) {
+        sidenavStart.toggle();
+        sidenavStart.autoFocus=false;
     }
 }
