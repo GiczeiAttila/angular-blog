@@ -33,14 +33,14 @@ export class UserLoginFormComponent implements OnInit {
         let loginData = this.loginForm.value;
         this.userService.login(loginData)
             .subscribe(() => {
-                    localStorage.setItem('auth', 'true');
-                    localStorage.setItem('userId', loginData.id);
                 },
                 error => {
                     console.log(error);
                     handleValidationErrors(error, this.loginForm);
                 },
                 () => {
+                    localStorage.setItem('auth', 'true');
+                    localStorage.setItem('userId', loginData.id);
                     this.userService.loginSubject.next();
                     this.router.navigate(['/posts'])
                 },

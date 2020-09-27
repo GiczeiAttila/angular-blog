@@ -13,6 +13,7 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 import java.time.format.DateTimeFormatter;
@@ -42,7 +43,7 @@ public class PostListItem {
                 .map(string -> string.substring(0, string.contains(" ") && post.getPostBody().length() > 205 ? string.lastIndexOf(" ") : string.length()))
                 .map(string -> string.equals(post.getPostBody()) ? string : string.concat("..."))
                 .collect(Collectors.joining());
-        this.picture = post.getPicture();
+        this.picture = post.getPictureUrl();
 
         // this.createdAt = post.getCreatedAt()
         //         .toLocalDate();

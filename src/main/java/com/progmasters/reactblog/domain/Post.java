@@ -33,18 +33,21 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "post_body", columnDefinition = "TEXT")
+    @Column(name = "post_body",
+            columnDefinition = "TEXT")
     private String postBody;
 
-    @Column(name = "img_url", columnDefinition = "TEXT")
-    private String picture;
+    //  @OneToOne(cascade = CascadeType.ALL)
+    //   @JoinColumn(name = "picture" ,referencedColumnName = "file_path")
+    private String pictureUrl;
 
     @Column(name = "creation_at")
     private LocalDateTime createdAt;
 
     //private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post",
+               fetch = FetchType.EAGER)
     @OrderBy(value = "createdAt desc")
     private List<Comment> comments;
 
@@ -67,8 +70,7 @@ public class Post {
         this.author = user;
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
-        this.picture = postFormData.getPicture();
-
+        this.pictureUrl = "https://res.cloudinary.com/blog-img-cloud/image/upload/v1600930449/progmasterslogo_ccgds7.jpg";
 
         /*this.createdAt = ZonedDateTime.of(
                 LocalDate.now(),
@@ -79,7 +81,7 @@ public class Post {
          */
 
         this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
-        this.category = postFormData.getCategory();
+        this.category = PostCategories.valueOf(postFormData.getCategory());;
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
     }
@@ -108,12 +110,12 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPicture(String imgUrl) {
-        this.picture = imgUrl;
+    public void setPictureUrl(String imgUrl) {
+        this.pictureUrl = imgUrl;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -165,17 +167,23 @@ public class Post {
     }
 
     @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Post post = (Post) o;
 
         return id != null ? id.equals(post.id) : post.id == null;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
+
 }

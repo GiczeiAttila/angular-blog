@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {TimeOffListItemModel} from "../../models/timeOffListItem.model";
 import {TimeOffStatusChangeDto} from "../../models/timeOffStatusChangeDto";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-time-off-list',
@@ -17,10 +18,17 @@ export class TimeOffListComponent implements OnInit {
     currentUserId: number
     displayedColumns: string[] = ['Id', 'User name', 'Start date', 'End date', 'Status'];
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+            this.currentUserId = +localStorage.getItem("userId");
+        }else {
+            this.router.navigate(['']);
+        }
         this.index = 0;
         this.acceptedTimeOffList = [];
         this.rejectedTimeOffList = [];

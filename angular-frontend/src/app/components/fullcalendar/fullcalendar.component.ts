@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CalendarOptions} from '@fullcalendar/angular';
 import {UserService} from "../../services/user.service";
 import {CalendarTimeOffListDtoModel} from "../../models/calendarTimeOffListDto.model";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,10 +18,16 @@ export class FullcalendarComponent implements OnInit {
     calendarEvents = [];
 
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
+        }
         this.userId = +localStorage.getItem('userId');
         this.loadTimeOffList();
     }

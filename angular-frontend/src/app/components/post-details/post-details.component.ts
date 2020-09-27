@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {PostDetailsModel} from "../../models/postDetails.model";
 import {UserService} from "../../services/user.service";
@@ -16,7 +16,10 @@ export class PostDetailsComponent implements OnInit {
     commentOpenState: boolean;
     addressOpenState: boolean;
 
-    constructor(private blogService: BlogService, private route: ActivatedRoute, private userService: UserService) {
+    constructor(private blogService: BlogService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private userService: UserService) {
         this.route.paramMap.subscribe(
             map => {
                 const idParam = +map.get('id');
@@ -31,13 +34,17 @@ export class PostDetailsComponent implements OnInit {
     ngOnInit() {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
         }
     }
 
     loadPostDetails() {
         this.blogService.fetchPostDetails(this.id).subscribe(
             (data: PostDetailsModel) => this.postDetails = data,
-            error => console.warn(error),
+            error => {
+                this.router.navigate(['not-found']);
+                console.warn(error);},
         );
     }
 }

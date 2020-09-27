@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlogService} from '../../services/blog.service';
 import {handleValidationErrors} from '../../shared/validation.handler';
 import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-comment-form',
@@ -16,7 +17,8 @@ export class CommentFormComponent implements OnInit {
     @Output() commentCreated = new EventEmitter();
     commentForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private blogService: BlogService, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder,
+                private router: Router, private blogService: BlogService, private userService: UserService) {
         this.commentForm = formBuilder.group({
                 commentBody: ['', Validators.required]
             }
@@ -26,6 +28,8 @@ export class CommentFormComponent implements OnInit {
     ngOnInit() {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
         }
 
         this.authorId = +localStorage.getItem('userId');

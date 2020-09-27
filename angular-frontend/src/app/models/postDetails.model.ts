@@ -6,7 +6,7 @@ export interface PostDetailsModel {
     author: string;
     title: string;
     postBody: string;
-    picture: string;
+    picture: object;
     createdAt: string;
     comments: Array<CommentDetailsModel>;
     category: string;

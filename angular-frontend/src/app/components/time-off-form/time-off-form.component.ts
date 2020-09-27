@@ -4,6 +4,7 @@ import {UserService} from "../../services/user.service";
 import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {TimeOffDateRangeDataModel} from "../../models/timeOffDateRangeData.model";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,12 +24,18 @@ export class TimeOffFormComponent implements OnInit {
     index: number;
 
     constructor(private formBuilder: FormBuilder,
-                private userService: UserService) {
+                private userService: UserService,
+                private router: Router) {
 
         this.createForm();
     }
 
     ngOnInit() {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }else {
+            this.router.navigate(['']);
+        }
         this.userId = +localStorage.getItem('userId');
         this.index = 0;
         const today = new Date()

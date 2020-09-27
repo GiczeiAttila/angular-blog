@@ -89,13 +89,11 @@ class SuggestionServiceTest {
         suggestionVoteDto.setSuggestionId(1L);
         suggestionVoteDto.setVotingUserId(1L);
         suggestionVoteDto.setVote(voteType.toString());
-     //   User user = UserFactory.getUser(1L);
         SuggestionVote suggestionVote = new SuggestionVote();
         Suggestion suggestion = new Suggestion();
         suggestion.setId(1L);
         when(suggestionRepositoryMock.findById(suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestion));
         when(suggestionVoteRepositoryMock.findVoteByUserIdAndSuggestionId(suggestionVoteDto.getVotingUserId(),suggestionVoteDto.getSuggestionId())).thenReturn(Optional.of(suggestionVote));
-    //    when(userServiceMock.findById(suggestionVoteDto.getVotingUserId())).thenReturn(user);
 
         SuggestionVote savedSuggestionVote = suggestionService.saveVote(suggestionVoteDto);
 
