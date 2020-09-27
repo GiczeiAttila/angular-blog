@@ -34,12 +34,14 @@ public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
-    private CommentService commentService;
-    private CommentFormDetailsValidator commentFormDetailsValidator;
+    //TODO Review: Ezek a fieldek mehetnek finalra
+    private final CommentService commentService;
+    private final CommentFormDetailsValidator commentFormDetailsValidator;
 
     @Autowired
     public CommentController(CommentService commentService,
-                             CommentFormDetailsValidator commentFormDetailsValidator) {
+                             CommentFormDetailsValidator commentFormDetailsValidator
+    ) {
         this.commentService = commentService;
         this.commentFormDetailsValidator = commentFormDetailsValidator;
     }
@@ -49,11 +51,20 @@ public class CommentController {
         binder.addValidators(commentFormDetailsValidator);
     }
 
+    //TODO Review - A ResponseEntitynek mindig adjatok típust, csak hogy ne nyafogjon az IDE/SonarLint
+    // Ha tudjátok h nem ad vissza semmit, akkor lehet <Void>
     @PostMapping
     public ResponseEntity createComment(@Valid @RequestBody CommentFormData commentFormData) {
+        //TODO Review - Ez a log üzenet nem biztos hogy valid,
+        // hiszen itt még simán előfordulhat, hogy a comment nem is fog létrejönni valamiért...
         logger.info("New comment is created");
-
+        //TODO Review - Nem túl jó practice controller layerig felküldeni az entityt, mivel nem ti kezelitek az
+        // entityManagert, ezért elég durva anomáliákat tud okozni, mivel itt már kiléptetek a tranzakcióból, de még lehet
+        // hogy az entity managed stateben van, de nem biztos...
         Comment commentCreated = commentService.createComment(commentFormData);
+        //TODO Review - Szerintem nem túl jó practice, ha a controller layerben van ilyesfajta logika, ha valami
+        // félresikerült a service layerben, akkor a legszebb, ha ott mindig dobunk valami exceptiont, ezt pedig
+        // lekezeljük a GlobalExceptionHandlerben
         if (commentCreated != null) {
             return new ResponseEntity(HttpStatus.CREATED);
         }
@@ -62,6 +73,7 @@ public class CommentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<List<CommentDetails>> findAllCommentsByPostId(@PathVariable("id") Long id) {
+        //TODO Review - Lásd az előző methodot...
         Post actualPost = this.commentService.findPostById(id);
         List<CommentDetails> comments;
         if (actualPost != null) {

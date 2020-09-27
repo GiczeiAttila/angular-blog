@@ -16,7 +16,8 @@ public class MeetingRoomFormDataValidator implements Validator {
     public void validate(Object o, Errors errors) {
         MeetingRoomFormData meetingRoomFormData = (MeetingRoomFormData) o;
         String name = meetingRoomFormData.getName();
-
+        //TODO Review - Ezek balról jobbra vannak kiértékelve, érdemes mindig a null-checkel
+        // kezdeni, mert itt még simán kaphatsz nullPointert ebben az esetben
         if (name.isEmpty() || name == null) {
             errors.rejectValue("name", "meetingRoomFormData.name.empty");
         } else if (Character.isLowerCase(name.charAt(1))) {

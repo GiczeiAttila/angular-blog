@@ -11,7 +11,6 @@
 
 package com.progmasters.reactblog.controller;
 
-import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.dto.PostDetails;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 import com.progmasters.reactblog.domain.dto.PostFormInitData;
@@ -27,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,13 +35,15 @@ public class PostController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-    private PostService postService;
-    private PostFormDataValidator postFormDataValidator;
+    private final PostService postService;
+    private final PostFormDataValidator postFormDataValidator;
+    //TODO Review - unused var
     private CloudinaryFileUploader fileUploader;
 
     @Autowired
     public PostController(PostService postService,
-                          PostFormDataValidator postFormDataValidator) {
+                          PostFormDataValidator postFormDataValidator
+    ) {
         this.postService = postService;
         this.postFormDataValidator = postFormDataValidator;
     }
@@ -53,6 +53,8 @@ public class PostController {
         binder.addValidators(postFormDataValidator);
     }
 
+    //TODO Review - endpointokban maradjatok konzisztensek... érdemes inkább kötőjellel '-' elválasztani, és nem
+    // camelCase-t használni + ez legyen egységes mindenhol!
     @GetMapping("/formData")
     public ResponseEntity<PostFormInitData> getFormInitData() {
         return new ResponseEntity<>(postService.createFormInitData(), HttpStatus.OK);

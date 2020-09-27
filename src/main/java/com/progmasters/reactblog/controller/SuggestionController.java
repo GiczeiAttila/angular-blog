@@ -56,6 +56,7 @@ public class SuggestionController {
     @PostMapping("/vote")
     public ResponseEntity<Void> createVote(@Valid @RequestBody SuggestionVoteDto suggestionVoteDto) {
         logger.info("Create vote requested with user id:" + suggestionVoteDto.getVotingUserId() + " for suggestion with id: " + suggestionVoteDto.getSuggestionId());
+        //TODO Review - unused var
         SuggestionVote suggestionVote = suggestionService.saveVote(suggestionVoteDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -70,6 +71,7 @@ public class SuggestionController {
     @PutMapping
     public ResponseEntity<Void> changeSuggestionStatus(@RequestBody SuggestionStatusChangeDto suggestionStatusChangeDto) {
         suggestionService.changeSuggestionStatus(suggestionStatusChangeDto);
+        //TODO Review - Inkább írjatok egy toStringet a DTO-ra!
         logger.info("Request to change suggestion status to: " +
                 suggestionStatusChangeDto.getStatus() + "for suggestion with id: " +
                 suggestionStatusChangeDto.getSuggestionId() + "by user with id: " +

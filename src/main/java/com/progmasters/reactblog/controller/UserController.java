@@ -92,6 +92,7 @@ public class UserController {
     @PostMapping("logout")
     public ResponseEntity<Void> logout(HttpSession session) {
 //        session.invalidate();
+        //TODO Review - session.invalidate()-t lehet csinálni majd a securityConfigban
         logger.info("User logged out");
         return new ResponseEntity<>(HttpStatus.OK);
     }

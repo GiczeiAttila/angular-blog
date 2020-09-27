@@ -46,6 +46,7 @@ public class RequestService {
     }
 
     public List<UserTimeOffList> getUserTimeOffListById(Long id) {
+        //TODO Review - Ezek lehetnek inline variable-ök
         List<UserTimeOffList> list = this.timeOffDateRangeRepository.findTimeOffsByUserId(id)
                 .stream()
                 .map(timeOff -> new UserTimeOffList(timeOff))

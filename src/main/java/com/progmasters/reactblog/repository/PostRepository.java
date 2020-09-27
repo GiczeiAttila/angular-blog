@@ -20,5 +20,8 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+    //TODO Review - Ez lehet csak nekem rigolyám, de inkább használjatok már akkor
+    // mindenhol JPQL-t a SPeL helyett... konzisztencia + less magic
     List<Post> findAllByOrderByCreatedAtDesc();
+
 }

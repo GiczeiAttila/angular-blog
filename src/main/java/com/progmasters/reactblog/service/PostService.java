@@ -82,8 +82,9 @@ public class PostService {
     }
 
     public Long createPostWithImage(PostFormData data) throws IOException {
-
+        //TODO Review - Itt miért nem eleve long jön a DTO-ban ?
         Long authorId = Long.parseLong(data.getAuthorId());
+        //TODO Review - Bad practice, lásd UserService
         User user = this.userRepository.findById(authorId).orElse(null);
         if (user != null) {
 

@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class MeetingService {
 
-    private MeetingRoomRepository meetingRoomRepository;
-    private MeetingReservationRepository meetingReservationRepository;
-    private MeetingParticipantRepository meetingParticipantRepository;
-    private UserRepository userRepository;
+    private final MeetingRoomRepository meetingRoomRepository;
+    private final MeetingReservationRepository meetingReservationRepository;
+    private final MeetingParticipantRepository meetingParticipantRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public MeetingService(MeetingRoomRepository meetingRoomRepository, MeetingReservationRepository meetingReservationRepository, MeetingParticipantRepository meetingParticipantRepository, UserRepository userRepository) {
@@ -71,10 +71,13 @@ public class MeetingService {
 
 
     public List<MeetingRoomOptionDto> getMeetingRooms() {
+        //TODO Review - Az ilyen egyszerű konverziót ( entity -> DTO ) meg tudjátok közvetlenül
+        // a repository rétegben is csinálni
+        // Bár ez ízlés dolga, nem hiszem, hogy teljesítményben van-e bármi előnye, csak egy tip :)
         List<MeetingRoomOptionDto> meetingRooms = this.meetingRoomRepository.findAll()
-                .stream()
-                .map(room -> new MeetingRoomOptionDto(room))
-                .collect(Collectors.toList());
+                                                                            .stream()
+                                                                            .map(room -> new MeetingRoomOptionDto(room))
+                                                                            .collect(Collectors.toList());
         return meetingRooms;
     }
 }

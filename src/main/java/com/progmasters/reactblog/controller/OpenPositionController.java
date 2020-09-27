@@ -44,26 +44,32 @@ public class OpenPositionController {
     @PostMapping
     public ResponseEntity<Void> createOpenPosition(@Valid @RequestBody OpenPositionFormDto openPositionFormDto) {
         logger.info("Create open position requested with user id:" + openPositionFormDto.getUserId() +
-                " with open position name: " + openPositionFormDto.getPositionName() +
-                " deadline: " + openPositionFormDto.getDeadline());
+                            " with open position name: " + openPositionFormDto.getPositionName() +
+                            " deadline: " + openPositionFormDto.getDeadline());
         OpenPosition openPosition = openPositionService.saveOpenPosition(openPositionFormDto);
         System.out.println(openPosition.getDeadline());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //TODO Review - REST szerint ennek úgy kéne kinéznie, hogy az /api/open-positions/{id}/apply-ra
+    // menne ez a kérés, ahol DTO-ban küldjük az módosításhoz szükséges adatokat
+    // Ennek kb a lényege, hogy egy bizonyos resourcera küldünk valamilyen 'commandot'
     @PostMapping("/apply")
     public ResponseEntity<Void> applyForOpenPosition(@RequestBody ApplicationForOpenPositionDto applicationForOpenPositionDto) {
         logger.info("User with id:" + applicationForOpenPositionDto.getApplicantId() +
-                " applied for open position with id: " + applicationForOpenPositionDto.getOpenPositionId());
+                            " applied for open position with id: " + applicationForOpenPositionDto.getOpenPositionId());
         OpenPosition openPosition = openPositionService.findOpenPositionById(applicationForOpenPositionDto.getOpenPositionId());
         User user = userService.findById(applicationForOpenPositionDto.getApplicantId());
-        ApplicantForOpenPosition applicantForOpenPosition = new ApplicantForOpenPosition(user,openPosition);
+        ApplicantForOpenPosition applicantForOpenPosition = new ApplicantForOpenPosition(user, openPosition);
         applicantForOpenPositionService.saveApplicant(applicantForOpenPosition);
         logger.info("Application requested by user with id:" + user.getId() +
-                " to open position with id: " + openPosition.getId());
+                            " to open position with id: " + openPosition.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //TODO Review - Ez szintén fordítva kéne hogy legyen, /api/open-positions/{id}/get-open-positions
+    // Ezek lentebb/máshol szintén előfordulnak többször
+    // Ebben most a szívás, hogy a frontendet is utána kell húzni...
     @GetMapping("/open-positions/{id}")
     public ResponseEntity<List<OpenPositionListItemDto>> getActiveOpenPositions(@PathVariable("id") Long id) {
         logger.info("Open position list requested");
