@@ -2,90 +2,92 @@
     <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
 </div>
 <div class="mat-app-background basic-container">
-    <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
-        <mat-form-field class="meeting-full-width">
-            <mat-label>Title</mat-label>
-            <input formControlName="title" matInput placeholder="Title" required>
-            <mat-hint>Title is requires</mat-hint>
-            <mat-error
-                *ngIf="meetingRequestForm.get('title').invalid && meetingRequestForm.get('title').touched && !meetingRequestForm.get('title').errors?.serverError">
-                Title is required
-            </mat-error>
-            <mat-error>{{meetingRequestForm.get('title').errors?.serverError}}</mat-error>
-        </mat-form-field>
+    <mat-card class="basic-container">
+        <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" matInput placeholder="Title" required>
+                <mat-hint>Title is requires</mat-hint>
+                <mat-error
+                    *ngIf="meetingRequestForm.get('title').invalid && meetingRequestForm.get('title').touched && !meetingRequestForm.get('title').errors?.serverError">
+                    Title is required
+                </mat-error>
+                <mat-error>{{meetingRequestForm.get('title').errors?.serverError}}</mat-error>
+            </mat-form-field>
 
-        <mat-form-field class="meeting-full-width">
-            <mat-label>Description</mat-label>
-            <textarea formControlName="description" matInput placeholder="Meeting description" required></textarea>
-            <mat-hint>Description is required</mat-hint>
-            <mat-error
-                *ngIf="meetingRequestForm.get('description').invalid && meetingRequestForm.get('description').touched && !meetingRequestForm.get('description').errors?.serverError">
-                Description is required
-            </mat-error>
-            <mat-error>{{meetingRequestForm.get('description').errors?.serverError}}</mat-error>
-        </mat-form-field>
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput placeholder="Meeting description" required></textarea>
+                <mat-hint>Description is required</mat-hint>
+                <mat-error
+                    *ngIf="meetingRequestForm.get('description').invalid && meetingRequestForm.get('description').touched && !meetingRequestForm.get('description').errors?.serverError">
+                    Description is required
+                </mat-error>
+                <mat-error>{{meetingRequestForm.get('description').errors?.serverError}}</mat-error>
+            </mat-form-field>
 
 
-        <mat-form-field class="meeting-full-width">
-            <mat-label>Participants</mat-label>
-            <mat-select formControlName="participantsId" multiple>
-                <mat-select-trigger>
-                    <mat-chip-list>
-                        <mat-chip (removed)="onUserRemoved(user)"
-                                  *ngFor="let user of meetingRequestForm.get('participantsId').value"
-                                  [removable]="true">
-                            {{ user }}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                    </mat-chip-list>
-                </mat-select-trigger>
-                <mat-option *ngFor="let user of userList" [value]="user.userName">{{user.userName}}</mat-option>
-            </mat-select>
-            <mat-hint>Should choose participants</mat-hint>
-            <mat-error
-                *ngIf="meetingRequestForm.get('participantsId').invalid && meetingRequestForm.get('participantsId').touched && !meetingRequestForm.get('participantsId').errors?.serverError">
-                Should choose participant
-            </mat-error>
-            <mat-error>{{meetingRequestForm.get('participantsId').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Participants</mat-label>
+                <mat-select formControlName="participantsId" multiple>
+                    <mat-select-trigger>
+                        <mat-chip-list>
+                            <mat-chip (removed)="onUserRemoved(user)"
+                                      *ngFor="let user of meetingRequestForm.get('participantsId').value"
+                                      [removable]="true">
+                                {{ user }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let user of userList" [value]="user.userName">{{user.userName}}</mat-option>
+                </mat-select>
+                <mat-hint>Should choose participants</mat-hint>
+                <mat-error
+                    *ngIf="meetingRequestForm.get('participantsId').invalid && meetingRequestForm.get('participantsId').touched && !meetingRequestForm.get('participantsId').errors?.serverError">
+                    Should choose participant
+                </mat-error>
+                <mat-error>{{meetingRequestForm.get('participantsId').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
 
-        <mat-form-field class="meeting-full-width">
-            <mat-label>Select room</mat-label>
-            <mat-select formControlName="meetingRoomId" id="select-room" required>
-                <ng-container *ngFor="let room of meetingRoomList">
-                    <mat-option
-                        *ngIf="meetingRequestForm.get('participantsId').value.length < room.seats"
-                        [value]="room.roomId"
-                    >{{room.name}}</mat-option>
-                </ng-container>
-            </mat-select>
-            <mat-hint>Select a meeting room</mat-hint>
-            <mat-error
-                *ngIf="meetingRequestForm.get('meetingRoomId').invalid && meetingRequestForm.get('meetingRoomId').touched && !meetingRequestForm.get('meetingRoomId').errors?.serverError">
-                Should choose a meeting room
-            </mat-error>
-            <mat-error>{{meetingRequestForm.get('meetingRoomId').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Select room</mat-label>
+                <mat-select formControlName="meetingRoomId" id="select-room" required>
+                    <ng-container *ngFor="let room of meetingRoomList">
+                        <mat-option
+                            *ngIf="meetingRequestForm.get('participantsId').value.length < room.seats"
+                            [value]="room.roomId"
+                        >{{room.name}}</mat-option>
+                    </ng-container>
+                </mat-select>
+                <mat-hint>Select a meeting room</mat-hint>
+                <mat-error
+                    *ngIf="meetingRequestForm.get('meetingRoomId').invalid && meetingRequestForm.get('meetingRoomId').touched && !meetingRequestForm.get('meetingRoomId').errors?.serverError">
+                    Should choose a meeting room
+                </mat-error>
+                <mat-error>{{meetingRequestForm.get('meetingRoomId').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
 
-        <mat-form-field appearance="fill" class="meeting-full-width">
-            <mat-label>TIMEPICKER</mat-label>
-            <input #t="matTimepicker" formControlName="endDate"
-                   id="timepicker-example" matTimepicker
-                   mode="24h"
-                   name="time" placeholder="Please select time..." required>
-            <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
-            <mat-hint>Select time</mat-hint>
-            <mat-error
-                *ngIf="meetingRequestForm.get('endDate').invalid && meetingRequestForm.get('endDate').touched && !meetingRequestForm.get('endDate').errors?.serverError">
-                Should choose a meeting room
-            </mat-error>
-            <mat-error>{{meetingRequestForm.get('endDate').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
+            <mat-form-field appearance="fill" class="meeting-full-width">
+                <mat-label>TIMEPICKER</mat-label>
+                <input #t="matTimepicker" formControlName="endDate"
+                       id="timepicker-example" matTimepicker
+                       mode="24h"
+                       name="time" placeholder="Please select time..." required>
+                <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
+                <mat-hint>Select time</mat-hint>
+                <mat-error
+                    *ngIf="meetingRequestForm.get('endDate').invalid && meetingRequestForm.get('endDate').touched && !meetingRequestForm.get('endDate').errors?.serverError">
+                    Should choose a meeting room
+                </mat-error>
+                <mat-error>{{meetingRequestForm.get('endDate').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
 
-        <button color="primary" mat-raised-button>Save</button>
-        <button color="primary" mat-button matDialogClose>Close</button>
-    </form>
+            <button color="primary" mat-raised-button>Save</button>
+            <button color="primary" mat-button matDialogClose>Close</button>
+        </form>
+    </mat-card>
 </div>

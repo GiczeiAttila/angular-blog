@@ -36,9 +36,6 @@ export class TimeOffFormComponent implements OnInit {
         tomorrow.setDate(tomorrow.getDate() + 1)
         this.minDate = new Date(tomorrow).toLocaleString("en-CA").substring(0, 10);
         this.minDateForEndDate = new Date(tomorrow).toLocaleString("en-CA").substring(0, 10);
-        this.acceptedTimeOffList = [];
-        this.rejectedTimeOffList = [];
-        this.pendingTimeOffList = [];
         this.loadTimeOffList();
         this.startDateChanged();
     }
@@ -49,6 +46,7 @@ export class TimeOffFormComponent implements OnInit {
             startDate: [''],
             endDate: ['']
         });
+
     }
 
     saveDate() {
@@ -74,6 +72,9 @@ export class TimeOffFormComponent implements OnInit {
     loadTimeOffList() {
         this.userService.getUserTimeOffList(this.userId).subscribe(
             (data) => {
+                this.acceptedTimeOffList = [];
+                this.rejectedTimeOffList = [];
+                this.pendingTimeOffList = [];
                 data.forEach((timeOffListModel) => {
                     if (timeOffListModel.status == 'ACCEPTED') {
                         this.acceptedTimeOffList.unshift(timeOffListModel);

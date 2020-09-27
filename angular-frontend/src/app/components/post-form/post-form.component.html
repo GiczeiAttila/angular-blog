@@ -1,114 +1,116 @@
 <div class="mat-app-background basic-container">
-    <h4 class="modal-title">New post</h4>
-    <br>
-    <form (ngSubmit)="onSubmit()" [formGroup]="postForm" class="example-form" class="example">
-
-        <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>Select a category</mat-label>
-            <mat-select formControlName="category" required>
-                <mat-option *ngFor="let category of categories" [value]="category.name">
-                    {{category.displayName}}
-                </mat-option>
-            </mat-select>
-            <mat-hint>Please choose a category</mat-hint>
-            <mat-error
-                *ngIf="postForm.get('category').invalid && postForm.get('category').touched && !postForm.get('category').errors?.serverError"
-                class="text-danger">Please
-                choose a category
-            </mat-error>
-            <mat-error class="text-danger">{{postForm.get('category').errors?.serverError}}</mat-error>
-        </mat-form-field>
+    <mat-card class="basic-container">
+        <h4 class="modal-title">New post</h4>
         <br>
+        <form (ngSubmit)="onSubmit()" [formGroup]="postForm" class="example-form" class="example">
 
-        <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>Select type</mat-label>
-            <mat-select formControlName="type" required>
-                <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [value]="type.name">
-                    {{type.displayName}}
-                </mat-option>
-            </mat-select>
-            <mat-hint>Please choose a type</mat-hint>
-            <mat-error
-                *ngIf="postForm.get('type').invalid && postForm.get('type').touched && !postForm.get('type').errors?.serverError">
-                Please choose a type
-            </mat-error>
-            <mat-error>{{postForm.get('type').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
+            <mat-form-field appearance="fill" class="primary example-full-width">
+                <mat-label>Select a category</mat-label>
+                <mat-select formControlName="category" required>
+                    <mat-option *ngFor="let category of categories" [value]="category.name">
+                        {{category.displayName}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Please choose a category</mat-hint>
+                <mat-error
+                    *ngIf="postForm.get('category').invalid && postForm.get('category').touched && !postForm.get('category').errors?.serverError"
+                    class="text-danger">Please
+                    choose a category
+                </mat-error>
+                <mat-error class="text-danger">{{postForm.get('category').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
 
-        <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>Title</mat-label>
-            <input formControlName="title" matInput required>
-            <mat-hint>Please enter a title</mat-hint>
-            <mat-error
-                *ngIf="postForm.get('title').invalid
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Select type</mat-label>
+                <mat-select formControlName="type" required>
+                    <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [value]="type.name">
+                        {{type.displayName}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Please choose a type</mat-hint>
+                <mat-error
+                    *ngIf="postForm.get('type').invalid && postForm.get('type').touched && !postForm.get('type').errors?.serverError">
+                    Please choose a type
+                </mat-error>
+                <mat-error>{{postForm.get('type').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" matInput required>
+                <mat-hint>Please enter a title</mat-hint>
+                <mat-error
+                    *ngIf="postForm.get('title').invalid
                         && postForm.get('title').touched
                         && !postForm.get('title').errors?.serverError"
-                class="text-danger"
-            >
-                Please enter a title
-            </mat-error>
-            <mat-error>{{postForm.get('title').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field class="example-full-width">
-            <mat-label>Text</mat-label>
-            <textarea formControlName="postBody" matInput required></textarea>
-            <mat-hint>Please enter the body of the post</mat-hint>
-            <mat-error
-                *ngIf="postForm.get('postBody').invalid
+                    class="text-danger"
+                >
+                    Please enter a title
+                </mat-error>
+                <mat-error>{{postForm.get('title').errors?.serverError}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width">
+                <mat-label>Text</mat-label>
+                <textarea formControlName="postBody" matInput required></textarea>
+                <mat-hint>Please enter the body of the post</mat-hint>
+                <mat-error
+                    *ngIf="postForm.get('postBody').invalid
                         && postForm.get('postBody').touched
                         && !postForm.get('postBody').errors?.serverError"
-                class="text-danger"
-            >
-                Please enter the body of the post
-            </mat-error>
-            <mat-error>{{postForm.get('postBody').errors?.serverError}}</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>Picture</mat-label>
-            <input formControlName="picture" matInput>
-            <mat-hint>Can upload a picture</mat-hint>
-        </mat-form-field>
-        <br>
-
-        <div *ngIf="isEvent" formGroupName="address">
-            <h4 class="modal-title">Address</h4>
-            <mat-form-field class="example-full-width">
-                <mat-label>Country</mat-label>
-                <input formControlName="country" matInput>
-                <mat-hint>Enter country name</mat-hint>
+                    class="text-danger"
+                >
+                    Please enter the body of the post
+                </mat-error>
+                <mat-error>{{postForm.get('postBody').errors?.serverError}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field class="example-width-half">
-                <mat-label>Zip code</mat-label>
-                <input formControlName="zipCode" matInput>
-                <mat-hint>Enter zip code</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field class="example-width-half">
-                <mat-label>City</mat-label>
-                <input formControlName="city" matInput>
-                <mat-hint>Enter city</mat-hint>
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Picture</mat-label>
+                <input formControlName="picture" matInput>
+                <mat-hint>Can upload a picture</mat-hint>
             </mat-form-field>
             <br>
-            <mat-form-field class="example-width-half">
-                <mat-label>Street</mat-label>
-                <input formControlName="street" matInput>
-                <mat-hint>Enter street</mat-hint>
-            </mat-form-field>
 
-            <mat-form-field class="example-width-half">
-                <mat-label>Number</mat-label>
-                <input formControlName="number" matInput type="number">
-                <mat-hint>Enter number</mat-hint>
-            </mat-form-field>
-            <br>
-        </div>
+            <div *ngIf="isEvent" formGroupName="address">
+                <h4 class="modal-title">Address</h4>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Country</mat-label>
+                    <input formControlName="country" matInput>
+                    <mat-hint>Enter country name</mat-hint>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="example-width-half">
+                    <mat-label>Zip code</mat-label>
+                    <input formControlName="zipCode" matInput>
+                    <mat-hint>Enter zip code</mat-hint>
+                </mat-form-field>
 
-        <mat-card-actions>
-            <button color="primary" mat-raised-button type="submit">Save post</button>
-        </mat-card-actions>
-    </form>
+                <mat-form-field class="example-width-half">
+                    <mat-label>City</mat-label>
+                    <input formControlName="city" matInput>
+                    <mat-hint>Enter city</mat-hint>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="example-width-half">
+                    <mat-label>Street</mat-label>
+                    <input formControlName="street" matInput>
+                    <mat-hint>Enter street</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="example-width-half">
+                    <mat-label>Number</mat-label>
+                    <input formControlName="number" matInput type="number">
+                    <mat-hint>Enter number</mat-hint>
+                </mat-form-field>
+                <br>
+            </div>
+
+            <mat-card-actions>
+                <button color="primary" mat-raised-button type="submit">Save post</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
 </div>
