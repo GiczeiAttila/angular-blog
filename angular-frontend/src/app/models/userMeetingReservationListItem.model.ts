@@ -10,5 +10,6 @@ export interface UserMeetingReservationListItemModel {
     creatorId: number;
     participants: Array<MeetingParticipantListItem>;
     meetingRoomId: number;
+    meetingRoomName: string;
     status: string;
 }

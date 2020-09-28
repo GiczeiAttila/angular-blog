@@ -99,4 +99,13 @@ public class MeetingController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/creator")
+    public ResponseEntity<MeetingStatusChangeDto> changeMeetingStatus(@RequestBody MeetingStatusChangeDto statusChangeDto) {
+        this.meetingService.changeMeetingStatus(statusChangeDto);
+        logger.info("Request to change meeting status to: " +
+                statusChangeDto.getStatus() + " with meeting id: " +
+                statusChangeDto.getMeetingId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

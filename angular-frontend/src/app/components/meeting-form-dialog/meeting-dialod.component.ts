@@ -76,8 +76,9 @@ export class MeetingDialodComponent implements OnInit {
         meetingForm.creatorId = this.userId;
 
         this.actualParticipantsId = [];
+        const participantsLength: number = this.meetingRequestForm.get('participantsId').value.length;
         let actualParticipants = this.meetingRequestForm.get('participantsId').value;
-        if (actualParticipants != []) {
+        if (participantsLength > 0) {
             actualParticipants.forEach((participant) => {
                 this.userList.forEach(user => {
                     if (participant == user.userName) {
@@ -87,6 +88,7 @@ export class MeetingDialodComponent implements OnInit {
             })
             meetingForm.participantsId = this.actualParticipantsId;
             meetingForm.participantsId.push(this.userId);
+            console.log(meetingForm.participantsId);
         }
         const format = "YYYY-MM-DD HH:mm:ss";
         const value = this.meetingRequestForm.get('endDate').value;

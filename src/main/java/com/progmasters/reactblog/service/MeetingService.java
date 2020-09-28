@@ -1,9 +1,6 @@
 package com.progmasters.reactblog.service;
 
-import com.progmasters.reactblog.domain.MeetingParticipant;
-import com.progmasters.reactblog.domain.MeetingReservation;
-import com.progmasters.reactblog.domain.MeetingRoom;
-import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.*;
 import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.MeetingParticipantRepository;
 import com.progmasters.reactblog.repository.MeetingReservationRepository;
@@ -79,7 +76,7 @@ public class MeetingService {
     public List<MeetingListItem> getMyMeetingList(Long id) {
         Optional<User> optionalUser = this.userRepository.findById(id);
         if (optionalUser.isPresent()) {
-            List<MeetingListItem> meetingReservations = this.meetingParticipantRepository.findMeetingByUserId(optionalUser.get())
+            List<MeetingListItem> meetingReservations = this.meetingParticipantRepository.findMeetingByUserId(optionalUser.get(), MeetingStatus.ACTIVE)
                     .stream()
                     .map(meeting -> new MeetingListItem(meeting.getMeetingReservation()))
                     .collect(Collectors.toList());
@@ -102,6 +99,14 @@ public class MeetingService {
             return meetingReservationList;
         } else {
             return null;
+        }
+    }
+
+    public void changeMeetingStatus(MeetingStatusChangeDto statusChangeDto) {
+        Optional<MeetingReservation> optionalMeetingReservation = this.meetingReservationRepository.findById(statusChangeDto.getMeetingId());
+        if (optionalMeetingReservation.isPresent()) {
+            MeetingReservation meetingReservation = optionalMeetingReservation.get();
+            meetingReservation.setMeetingStatus(statusChangeDto.getStatus());
         }
     }
 }

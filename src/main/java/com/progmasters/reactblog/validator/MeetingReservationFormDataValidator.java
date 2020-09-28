@@ -5,12 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.TimeZone;
+
+import static com.progmasters.reactblog.utils.DateUtils.convertLocalDateTimeToZonedDateTime;
 
 @Component
 public class MeetingReservationFormDataValidator implements Validator {
@@ -44,7 +42,17 @@ public class MeetingReservationFormDataValidator implements Validator {
             errors.rejectValue("meetingRoomId", "meetingReservationFormData.meetingRoomId.null");
         }
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ZonedDateTime startDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getStartDateTime());
+        ZonedDateTime endDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getEndDateTime());
+        ZonedDateTime now = ZonedDateTime.now();
+
+        if (!startDateTime.isBefore(now)) {
+            errors.rejectValue("endDate", "meetingReservationFormData.endDate.wrong-startDate");
+        } else if (!startDateTime.isBefore(endDateTime)) {
+            errors.rejectValue("endDate", "meetingReservationFormData.endDate.before");
+        }
+
+       /* DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date startDate;
         Date endDate;
@@ -60,15 +68,11 @@ public class MeetingReservationFormDataValidator implements Validator {
             if (startDate.before(today)) {
                 errors.rejectValue("endDate", "meetingReservationFormData.endDate.wrong-startDate");
             }
-            /*if(endDate.before(startDate) || endDate.equals(startDate)){
-                System.out.println("/n start: " + startDate + "/n end: " + endDate);
-                errors.rejectValue("endDate","meetingReservationFormData.endDate.before");
-            }
-
-             */
         } catch (ParseException e) {
             errors.rejectValue("endDate", "meetingReservationFormData.endDate.invalid");
         }
+
+        */
 
     }
 }

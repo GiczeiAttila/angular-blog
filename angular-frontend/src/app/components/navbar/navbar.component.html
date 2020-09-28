@@ -153,6 +153,9 @@
                    routerLinkActive="active-link">Request
                     Time Off</a>
 
+                <a (click)="sidenavStart.toggle()" *ngIf="isLoggedIn" href="#" mat-list-item routerLink="/meeting-list"
+                   routerLinkActive="active-link">My meetings</a>
+
                 <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested-->
                 <!--                    Time-->
                 <!--                    Off</a>-->
