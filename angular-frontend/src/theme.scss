@@ -25,7 +25,7 @@ $mat-light-theme-background: (
 }
 
  */
-$my-dark-theme-background: (
+$my-light-theme-background: (
     status-bar: #f5f5f5,
     app-bar: map_get($mat-teal, 100),
     background: #e0f2f1,
@@ -42,9 +42,9 @@ $my-dark-theme-background: (
     disabled-list-option: black,
 );
 
-$my-dark-theme-foreground: (
-    base: #FAFAFA,
-    divider: $white-12-opacity,
+$my-light-theme-foreground: (
+    base: #fafafa,
+    divider: #0351C1,
     dividers: $white-12-opacity,
     disabled: rgba(black, 0.3),
     disabled-button: rgba(black, 0.3),
@@ -66,8 +66,8 @@ $my-dark-theme-foreground: (
         accent: $accent,
         warn: $warn,
         is-dark: false,
-        foreground: $my-dark-theme-foreground,
-        background: $my-dark-theme-background,
+        foreground: $my-light-theme-foreground,
+        background: $my-light-theme-background,
     );
 }
 
