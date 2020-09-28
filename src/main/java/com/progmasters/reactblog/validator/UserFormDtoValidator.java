@@ -1,5 +1,6 @@
 package com.progmasters.reactblog.validator;
 
+import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.dto.UserFormDto;
 import com.progmasters.reactblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,8 @@ public class UserFormDtoValidator implements Validator {
                 "[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:" +
                 "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")){
             errors.rejectValue("email", "userFormDto.e-mail");
+        }else if (userService.emailIsTaken(email)){
+            errors.rejectValue("email", "userFormDto.e-mail-already-registered");
         }
     }
 

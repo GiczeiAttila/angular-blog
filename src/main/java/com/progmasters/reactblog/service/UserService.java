@@ -46,6 +46,10 @@ public class UserService {
         return userRepository.findById(id).isPresent();
     }
 
+    public boolean emailIsTaken(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
     public User confirmRegistration(UserConfirmationDto userConfirmationDto) {
         Optional<User> userOptional = userRepository.findById(userConfirmationDto.getId());
         User user = userOptional.get();
@@ -59,9 +63,9 @@ public class UserService {
 
     public void savePassword(PasswordDto passwordDto) {
         Optional<User> userOptional = userRepository.findById(passwordDto.getId());
-        if (userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (user.getPassword() == passwordDto.getOldPassword() && user.getUserStatus()==UserStatusEnum.BLOCKED){
+            if (user.getPassword() == passwordDto.getOldPassword() && user.getUserStatus() == UserStatusEnum.BLOCKED) {
                 user.setPassword(passwordDto.getPassword());
                 user.setUserStatus(UserStatusEnum.ACTIVE);
                 logger.info("New password saved for id: " + passwordDto.getId());
