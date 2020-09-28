@@ -10,13 +10,23 @@ import {UserMeetingReservationListItemModel} from "../../models/userMeetingReser
 export class MeetingListComponent implements OnInit {
 
     meetingList: Array<UserMeetingReservationListItemModel>;
-    loadMeetingList
+    userId: number;
+
 
     constructor(private userService: UserService) {
     }
 
     ngOnInit(): void {
+        this.userId = localStorage.getItem('auth');
+        this.loadMeetingList();
 
+    }
+
+    loadMeetingList() {
+        this.userService.getUserMeetingList(this.userId).subscribe(
+            (list) => this.meetingList = list,
+            error => console.log(error)
+        )
     }
 
 
