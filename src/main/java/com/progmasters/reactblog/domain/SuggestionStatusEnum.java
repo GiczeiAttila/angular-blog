@@ -3,7 +3,7 @@ package com.progmasters.reactblog.domain;
 public enum SuggestionStatusEnum {
     ACTIVE("Active"),
     ACCEPTED("Accepted"),
-    IMPLEMENTED("Implemented"),
+    DELETED("Deleted"),
     REJECTED("Rejected");
 
     private String displayName;

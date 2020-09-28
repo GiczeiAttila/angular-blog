@@ -66,6 +66,14 @@
                         + {{mySuggestion.countUp}}/- {{mySuggestion.countDown}}
                     </mat-expansion-panel-header>
                     <p>{{mySuggestion.description}}</p>
+                    <mat-action-row>
+                        <button *ngIf="mySuggestion.status!=='DELETED'" mat-raised-button color="warn" (click)="deleteSuggestion(mySuggestion.id)">
+                            Delete
+                        </button>
+                        <button *ngIf="mySuggestion.status==='DELETED'" mat-raised-button color="primary" (click)="reactivateSuggestion(mySuggestion.id)">
+                            Reactivate
+                        </button>
+                    </mat-action-row>
                 </mat-expansion-panel>
             </mat-accordion>
         </mat-tab>
