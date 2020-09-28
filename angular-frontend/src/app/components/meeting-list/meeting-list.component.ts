@@ -17,7 +17,7 @@ export class MeetingListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userId = localStorage.getItem('auth');
+        this.userId = +localStorage.getItem('auth');
         this.loadMeetingList();
 
     }

@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     }
 
-    togleInTs(sidenavMaster: MatSidenav,sidenavSlave: MatSidenav) {
+    toggleInTs(sidenavMaster: MatSidenav, sidenavSlave: MatSidenav) {
         sidenavMaster.toggle();
         sidenavMaster.autoFocus=false;
         sidenavSlave.autoFocus=false;

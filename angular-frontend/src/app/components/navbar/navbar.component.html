@@ -58,7 +58,7 @@
 
 <mat-toolbar class="header">
     <mat-toolbar-row>
-        <button mat-icon-button *ngIf="isLoggedIn" (click)="togleInTs(sidenavStart, sidenav)" fxShow="true">
+        <button mat-icon-button *ngIf="isLoggedIn" (click)="toggleInTs(sidenavStart, sidenav)" fxShow="true">
             <mat-icon>face</mat-icon>
         </button>
         <span *ngIf="isLoggedIn">id: {{userId}}  </span>
@@ -88,7 +88,7 @@
 
         </div>
         <span class="menu-spacer"></span>
-        <button mat-icon-button (click)="togleInTs(sidenav, sidenavStart)" fxShow="true" fxHide.gt-sm>
+        <button mat-icon-button (click)="toggleInTs(sidenav, sidenavStart)" fxShow="true" fxHide.gt-sm>
             <mat-icon>menu</mat-icon>
         </button>
     </mat-toolbar-row>
