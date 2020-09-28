@@ -2,10 +2,7 @@ package com.progmasters.reactblog.controller;
 
 import com.progmasters.reactblog.domain.MeetingReservation;
 import com.progmasters.reactblog.domain.MeetingRoom;
-import com.progmasters.reactblog.domain.dto.MeetingListItem;
-import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
-import com.progmasters.reactblog.domain.dto.MeetingRoomFormData;
-import com.progmasters.reactblog.domain.dto.MeetingRoomOptionDto;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.service.MeetingService;
 import com.progmasters.reactblog.validator.MeetingReservationFormDataValidator;
 import com.progmasters.reactblog.validator.MeetingRoomFormDataValidator;
@@ -87,6 +84,17 @@ public class MeetingController {
         if (meetingList != null) {
             logger.info("Meeting list is required with id: " + id);
             return new ResponseEntity<>(meetingList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/creator/{id}")
+    public ResponseEntity<List<UserMeetingReservationListItem>> getUserMeetingReservationList(@PathVariable Long id) {
+        List<UserMeetingReservationListItem> meetingReservationList = this.meetingService.getUserMeetingReservation(id);
+        if (meetingReservationList != null) {
+            logger.info("Meeting reservation list is required with id: " + id);
+            return new ResponseEntity<>(meetingReservationList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

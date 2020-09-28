@@ -43,6 +43,10 @@ public class MeetingReservation {
     @JoinColumn(name = "meeting_room_id")
     private MeetingRoom meetingRoom;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meeting_status")
+    private MeetingStatus meetingStatus;
+
     public MeetingReservation() {
     }
 
@@ -61,6 +65,7 @@ public class MeetingReservation {
         }
         this.creator = creator;
         this.meetingRoom = meetingRoom;
+        this.meetingStatus = MeetingStatus.ACTIVE;
     }
 
 
@@ -128,5 +133,11 @@ public class MeetingReservation {
         this.meetingRoom = meetingRoom;
     }
 
+    public MeetingStatus getMeetingStatus() {
+        return meetingStatus;
+    }
 
+    public void setMeetingStatus(MeetingStatus meetingStatus) {
+        this.meetingStatus = meetingStatus;
+    }
 }

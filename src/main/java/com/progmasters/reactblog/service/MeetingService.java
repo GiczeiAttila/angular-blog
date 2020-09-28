@@ -4,10 +4,7 @@ import com.progmasters.reactblog.domain.MeetingParticipant;
 import com.progmasters.reactblog.domain.MeetingReservation;
 import com.progmasters.reactblog.domain.MeetingRoom;
 import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.MeetingListItem;
-import com.progmasters.reactblog.domain.dto.MeetingReservationFormData;
-import com.progmasters.reactblog.domain.dto.MeetingRoomFormData;
-import com.progmasters.reactblog.domain.dto.MeetingRoomOptionDto;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.MeetingParticipantRepository;
 import com.progmasters.reactblog.repository.MeetingReservationRepository;
 import com.progmasters.reactblog.repository.MeetingRoomRepository;
@@ -80,7 +77,6 @@ public class MeetingService {
     }
 
     public List<MeetingListItem> getMyMeetingList(Long id) {
-
         Optional<User> optionalUser = this.userRepository.findById(id);
         if (optionalUser.isPresent()) {
             List<MeetingListItem> meetingReservations = this.meetingParticipantRepository.findMeetingByUserId(optionalUser.get())
@@ -88,6 +84,22 @@ public class MeetingService {
                     .map(meeting -> new MeetingListItem(meeting.getMeetingReservation()))
                     .collect(Collectors.toList());
             return meetingReservations;
+        } else {
+            return null;
+        }
+    }
+
+    public List<UserMeetingReservationListItem> getUserMeetingReservation(Long id) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            List<UserMeetingReservationListItem> meetingReservationList = this.meetingReservationRepository.findMeetingByCreatorId(optionalUser.get())
+                    .stream()
+                    .map(meeting -> {
+                        List<MeetingParticipant> participants = this.meetingParticipantRepository.findUserByMeetingId(meeting);
+                        return new UserMeetingReservationListItem(meeting, participants);
+                    })
+                    .collect(Collectors.toList());
+            return meetingReservationList;
         } else {
             return null;
         }

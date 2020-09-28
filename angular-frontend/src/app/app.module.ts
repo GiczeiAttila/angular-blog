@@ -38,6 +38,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeetingDialodComponent} from './components/meeting-form-dialog/meeting-dialod.component';
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {MatTimepickerModule} from "mat-timepicker";
+import {MeetingListComponent} from './components/meeting-list/meeting-list.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -68,6 +69,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MeetingReservationFormComponent,
         MeetingRoomFormComponent,
         MeetingDialodComponent,
+        MeetingListComponent,
     ],
     imports: [
         BrowserModule,
