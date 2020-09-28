@@ -3,46 +3,48 @@
 <div class="mat-app-background basic-container">
     <mat-tab-group [(selectedIndex)]="index" animationDuration="200ms" dynamicHeight>
         <mat-tab label="Request time off">
-            <form (ngSubmit)="saveDate()" [formGroup]="timeOffForm">
-                <mat-form-field appearance="fill" class="request">
-                    <mat-label>Pick start date</mat-label>
-                    <input [min]="minDate" formControlName="startDate"
-                           matInput
-                           placeholder="start date"
-                           required
-                           type="date">
-                    <mat-error>
-                        {{timeOffForm.get('startDate').errors?.serverError}}
-                    </mat-error>
-                    <mat-error *ngIf="timeOffForm.get('startDate').hasError('matDatepickerParse')">
-                        "{{timeOffForm.get('startDate').getError('matDatepickerParse').text}}"
-                        is not a valid date!
-                    </mat-error>
-                    <mat-error *ngIf="timeOffForm.get('startDate').hasError('matDatepickerMin')">
-                        Minimum date should be {{minDate | date }}</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="request">
-                    <mat-label class="endDate">Pick end date</mat-label>
-                    <input [min]="minDateForEndDate" formControlName="endDate"
-                           matInput
-                           placeholder="end date"
-                           required
-                           type="date">
-                    <mat-error>
-                        {{timeOffForm.get('endDate').errors?.serverError}}
-                    </mat-error>
-                    <mat-error *ngIf="timeOffForm.get('endDate').hasError('matDatepickerParse')">
-                        "{{timeOffForm.get('endDate').getError('matDatepickerParse').text}}"
-                        is not a valid date!
-                    </mat-error>
-                </mat-form-field>
-                <br>
-                <button color="primary" mat-raised-button type="submit">Save Date</button>
-            </form>
+            <mat-card class="basic-container">
+                <form (ngSubmit)="saveDate()" [formGroup]="timeOffForm">
+                    <mat-form-field appearance="fill" class="request">
+                        <mat-label>Pick start date</mat-label>
+                        <input [min]="minDate" formControlName="startDate"
+                               matInput
+                               placeholder="start date"
+                               required
+                               type="date">
+                        <mat-error>
+                            {{timeOffForm.get('startDate').errors?.serverError}}
+                        </mat-error>
+                        <mat-error *ngIf="timeOffForm.get('startDate').hasError('matDatepickerParse')">
+                            "{{timeOffForm.get('startDate').getError('matDatepickerParse').text}}"
+                            is not a valid date!
+                        </mat-error>
+                        <mat-error *ngIf="timeOffForm.get('startDate').hasError('matDatepickerMin')">
+                            Minimum date should be {{minDate | date }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="request">
+                        <mat-label class="endDate">Pick end date</mat-label>
+                        <input [min]="minDateForEndDate" formControlName="endDate"
+                               matInput
+                               placeholder="end date"
+                               required
+                               type="date">
+                        <mat-error>
+                            {{timeOffForm.get('endDate').errors?.serverError}}
+                        </mat-error>
+                        <mat-error *ngIf="timeOffForm.get('endDate').hasError('matDatepickerParse')">
+                            "{{timeOffForm.get('endDate').getError('matDatepickerParse').text}}"
+                            is not a valid date!
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <button color="primary" mat-raised-button type="submit">Save Date</button>
+                </form>
+            </mat-card>
         </mat-tab>
         <mat-tab label="Accepted">
             <mat-accordion>
-                <table class="table table-striped table-dark">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">Start date</th>
@@ -62,7 +64,7 @@
         </mat-tab>
         <mat-tab label="Pending">
             <mat-accordion>
-                <table class="table table-striped table-dark">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">Start date</th>
@@ -82,7 +84,7 @@
         </mat-tab>
         <mat-tab label="Rejected">
             <mat-accordion>
-                <table class="table table-striped table-dark">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">Start date</th>

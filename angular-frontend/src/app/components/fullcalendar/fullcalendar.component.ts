@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendarOptions} from '@fullcalendar/angular';
 import {UserService} from "../../services/user.service";
-import {CalendarTimeOffListDtoModel} from "../../models/calendarTimeOffListDto.model";
 import {Router} from "@angular/router";
 
 
@@ -13,9 +12,8 @@ import {Router} from "@angular/router";
 export class FullcalendarComponent implements OnInit {
 
     userId: number;
-    timeOffList: Array<CalendarTimeOffListDtoModel> = [];
     calendarOptions: CalendarOptions;
-    calendarEvents = [];
+    allDateList: Array<Object>;
 
 
     constructor(private userService: UserService,
@@ -32,28 +30,58 @@ export class FullcalendarComponent implements OnInit {
         this.loadTimeOffList();
     }
 
-    handleDateClick(arg) {
-
-    }
 
     loadTimeOffList() {
+        this.allDateList = [];
         this.userService.getTimeOffListForCalendarByUserId(this.userId).subscribe(
             (list) => {
                 list.forEach((timeOffData) => {
                     if (timeOffData.title.includes('Accepted')) {
                         timeOffData.color = '#00848C';
-                        this.timeOffList.unshift(timeOffData);
+                        const acceptedTimeOff: Object = {
+                            title: timeOffData.title,
+                            start: timeOffData.start,
+                            end: timeOffData.end,
+                            color: timeOffData.color
+                        }
+                        this.allDateList.push(acceptedTimeOff);
                     } else if (timeOffData.title.includes('Pending')) {
                         timeOffData.color = '#6D6E71';
-                        this.timeOffList.unshift(timeOffData);
+                        const pendingTimeOff: Object = {
+                            title: timeOffData.title,
+                            start: timeOffData.start,
+                            end: timeOffData.end,
+                            color: timeOffData.color
+                        }
+                        this.allDateList.push(pendingTimeOff);
                     }
                 });
-                console.log(this.timeOffList)
             },
             error => console.log(error),
             () => {
-                this.loadCalendar()
+                this.loadMeetingList();
+            }
+        )
+    }
 
+    loadMeetingList() {
+        this.userService.getMeetingList(this.userId).subscribe(
+            (meetingList) => {
+                meetingList.forEach(meeting => {
+                    const meetingObject: Object = {
+                        title: meeting.title + ' - room: ' + meeting.meetingRoomName,
+                        start: meeting.startDate,
+                        end: meeting.endDate,
+                        color: '#FDA371',
+                        description: meeting.description
+                    }
+                    this.allDateList.push(meetingObject);
+                })
+            },
+            error => console.log(error),
+            () => {
+                this.loadCalendar();
+                console.log(this.allDateList)
             }
         )
     }
@@ -61,12 +89,10 @@ export class FullcalendarComponent implements OnInit {
     loadCalendar() {
         this.calendarOptions = {
             initialView: 'dayGridMonth',
-            dateClick: this.handleDateClick.bind(this),
             timeZone: 'UTC',
-            events: this.timeOffList,
+            events: this.allDateList
         };
     }
-
 
 
 }

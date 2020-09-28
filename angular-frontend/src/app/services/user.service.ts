@@ -23,6 +23,7 @@ import {MeetingReservationFormDataModel} from "../models/meetingReservationFormD
 import {MeetingRoomOptionDtoModel} from "../models/meetingRoomOptionDto.model";
 import {UserForMeetingOptionDtoModel} from "../models/userForMeetingOptionDto.model";
 import {MeetingListItemModel} from "../models/meetingListItem.model";
+import {UserMeetingReservationListItemModel} from "../models/userMeetingReservationListItem.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -149,5 +150,9 @@ export class UserService {
 
     getMeetingList(id: number): Observable<Array<MeetingListItemModel>> {
         return this.http.get<Array<MeetingListItemModel>>(MEETING_URL + '/' + id);
+    }
+
+    getUserMeetingList(id: number): Observable<Array<UserMeetingReservationListItemModel>> {
+        return this.http.get<Array<UserMeetingReservationListItemModel>>(MEETING_URL + '/creator/' + id);
     }
 }

@@ -1,0 +1,81 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+/*$my-app-primary: mat-palette($mat-teal, 500 );
+$my-app-accent:  mat-palette($mat-teal, 100, 200, 300);
+$my-app-warn:    mat-palette($mat-red, 700);
+$my-app-background:    mat-palette($mat-teal, 200);
+
+//$background-color: map-get($mat-teal, 100);
+
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);
+
+$mat-light-theme-background: (
+    background: map-get($mat-teal, 200)
+);
+
+
+.alternate-theme {
+    $alternate-primary: mat-palette($mat-teal, 200);
+    $alternate-accent:  mat-palette($mat-grey, 400);
+    $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+    @include angular-material-theme($alternate-theme);
+}
+
+ */
+$my-light-theme-background: (
+    status-bar: #f5f5f5,
+    app-bar: map_get($mat-teal, 100),
+    background: #e0f2f1,
+    hover: rgba(#8cc7c0, 0.04),
+    card: #f5f5f5,
+    dialog: map_get($mat-teal, 100),
+    disabled-button: $white-12-opacity,
+    raised-button: map-get($mat-teal, 800),
+    focused-button: $white-6-opacity,
+    selected-button: map_get($mat-teal, 800),
+    selected-disabled-button: map_get($mat-teal, 800),
+    disabled-button-toggle: black,
+    unselected-chip: map_get($mat-teal, 300),
+    disabled-list-option: black,
+);
+
+$my-light-theme-foreground: (
+    base: #fafafa,
+    divider: #0351C1,
+    dividers: $white-12-opacity,
+    disabled: rgba(black, 0.3),
+    disabled-button: rgba(black, 0.3),
+    disabled-text: rgba(black, 0.3),
+    hint-text: rgba(black, 0.3),
+    secondary-text: rgba(black, 0.7),
+    icon: black,
+    icons: black,
+    text: black,
+    slider-min: black,
+    slider-off: rgba(black, 0.3),
+    slider-off-active: rgba(black, 0.3),
+);
+
+// instead of creating a theme with mat-light-theme like a sane person, we will create our own theme-creating function that lets us apply our own foreground and background palettes.
+@function create-wonky-theme($primary, $accent, $warn: mat-palette($mat-red)) {
+    @return (
+        primary: $primary,
+        accent: $accent,
+        warn: $warn,
+        is-dark: false,
+        foreground: $my-light-theme-foreground,
+        background: $my-light-theme-background,
+    );
+}
+
+// The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
+$custom-theme-primary: mat-palette($mat-teal, 400);
+$custom-theme-accent: mat-palette($mat-teal, 100);
+$custom-theme-warn: mat-palette($mat-red);
+
+$custom-theme: create-wonky-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+
+@include angular-material-theme($custom-theme);
