@@ -95,6 +95,8 @@ export class MeetingDialodComponent implements OnInit {
         let actualEndDate = moment(value).format(format);
         meetingForm.endDate = actualEndDate;
 
+        const startDay = this.meetingRequestForm.get('startDate').value.toString().slice(0, 12);
+
         this.userService.saveNewMeeting(meetingForm).subscribe(
             () => console.log(meetingForm),
             error => handleValidationErrors(error, this.meetingRequestForm),

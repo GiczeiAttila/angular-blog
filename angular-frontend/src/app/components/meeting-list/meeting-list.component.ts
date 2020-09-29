@@ -34,7 +34,6 @@ export class MeetingListComponent implements OnInit {
 
     loadMeetingList() {
         this.userId = +localStorage.getItem('userId');
-        console.log(this.userId);
         this.meetingList = [];
         this.displayMeetingList = [];
         this.userService.getUserMeetingList(this.userId).subscribe(
@@ -45,8 +44,7 @@ export class MeetingListComponent implements OnInit {
                     this.displayMeetingList.push(meeting);
 
                     meeting.startDate = meeting.startDate.slice(0, 16);
-                    meeting.endDate = meeting.endDate.slice(12, 16);
-
+                    meeting.endDate = meeting.endDate.slice(11, 16);
                     this.meetingList.push(meeting);
                 })
             },
