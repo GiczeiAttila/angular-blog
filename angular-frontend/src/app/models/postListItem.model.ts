@@ -3,6 +3,7 @@ import {CommentDetailsModel} from "./commentDetails.model";
 export interface PostListItemModel {
     id: number;
     author: string;
+    authorId:number;
     title: string;
     postBodyShortened: string;
     picture?: string;

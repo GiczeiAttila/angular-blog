@@ -25,6 +25,7 @@ public class PostListItem {
 
     private final Long id;
     private final String author;
+    private final Long authorId;
     private final String title;
     private final String postBodyShortened;
     private final String picture;
@@ -38,6 +39,7 @@ public class PostListItem {
         this.id = post.getId();
         this.title = post.getTitle();
         this.author = post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName();
+        this.authorId = post.getAuthor().getId();
         this.postBodyShortened = Stream.of(post.getPostBody())
                 .map(string -> string.substring(0, Math.min(200, string.length())))
                 .map(string -> string.substring(0, string.contains(" ") && post.getPostBody().length() > 205 ? string.lastIndexOf(" ") : string.length()))
@@ -66,6 +68,10 @@ public class PostListItem {
         }
 
        */
+    }
+
+    public Long getAuthorId() {
+        return authorId;
     }
 
     public Long getId() {

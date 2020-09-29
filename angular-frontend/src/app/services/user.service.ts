@@ -169,4 +169,5 @@ export class UserService {
     changeMeetingStatus(changedStatus: MeetingStatusChangeDtoModel) {
         return this.http.put(MEETING_URL + '/creator', changedStatus);
     }
+
 }

@@ -19,6 +19,7 @@ export class PostListComponent implements OnInit {
     commentOpenState: boolean;
     addCommentOpenState: boolean;
     index: number;
+    userId: number;
 
     constructor(private blogService: BlogService,
                 private userService: UserService,
@@ -26,21 +27,23 @@ export class PostListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.index = 0;
-        this.corporateNews = [];
-        this.freeTimeActivities = [];
-        this.professionalNews = [];
         this.loadPosts();
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+            this.userId = +localStorage.getItem('userId');
         }else {
             this.router.navigate(['']);
         }
     }
 
     loadPosts() {
+        this.index = 0;
+        this.corporateNews = [];
+        this.freeTimeActivities = [];
+        this.professionalNews = [];
         this.blogService.fetchAllPost().subscribe(
             data => {
+                console.log(data);
                 this.allPost = data;
                 data.forEach((post) => {
                     if (post.category == 'CORPORATE') {
@@ -58,5 +61,13 @@ export class PostListComponent implements OnInit {
 
     readMore(id: number) {
         this.router.navigate(['posts', id])
+    }
+
+    delete(postId: number) {
+        this.blogService.deletePost(postId).subscribe(
+            ()=>{},
+            ()=>{},
+            ()=>{this.loadPosts()}
+        );
     }
 }

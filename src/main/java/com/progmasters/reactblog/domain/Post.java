@@ -92,6 +92,14 @@ public class Post {
         this.address = new Address(postFormData.getAddress());
     }
 
+    public PostStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PostStatus status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
