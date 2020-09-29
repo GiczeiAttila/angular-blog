@@ -19,4 +19,8 @@ public interface MeetingParticipantRepository extends JpaRepository<MeetingParti
 
     @Query("SELECT m FROM MeetingParticipant m WHERE m.meetingReservation = :id")
     List<MeetingParticipant> findUserByMeetingId(@Param("id") MeetingReservation id);
+
+    @Query("SELECT u FROM MeetingParticipant m JOIN m.user u WHERE m.meetingReservation.id = :id AND u.userStatus = 'ACTIVE' OR" +
+            " u.userStatus = 'RESET' OR u.userStatus = 'BLOCKED'")
+    List<User> findAllUserByMeetingId(@Param("id") Long id);
 }

@@ -128,6 +128,19 @@ public class EmailSenderService {
     }
 
     @Async
+    public void sendMeetingStatusChangeNotification(MeetingReservation meetingReservation, List<User> userList) {
+        String subject = "Meeting status changed";
+        String mailBody =
+                "Meeting with title: " + meetingReservation.getTitle() + " starting at:  " + meetingReservation.getStartDate() +
+                        " status is changed to: " + meetingReservation.getMeetingStatus().getDisplayName() + "\n";
+        for (User user : userList) {
+            sendMail(user.getEmail(), subject, mailBody);
+        }
+        logger.info("Meeting status change notification is send with id:  " + meetingReservation.getId() + "new status is: " +
+                meetingReservation.getMeetingStatus().getDisplayName());
+    }
+
+    @Async
     public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toAddress);

@@ -22,13 +22,15 @@ public class MeetingService {
     private MeetingReservationRepository meetingReservationRepository;
     private MeetingParticipantRepository meetingParticipantRepository;
     private UserRepository userRepository;
+    private EmailSenderService emailSenderService;
 
     @Autowired
-    public MeetingService(MeetingRoomRepository meetingRoomRepository, MeetingReservationRepository meetingReservationRepository, MeetingParticipantRepository meetingParticipantRepository, UserRepository userRepository) {
+    public MeetingService(MeetingRoomRepository meetingRoomRepository, MeetingReservationRepository meetingReservationRepository, MeetingParticipantRepository meetingParticipantRepository, UserRepository userRepository, EmailSenderService emailSenderService) {
         this.meetingRoomRepository = meetingRoomRepository;
         this.meetingReservationRepository = meetingReservationRepository;
         this.meetingParticipantRepository = meetingParticipantRepository;
         this.userRepository = userRepository;
+        this.emailSenderService = emailSenderService;
     }
 
 
@@ -107,6 +109,8 @@ public class MeetingService {
         if (optionalMeetingReservation.isPresent()) {
             MeetingReservation meetingReservation = optionalMeetingReservation.get();
             meetingReservation.setMeetingStatus(statusChangeDto.getStatus());
+            List<User> participants = this.meetingParticipantRepository.findAllUserByMeetingId(meetingReservation.getId());
+            emailSenderService.sendMeetingStatusChangeNotification(meetingReservation, participants);
         }
     }
 }

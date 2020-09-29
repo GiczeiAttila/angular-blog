@@ -5,9 +5,10 @@
                 <mat-expansion-panel *ngIf="meeting.status == 'ACTIVE'" hideToggle>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{meeting.title}} / {{meeting.meetingRoomName}} / {{meeting.startDate}}
-                            - {{meeting.endDate}}
-                        </mat-panel-title>
+                            {{meeting.title}} </mat-panel-title>
+                        {{meeting.meetingRoomName}} / {{meeting.startDate}}
+                        - {{meeting.endDate}}
+
                     </mat-expansion-panel-header>
                     <p>{{meeting.description}}</p>
                     <p *ngFor="let participant of meeting.participants">{{participant.userName}}</p>
@@ -28,9 +29,9 @@
                 <mat-expansion-panel *ngIf="meeting.status == 'DELETED'" hideToggle>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{meeting.title}} / {{meeting.meetingRoomName}} / {{meeting.startDate}}
-                            - {{meeting.endDate}}
-                        </mat-panel-title>
+                            {{meeting.title}} </mat-panel-title>
+                        {{meeting.meetingRoomName}} / {{meeting.startDate}}
+                        - {{meeting.endDate}}
                     </mat-expansion-panel-header>
                     <p>{{meeting.description}}</p>
                     <p *ngFor="let participant of meeting.participants">{{participant.userName}}</p>
