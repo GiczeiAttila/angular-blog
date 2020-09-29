@@ -2,7 +2,8 @@
 /*    background-color: gainsboro;*/
 /*}*/
 .app_container {
-    margin-top: 56px;
+    margin-top: 32px;
+    margin-bottom: 32px;
     padding: 24px;
 }
 
@@ -49,10 +50,21 @@ a.mat-list-item.active a.mat-button.active{
 .sidenav-container{
     position: absolute;
     overflow: hidden;
-    top: 0;
+    top: 64px;
     bottom: 0;
     left: 0;
     right: 0;
+    height: calc(100% - 128px);
+}
+
+.wrapper::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 128px;
+}
+
+.wrapper::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 128px;
 }
 
 /*
