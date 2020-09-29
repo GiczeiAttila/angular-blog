@@ -27,11 +27,11 @@ $mat-light-theme-background: (
  */
 $my-light-theme-background: (
     status-bar: #f5f5f5,
-    app-bar: map_get($mat-teal, 100),
-    background: #e0f2f1,
+    app-bar: map_get($mat-teal, 500),
+    background: #757575,
     hover: rgba(#8cc7c0, 0.04),
     card: #f5f5f5,
-    dialog: map_get($mat-teal, 100),
+    dialog: map_get($mat-teal, A700),
     disabled-button: $white-12-opacity,
     raised-button: map-get($mat-teal, 800),
     focused-button: $white-6-opacity,
@@ -44,25 +44,26 @@ $my-light-theme-background: (
 
 $my-light-theme-foreground: (
     base: #fafafa,
-    divider: #0351C1,
+    divider: #0351c1,
     dividers: $white-12-opacity,
     disabled: rgba(black, 0.3),
     disabled-button: rgba(black, 0.3),
-    disabled-text: rgba(black, 0.3),
-    hint-text: rgba(black, 0.3),
+    disabled-text: #000000,
+    hint-text: #000000,
     secondary-text: rgba(black, 0.7),
     icon: black,
     icons: black,
-    text: black,
+    text: white,
     slider-min: black,
     slider-off: rgba(black, 0.3),
     slider-off-active: rgba(black, 0.3),
 );
 
 // instead of creating a theme with mat-light-theme like a sane person, we will create our own theme-creating function that lets us apply our own foreground and background palettes.
-@function create-wonky-theme($primary, $accent, $warn: mat-palette($mat-red)) {
+@function create-wonky-theme($primary, $secondary, $accent, $warn: mat-palette($mat-red)) {
     @return (
         primary: $primary,
+        secondary: $secondary,
         accent: $accent,
         warn: $warn,
         is-dark: false,
@@ -72,8 +73,9 @@ $my-light-theme-foreground: (
 }
 
 // The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
-$custom-theme-primary: mat-palette($mat-teal, 400);
-$custom-theme-accent: mat-palette($mat-teal, 100);
+$custom-theme-primary: mat-palette($mat-teal, 600);
+$custom-theme-secondary: mat-palette($mat-grey, 100);
+$custom-theme-accent: mat-palette($mat-grey, 100);
 $custom-theme-warn: mat-palette($mat-red);
 
 $custom-theme: create-wonky-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);

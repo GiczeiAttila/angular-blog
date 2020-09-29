@@ -1,28 +1,11 @@
 package com.progmasters.reactblog.integration;
 
-import com.progmasters.reactblog.domain.OpenPosition;
-import com.progmasters.reactblog.domain.User;
-import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
-import com.progmasters.reactblog.domain.dto.OpenPositionListItemDto;
 import com.progmasters.reactblog.service.OpenPositionService;
 import com.progmasters.reactblog.service.UserService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.stream.Stream;
 
 @SpringBootTest
 @Transactional
@@ -33,7 +16,7 @@ public class OpenPositionIT {
     @Autowired
     private UserService userService;
 
-    @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
+ /*   @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
     @CsvSource({
             "1,2,3,4,3",
             "0,1,2,3,2",
@@ -160,6 +143,8 @@ public class OpenPositionIT {
             return user;
         }
     }
+
+  */
 
 
 }

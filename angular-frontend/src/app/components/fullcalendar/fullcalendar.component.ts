@@ -81,7 +81,6 @@ export class FullcalendarComponent implements OnInit {
             error => console.log(error),
             () => {
                 this.loadCalendar();
-                console.log(this.allDateList)
             }
         )
     }

@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface MeetingReservationRepository extends JpaRepository<MeetingReservation, Long> {
 
-    @Query("SELECT m FROM MeetingReservation m WHERE m.creator = :id")
+    @Query("SELECT m FROM MeetingReservation m WHERE m.creator = :id ORDER BY m.startDate DESC")
     List<MeetingReservation> findMeetingByCreatorId(@Param("id") User id);
 }

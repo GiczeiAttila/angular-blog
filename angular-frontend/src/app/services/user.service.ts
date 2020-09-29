@@ -24,6 +24,7 @@ import {MeetingRoomOptionDtoModel} from "../models/meetingRoomOptionDto.model";
 import {UserForMeetingOptionDtoModel} from "../models/userForMeetingOptionDto.model";
 import {MeetingListItemModel} from "../models/meetingListItem.model";
 import {UserMeetingReservationListItemModel} from "../models/userMeetingReservationListItem.model";
+import {MeetingStatusChangeDtoModel} from "../models/meetingStatusChangeDto.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -154,5 +155,9 @@ export class UserService {
 
     getUserMeetingList(id: number): Observable<Array<UserMeetingReservationListItemModel>> {
         return this.http.get<Array<UserMeetingReservationListItemModel>>(MEETING_URL + '/creator/' + id);
+    }
+
+    changeMeetingStatus(changedStatus: MeetingStatusChangeDtoModel) {
+        return this.http.put(MEETING_URL + '/creator', changedStatus);
     }
 }

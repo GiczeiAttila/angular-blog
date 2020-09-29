@@ -17,6 +17,7 @@ import {OpenPositionsComponent} from "./components/open-positions/open-positions
 import {FullcalendarComponent} from "./components/fullcalendar/fullcalendar.component";
 import {MeetingRoomFormComponent} from "./components/meeting-room-form/meeting-room-form.component";
 import {MeetingReservationFormComponent} from "./components/meeting-reservation-form/meeting-reservation-form.component";
+import {MeetingListComponent} from "./components/meeting-list/meeting-list.component";
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
     {path: 'fullcalendar', component: FullcalendarComponent},
     {path: 'meetingRoom-form', component: MeetingRoomFormComponent},
     {path: 'meetingReservation', component: MeetingReservationFormComponent},
+    {path: 'meeting-list', component: MeetingListComponent},
     {path: '', redirectTo: 'welcome', pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent},
 ];

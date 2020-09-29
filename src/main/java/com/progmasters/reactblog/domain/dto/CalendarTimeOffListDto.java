@@ -2,16 +2,16 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.TimeOffStatusEnum;
+import com.progmasters.reactblog.utils.DateUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class CalendarTimeOffListDto {
 
     private String color;
     private String title;
-    private String start;
-    private String end;
+    private LocalDate start;
+    private LocalDate end;
 
     public CalendarTimeOffListDto() {
     }
@@ -22,10 +22,8 @@ public class CalendarTimeOffListDto {
         } else {
             this.title = "Time off - Pending";
         }
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.start = dateFormat.format(timeOff.getStartDate());
-        this.end = dateFormat.format(timeOff.getEndDate());
+        this.start = DateUtils.localizeDateFromZonedDateTime(timeOff.getStartDate());
+        this.end = DateUtils.localizeDateFromZonedDateTime(timeOff.getEndDate());
 
     }
 
@@ -38,19 +36,19 @@ public class CalendarTimeOffListDto {
         this.title = title;
     }
 
-    public String getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

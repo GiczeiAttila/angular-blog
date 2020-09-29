@@ -1,27 +1,32 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.MeetingReservation;
+import com.progmasters.reactblog.utils.DateUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 public class MeetingListItem {
 
     private String title;
     private String description;
     private String creatorName;
-    private String startDate;
-    private String endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String meetingRoomName;
 
     public MeetingListItem(MeetingReservation meeting) {
         this.title = meeting.getTitle();
         this.description = meeting.getDescription();
         this.creatorName = meeting.getCreator().getFirstName() + " " + meeting.getCreator().getLastName();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.startDate = DateUtils.localizeDateTimeFromZonedDateTime(meeting.getStartDate());
+        this.endDate = DateUtils.localizeDateTimeFromZonedDateTime(meeting.getEndDate());
+
+
+        /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         this.startDate = dateFormat.format(meeting.getStartDate());
         this.endDate = dateFormat.format(meeting.getEndDate());
+         */
         this.meetingRoomName = meeting.getMeetingRoom().getName();
     }
 
@@ -50,19 +55,19 @@ public class MeetingListItem {
         this.creatorName = creatorName;
     }
 
-    public String getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
