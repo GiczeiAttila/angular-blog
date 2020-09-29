@@ -8,7 +8,6 @@ import java.util.List;
 
 public class MeetingReservationUpdatedForm {
 
-    private final List<Long> participantsId = new ArrayList<>();
     private Long meetingId;
     private String title;
     private String description;
@@ -17,6 +16,7 @@ public class MeetingReservationUpdatedForm {
     private Long creatorId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDateTime;
+    private final List<Long> participantsId = new ArrayList<>();
     private Long meetingRoomId;
 
 

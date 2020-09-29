@@ -8,9 +8,8 @@
                             {{meeting.title}} </mat-panel-title>
                         {{meeting.meetingRoomName}} / {{meeting.startDate}}
                         - {{meeting.endDate}}
-
                     </mat-expansion-panel-header>
-                    <p>{{meeting.description}}</p>
+                    <p>Description: {{meeting.description}}</p>
                     <p *ngFor="let participant of meeting.participants">{{participant.userName}}</p>
                     <mat-action-row>
                         <button (click)="editMeeting(meeting.meetingId)" color="success" mat-raised-button>
@@ -33,8 +32,9 @@
                         {{meeting.meetingRoomName}} / {{meeting.startDate}}
                         - {{meeting.endDate}}
                     </mat-expansion-panel-header>
-                    <p>{{meeting.description}}</p>
-                    <p *ngFor="let participant of meeting.participants">{{participant.userName}}</p>
+                    <p>Description: {{meeting.description}}</p>
+                    <p *ngFor="let participant of meeting.participants"
+                       id="participantNames">{{participant.userName}} </p>
                     <mat-action-row>
                         <button (click)="changeToActive(meeting.meetingId)" color="warn" mat-raised-button>
                             Back to active

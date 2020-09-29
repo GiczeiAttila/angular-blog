@@ -11,7 +11,6 @@ import java.util.List;
 
 public class MeetingReservationData {
 
-    private final List<MeetingParticipantListItem> participantsList = new ArrayList<>();
     private String title;
     private String description;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -19,6 +18,7 @@ public class MeetingReservationData {
     private Long creatorId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDateTime;
+    private final List<MeetingParticipantListItem> participantsList = new ArrayList<>();
     private MeetingRoomOptionDto meetingRoom;
 
     public MeetingReservationData(MeetingReservation meetingReservation, List<MeetingParticipant> participants) {
