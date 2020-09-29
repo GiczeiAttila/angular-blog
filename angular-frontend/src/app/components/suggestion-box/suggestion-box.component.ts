@@ -59,9 +59,9 @@ export class SuggestionBoxComponent implements OnInit {
                 if (suggestionListItemModel.userId === +localStorage.getItem('userId')) {
                     this.mySuggestionList.unshift(suggestionListItemModel);
                 }
-                if (suggestionListItemModel.status == 'ACTIVE') {
+                if (suggestionListItemModel.status === 'ACTIVE') {
                     this.activeSuggestionList.unshift(suggestionListItemModel);
-                } else {
+                } else if (suggestionListItemModel.status !== 'DELETED'){
                     this.closedSuggestionList.unshift(suggestionListItemModel);
                 }
             })
@@ -109,6 +109,10 @@ export class SuggestionBoxComponent implements OnInit {
 
     acceptSuggestion(suggestionId: number) {
         this.changeSuggestionStatus('ACCEPTED', suggestionId)
+    }
+
+    deleteSuggestion(suggestionId: number) {
+        this.changeSuggestionStatus('DELETED', suggestionId)
     }
 
     changeSuggestionStatus(status: string, suggestionId: number){

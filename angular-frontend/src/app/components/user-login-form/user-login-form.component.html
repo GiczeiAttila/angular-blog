@@ -67,7 +67,7 @@
         <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
             <mat-form-field class="example-full-width">
                 <mat-label>Id</mat-label>
-                <input matInput type="number" formControlName="id" required>
+                <input matInput type="number" formControlName="id" required autocomplete="off">
                 <mat-hint>Id is required</mat-hint>
                 <mat-error>
                     {{loginForm.get('id').errors?.serverError}}
@@ -82,7 +82,7 @@
             <hr/>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required autocomplete="off">
 
                 <mat-icon class="show-hide" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-hint>Password is required</mat-hint>
