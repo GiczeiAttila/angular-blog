@@ -55,7 +55,7 @@ public class RequestService {
 
 
     public List<TimeOffListItem> getAllTimeOffList() {
-        List<TimeOffListItem> listOfAll = this.timeOffDateRangeRepository.findAll()
+        List<TimeOffListItem> listOfAll = this.timeOffDateRangeRepository.findAllExceptDeleted()
                 .stream()
                 .map(timeOff -> new TimeOffListItem(timeOff))
                 .collect(Collectors.toList());

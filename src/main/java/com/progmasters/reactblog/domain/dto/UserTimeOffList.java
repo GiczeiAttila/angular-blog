@@ -10,6 +10,7 @@ import static com.progmasters.reactblog.utils.DateUtils.localizeDateFromZonedDat
 
 public class UserTimeOffList {
 
+    private Long timeOffId;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -20,9 +21,14 @@ public class UserTimeOffList {
     }
 
     public UserTimeOffList(TimeOffDateRange timeOff) {
+        this.timeOffId = timeOff.getId();
         this.startDate = localizeDateFromZonedDateTime(timeOff.getStartDate());
         this.endDate = localizeDateFromZonedDateTime(timeOff.getEndDate());
         this.status = timeOff.getStatus();
+    }
+
+    public Long getTimeOffId() {
+        return timeOffId;
     }
 
     public LocalDate getStartDate() {

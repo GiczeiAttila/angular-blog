@@ -4,7 +4,8 @@ public enum TimeOffStatusEnum {
 
     ACCEPTED("Accepted"),
     REJECTED("Rejected"),
-    PENDING("Pending");
+    PENDING("Pending"),
+    DELETED("Deleted");
 
     private final String displayName;
 

@@ -77,6 +77,11 @@
                         <td>{{pendingDate.startDate}}</td>
                         <td>{{pendingDate.endDate}}</td>
                         <td>{{pendingDate.status}}</td>
+                        <td>
+                            <button (click)="deleteRequest(pendingDate.timeOffId)" color="warn" mat-raised-button>
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

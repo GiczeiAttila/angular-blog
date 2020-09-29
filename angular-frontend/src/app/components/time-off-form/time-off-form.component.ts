@@ -5,6 +5,7 @@ import {UserTimeOffListModel} from "../../models/userTimeOffList.model";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {TimeOffDateRangeDataModel} from "../../models/timeOffDateRangeData.model";
 import {Router} from "@angular/router";
+import {TimeOffStatusChangeDto} from "../../models/timeOffStatusChangeDto";
 
 
 @Component({
@@ -109,4 +110,17 @@ export class TimeOffFormComponent implements OnInit {
     }
 
 
+    deleteRequest(timeOffId: number) {
+        let deletedTimeOff: TimeOffStatusChangeDto = {
+            dateId: timeOffId,
+            status: 'DELETED'
+        }
+
+        this.userService.changeTimeOffRequestStatus(deletedTimeOff).subscribe(
+            () => {
+                this.ngOnInit();
+                this.index = 2;
+            }
+        )
+    }
 }
