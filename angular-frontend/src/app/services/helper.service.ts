@@ -3,7 +3,7 @@ import {FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
 
-const URL = 'http://api.openweathermap.org/data/2.5/weather?q=';
+const URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const APIkey = 'f681ff7de513fe2743b71e7355113a0c';
 
 @Injectable({

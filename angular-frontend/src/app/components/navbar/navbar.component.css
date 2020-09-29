@@ -2,7 +2,8 @@
 /*    background-color: gainsboro;*/
 /*}*/
 .app_container {
-    margin-top: 56px;
+    margin-top: 32px;
+    margin-bottom: 32px;
     padding: 24px;
 }
 
@@ -29,26 +30,41 @@ a.mat-list-item.active a.mat-button.active{
 }
 
 .footer{
-    position: sticky;
+    overflow: hidden;
+    position: absolute;
     position: -webkit-sticky; /* For macOS/iOS Safari */
-    top: 10000px; /* Sets the sticky toolbar to be on top */
+    bottom: 0; /* Sets the sticky toolbar to be on top */
     z-index: 1000;
     /*box-shadow:2px 0px 20px rgb(40,253,0), 2px 0px 20px rgb(18,168,6);*/
 }
 .header{
+    overflow: hidden;
     position: sticky;
     position: -webkit-sticky; /* For macOS/iOS Safari */
     top: 0; /* Sets the sticky toolbar to be on top */
     z-index: 1000;
+    margin: 0;
     /*box-shadow:2px 0px 20px rgb(40,253,0), 2px 0px 20px rgb(18,168,6);*/
 }
 
 .sidenav-container{
     position: absolute;
-    top: 0;
+    overflow: hidden;
+    top: 64px;
     bottom: 0;
     left: 0;
     right: 0;
+    height: calc(100% - 128px);
+}
+
+.wrapper::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 128px;
+}
+
+.wrapper::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 128px;
 }
 
 /*
