@@ -7,7 +7,7 @@ public enum UserStatusEnum {
     BLOCKED("Blocked"),
     ARCHIVE("Archive");
 
-    private String displayName;
+    private final String displayName;
 
     UserStatusEnum(String displayName) {
         this.displayName = displayName;

@@ -1,15 +1,13 @@
 package com.progmasters.reactblog.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.progmasters.reactblog.domain.dto.TimeOffFormData;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+
+import static com.progmasters.reactblog.utils.DateUtils.convertLocalDateToZonedDateTime;
 
 @Entity
 @Table(name = "timeOffDateRange")
@@ -19,13 +17,14 @@ public class TimeOffDateRange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    //TODO Ide nem rakunk JSONFormat annotációt, az csak akkor kell amikor konverziót csinálunk
+    // JSON-ból/DTO-ból oda/vissza,
+    // mivel ez egy entitás ennek a Controllerig sose kéne eljutnia -> soha nem fogjuk küldeni / fogadni.
     @Column(name = "startDate")
-    private Date startDate;
+    private ZonedDateTime startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "endDate")
-    private Date endDate;
+    private ZonedDateTime endDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -41,40 +40,29 @@ public class TimeOffDateRange {
     }
 
     public TimeOffDateRange(TimeOffFormData timeOffFormData, User user) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            this.startDate = format.parse(timeOffFormData.getStartDate());
-            this.endDate = format.parse(timeOffFormData.getEndDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        this.weekDays = calculateWeekDays(startDate, endDate);
+        this.weekDays = calculateWeekDays(timeOffFormData.getStartDate(), timeOffFormData.getEndDate());
         this.user = user;
         this.status = TimeOffStatusEnum.PENDING;
-
+        this.startDate = convertLocalDateToZonedDateTime(timeOffFormData.getStartDate());
+        this.endDate = convertLocalDateToZonedDateTime(timeOffFormData.getEndDate());
     }
 
     //doesnt work yet
-    private Integer calculateWeekDays(Date startDate, Date endDate) {
+    //TODO How about now? :) Btw, írtam rá tesztet is :)
+    private Integer calculateWeekDays(LocalDate startDate, LocalDate endDate) {
         Integer countWeekDays = 0;
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        start.setTime(startDate);
-        end.setTime(endDate);
-        end.add(Calendar.DATE, 1);
-
-        while (start.before(end)) {
-            if (Calendar.SATURDAY != start.get(Calendar.DAY_OF_WEEK)
-                    || Calendar.SUNDAY != start.get(Calendar.DAY_OF_WEEK)) {
+        LocalDate temporalDate = startDate;
+        while (!temporalDate.isAfter(endDate)) {
+            DayOfWeek dayOfWeek = temporalDate.getDayOfWeek();
+            boolean dateIsWeekday = dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY;
+            if (dateIsWeekday) {
                 countWeekDays++;
             }
-            start.add(Calendar.DATE, 1);
+
+            temporalDate = temporalDate.plusDays(1);
         }
         return countWeekDays;
     }
-
 
     public Long getId() {
         return id;
@@ -84,19 +72,19 @@ public class TimeOffDateRange {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -123,4 +111,5 @@ public class TimeOffDateRange {
     public void setStatus(TimeOffStatusEnum status) {
         this.status = status;
     }
+
 }

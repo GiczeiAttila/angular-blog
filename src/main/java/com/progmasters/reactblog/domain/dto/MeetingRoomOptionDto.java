@@ -4,16 +4,15 @@ import com.progmasters.reactblog.domain.MeetingRoom;
 
 public class MeetingRoomOptionDto {
 
-    private Long roomId;
-    private String name;
-    private Integer seats;
+    private final Long roomId;
+    private final String name;
+    private final Integer seats;
 
     public MeetingRoomOptionDto(MeetingRoom room) {
         this.name = room.getName();
         this.seats = room.getSeats();
         this.roomId = room.getId();
     }
-
 
     public Long getRoomId() {
         return roomId;
@@ -26,4 +25,5 @@ public class MeetingRoomOptionDto {
     public Integer getSeats() {
         return seats;
     }
+
 }

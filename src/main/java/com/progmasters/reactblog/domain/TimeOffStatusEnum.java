@@ -6,7 +6,7 @@ public enum TimeOffStatusEnum {
     REJECTED("Rejected"),
     PENDING("Pending");
 
-    private String displayName;
+    private final String displayName;
 
     TimeOffStatusEnum(String displayName) {
         this.displayName = displayName;

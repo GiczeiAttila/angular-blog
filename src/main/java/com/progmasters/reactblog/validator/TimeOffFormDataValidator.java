@@ -6,14 +6,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Component
 public class TimeOffFormDataValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return TimeOffFormData.class.equals(aClass);
@@ -23,29 +21,26 @@ public class TimeOffFormDataValidator implements Validator {
     public void validate(Object o, Errors errors) {
         TimeOffFormData formData = (TimeOffFormData) o;
 
+        ZonedDateTime startDate = DateUtils.convertLocalDateToZonedDateTime(formData.getStartDate());
+        ZonedDateTime endDate = DateUtils.convertLocalDateToZonedDateTime(formData.getEndDate());
+        ZonedDateTime now = ZonedDateTime.now();
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date today;
-        Date startDate;
 
-        if (formData.getStartDate() == null || formData.getStartDate().isEmpty()) {
+        if (formData.getStartDate() == null) {
             errors.rejectValue("startDate", "timeOff.startDate.required");
         }
 
-        if (formData.getEndDate() == null || formData.getEndDate().isEmpty()) {
+        if (formData.getEndDate() == null) {
             errors.rejectValue("endDate", "timeOff.endDate.required");
         } else {
-            try {
-                String date = format.format(new Date());
-                today = format.parse(date);
-                startDate = format.parse(formData.getStartDate());
-                if (!startDate.after(today)) {
-                    errors.rejectValue("startDate", "timeOff.startDate.beforeNow");
-                }
-            } catch (ParseException e) {
-                errors.rejectValue("startDate", "timeOff.startDate.wrongDate");
+            if (!formData.getStartDate().isAfter(LocalDate.now())) {
+                //TODO if startDate is same date like the actual day
+                // eg: formData.getStartDate() == 2020.09.21
+                //      and today is 2020.09.21
+                // isAfter will result in false
+                errors.rejectValue("startDate", "timeOff.startDate.beforeNow");
             }
         }
     }
+
 }

@@ -20,7 +20,6 @@ public class SuggestionVote {
     @ManyToOne
     private User user;
 
-
     public SuggestionVote() {
     }
 
@@ -61,4 +60,5 @@ public class SuggestionVote {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

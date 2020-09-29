@@ -1,41 +1,43 @@
 package com.progmasters.reactblog.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.progmasters.reactblog.domain.TimeOffDateRange;
 import com.progmasters.reactblog.domain.TimeOffStatusEnum;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+import static com.progmasters.reactblog.utils.DateUtils.localizeDateFromZonedDateTime;
 
 public class UserTimeOffList {
 
-    private String startDate;
-    private String endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
     private TimeOffStatusEnum status;
 
     public UserTimeOffList() {
     }
 
     public UserTimeOffList(TimeOffDateRange timeOff) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.startDate = dateFormat.format(timeOff.getStartDate());
-        this.endDate = dateFormat.format(timeOff.getEndDate());
+        this.startDate = localizeDateFromZonedDateTime(timeOff.getStartDate());
+        this.endDate = localizeDateFromZonedDateTime(timeOff.getEndDate());
         this.status = timeOff.getStatus();
     }
 
-
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -46,4 +48,5 @@ public class UserTimeOffList {
     public void setStatus(TimeOffStatusEnum status) {
         this.status = status;
     }
+
 }

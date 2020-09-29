@@ -14,9 +14,10 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
+
+import static com.progmasters.reactblog.utils.DateUtils.getCurrentServerTime;
 
 @Entity
 @Table(name = "post")
@@ -42,7 +43,7 @@ public class Post {
     private String pictureUrl;
 
     @Column(name = "creation_at")
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     //private ZonedDateTime createdAt;
 
@@ -80,7 +81,7 @@ public class Post {
 
          */
 
-        this.createdAt = LocalDateTime.now(ZoneOffset.UTC);
+        this.createdAt = getCurrentServerTime();
         this.category = PostCategories.valueOf(postFormData.getCategory());;
         this.type = postFormData.getType();
         this.address = new Address(postFormData.getAddress());
@@ -118,11 +119,11 @@ public class Post {
         this.pictureUrl = imgUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -184,6 +185,5 @@ public class Post {
 
         return id != null ? id.equals(post.id) : post.id == null;
     }
-
 
 }

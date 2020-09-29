@@ -14,7 +14,9 @@ package com.progmasters.reactblog.domain;
 import com.progmasters.reactblog.domain.dto.CommentFormData;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+
+import static com.progmasters.reactblog.utils.DateUtils.getCurrentServerTime;
 
 @Entity
 @Table(name = "comment")
@@ -28,11 +30,12 @@ public class Comment {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @Column(name = "comment_body", columnDefinition = "TEXT")
+    @Column(name = "comment_body",
+            columnDefinition = "TEXT")
     private String commentBody;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @ManyToOne
     private Post post;
@@ -46,7 +49,7 @@ public class Comment {
 
     public Comment(CommentFormData commentFormData, Post post, User user) {
         this.commentBody = commentFormData.getCommentBody();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = getCurrentServerTime();
         this.post = post;
         this.author = user;
     }
@@ -75,11 +78,11 @@ public class Comment {
         this.commentBody = commentBody;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -92,17 +95,22 @@ public class Comment {
     }
 
     @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Comment comment = (Comment) o;
 
         return id != null ? id.equals(comment.id) : comment.id == null;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class UserFormDto {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -40,7 +41,6 @@ public class UserFormDto {
         this.email = email;
     }
 
-
 //    public String getPassword() {
 //        return password;
 //    }
@@ -56,4 +56,5 @@ public class UserFormDto {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

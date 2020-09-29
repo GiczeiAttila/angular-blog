@@ -6,7 +6,7 @@ public enum SuggestionStatusEnum {
     DELETED("Deleted"),
     REJECTED("Rejected");
 
-    private String displayName;
+    private final String displayName;
 
     SuggestionStatusEnum(String displayName) {
         this.displayName = displayName;

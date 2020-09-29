@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class ApplicationForOpenPositionDto {
+
     private Long applicantId;
     private Long openPositionId;
 
@@ -22,4 +23,5 @@ public class ApplicationForOpenPositionDto {
     public void setOpenPositionId(Long openPositionId) {
         this.openPositionId = openPositionId;
     }
+
 }

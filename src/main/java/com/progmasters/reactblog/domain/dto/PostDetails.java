@@ -13,7 +13,6 @@ package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
-import com.progmasters.reactblog.domain.PostPictureRegistry;
 import com.progmasters.reactblog.domain.PostTypes;
 
 import java.util.List;
@@ -23,16 +22,16 @@ import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATT
 
 public class PostDetails {
 
-    private Long id;
-    private String author;
-    private String title;
-    private String postBody;
-    private String picture;
-    private String createdAt;
-    private List<CommentDetails> comments;
-    private PostCategories category;
-    private PostTypes type;
-    private AddressDetails address;
+    private final Long id;
+    private final String author;
+    private final String title;
+    private final String postBody;
+    private final String picture;
+    private final String createdAt;
+    private final List<CommentDetails> comments;
+    private final PostCategories category;
+    private final PostTypes type;
+    private final AddressDetails address;
 
     public PostDetails(Post post) {
         this.id = post.getId();
@@ -88,4 +87,5 @@ public class PostDetails {
     public AddressDetails getAddress() {
         return address;
     }
+
 }

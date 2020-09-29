@@ -5,7 +5,6 @@ public class TimeOffStatusChangeDto {
     private Long dateId;
     private String status;
 
-
     public Long getDateId() {
         return dateId;
     }
@@ -21,4 +20,5 @@ public class TimeOffStatusChangeDto {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

@@ -24,7 +24,7 @@ public class Suggestion {
 
     @OneToMany(mappedBy = "suggestion")
     private List<SuggestionVote> voteList = new ArrayList<>();
-    
+
     public Suggestion(SuggestionFormDto suggestionFormDto, User user) {
         this.title = suggestionFormDto.getTitle();
         this.description = suggestionFormDto.getDescription();
@@ -82,4 +82,5 @@ public class Suggestion {
     public void setStatus(SuggestionStatusEnum status) {
         this.status = status;
     }
+
 }

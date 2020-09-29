@@ -27,7 +27,6 @@ public class MeetingParticipant {
         this.meetingReservation = meetingReservation;
     }
 
-
     public Long getId() {
         return id;
     }

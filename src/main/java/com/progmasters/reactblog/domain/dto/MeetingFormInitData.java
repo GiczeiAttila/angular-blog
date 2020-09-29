@@ -7,7 +7,6 @@ public class MeetingFormInitData {
     private List<MeetingRoomOptionDto> meetingRooms;
     private List<UserForMeetingOptionDto> users;
 
-
     public List<MeetingRoomOptionDto> getMeetingRooms() {
         return meetingRooms;
     }
@@ -15,4 +14,5 @@ public class MeetingFormInitData {
     public List<UserForMeetingOptionDto> getUsers() {
         return users;
     }
+
 }

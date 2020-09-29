@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class SuggestionVoteDto {
+
     private Long suggestionId;
     private Long userId;
     private String vote;
@@ -37,4 +38,5 @@ public class SuggestionVoteDto {
     public void setVotingUserId(Long votingUserId) {
         this.votingUserId = votingUserId;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.progmasters.reactblog.domain.dto;
 
 public class UserLogInFormDto {
+
     private Long id;
     private String password;
 
@@ -19,4 +20,5 @@ public class UserLogInFormDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

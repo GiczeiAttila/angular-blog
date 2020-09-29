@@ -9,7 +9,6 @@ public class AddressFormData {
     private String number;
     private String coordinate;
 
-
     public String getCountry() {
         return country;
     }
@@ -57,4 +56,5 @@ public class AddressFormData {
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate;
     }
+
 }

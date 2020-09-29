@@ -1,9 +1,15 @@
 package com.progmasters.reactblog.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
+
 public class OpenPositionFormDto {
+
     private String positionName;
     private String description;
-    private String deadline;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deadline;
     private Long userId;
 
     public String getPositionName() {
@@ -22,11 +28,11 @@ public class OpenPositionFormDto {
         this.description = description;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
@@ -37,4 +43,5 @@ public class OpenPositionFormDto {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
 }
