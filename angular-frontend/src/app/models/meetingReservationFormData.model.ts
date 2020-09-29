@@ -2,8 +2,8 @@ export interface MeetingReservationFormDataModel {
 
     title: string;
     description: string;
-    startDate: string;
-    endDate: string;
+    startDateTime: string;
+    endDateTime: string;
     creatorId: number;
     participantsId: Array<number>;
     meetingRoomId: number;

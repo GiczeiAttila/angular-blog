@@ -7,6 +7,7 @@ import {handleValidationErrors} from "../../shared/validation.handler";
 import * as moment from "moment";
 import {MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
+import {MeetingReservationFormDataModel} from "../../models/meetingReservationFormData.model";
 
 
 @Component({
@@ -32,8 +33,8 @@ export class MeetingDialodComponent implements OnInit {
         this.meetingRequestForm = formBuilder.group({
             title: [''],
             description: [''],
-            startDate: [''],
-            endDate: [''],
+            startDateTime: [''],
+            endDateTime: [''],
             creatorId: [],
             participantsId: new FormControl([]),
             meetingRoomId: []
@@ -47,7 +48,7 @@ export class MeetingDialodComponent implements OnInit {
             this.router.navigate(['']);
         }
         this.startDate = this.userService.getStartDate();
-        this.meetingRequestForm.get('startDate').setValue(this.startDate);
+        this.meetingRequestForm.get('startDateTime').setValue(this.startDate);
         this.loadUserList();
         this.loadMeetingRoomList();
     }
@@ -72,7 +73,9 @@ export class MeetingDialodComponent implements OnInit {
     }
 
     saveMeeting() {
-        const meetingForm = this.meetingRequestForm.value;
+        console.log(this.meetingRequestForm.get('startDateTime').value);
+
+        const meetingForm: MeetingReservationFormDataModel = this.meetingRequestForm.value;
         meetingForm.creatorId = this.userId;
 
         this.actualParticipantsId = [];
@@ -88,17 +91,14 @@ export class MeetingDialodComponent implements OnInit {
             })
             meetingForm.participantsId = this.actualParticipantsId;
             meetingForm.participantsId.push(this.userId);
-            console.log(meetingForm.participantsId);
         }
-        const format = "YYYY-MM-DD HH:mm:ss";
-        const value = this.meetingRequestForm.get('endDate').value;
+        const format = "YYYY-MM-DD HH:mm";
+        const value = this.meetingRequestForm.get('endDateTime').value;
         let actualEndDate = moment(value).format(format);
-        const startDay = this.meetingRequestForm.get('startDate').value.toString().slice(0, 12);
-        const endTime = actualEndDate.slice()
-
-
-        meetingForm.endDate = actualEndDate;
-
+        const startDay = this.meetingRequestForm.get('startDateTime').value.toString().slice(0, 11);
+        const endTime = actualEndDate.slice(11);
+        const endDate = startDay.concat(endTime);
+        meetingForm.endDateTime = endDate;
 
         this.userService.saveNewMeeting(meetingForm).subscribe(
             () => console.log(meetingForm),

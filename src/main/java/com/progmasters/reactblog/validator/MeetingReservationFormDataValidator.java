@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.progmasters.reactblog.utils.DateUtils.convertLocalDateTimeToZonedDateTime;
 
 @Component
 public class MeetingReservationFormDataValidator implements Validator {
@@ -43,14 +41,14 @@ public class MeetingReservationFormDataValidator implements Validator {
         }
 
 
-        ZonedDateTime startDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getStartDateTime());
-        ZonedDateTime endDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getEndDateTime());
-        ZonedDateTime now = ZonedDateTime.now();
+        //  ZonedDateTime startDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getStartDateTime());
+        //  ZonedDateTime endDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getEndDateTime());
+        //  ZonedDateTime now = ZonedDateTime.now();
 
-        if (!startDateTime.isBefore(now)) {
-            errors.rejectValue("endDate", "meetingReservationFormData.endDate.wrong-startDate");
-        } else if (!startDateTime.isBefore(endDateTime)) {
-            errors.rejectValue("endDate", "meetingReservationFormData.endDate.before");
+        if (meetingFormData.getStartDateTime().isBefore(LocalDateTime.now())) {
+            errors.rejectValue("endDateTime", "meetingReservationFormData.endDateTime.wrong-startDate");
+        } else if (!meetingFormData.getStartDateTime().isBefore(meetingFormData.getEndDateTime())) {
+            errors.rejectValue("endDateTime", "meetingReservationFormData.endDateTime.before");
         }
 
        /* DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

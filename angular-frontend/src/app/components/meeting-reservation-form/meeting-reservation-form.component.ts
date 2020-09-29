@@ -76,7 +76,7 @@ export class MeetingReservationFormComponent implements OnInit {
         this.userId = +localStorage.getItem('userId');
         this.meetingList = [];
         this.displayingMeetingList = [];
-        //this.events = [];
+
         this.userService.getMeetingList(this.userId).subscribe(
             (list) => {
                 this.meetingList = list;
@@ -84,7 +84,6 @@ export class MeetingReservationFormComponent implements OnInit {
             },
             error => console.log(error),
             () => {
-                console.log(this.meetingList);
                 this.loadCalendar()
             }
         )
@@ -92,8 +91,8 @@ export class MeetingReservationFormComponent implements OnInit {
 
     clickOnHourSegment(date: Date) {
         this.clickedDate = date;
-        const format = "YYYY-MM-DD HH:mm:ss";
-        let usingDate = moment(date).format(format).toString();
+        const format = "YYYY-MM-DD HH:mm";
+        let usingDate = moment(date).format(format);
         this.userService.addStartDate(usingDate);
 
         const dialogRef = this.dialog.open(MeetingDialodComponent);
@@ -114,7 +113,6 @@ export class MeetingReservationFormComponent implements OnInit {
             }
             this.events.push(meetingData);
             this.displayingMeetingList.push(meetingData);
-            console.log(this.displayingMeetingList);
         })
     }
 

@@ -72,17 +72,17 @@
 
             <mat-form-field appearance="fill" class="meeting-full-width">
                 <mat-label>TIMEPICKER</mat-label>
-                <input #t="matTimepicker" formControlName="endDate"
+                <input #t="matTimepicker" formControlName="endDateTime"
                        id="timepicker-example" matTimepicker
                        mode="24h"
                        name="time" placeholder="Please select time..." required>
                 <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
                 <mat-hint>Select time</mat-hint>
                 <mat-error
-                    *ngIf="meetingRequestForm.get('endDate').invalid && meetingRequestForm.get('endDate').touched && !meetingRequestForm.get('endDate').errors?.serverError">
+                    *ngIf="meetingRequestForm.get('endDateTime').invalid && meetingRequestForm.get('endDateTime').touched && !meetingRequestForm.get('endDate').errors?.serverError">
                     Should choose a meeting room
                 </mat-error>
-                <mat-error>{{meetingRequestForm.get('endDate').errors?.serverError}}</mat-error>
+                <mat-error>{{meetingRequestForm.get('endDateTime').errors?.serverError}}</mat-error>
             </mat-form-field>
             <br>
 
