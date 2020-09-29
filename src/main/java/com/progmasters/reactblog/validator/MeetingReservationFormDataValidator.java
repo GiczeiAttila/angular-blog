@@ -42,6 +42,7 @@ public class MeetingReservationFormDataValidator implements Validator {
             errors.rejectValue("meetingRoomId", "meetingReservationFormData.meetingRoomId.null");
         }
 
+
         ZonedDateTime startDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getStartDateTime());
         ZonedDateTime endDateTime = convertLocalDateTimeToZonedDateTime(meetingFormData.getEndDateTime());
         ZonedDateTime now = ZonedDateTime.now();
