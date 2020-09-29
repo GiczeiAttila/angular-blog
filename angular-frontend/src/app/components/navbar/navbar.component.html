@@ -152,6 +152,10 @@
                routerLinkActive="active-link">Request
                 Time Off</a>
 
+            <a (click)="sidenavStart.toggle()" *ngIf="isLoggedIn" href="#" mat-list-item routerLink="/meeting-list"
+               routerLinkActive="active-link">My meetings</a>
+
+
             <!--                <a href="#" mat-list-item *ngIf="isLoggedIn" routerLink="/timeOff-list" routerLinkActive="active-link">Requested-->
             <!--                    Time-->
             <!--                    Off</a>-->
@@ -181,6 +185,7 @@
 </mat-sidenav-container>
 <mat-toolbar class="footer">
     <mat-toolbar-row>
+        <span class="menu-spacer"></span>
         <div style="margin-right: 55px">
             <span>
                 <div style="font-size: small;">
