@@ -3,6 +3,8 @@ import {UserService} from "../../services/user.service";
 import {UserMeetingReservationListItemModel} from "../../models/userMeetingReservationListItem.model";
 import {Router} from "@angular/router";
 import {MeetingStatusChangeDtoModel} from "../../models/meetingStatusChangeDto.model";
+import {MatDialog} from '@angular/material/dialog';
+import {MeetingUpdateDialogComponent} from "../meeting-update-dialog/meeting-update-dialog.component";
 
 @Component({
     selector: 'app-meeting-list',
@@ -18,7 +20,8 @@ export class MeetingListComponent implements OnInit {
 
 
     constructor(private userService: UserService,
-                private router: Router) {
+                private router: Router,
+                private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -54,7 +57,8 @@ export class MeetingListComponent implements OnInit {
 
 
     editMeeting(meetingId: number) {
-
+        const dialogRef = this.dialog.open(MeetingUpdateDialogComponent);
+        this.userService.addMeetingId(meetingId);
     }
 
     deleteMeeting(meetingId: number) {

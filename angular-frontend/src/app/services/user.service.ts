@@ -36,6 +36,7 @@ const MEETING_URL: string = environment.BASE_URL + '/api/meetings';
 export class UserService {
 
     private startDate: string = '';
+    private meetingId: number = 0;
 
     refreshCalendar = new Subject();
 
@@ -46,6 +47,14 @@ export class UserService {
 
     getStartDate(): string {
         return this.startDate;
+    }
+
+    addMeetingId(id: number) {
+        this.meetingId = id;
+    }
+
+    getMeetingId(): number {
+        return this.meetingId;
     }
 
     loginSubject: Subject<any> = new Subject<any>();
