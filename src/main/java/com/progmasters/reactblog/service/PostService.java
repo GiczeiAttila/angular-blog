@@ -16,6 +16,8 @@ import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.PostRepository;
 import com.progmasters.reactblog.repository.UserRepository;
 import com.progmasters.reactblog.service.cloudinary.CloudinaryFileUploader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class PostService {
-
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CloudinaryFileUploader cloudinaryFileUploader;
@@ -51,7 +53,7 @@ public class PostService {
 
     public List<PostListItem> getPostListItems() {
         return postRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
+                .stream().filter(post -> post.getStatus()==PostStatus.ACTIVE)
                 .map(PostListItem::new)
                 .collect(Collectors.toList());
     }
@@ -99,5 +101,16 @@ public class PostService {
             return post.getId();
         }
         return null;
+    }
+
+    public boolean deletePostWithId(Long id) {
+        Optional<Post> postOptional = postRepository.findById(id);
+        if (postOptional.isPresent()){
+            Post post = postOptional.get();
+            post.setStatus(PostStatus.ARCHIVE);
+            logger.info("Post status changed to Archive with post id: " + post.getId());
+            return true;
+        }
+        return false;
     }
 }

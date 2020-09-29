@@ -51,4 +51,7 @@ export class BlogService {
         return this.http.get<Array<PostListItemModel>>(POSTS_BASE_URL);
     }
 
+    deletePost(postId: number) {
+        return this.http.delete(POSTS_BASE_URL + "/" + postId)
+    }
 }

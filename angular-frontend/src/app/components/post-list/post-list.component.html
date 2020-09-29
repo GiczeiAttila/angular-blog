@@ -18,7 +18,9 @@
 
                     <mat-card-actions>
                         <button (click)="readMore(post.id)" color="primary" mat-raised-button>Read More</button>
+                        <button  *ngIf="userId===post.authorId"  (click)="delete(post.id)" color="warn" mat-raised-button>Delete</button>
                     </mat-card-actions>
+
                 </mat-card>
 
                 <mat-accordion>
@@ -90,8 +92,8 @@
                     <mat-card-subtitle>{{corporatePost.createdAt}}</mat-card-subtitle>
 
                     <mat-card-actions>
-                        <button (click)="readMore(corporatePost.id)" color="primary" mat-raised-button>Read More
-                        </button>
+                        <button (click)="readMore(corporatePost.id)" color="primary" mat-raised-button>Read More</button>
+                        <button  *ngIf="userId===corporatePost.authorId"  (click)="delete(corporatePost.id)" color="warn" mat-raised-button>Delete</button>
                     </mat-card-actions>
                 </mat-card>
 
@@ -166,6 +168,7 @@
 
                     <mat-card-actions>
                         <button (click)="readMore(freeTimePost.id)" color="primary" mat-raised-button>Read More</button>
+                        <button  *ngIf="userId===freeTimePost.authorId"  (click)="delete(freeTimePost.id)" color="warn" mat-raised-button>Delete</button>
                     </mat-card-actions>
                 </mat-card>
 
@@ -242,6 +245,7 @@
                     <mat-card-actions>
                         <button (click)="readMore(professionalPost.id)" color="primary" mat-raised-button>Read More
                         </button>
+                        <button  *ngIf="userId===professionalPost.authorId"  (click)="delete(professionalPost.id)" color="warn" mat-raised-button>Delete</button>
                     </mat-card-actions>
                 </mat-card>
 
