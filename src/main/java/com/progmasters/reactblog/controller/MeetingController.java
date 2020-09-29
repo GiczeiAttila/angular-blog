@@ -108,4 +108,14 @@ public class MeetingController {
                 statusChangeDto.getMeetingId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/update/{id}")
+    public ResponseEntity<MeetingReservationData> getMeetingById(@PathVariable Long id) {
+        MeetingReservationData meeting = this.meetingService.getMeetingDataById(id);
+        if (meeting != null) {
+            return new ResponseEntity<>(meeting, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

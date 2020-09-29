@@ -113,4 +113,16 @@ public class MeetingService {
             emailSenderService.sendMeetingStatusChangeNotification(meetingReservation, participants);
         }
     }
+
+
+    public MeetingReservationData getMeetingDataById(Long meetingId) {
+        Optional<MeetingReservation> optionalMeeting = this.meetingReservationRepository.findById(meetingId);
+        if (optionalMeeting.isPresent()) {
+            List<MeetingParticipant> participants = this.meetingParticipantRepository.findUserByMeetingId(optionalMeeting.get());
+            MeetingReservationData meeting = new MeetingReservationData(optionalMeeting.get(), participants);
+            return meeting;
+        } else {
+            return null;
+        }
+    }
 }

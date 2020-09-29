@@ -15,6 +15,14 @@ export class MeetingUpdateDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.meetingId = this.userService.getMeetingId();
+        this.loadActualMeeting(this.meetingId);
     }
 
+    loadActualMeeting(meetingId: number) {
+
+    }
+
+    saveUpdate() {
+
+    }
 }
