@@ -55,6 +55,8 @@
 </nav>
 -->
 
+<div style="overflow: auto;">
+
 
 <mat-toolbar class="header">
     <mat-toolbar-row>
@@ -177,33 +179,53 @@
 
         </mat-nav-list>
     </mat-sidenav>
-    <div class="container app_container" style="height: 100vh;">
+    <div class="container app_container" >
         <mat-card class="basic-container">
             <router-outlet></router-outlet>
         </mat-card>
     </div>
 </mat-sidenav-container>
+<!--<mat-toolbar class="footer">-->
+<!--    <mat-toolbar-row>-->
+<!--        <span class="menu-spacer"></span>-->
+<!--        <div style="margin-right: 55px">-->
+<!--            <span>-->
+<!--                <div style="font-size: small;">-->
+<!--                    <span>{{location}}: {{weather}}, wind: {{wind}}</span>-->
+<!--                </div>-->
+<!--                <span style="font-size: xx-large; text-align: center">{{temperature}}</span>-->
+<!--            </span>-->
+<!--            <span style="margin: 10px"> Humidity:{{humidity}}</span>-->
+<!--        </div>-->
+<!--        <div class="time">-->
+<!--            <small>{{actualTime.getDate()}}.{{actualTime.getMonth() + 1}}.{{actualTime.getFullYear()}}</small>-->
+<!--            <br>-->
+<!--            <span class="clock">{{actualTime.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>-->
+<!--        </div>-->
+<!--    </mat-toolbar-row>-->
+<!--</mat-toolbar>-->
+
 <mat-toolbar class="footer">
     <mat-toolbar-row>
         <span class="menu-spacer"></span>
         <div style="margin-right: 55px">
-            <span>
-                <div style="font-size: small;">
-                    <span>{{location}}: {{weather}}, wind: {{wind}}</span>
-                </div>
-                <span style="font-size: xx-large; text-align: center">{{temperature}}</span>
-            </span>
-            <span style="margin: 10px"> Humidity:{{humidity}}</span>
-        </div>
-        <div class="time">
-            <small>{{actualTime.getDate()}}.{{actualTime.getMonth() + 1}}.{{actualTime.getFullYear()}}</small>
-            <br>
-            <span class="clock">{{actualTime.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>
-        </div>
+                        <span>
+                            <div style="font-size: small;">
+                                <span>{{location}}: {{weather}}, wind: {{wind}}</span>
+                            </div>
+                            <span style="font-size: xx-large; text-align: center">{{temperature}}</span>
+                        </span>
+                        <span style="margin: 10px"> Humidity:{{humidity}}</span>
+                    </div>
+                    <div class="time">
+                        <small>{{actualTime.getDate()}}.{{actualTime.getMonth() + 1}}.{{actualTime.getFullYear()}}</small>
+                        <br>
+                        <span class="clock">{{actualTime.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>
+                    </div>
     </mat-toolbar-row>
 </mat-toolbar>
 
-
+</div>
 <!--<nav mat-tab-nav-bar  class="basic-container container app_container">-->
 <!--    <a mat-tab-link #rla="routerLinkActive" *ngFor="let device of devices;let i=index" [routerLink]="device.path"-->
 <!--       routerLinkActive="active" [active]="rla.isActive">{{device.path}}-->

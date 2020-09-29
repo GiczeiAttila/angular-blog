@@ -29,22 +29,26 @@ a.mat-list-item.active a.mat-button.active{
 }
 
 .footer{
-    position: sticky;
+    overflow: hidden;
+    position: absolute;
     position: -webkit-sticky; /* For macOS/iOS Safari */
-    top: 10000px; /* Sets the sticky toolbar to be on top */
+    bottom: 0; /* Sets the sticky toolbar to be on top */
     z-index: 1000;
     /*box-shadow:2px 0px 20px rgb(40,253,0), 2px 0px 20px rgb(18,168,6);*/
 }
 .header{
+    overflow: hidden;
     position: sticky;
     position: -webkit-sticky; /* For macOS/iOS Safari */
     top: 0; /* Sets the sticky toolbar to be on top */
     z-index: 1000;
+    margin: 0;
     /*box-shadow:2px 0px 20px rgb(40,253,0), 2px 0px 20px rgb(18,168,6);*/
 }
 
 .sidenav-container{
     position: absolute;
+    overflow: hidden;
     top: 0;
     bottom: 0;
     left: 0;

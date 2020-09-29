@@ -89,12 +89,14 @@ public class PostService {
 
             Post post = new Post(data, user);
             List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
-            emailSenderService.sendNewPostNotificationEmail(post, userList);
+
             if (data.getPicture() != null) {
                 String uploadedFileUrl = cloudinaryFileUploader.processFile(data.getPicture(), data.getTitle(), data.getCategory());
                 post.setPictureUrl(uploadedFileUrl);
             }
-            return postRepository.save(post).getId();
+            post = postRepository.save(post);
+            emailSenderService.sendNewPostNotificationEmail(post, userList);
+            return post.getId();
         }
         return null;
     }

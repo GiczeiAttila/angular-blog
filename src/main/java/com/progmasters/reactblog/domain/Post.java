@@ -60,6 +60,11 @@ public class Post {
     @Column(name = "type")
     private PostTypes type;
 
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private PostStatus status;
+
     @Embedded
     private Address address;
 
@@ -72,7 +77,7 @@ public class Post {
         this.title = postFormData.getTitle();
         this.postBody = postFormData.getPostBody();
         this.pictureUrl = "https://res.cloudinary.com/blog-img-cloud/image/upload/v1600930449/progmasterslogo_ccgds7.jpg";
-
+        this.status = PostStatus.ACTIVE;
         /*this.createdAt = ZonedDateTime.of(
                 LocalDate.now(),
                 LocalTime.MIN,

@@ -64,7 +64,7 @@
             <mat-card-title>Login</mat-card-title>
         </mat-card-header>
 
-        <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" autocomplete="off">
             <mat-form-field class="example-full-width">
                 <mat-label>Id</mat-label>
                 <input matInput type="number" formControlName="id" required autocomplete="off">

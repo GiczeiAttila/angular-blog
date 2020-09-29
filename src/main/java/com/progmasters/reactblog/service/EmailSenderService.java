@@ -70,7 +70,7 @@ public class EmailSenderService {
         logger.info("New suggestion notification emails sent for suggestion id: " + suggestion.getId());
     }
 
-    @Async
+
     public void sendNewPostNotificationEmail(Post post, List<User> userList) {
         String subject = "New post";
         String mailBodyEnd = "You can read the post details in the link below\n" +
