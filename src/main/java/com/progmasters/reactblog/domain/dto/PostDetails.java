@@ -14,11 +14,11 @@ package com.progmasters.reactblog.domain.dto;
 import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostCategories;
 import com.progmasters.reactblog.domain.PostTypes;
+import com.progmasters.reactblog.utils.DateUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATTER;
 
 public class PostDetails {
 
@@ -27,7 +27,7 @@ public class PostDetails {
     private final String title;
     private final String postBody;
     private final String picture;
-    private final String createdAt;
+    private final LocalDateTime createdAt;
     private final List<CommentDetails> comments;
     private final PostCategories category;
     private final PostTypes type;
@@ -39,7 +39,7 @@ public class PostDetails {
         this.title = post.getTitle();
         this.postBody = post.getPostBody();
         this.picture = post.getPictureUrl();
-        this.createdAt = DATE_TIME_FORMATTER.format(post.getCreatedAt());
+        this.createdAt = DateUtils.localizeDateTimeFromZonedDateTime(post.getCreatedAt());
         this.comments = post.getComments().stream()
                 .map(CommentDetails::new)
                 .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class PostDetails {
         return picture;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

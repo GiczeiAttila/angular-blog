@@ -12,19 +12,20 @@
 package com.progmasters.reactblog.domain.dto;
 
 import com.progmasters.reactblog.domain.Comment;
+import com.progmasters.reactblog.utils.DateUtils;
 
-import static com.progmasters.reactblog.config.SpringWebConfig.DATE_TIME_FORMATTER;
+import java.time.LocalDateTime;
 
 public class CommentDetails {
 
     private final String author;
     private final String commentBody;
-    private final String createdAt;
+    private final LocalDateTime createdAt;
 
     public CommentDetails(Comment comment) {
         this.author = comment.getAuthor().getFirstName() + " " + comment.getAuthor().getLastName();
         this.commentBody = comment.getCommentBody();
-        this.createdAt = DATE_TIME_FORMATTER.format(comment.getCreatedAt());
+        this.createdAt = DateUtils.localizeDateTimeFromZonedDateTime(comment.getCreatedAt());
     }
 
     public String getAuthor() {
@@ -35,8 +36,7 @@ public class CommentDetails {
         return commentBody;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
 }

@@ -1,2 +1,2 @@
-cors-policies: https://blog.progmasters.hu
+cors-policies: https://blog.progmasters.hu, https://openweathermap.org
 url-for-mail: https://blog.progmasters.hu
