@@ -82,13 +82,29 @@
                 <mat-form-field appearance="fill" class="endDateTime">
                     <mat-label>To</mat-label>
                     <input #t="matTimepicker" formControlName="endTime"
-
                            id="timepicker-example" matTimepicker
+                           defaultValue="'10:10'"
                            mode="24h"
                            name="time" placeholder="Please select time..." required>
                     <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
                 </mat-form-field>
                 <br>
+
+
+                <input [ngxTimepicker]="defaultValue" [value]="'05:11 pm'" aria-label="default time" readonly>
+                <ngx-material-timepicker #defaultValue></ngx-material-timepicker>
+
+                <br>
+
+                <div class="ngx-timepicker-field-example">
+                    <ngx-timepicker-field [defaultTime]="'23:11'" [format]="24"></ngx-timepicker-field>
+                </div>
+
+                <div class="default-time-example">
+                    <input [ngxTimepicker]="defaultValue" [value]="'05:11 pm'" aria-label="default time" readonly>
+                    <ngx-material-timepicker #defaultValue></ngx-material-timepicker>
+                </div>
+
 
                 <button color="primary" mat-raised-button>Save</button>
                 <button color="primary" mat-button matDialogClose>Close</button>
