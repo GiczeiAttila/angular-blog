@@ -71,14 +71,13 @@ export class MeetingUpdateDialogComponent implements OnInit {
 
                 let startDate = data.startDateTime.substring(0, 10);
                 let endDate = data.endDateTime.substring(0, 10);
-                this.startTime = data.startDateTime.substring(11).toString();
-                let endTime = data.endDateTime.substring(11);
+              //  this.startTime = data.startDateTime.substring(11);
                 console.log(this.startTime);
 
                 this.meetingUpdateForm.get('startDate').setValue(startDate);
-                this.meetingUpdateForm.get('startTime').setValue('10:20:00');
+                this.meetingUpdateForm.get('startTime').setValue(new Date(data.startDateTime));
                 this.meetingUpdateForm.get('endDate').setValue(endDate);
-                // this.meetingUpdateForm.get('endTime').setValue(endTime);
+                this.meetingUpdateForm.get('endTime').setValue(new Date(data.endDateTime));
 
             },
             error => console.log(error),
