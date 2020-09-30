@@ -10,10 +10,10 @@ import {UserService} from '../../services/user.service';
 
 
 @Component({
-               selector   : 'app-post-form',
-               templateUrl: './post-form.component.html',
-               styleUrls  : ['./post-form.component.css'],
-           })
+    selector: 'app-post-form',
+    templateUrl: './post-form.component.html',
+    styleUrls: ['./post-form.component.css'],
+})
 export class PostFormComponent implements OnInit {
 
     postForm: FormGroup;
@@ -22,33 +22,34 @@ export class PostFormComponent implements OnInit {
     types: Array<TypeOptionModel>;
     isEvent: boolean;
     uploaded: string
+    isUploading: boolean;
 
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
                 private userService: UserService,
                 private router: Router) {
         this.postForm = formBuilder.group({
-                                              category: [null, Validators.required],
-                                              type    : [null, Validators.required],
-                                              title   : ['', Validators.required],
-                                              postBody: ['', Validators.required],
-                                              picture : [null],
-                                              //          pictureUrl: [null],
-                                              address : formBuilder.group({
-                                                                              country   : [''],
-                                                                              zipCode   : [''],
-                                                                              city      : [''],
-                                                                              street    : [''],
-                                                                              number    : [''],
-                                                                              coordinate: [''],
-                                                                          }),
-                                          });
+            category: [null, Validators.required],
+            type: [null, Validators.required],
+            title: ['', Validators.required],
+            postBody: ['', Validators.required],
+            picture: [null],
+            //          pictureUrl: [null],
+            address: formBuilder.group({
+                country: [''],
+                zipCode: [''],
+                city: [''],
+                street: [''],
+                number: [''],
+                coordinate: [''],
+            }),
+        });
     }
 
     ngOnInit() {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
-        }else {
+        } else {
             this.router.navigate(['']);
         }
         this.blogService.fetchPostFormInitData().subscribe(
@@ -60,7 +61,8 @@ export class PostFormComponent implements OnInit {
         );
 
         this.authorId = +localStorage.getItem('userId');
-        this.uploaded='folder'
+        this.uploaded = 'folder'
+        this.isUploading = false;
     }
 
     onFileChange($event: Event) {
@@ -69,9 +71,9 @@ export class PostFormComponent implements OnInit {
             // @ts-ignore
             const picture = event.target.files[0];
             this.postForm.patchValue({
-                                         picture,
-                                     });
-            this.uploaded='done'
+                picture,
+            });
+            this.uploaded = 'done'
 
         }
     }
@@ -90,6 +92,7 @@ export class PostFormComponent implements OnInit {
     }
 
     upload() {
+        this.isUploading = true;
         const formData = new FormData();
         formData.append('category', this.postForm.get('category').value);
         console.log(this.postForm.get('category').value)
@@ -111,7 +114,11 @@ export class PostFormComponent implements OnInit {
                 console.log(this.postForm);
                 this.router.navigate(['/posts']);
             },
-            error => handleValidationErrors(error, this.postForm),
+            error => {handleValidationErrors(error, this.postForm);
+                this.isUploading = false;},
+            () => {
+                this.isUploading = false;
+            }
         );
     }
 }

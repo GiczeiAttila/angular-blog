@@ -119,7 +119,11 @@
             </div>
 
         <mat-card-actions>
-            <button color="primary" mat-raised-button type="submit">Save post</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="isUploading">
+                Save post
+                <mat-icon *ngIf="isUploading" ><mat-spinner color="accent" diameter="20">
+                </mat-spinner></mat-icon>
+            </button>
         </mat-card-actions>
     </form>
 </div>
