@@ -79,7 +79,7 @@ export class MeetingReservationFormComponent implements OnInit {
         this.meetingList = [];
         this.displayingMeetingList = [];
         this.events = [];
-        //this.loadCalendar();
+        this.loadCalendar();
 
         this.userService.getMeetingList(this.userId).subscribe(
             (list) => {
@@ -127,7 +127,7 @@ export class MeetingReservationFormComponent implements OnInit {
         const dialogRef = this.dialog.open(MeetingDialodComponent);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            this.ngOnInit();
         });
     }
 }

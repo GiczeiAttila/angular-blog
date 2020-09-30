@@ -6,6 +6,7 @@ import com.progmasters.reactblog.repository.MeetingParticipantRepository;
 import com.progmasters.reactblog.repository.MeetingReservationRepository;
 import com.progmasters.reactblog.repository.MeetingRoomRepository;
 import com.progmasters.reactblog.repository.UserRepository;
+import com.progmasters.reactblog.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,6 +133,19 @@ public class MeetingService {
             MeetingReservation meetingReservation = optionalMeetingReservation.get();
             meetingReservation.setTitle(updatedForm.getTitle());
             meetingReservation.setDescription(updatedForm.getDescription());
+            meetingReservation.setStartDate(DateUtils.convertLocalDateTimeToZonedDateTime(updatedForm.getStartDateTime()));
+            meetingReservation.setEndDate(DateUtils.convertLocalDateTimeToZonedDateTime(updatedForm.getEndDateTime()));
+
+            Optional<MeetingRoom> optionalMeetingRoom = this.meetingRoomRepository.findById(updatedForm.getMeetingId());
+            if (optionalMeetingRoom.isPresent()) {
+                MeetingRoom meetingRoom = optionalMeetingRoom.get();
+                meetingReservation.setMeetingRoom(meetingRoom);
+            }
+
+            for (MeetingParticipant participant : meetingReservation.getParticipants()) {
+                this.meetingParticipantRepository.deleteById(participant.getId());
+            }
+            saveParticipants(updatedForm.getParticipantsId(), meetingReservation);
         }
     }
 }

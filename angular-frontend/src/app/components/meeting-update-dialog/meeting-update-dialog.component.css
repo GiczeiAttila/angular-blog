@@ -17,3 +17,11 @@
     margin-right: 1%;
 }
 
+.timepicker-overlay {
+    z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+    z-index: 10000000 !important;
+}
+
