@@ -121,8 +121,14 @@
         <mat-card-actions>
             <button mat-raised-button color="primary" type="submit" [disabled]="isUploading">
                 Save post
-                <mat-icon *ngIf="isUploading" ><mat-spinner color="accent" diameter="20">
-                </mat-spinner></mat-icon>
+                <mat-icon *ngIf="isUploading">
+                    <mat-spinner color="accent" diameter="20">
+                    </mat-spinner>
+                </mat-icon>
+            </button>
+            <button (click)="cancel()" *ngIf="userId!==authorId" [disabled]="isUploading" color="warn"
+                    mat-raised-button>
+                Cancel
             </button>
         </mat-card-actions>
     </form>

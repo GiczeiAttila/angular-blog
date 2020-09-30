@@ -29,6 +29,7 @@ const routes: Routes = [
     {path: 'confirmation/:token/:id', component: UserRegistrationConfirmationComponent},
     {path: 'password/:id', component: UserPasswordFormComponent},
     {path: 'postForm', component: PostFormComponent},
+    {path: 'postForm/:id', component: PostFormComponent},
     {path: 'suggestion-box', component: SuggestionBoxComponent},
     {path: 'open-position', component: OpenPositionsComponent},
     {path: 'timeOffForm', component: TimeOffFormComponent},

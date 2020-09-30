@@ -18,7 +18,12 @@
 
                     <mat-card-actions>
                         <button (click)="readMore(post.id)" color="primary" mat-raised-button>Read More</button>
-                        <button  *ngIf="userId===post.authorId"  (click)="delete(post.id)" color="warn" mat-raised-button>Delete</button>
+                        <button (click)="edit(post.id)" *ngIf="userId===post.authorId" color="accent" mat-raised-button>
+                            Edit
+                        </button>
+                        <button (click)="delete(post.id)" *ngIf="userId===post.authorId" color="warn" mat-raised-button>
+                            Delete
+                        </button>
                     </mat-card-actions>
 
                 </mat-card>

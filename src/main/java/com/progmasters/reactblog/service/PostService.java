@@ -50,10 +50,9 @@ public class PostService {
     }
 
 
-
     public List<PostListItem> getPostListItems() {
         return postRepository.findAllByOrderByCreatedAtDesc()
-                .stream().filter(post -> post.getStatus()==PostStatus.ACTIVE)
+                .stream().filter(post -> post.getStatus() == PostStatus.ACTIVE)
                 .map(PostListItem::new)
                 .collect(Collectors.toList());
     }
@@ -84,7 +83,6 @@ public class PostService {
     }
 
     public Long createPostWithImage(PostFormData data) throws IOException {
-
         Long authorId = Long.parseLong(data.getAuthorId());
         User user = this.userRepository.findById(authorId).orElse(null);
         if (user != null) {
@@ -105,12 +103,45 @@ public class PostService {
 
     public boolean deletePostWithId(Long id) {
         Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()){
+        if (postOptional.isPresent()) {
             Post post = postOptional.get();
             post.setStatus(PostStatus.ARCHIVE);
             logger.info("Post status changed to Archive with post id: " + post.getId());
             return true;
         }
         return false;
+    }
+
+    public PostFormData getPostFormDataById(Long id) {
+        Optional<Post> optionalPostDetails = postRepository.findById(id);
+        if (optionalPostDetails.isPresent()) {
+            return new PostFormData(optionalPostDetails.get());
+        }
+        return null;
+    }
+
+
+    public Long updatePostWithImage(PostFormData data, Long postId) throws IOException {
+        Long authorId = Long.parseLong(data.getAuthorId());
+        User user = this.userRepository.findById(authorId).orElse(null);
+        if (user != null) {
+            Post originalPost = postRepository.findById(postId).orElse(null);
+            if (originalPost != null) {
+                Post post = new Post(data, user);
+                List<User> userList = userRepository.findAllByStatus(UserStatusEnum.ACTIVE);
+                post.setId(postId);
+                if (data.getPicture() != null) {
+                    String uploadedFileUrl = cloudinaryFileUploader.processFile(data.getPicture(), data.getTitle(), data.getCategory());
+                    post.setPictureUrl(uploadedFileUrl);
+                } else {
+                    post.setPictureUrl(originalPost.getPictureUrl());
+                }
+                post = postRepository.save(post);
+                emailSenderService.sendNewPostNotificationEmail(post, userList);
+                return post.getId();
+            }
+
+        }
+        return null;
     }
 }

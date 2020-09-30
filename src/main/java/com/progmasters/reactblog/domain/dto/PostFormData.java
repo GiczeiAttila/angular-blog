@@ -11,12 +11,12 @@
 
 package com.progmasters.reactblog.domain.dto;
 
-import com.progmasters.reactblog.domain.PostCategories;
+import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.PostTypes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PostFormData {
-
+    private Long id;
     private String title;
     private String authorId;
     private String postBody;
@@ -24,6 +24,29 @@ public class PostFormData {
     private String category;
     private PostTypes type;
     private AddressFormData address;
+
+    public PostFormData(Post post) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.authorId = post.getAuthor().getId().toString();
+        this.postBody = post.getPostBody();
+        //this.picture = post.getPictureUrl();
+        this.category = post.getCategory().toString();
+        this.type = post.getType();
+        this.address = new AddressFormData(post.getAddress());
+    }
+
+    public PostFormData() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

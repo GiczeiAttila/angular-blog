@@ -58,7 +58,8 @@
 <div>
     <mat-toolbar class="header">
         <mat-toolbar-row>
-            <button mat-icon-button *ngIf="isLoggedIn" (click)="toggleInTs(sidenavStart, sidenav)" fxShow="true">
+            <button (click)="toggleInTs(sidenavStart, sidenav)" *ngIf="isLoggedIn" fxShow="true" mat-icon-button
+                    style="margin-right: 10px">
                 <mat-icon>face</mat-icon>
             </button>
             <span *ngIf="isLoggedIn">id: {{userId}}  </span>
@@ -211,7 +212,7 @@
                             <div style="font-size: small;">
                                 <span>{{location}}: {{weather}}, wind: {{wind}}</span>
                             </div>
-                            <span style="font-size: xx-large; text-align: center">{{temperature}}</span>
+                            <span style="font-size: x-large; text-align: center">{{temperature}}</span>
                         </span>
                 <span style="margin: 10px"> Humidity:{{humidity}}</span>
             </div>

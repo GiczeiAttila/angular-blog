@@ -65,9 +65,17 @@ export class PostListComponent implements OnInit {
 
     delete(postId: number) {
         this.blogService.deletePost(postId).subscribe(
-            ()=>{},
-            ()=>{},
-            ()=>{this.loadPosts()}
+            () => {
+            },
+            () => {
+            },
+            () => {
+                this.loadPosts()
+            }
         );
+    }
+
+    edit(id: number) {
+        this.router.navigate(['postForm', id])
     }
 }
