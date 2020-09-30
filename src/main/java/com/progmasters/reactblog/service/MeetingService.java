@@ -125,4 +125,13 @@ public class MeetingService {
             return null;
         }
     }
+
+    public void updateMeeting(MeetingReservationUpdatedForm updatedForm) {
+        Optional<MeetingReservation> optionalMeetingReservation = this.meetingReservationRepository.findById(updatedForm.getMeetingId());
+        if (optionalMeetingReservation.isPresent()) {
+            MeetingReservation meetingReservation = optionalMeetingReservation.get();
+            meetingReservation.setTitle(updatedForm.getTitle());
+            meetingReservation.setDescription(updatedForm.getDescription());
+        }
+    }
 }

@@ -25,6 +25,7 @@ import {UserForMeetingOptionDtoModel} from "../models/userForMeetingOptionDto.mo
 import {MeetingListItemModel} from "../models/meetingListItem.model";
 import {UserMeetingReservationListItemModel} from "../models/userMeetingReservationListItem.model";
 import {MeetingStatusChangeDtoModel} from "../models/meetingStatusChangeDto.model";
+import {MeetingReservationDataModel} from "../models/meetingReservationData.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -168,6 +169,10 @@ export class UserService {
 
     changeMeetingStatus(changedStatus: MeetingStatusChangeDtoModel) {
         return this.http.put(MEETING_URL + '/creator', changedStatus);
+    }
+
+    getMeetingDataToUpdate(id: number): Observable<MeetingReservationDataModel> {
+        return this.http.get<MeetingReservationDataModel>(MEETING_URL + '/update/' + id);
     }
 
 }

@@ -28,10 +28,10 @@ $mat-light-theme-background: (
 $my-light-theme-background: (
     status-bar: #f5f5f5,
     app-bar: map_get($mat-teal, 500),
-    background: #757575,
+    background: #FFE082,
     hover: rgba(#8cc7c0, 0.04),
-    card: #f5f5f5,
-    dialog: map_get($mat-teal, A700),
+    card: #757575,
+    dialog: #757575,
     disabled-button: $white-12-opacity,
     raised-button: map-get($mat-teal, 800),
     focused-button: $white-6-opacity,

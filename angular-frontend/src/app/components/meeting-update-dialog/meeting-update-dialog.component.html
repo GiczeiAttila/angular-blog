@@ -1,31 +1,29 @@
-<!--<div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
-</div>
-<div class="mat-app-background basic-container">
-    <mat-card class="basic-container">
-        <form (ngSubmit)="saveUpdate()" class="example">
-            <mat-form-field class="meeting-full-width">
-                <mat-label>Title</mat-label>
-                <input formControlName="title" matInput placeholder="Title" required value="">
-                <mat-hint>Title is required</mat-hint>
+<mat-dialog-content>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
+    </div>
+    <div class="mat-app-background basic-container">
+        <mat-card class="basic-container">
+            <form (ngSubmit)="saveUpdate()" [formGroup]="meetingUpdateForm" class="example">
+                <mat-form-field class="meeting-full-width">
+                    <mat-label>Title</mat-label>
+                    <input formControlName="title" matInput required>
+                </mat-form-field>
 
-            </mat-form-field>
+                <mat-form-field class="meeting-full-width">
+                    <mat-label>Description</mat-label>
+                    <textarea formControlName="description" matInput required></textarea>
 
-            <mat-form-field class="meeting-full-width">
-                <mat-label>Description</mat-label>
-                <textarea formControlName="description" matInput placeholder="Meeting description" required></textarea>
-                <mat-hint>Description is required</mat-hint>
-
-            </mat-form-field>
+                </mat-form-field>
 
 
-               <mat-form-field class="meeting-full-width">
+                <mat-form-field class="meeting-full-width">
                     <mat-label>Participants</mat-label>
-                    <mat-select formControlName="participantsId" multiple>
+                    <mat-select formControlName="participantsId" multiple required>
                         <mat-select-trigger>
                             <mat-chip-list>
                                 <mat-chip (removed)="onUserRemoved(user)"
-                                          *ngFor="let user of meetingRequestForm.get('participantsId').value"
+                                          *ngFor="let user of meetingUpdateForm.get('participantsId').value"
                                           [removable]="true">
                                     {{ user }}
                                     <mat-icon matChipRemove>cancel</mat-icon>
@@ -34,43 +32,68 @@
                         </mat-select-trigger>
                         <mat-option *ngFor="let user of userList" [value]="user.userName">{{user.userName}}</mat-option>
                     </mat-select>
-                    <mat-hint>Should choose participants</mat-hint>
+
 
                 </mat-form-field>
                 <br>
 
 
-            <mat-form-field class="meeting-full-width">
-                <mat-label>Select room</mat-label>
-                <mat-select formControlName="meetingRoomId" id="select-room" required>
-                    <ng-container>
-                        <mat-option
+                <mat-form-field class="meeting-full-width">
+                    <mat-label>Select room</mat-label>
+                    <mat-select formControlName="meetingRoomId" id="select-room" required>
+                        <ng-container *ngFor="let room of meetingRoomList">
+                            <mat-option
+                                *ngIf="meetingUpdateForm.get('participantsId').value.length < room.seats"
+                                [value]="room.roomId"
+                            >{{room.name}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <br>
 
-                        ></mat-option>
-                    </ng-container>
-                </mat-select>
-                <mat-hint>Select a meeting room</mat-hint>
+                <mat-form-field appearance="fill" class="startDateTime">
+                    <mat-label>Pick date</mat-label>
+                    <input [min]="minDate"
+                           formControlName="startDate"
+                           matInput
+                           required
+                           type="date">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="startDateTime">
+                    <mat-label>From</mat-label>
+                    <input #t="matTimepicker" [defaultValue]="startTime"
+                           formControlName="startTime"
+                           matTimepicker
+                           mode="24h"
+                           name="time" required>
+                    <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
+                </mat-form-field>
+                <br>
 
-            </mat-form-field>
-            <br>
+                <!--  <mat-form-field appearance="fill" class="endDateTime">
+                      <mat-label>Pick end date</mat-label>
+                      <input formControlName="endDate"
+                             matInput
+                             placeholder="end date"
+                             required
+                             type="date">
+                  </mat-form-field>
+                  -->
+                <mat-form-field appearance="fill" class="endDateTime">
+                    <mat-label>To</mat-label>
+                    <input #t="matTimepicker" formControlName="endTime"
 
-                 <mat-form-field appearance="fill" class="meeting-full-width">
-                     <mat-label>TIMEPICKER</mat-label>
-                     <input #t="matTimepicker" formControlName="endDateTime"
-                            id="timepicker-example" matTimepicker
-                            mode="24h"
-                            name="time" placeholder="Please select time..." required>
-                     <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
-                     <mat-hint>Select time</mat-hint>
+                           id="timepicker-example" matTimepicker
+                           mode="24h"
+                           name="time" placeholder="Please select time..." required>
+                    <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
+                </mat-form-field>
+                <br>
 
-                 </mat-form-field>
-                 <br>
-
-
-            <button color="primary" mat-raised-button>Save</button>
-            <button color="primary" mat-button matDialogClose>Close</button>
-        </form>
-    </mat-card>
-</div>
--->
+                <button color="primary" mat-raised-button>Save</button>
+                <button color="primary" mat-button matDialogClose>Close</button>
+            </form>
+        </mat-card>
+    </div>
+</mat-dialog-content>
 

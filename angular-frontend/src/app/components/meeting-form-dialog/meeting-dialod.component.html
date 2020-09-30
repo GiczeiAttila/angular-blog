@@ -1,14 +1,15 @@
-<div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
-</div>
-<div class="mat-app-background basic-container">
-    <mat-card class="basic-container">
-        <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
-            <mat-form-field class="meeting-full-width">
-                <mat-label>Title</mat-label>
-                <input formControlName="title" matInput placeholder="Title" required>
-                <mat-hint>Title is requires</mat-hint>
-                <mat-error
+<mat-dialog-content>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">New meeting</h4>
+    </div>
+    <div class="mat-app-background basic-container">
+        <mat-card class="basic-container">
+            <form (ngSubmit)="saveMeeting()" [formGroup]="meetingRequestForm" class="example">
+                <mat-form-field class="meeting-full-width">
+                    <mat-label>Title</mat-label>
+                    <input formControlName="title" matInput placeholder="Title" required>
+                    <mat-hint>Title is requires</mat-hint>
+                    <mat-error
                     *ngIf="meetingRequestForm.get('title').invalid && meetingRequestForm.get('title').touched && !meetingRequestForm.get('title').errors?.serverError">
                     Title is required
                 </mat-error>
@@ -84,10 +85,11 @@
                 </mat-error>
                 <mat-error>{{meetingRequestForm.get('endDateTime').errors?.serverError}}</mat-error>
             </mat-form-field>
-            <br>
+                <br>
 
-            <button color="primary" mat-raised-button>Save</button>
-            <button color="primary" mat-button matDialogClose>Close</button>
-        </form>
-    </mat-card>
-</div>
+                <button color="primary" mat-raised-button>Save</button>
+                <button color="primary" mat-button matDialogClose>Close</button>
+            </form>
+        </mat-card>
+    </div>
+</mat-dialog-content>

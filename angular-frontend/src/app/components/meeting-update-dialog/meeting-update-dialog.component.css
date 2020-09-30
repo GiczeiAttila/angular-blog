@@ -1,0 +1,19 @@
+.meeting-full-width {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.button {
+    margin: 10px;
+}
+
+.startDateTime {
+    width: 49%;
+    margin-right: 0.5%;
+}
+
+.endDateTime {
+    width: 49.5%;
+    margin-right: 1%;
+}
+

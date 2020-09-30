@@ -113,9 +113,17 @@ public class MeetingController {
     public ResponseEntity<MeetingReservationData> getMeetingById(@PathVariable Long id) {
         MeetingReservationData meeting = this.meetingService.getMeetingDataById(id);
         if (meeting != null) {
+            logger.info("Request meeting with id: " + id);
             return new ResponseEntity<>(meeting, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<MeetingReservation> updateMeeting(@RequestBody MeetingReservationUpdatedForm updatedForm) {
+        this.meetingService.updateMeeting(updatedForm);
+        logger.info("Request to update meeting with id: " + updatedForm.getMeetingId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -55,10 +55,12 @@ export class MeetingListComponent implements OnInit {
         )
     }
 
-
     editMeeting(meetingId: number) {
-        const dialogRef = this.dialog.open(MeetingUpdateDialogComponent);
         this.userService.addMeetingId(meetingId);
+        const dialogRef = this.dialog.open(MeetingUpdateDialogComponent);
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 
     deleteMeeting(meetingId: number) {

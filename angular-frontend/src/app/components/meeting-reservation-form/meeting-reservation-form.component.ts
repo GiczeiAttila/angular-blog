@@ -29,13 +29,13 @@ const colors: any = {
     selector: 'app-meeting-reservation-form',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './meeting-reservation-form.component.html',
+    encapsulation: ViewEncapsulation.None,
     providers: [
         {
             provide: CalendarEventTitleFormatter,
         },
     ],
     styleUrls: ['./meeting-reservation-form.component.css'],
-    encapsulation: ViewEncapsulation.None,
 })
 export class MeetingReservationFormComponent implements OnInit {
     meetingList: Array<MeetingListItemModel>;
@@ -43,7 +43,7 @@ export class MeetingReservationFormComponent implements OnInit {
     userId: number;
 
     view: CalendarView;
-    viewDate: Date;
+    viewDate: Date = new Date();
     events: CalendarEvent[];
     clickedDate: Date;
 
@@ -56,6 +56,8 @@ export class MeetingReservationFormComponent implements OnInit {
         this.userService.refreshCalendar.subscribe(
             () => this.ngOnInit()
         )
+
+        // refresh: Subject<any> = new Subject();
     }
 
     ngOnInit(): void {
@@ -69,38 +71,38 @@ export class MeetingReservationFormComponent implements OnInit {
 
     loadCalendar() {
         this.view = CalendarView.Week;
-        this.viewDate = new Date();
+        //this.viewDate = new Date();
     }
 
     loadMeetingList() {
         this.userId = +localStorage.getItem('userId');
         this.meetingList = [];
         this.displayingMeetingList = [];
+        this.events = [];
+        //this.loadCalendar();
 
         this.userService.getMeetingList(this.userId).subscribe(
             (list) => {
-                this.meetingList = list;
-                this.addToDisplayList();
+                list.forEach(meeting => {
+                    const meetingData: CalendarEvent = {
+                        title: meeting.title + ' room: ' + meeting.meetingRoomName,
+                        start: new Date(meeting.startDate),
+                        end: new Date(meeting.endDate),
+                        color: colors.blue
+                    }
+                    this.events.push(meetingData);
+                })
+                // this.meetingList = list;
+                // this.addToDisplayList();
+                this.loadCalendar()
             },
             error => console.log(error),
             () => {
-                this.loadCalendar()
+
             }
         )
     }
 
-    clickOnHourSegment(date: Date) {
-        this.clickedDate = date;
-        const format = "YYYY-MM-DD HH:mm";
-        let usingDate = moment(date).format(format);
-        this.userService.addStartDate(usingDate);
-
-        const dialogRef = this.dialog.open(MeetingDialodComponent);
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
-    }
 
     private addToDisplayList() {
         this.events = [];
@@ -116,4 +118,16 @@ export class MeetingReservationFormComponent implements OnInit {
         })
     }
 
+    clickOnHourSegment(date: Date) {
+        this.clickedDate = date;
+        const format = "YYYY-MM-DD HH:mm";
+        let usingDate = moment(date).format(format);
+        this.userService.addStartDate(usingDate);
+
+        const dialogRef = this.dialog.open(MeetingDialodComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 }
