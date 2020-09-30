@@ -76,7 +76,7 @@ export class MeetingUpdateDialogComponent implements OnInit {
                 console.log(this.startTime);
 
                 this.meetingUpdateForm.get('startDate').setValue(startDate);
-                this.meetingUpdateForm.get('startTime').setValue('10:20');
+                this.meetingUpdateForm.get('startTime').setValue('10:20:00');
                 this.meetingUpdateForm.get('endDate').setValue(endDate);
                 // this.meetingUpdateForm.get('endTime').setValue(endTime);
 

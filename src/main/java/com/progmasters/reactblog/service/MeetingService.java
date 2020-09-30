@@ -136,7 +136,7 @@ public class MeetingService {
             meetingReservation.setStartDate(DateUtils.convertLocalDateTimeToZonedDateTime(updatedForm.getStartDateTime()));
             meetingReservation.setEndDate(DateUtils.convertLocalDateTimeToZonedDateTime(updatedForm.getEndDateTime()));
 
-            Optional<MeetingRoom> optionalMeetingRoom = this.meetingRoomRepository.findById(updatedForm.getMeetingId());
+            Optional<MeetingRoom> optionalMeetingRoom = this.meetingRoomRepository.findById(updatedForm.getMeetingRoomId());
             if (optionalMeetingRoom.isPresent()) {
                 MeetingRoom meetingRoom = optionalMeetingRoom.get();
                 meetingReservation.setMeetingRoom(meetingRoom);
