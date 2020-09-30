@@ -1,6 +1,7 @@
 import {AddressFormDataModel} from "./addressFormData.model";
 
 export interface PostFormDataModel {
+    id: number;
     authorId: number;
     title: string;
     postBody: string;

@@ -40,6 +40,7 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
 import {MatTimepickerModule} from "mat-timepicker";
 import {MeetingListComponent} from './components/meeting-list/meeting-list.component';
 import {MeetingUpdateDialogComponent} from './components/meeting-update-dialog/meeting-update-dialog.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -89,6 +90,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         MatTableModule,
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         NgbModule,
+        MatProgressBarModule,
 
 
     ],

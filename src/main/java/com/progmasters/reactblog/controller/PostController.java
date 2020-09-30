@@ -11,7 +11,6 @@
 
 package com.progmasters.reactblog.controller;
 
-import com.progmasters.reactblog.domain.Post;
 import com.progmasters.reactblog.domain.dto.PostDetails;
 import com.progmasters.reactblog.domain.dto.PostFormData;
 import com.progmasters.reactblog.domain.dto.PostFormInitData;
@@ -59,15 +58,18 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> uploadFileWithFormData(@ModelAttribute PostFormData data) throws IOException {
+    public ResponseEntity<Long> uploadFileWithFormData(@Valid @ModelAttribute PostFormData data) throws IOException {
         logger.info("New post is created");
         Long postWithImage = postService.createPostWithImage(data);
-
-        System.out.println("\n"+data.getCategory()+"\n");
-
         return new ResponseEntity<>(postWithImage, HttpStatus.CREATED);
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<Long> updatePost(@Valid @ModelAttribute PostFormData postFormData, @PathVariable Long id) throws IOException {
+        logger.info("Update post is requested with post id: " + id);
+        Long updatedPostId = postService.updatePostWithImage(postFormData, id);
+        return new ResponseEntity<>(updatedPostId, HttpStatus.CREATED);
+    }
 //    @PostMapping
 //    public ResponseEntity createPost(@Valid @RequestBody PostFormData postFormData) {
 //        logger.info("New post is created");
@@ -78,12 +80,24 @@ public class PostController {
 //        } else {
 //            return new ResponseEntity(HttpStatus.BAD_REQUEST);
 //        }
+
 //    }
 
     @GetMapping
     public ResponseEntity<List<PostListItem>> getPostList() {
         logger.info("Post list page is requested");
         return new ResponseEntity<>(postService.getPostListItems(), HttpStatus.OK);
+    }
+
+    @GetMapping("/formData/{id}")
+    public ResponseEntity<PostFormData> getPostFormData(@PathVariable("id") Long id) {
+        PostFormData postFormData = postService.getPostFormDataById(id);
+        if (postFormData != null) {
+            logger.info("Post form data requested with post id: " + id);
+            return new ResponseEntity<>(postFormData, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")

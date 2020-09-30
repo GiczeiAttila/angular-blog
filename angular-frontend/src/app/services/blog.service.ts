@@ -34,6 +34,9 @@ export class BlogService {
         return this.http.post(POSTS_BASE_URL, formData);
     }
 
+    updatePost(formData: FormData, id: number): Observable<any> {
+        return this.http.post(POSTS_BASE_URL + '/' + id, formData);
+    }
 
     fetchPostDetails(id: number): Observable<PostDetailsModel> {
         return this.http.get<PostDetailsModel>(`${POSTS_BASE_URL}/${id}`);
@@ -53,5 +56,9 @@ export class BlogService {
 
     deletePost(postId: number) {
         return this.http.delete(POSTS_BASE_URL + "/" + postId)
+    }
+
+    fetchPostFormData(id: string): Observable<PostFormDataModel> {
+        return this.http.get<PostFormDataModel>(`${POSTS_BASE_URL}/formData/${id}`);
     }
 }
