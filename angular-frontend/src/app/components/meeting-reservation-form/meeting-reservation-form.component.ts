@@ -79,7 +79,7 @@ export class MeetingReservationFormComponent implements OnInit {
         this.meetingList = [];
         this.displayingMeetingList = [];
         this.events = [];
-        //this.loadCalendar();
+        this.loadCalendar();
 
         this.userService.getMeetingList(this.userId).subscribe(
             (list) => {

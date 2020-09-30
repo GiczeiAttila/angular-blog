@@ -94,6 +94,7 @@ export class MeetingDialodComponent implements OnInit {
         }
         const format = "YYYY-MM-DD HH:mm";
         const value = this.meetingRequestForm.get('endDateTime').value;
+        console.log(value);
         let actualEndDate = moment(value).format(format);
         const startDay = this.meetingRequestForm.get('startDateTime').value.toString().slice(0, 11);
         const endTime = actualEndDate.slice(11);

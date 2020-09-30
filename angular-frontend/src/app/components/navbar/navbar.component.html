@@ -217,9 +217,9 @@
                 <span style="margin: 10px"> Humidity:{{humidity}}</span>
             </div>
             <div class="time">
-                <small>{{actualTime.getDate()}}.{{actualTime.getMonth() + 1}}.{{actualTime.getFullYear()}}</small>
+                <small>{{actualTime?.getDate()}}.{{actualTime?.getMonth() + 1}}.{{actualTime?.getFullYear()}}</small>
                 <br>
-                <span class="clock">{{actualTime.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>
+                <span class="clock">{{actualTime?.getHours()}}:{{actualMinutes}}:{{actualSeconds}}</span>
             </div>
         </mat-toolbar-row>
     </mat-toolbar>
