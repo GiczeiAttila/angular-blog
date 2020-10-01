@@ -27,11 +27,11 @@ $mat-light-theme-background: (
  */
 $my-light-theme-background: (
     status-bar: #f5f5f5,
-    app-bar: map_get($mat-teal, 500),
-    background: #FFE082,
+    app-bar: map_get($mat-cyan, 700),
+    background: #eceff1,
     hover: rgba(#8cc7c0, 0.04),
-    card: #757575,
-    dialog: #757575,
+    card: #78909C,
+    dialog: #78909C,
     disabled-button: $white-12-opacity,
     raised-button: map-get($mat-teal, 800),
     focused-button: $white-6-opacity,
@@ -44,7 +44,7 @@ $my-light-theme-background: (
 
 $my-light-theme-foreground: (
     base: #fafafa,
-    divider: #0351c1,
+    divider: #0097a7,
     dividers: $white-12-opacity,
     disabled: rgba(black, 0.3),
     disabled-button: rgba(black, 0.3),
@@ -73,9 +73,9 @@ $my-light-theme-foreground: (
 }
 
 // The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
-$custom-theme-primary: mat-palette($mat-teal, 600);
-$custom-theme-secondary: mat-palette($mat-grey, 100);
-$custom-theme-accent: mat-palette($mat-grey, 100);
+$custom-theme-primary: mat-palette($mat-cyan, 700);
+$custom-theme-secondary: mat-palette($mat-blue-grey, 500);
+$custom-theme-accent: mat-palette($mat-blue-grey, 100);
 $custom-theme-warn: mat-palette($mat-red);
 
 $custom-theme: create-wonky-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
