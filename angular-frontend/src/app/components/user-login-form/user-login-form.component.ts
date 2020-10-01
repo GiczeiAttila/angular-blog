@@ -25,7 +25,9 @@ export class UserLoginFormComponent implements OnInit {
     ngOnInit(): void {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
+            this.router.navigate(['/posts']);
         }
+
         this.hide = true;
     }
 
@@ -42,7 +44,7 @@ export class UserLoginFormComponent implements OnInit {
                     localStorage.setItem('auth', 'true');
                     localStorage.setItem('userId', loginData.id);
                     this.userService.loginSubject.next();
-                    this.router.navigate(['/posts'])
+                    this.router.navigate(['/posts']);
                 },
             );
     }

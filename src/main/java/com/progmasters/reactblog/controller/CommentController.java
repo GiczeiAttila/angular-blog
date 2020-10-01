@@ -60,6 +60,17 @@ public class CommentController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateComment(@Valid @RequestBody CommentFormData commentFormData, @PathVariable("id") Long id) {
+        logger.info("Update comment is created");
+
+        Comment updatedComment = commentService.updateComment(commentFormData, id);
+        if (updatedComment != null) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<CommentDetails>> findAllCommentsByPostId(@PathVariable("id") Long id) {
         Post actualPost = this.commentService.findPostById(id);

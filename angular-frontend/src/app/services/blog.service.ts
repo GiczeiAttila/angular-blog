@@ -61,4 +61,9 @@ export class BlogService {
     fetchPostFormData(id: string): Observable<PostFormDataModel> {
         return this.http.get<PostFormDataModel>(`${POSTS_BASE_URL}/formData/${id}`);
     }
+
+    updateComment(commentData: CommentFormDataModel, id: number): Observable<any> {
+        console.log(id);
+        return this.http.put(COMMENTS_BASE_URL + '/' + id, commentData);
+    }
 }
