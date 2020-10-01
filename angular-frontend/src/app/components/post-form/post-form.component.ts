@@ -80,6 +80,8 @@ export class PostFormComponent implements OnInit {
     }
 
     onFileChange($event: Event) {
+        const picture= null;
+        this.uploaded= 'folder';
         // @ts-ignore
         if (event.target.files.length > 0) {
             // @ts-ignore
