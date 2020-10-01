@@ -27,18 +27,18 @@ $mat-light-theme-background: (
  */
 $my-light-theme-background: (
     status-bar: #f5f5f5,
-    app-bar: map_get($mat-cyan, 700),
+    app-bar: map_get($mat-cyan, 600),
     background: #eceff1,
     hover: rgba(#8cc7c0, 0.04),
-    card: #78909C,
-    dialog: #78909C,
+    card: #78909c,
+    dialog: #78909c,
     disabled-button: $white-12-opacity,
-    raised-button: map-get($mat-teal, 800),
+    raised-button: map-get($mat-cyan, 600),
     focused-button: $white-6-opacity,
-    selected-button: map_get($mat-teal, 800),
-    selected-disabled-button: map_get($mat-teal, 800),
+    selected-button: map_get($mat-cyan, 600),
+    selected-disabled-button: map_get($mat-cyan, 600),
     disabled-button-toggle: black,
-    unselected-chip: map_get($mat-teal, 300),
+    unselected-chip: map_get($mat-cyan, 300),
     disabled-list-option: black,
 );
 
@@ -46,14 +46,14 @@ $my-light-theme-foreground: (
     base: #fafafa,
     divider: #0097a7,
     dividers: $white-12-opacity,
-    disabled: rgba(black, 0.3),
-    disabled-button: rgba(black, 0.3),
+    disabled: black,
+    disabled-button: black,
     disabled-text: #000000,
     hint-text: #000000,
-    secondary-text: rgba(black, 0.7),
+    secondary-text: #263238,
     icon: black,
     icons: black,
-    text: white,
+    text: #1b2528,
     slider-min: black,
     slider-off: rgba(black, 0.3),
     slider-off-active: rgba(black, 0.3),
@@ -74,7 +74,7 @@ $my-light-theme-foreground: (
 
 // The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
 $custom-theme-primary: mat-palette($mat-cyan, 700);
-$custom-theme-secondary: mat-palette($mat-blue-grey, 500);
+$custom-theme-secondary: mat-palette($mat-blue-grey, 400);
 $custom-theme-accent: mat-palette($mat-blue-grey, 100);
 $custom-theme-warn: mat-palette($mat-red);
 

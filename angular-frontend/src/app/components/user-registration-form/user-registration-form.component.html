@@ -124,20 +124,20 @@
 </div>
 -->
 
-<div class="mat-app-background basic-container" >
-<!--    <mat-card style="margin-bottom: 86px">-->
-        <mat-card-header>
-            <mat-card-title>Registration</mat-card-title>
-        </mat-card-header>
-        <form  [formGroup]="registrationForm" (ngSubmit)="submitRegistration()">
-            <mat-form-field class="example-full-width">
-                <mat-label>Id</mat-label>
-                <input matInput type="number" formControlName="id" required>
-                <mat-hint>Id is required</mat-hint>
-                <mat-error>
-                    {{registrationForm.get('id').errors?.serverError}}
-                </mat-error>
-                <mat-error
+<div class="mat-app-background basic-container">
+    <!--    <mat-card style="margin-bottom: 86px">-->
+
+    <mat-card-title>Registration</mat-card-title>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="submitRegistration()">
+        <mat-form-field class="example-full-width">
+            <mat-label>Id</mat-label>
+            <input matInput type="number" formControlName="id" required>
+            <mat-hint>Id is required</mat-hint>
+            <mat-error>
+                {{registrationForm.get('id').errors?.serverError}}
+            </mat-error>
+            <mat-error
                     *ngIf="registrationForm.get('id').invalid && registrationForm.get('id').touched && !registrationForm.get('id').errors?.serverError"
                     class="text-danger">
                     Id is <strong>required</strong>
@@ -201,9 +201,7 @@
             </mat-form-field>
             <br>
             <hr/>
-            <mat-card-actions>
-                <button mat-raised-button type="submit" color="primary">Submit</button>
-            </mat-card-actions>
+        <button color="primary" mat-raised-button type="submit">Submit</button>
         </form>
 <!--    </mat-card>-->
 </div>

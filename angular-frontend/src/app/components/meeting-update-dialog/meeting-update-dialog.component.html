@@ -1,29 +1,29 @@
 <mat-dialog-content>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Update meeting</h4>
-    </div>
+    <br>
+    <mat-card-title>Update meeting</mat-card-title>
+    <br>
     <div class="mat-app-background basic-container">
-        <mat-card class="basic-container">
-            <form (ngSubmit)="saveUpdate()" [formGroup]="meetingUpdateForm" class="example">
-                <mat-form-field class="meeting-full-width">
-                    <mat-label>Title</mat-label>
-                    <input formControlName="title" matInput required>
-                    <mat-error
-                        *ngIf="meetingUpdateForm.get('title').invalid && meetingUpdateForm.get('title').touched">
-                        Title is required
-                    </mat-error>
 
-                </mat-form-field>
+        <form (ngSubmit)="saveUpdate()" [formGroup]="meetingUpdateForm" class="example">
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" matInput required>
+                <mat-error
+                    *ngIf="meetingUpdateForm.get('title').invalid && meetingUpdateForm.get('title').touched">
+                    Title is required
+                </mat-error>
 
-                <mat-form-field class="meeting-full-width">
-                    <mat-label>Description</mat-label>
-                    <textarea formControlName="description" matInput required></textarea>
-                    <mat-error
-                        *ngIf="meetingUpdateForm.get('description').invalid && meetingUpdateForm.get('description').touched">
-                        Description is required
-                    </mat-error>
+            </mat-form-field>
 
-                </mat-form-field>
+            <mat-form-field class="meeting-full-width">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput required></textarea>
+                <mat-error
+                    *ngIf="meetingUpdateForm.get('description').invalid && meetingUpdateForm.get('description').touched">
+                    Description is required
+                </mat-error>
+
+            </mat-form-field>
 
 
                 <mat-form-field class="meeting-full-width">
@@ -110,7 +110,7 @@
                 <button color="primary" mat-raised-button>Save</button>
                 <button color="primary" mat-button matDialogClose>Close</button>
             </form>
-        </mat-card>
+
     </div>
 </mat-dialog-content>
 
