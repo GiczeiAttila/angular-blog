@@ -18,14 +18,26 @@ import java.time.LocalDateTime;
 
 public class CommentDetails {
 
+    private Long id;
+    private Long authorId;
     private final String author;
     private final String commentBody;
     private final LocalDateTime createdAt;
 
     public CommentDetails(Comment comment) {
+        this.id = comment.getId();
+        this.authorId = comment.getAuthor().getId();
         this.author = comment.getAuthor().getFirstName() + " " + comment.getAuthor().getLastName();
         this.commentBody = comment.getCommentBody();
         this.createdAt = DateUtils.localizeDateTimeFromZonedDateTime(comment.getCreatedAt());
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getAuthor() {
