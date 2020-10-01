@@ -141,6 +141,24 @@ public class EmailSenderService {
     }
 
     @Async
+    public void sendMeetingDataChangeNotification(MeetingReservation meetingReservation, List<User> userList) {
+        String subject = "Meeting changed";
+        String mailBody =
+                "Meeting is changed by : " + meetingReservation.getCreator().getFirstName() + " " + meetingReservation.getCreator().getLastName() + ". " +
+                        "New meeting details: \n" +
+                        "Title: " + meetingReservation.getTitle() + "\n" +
+                        "Description: " + meetingReservation.getDescription() + "\n" +
+                        "Start: " + meetingReservation.getStartDate() + "\n" +
+                        "End: " + meetingReservation.getEndDate() + "\n" +
+                        "Meeting room: " + meetingReservation.getMeetingRoom().getName();
+
+        for (User user : userList) {
+            sendMail(user.getEmail(), subject, mailBody);
+        }
+        logger.info("Meeting data change notification is send with id:  " + meetingReservation.getId());
+    }
+
+    @Async
     public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toAddress);
