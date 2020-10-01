@@ -74,4 +74,20 @@ public class CommentService {
                 .map(CommentDetails::new)
                 .collect(Collectors.toList());
     }
+
+    public Comment updateComment(CommentFormData commentFormData, Long id) {
+        Comment comment = this.commentRepository.findById(id).orElse(null);
+        if (comment.getAuthor().getId() == commentFormData.getAuthorId()) {
+            comment.setCommentBody(commentFormData.getCommentBody());
+            commentRepository.save(comment);
+            return comment;
+        }
+        return null;
+    }
+
+    /*public Comment deleteComment(Long id){
+        Comment comment = this.commentRepository.findById(id).orElse(null);
+        comment;
+        commentRepository.save(comment);
+    }*/
 }
