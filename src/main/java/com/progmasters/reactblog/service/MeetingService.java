@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -146,6 +147,16 @@ public class MeetingService {
                 this.meetingParticipantRepository.deleteById(participant.getId());
             }
             saveParticipants(updatedForm.getParticipantsId(), meetingReservation);
+
+            List<User> userList = new ArrayList<>();
+            for (Long participant : updatedForm.getParticipantsId()) {
+                Optional<User> optionalUser = this.userRepository.findById(participant);
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get();
+                    userList.add(user);
+                }
+            }
+            emailSenderService.sendMeetingDataChangeNotification(meetingReservation, userList);
         }
     }
 }

@@ -143,7 +143,7 @@
                     Id is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <hr>
+
             <mat-form-field class="example-full-width">
                 <mat-label>Firstname</mat-label>
                 <input matInput type="text" formControlName="firstName" required>
@@ -157,8 +157,8 @@
                     Firstname is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <hr>
-            <mat-form-field class="example-full-width">
+
+        <mat-form-field class="example-full-width">
                 <mat-label>Lastname</mat-label>
                 <input matInput type="text" formControlName="lastName" required>
                 <mat-hint>Lastname is required</mat-hint>
@@ -171,8 +171,8 @@
                     Lastname is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <hr>
-            <mat-form-field class="example-full-width">
+
+        <mat-form-field class="example-full-width">
                 <mat-label>email</mat-label>
                 <input matInput type="text" formControlName="email" required>
                 <mat-hint>email is required</mat-hint>
@@ -185,24 +185,24 @@
                     email is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <hr>
-            <mat-form-field class="example-full-width">
+
+        <mat-form-field class="example-full-width">
                 <mat-label>Mobil phone number(example: +36301234567)</mat-label>
                 <input matInput type="text" formControlName="phoneNumber" required>
-                <mat-hint>Mobil phone number is required</mat-hint>
-                <mat-error>
-                    {{registrationForm.get('phoneNumber').errors?.serverError}}
-                </mat-error>
-                <mat-error
-                    *ngIf="registrationForm.get('phoneNumber').invalid && registrationForm.get('phoneNumber').touched && !registrationForm.get('phoneNumber').errors?.serverError"
-                    class="text-danger">
-                    Mobil phone number is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <br>
-            <hr/>
+            <mat-hint>Mobil phone number is required</mat-hint>
+            <mat-error>
+                {{registrationForm.get('phoneNumber').errors?.serverError}}
+            </mat-error>
+            <mat-error
+                *ngIf="registrationForm.get('phoneNumber').invalid && registrationForm.get('phoneNumber').touched && !registrationForm.get('phoneNumber').errors?.serverError"
+                class="text-danger">
+                Mobil phone number is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <br><br>
+
         <button color="primary" mat-raised-button type="submit">Submit</button>
-        </form>
+    </form>
 <!--    </mat-card>-->
 </div>
 
