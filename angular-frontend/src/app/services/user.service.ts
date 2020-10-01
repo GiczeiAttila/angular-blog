@@ -26,6 +26,7 @@ import {MeetingListItemModel} from "../models/meetingListItem.model";
 import {UserMeetingReservationListItemModel} from "../models/userMeetingReservationListItem.model";
 import {MeetingStatusChangeDtoModel} from "../models/meetingStatusChangeDto.model";
 import {MeetingReservationDataModel} from "../models/meetingReservationData.model";
+import {MeetingReservationUpdatedFormModel} from "../models/meetingReservationUpdatedForm.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
@@ -173,6 +174,10 @@ export class UserService {
 
     getMeetingDataToUpdate(id: number): Observable<MeetingReservationDataModel> {
         return this.http.get<MeetingReservationDataModel>(MEETING_URL + '/update/' + id);
+    }
+
+    putUpdatedMeetingData(updatedMeeting: MeetingReservationUpdatedFormModel) {
+        return this.http.put(MEETING_URL, updatedMeeting);
     }
 
 }

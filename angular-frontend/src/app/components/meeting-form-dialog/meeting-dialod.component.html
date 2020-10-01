@@ -80,8 +80,8 @@
                 <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
                 <mat-hint>Select time</mat-hint>
                 <mat-error
-                    *ngIf="meetingRequestForm.get('endDateTime').invalid && meetingRequestForm.get('endDateTime').touched && !meetingRequestForm.get('endDate').errors?.serverError">
-                    Should choose a meeting room
+                    *ngIf="meetingRequestForm.get('endDateTime').invalid && meetingRequestForm.get('endDateTime').touched && !meetingRequestForm.get('endDateTime').errors?.serverError">
+                    Should choose time
                 </mat-error>
                 <mat-error>{{meetingRequestForm.get('endDateTime').errors?.serverError}}</mat-error>
             </mat-form-field>

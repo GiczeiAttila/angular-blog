@@ -8,11 +8,20 @@
                 <mat-form-field class="meeting-full-width">
                     <mat-label>Title</mat-label>
                     <input formControlName="title" matInput required>
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('title').invalid && meetingUpdateForm.get('title').touched">
+                        Title is required
+                    </mat-error>
+
                 </mat-form-field>
 
                 <mat-form-field class="meeting-full-width">
                     <mat-label>Description</mat-label>
                     <textarea formControlName="description" matInput required></textarea>
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('description').invalid && meetingUpdateForm.get('description').touched">
+                        Description is required
+                    </mat-error>
 
                 </mat-form-field>
 
@@ -32,7 +41,10 @@
                         </mat-select-trigger>
                         <mat-option *ngFor="let user of userList" [value]="user.userName">{{user.userName}}</mat-option>
                     </mat-select>
-
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('participantsId').invalid && meetingUpdateForm.get('participantsId').touched">
+                        Should choose participant
+                    </mat-error>
 
                 </mat-form-field>
                 <br>
@@ -48,6 +60,11 @@
                             >{{room.name}}</mat-option>
                         </ng-container>
                     </mat-select>
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('meetingRoomId').invalid && meetingUpdateForm.get('meetingRoomId').touched">
+                        Should choose a meeting room
+                    </mat-error>
+
                 </mat-form-field>
                 <br>
 
@@ -65,46 +82,30 @@
                            formControlName="startTime"
                            matTimepicker
                            mode="24h"
-                           name="time" required>
+                           name="time" placeholder="Please select time..." required>
                     <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('startTime').invalid && meetingUpdateForm.get('startTime').touched">
+                        Should choose a meeting room
+                    </mat-error>
+
                 </mat-form-field>
                 <br>
 
-                <!--  <mat-form-field appearance="fill" class="endDateTime">
-                      <mat-label>Pick end date</mat-label>
-                      <input formControlName="endDate"
-                             matInput
-                             placeholder="end date"
-                             required
-                             type="date">
-                  </mat-form-field>
-                  -->
                 <mat-form-field appearance="fill" class="endDateTime">
                     <mat-label>To</mat-label>
                     <input #t="matTimepicker" formControlName="endTime"
-                           id="timepicker-example" matTimepicker
-                           defaultValue="'10:10'"
+                           matTimepicker
                            mode="24h"
                            name="time" placeholder="Please select time..." required>
                     <mat-icon (click)="t.showDialog()" matSuffix>access_time</mat-icon>
+                    <mat-error
+                        *ngIf="meetingUpdateForm.get('endTime').invalid && meetingUpdateForm.get('endTime').touched">
+                        Should choose a meeting room
+                    </mat-error>
+
                 </mat-form-field>
                 <br>
-
-
-                <input [ngxTimepicker]="defaultValue" [value]="'05:11 pm'" aria-label="default time" readonly>
-                <ngx-material-timepicker #defaultValue></ngx-material-timepicker>
-
-                <br>
-
-                <div class="ngx-timepicker-field-example">
-                    <ngx-timepicker-field [defaultTime]="'23:11'" [format]="24"></ngx-timepicker-field>
-                </div>
-
-                <div class="default-time-example">
-                    <input [ngxTimepicker]="defaultValue" [value]="'05:11 pm'" aria-label="default time" readonly>
-                    <ngx-material-timepicker #defaultValue></ngx-material-timepicker>
-                </div>
-
 
                 <button color="primary" mat-raised-button>Save</button>
                 <button color="primary" mat-button matDialogClose>Close</button>

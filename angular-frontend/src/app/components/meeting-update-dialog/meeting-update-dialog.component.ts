@@ -4,6 +4,9 @@ import {MeetingReservationDataModel} from "../../models/meetingReservationData.m
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {UserForMeetingOptionDtoModel} from "../../models/userForMeetingOptionDto.model";
 import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
+import {MeetingReservationUpdatedFormModel} from "../../models/meetingReservationUpdatedForm.model";
+import {MatDialogRef} from "@angular/material/dialog";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-meeting-update-dialog',
@@ -23,17 +26,16 @@ export class MeetingUpdateDialogComponent implements OnInit {
     meetingRoomList: MeetingRoomOptionDtoModel[];
     selected;
     minDate;
-    startTime: string;
-    time = {hour: 13, minute: 30};
+
 
     constructor(private userService: UserService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private dialogRef: MatDialogRef<MeetingUpdateDialogComponent>) {
         this.meetingUpdateForm = this.formBuilder.group({
             title: [''],
             description: [''],
             startDate: [''],
             startTime: [''],
-            endDate: [''],
             endTime: [''],
             creatorId: [],
             participantsId: new FormControl([]),
@@ -70,19 +72,14 @@ export class MeetingUpdateDialogComponent implements OnInit {
                 this.selected = data.meetingRoom.roomId;
 
                 let startDate = data.startDateTime.substring(0, 10);
-                let endDate = data.endDateTime.substring(0, 10);
-              //  this.startTime = data.startDateTime.substring(11);
-                console.log(this.startTime);
 
                 this.meetingUpdateForm.get('startDate').setValue(startDate);
                 this.meetingUpdateForm.get('startTime').setValue(new Date(data.startDateTime));
-                this.meetingUpdateForm.get('endDate').setValue(endDate);
                 this.meetingUpdateForm.get('endTime').setValue(new Date(data.endDateTime));
 
             },
             error => console.log(error),
             () => {
-                console.log("Get data");
                 console.log(this.meetingUpdateForm.value)
             }
         )
@@ -107,7 +104,6 @@ export class MeetingUpdateDialogComponent implements OnInit {
         this.meetingUpdateForm.get('participantsId').setValue(users);
     }
 
-
     private removeFirst<T>(array: T[], toRemove: T): void {
         const index = array.indexOf(toRemove);
         if (index !== -1) {
@@ -116,6 +112,44 @@ export class MeetingUpdateDialogComponent implements OnInit {
     }
 
     saveUpdate() {
+        this.userId = +localStorage.getItem('userId');
+        const format = "YYYY-MM-DD HH:mm";
+        let startDate = this.meetingUpdateForm.get('startDate').value;
+        let formStartTime = moment(this.meetingUpdateForm.get('startTime').value).format(format);
+        let formEndTime = moment(this.meetingUpdateForm.get('endTime').value).format(format);
+        let startTime = formStartTime.slice(10);
+        let endTime = formEndTime.slice(10);
+        let startDateTime = startDate.concat(startTime);
+        let endDateTime = startDate.concat(endTime);
 
+
+        let actualParticipantsId: Array<number> = [];
+        let participants: Array<string> = this.meetingUpdateForm.get('participantsId').value;
+        participants.forEach(participant => {
+            this.userList.forEach(user => {
+                if (participant == user.userName) {
+                    actualParticipantsId.push(user.userId);
+                }
+            })
+        })
+        actualParticipantsId.push(this.userId);
+
+        console.log(this.meetingUpdateForm.value);
+        let updatedMeeting: MeetingReservationUpdatedFormModel = {
+            meetingId: this.meetingId,
+            title: this.meetingUpdateForm.get('title').value,
+            description: this.meetingUpdateForm.get('description').value,
+            startDateTime: startDateTime,
+            endDateTime: endDateTime,
+            creatorId: this.userId,
+            participantsId: actualParticipantsId,
+            meetingRoomId: this.meetingUpdateForm.get('meetingRoomId').value
+        }
+
+        this.userService.putUpdatedMeetingData(updatedMeeting).subscribe(
+            () => console.log(updatedMeeting),
+            error => console.log(error),
+            () => this.dialogRef.close()
+        )
     }
 }
