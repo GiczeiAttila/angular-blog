@@ -1,17 +1,17 @@
 <div class="mat-app-background basic-container">
-<!--    <mat-card class="basic-container">-->
-        <h4 class="modal-title">New meeting room</h4>
-        <br>
+    <!--    <mat-card class="basic-container">-->
 
-        <form (ngSubmit)="saveRoom()" [formGroup]="meetingRoomForm">
-            <mat-form-field appearance="fill" class="example-width-half">
-                <mat-label>Room name</mat-label>
-                <input formControlName="name" matInput required>
-                <mat-error *ngIf="meetingRoomForm.get('name').invalid
+    <mat-card-title>New meeting room</mat-card-title>
+
+    <form (ngSubmit)="saveRoom()" [formGroup]="meetingRoomForm">
+        <mat-form-field appearance="fill" class="example-width-half">
+            <mat-label>Room name</mat-label>
+            <input formControlName="name" matInput required>
+            <mat-error *ngIf="meetingRoomForm.get('name').invalid
                         && meetingRoomForm.get('name').touched
                         && !meetingRoomForm.get('name').errors?.serverError">
-                    Please enter a room name
-                </mat-error>
+                Please enter a room name
+            </mat-error>
                 <mat-hint>Please enter a room name</mat-hint>
                 <mat-error>{{meetingRoomForm.get('name').errors?.serverError}}</mat-error>
             </mat-form-field>
@@ -29,10 +29,7 @@
                 <mat-error>{{meetingRoomForm.get('seats').errors?.serverError}}</mat-error>
             </mat-form-field>
             <br>
-
-            <mat-card-actions>
-                <button color="primary" mat-raised-button type="submit">Save room</button>
-            </mat-card-actions>
+        <button color="primary" mat-raised-button type="submit">Save room</button>
         </form>
 <!--    </mat-card>-->
 </div>

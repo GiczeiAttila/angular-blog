@@ -34,7 +34,7 @@
                     </mat-expansion-panel-header>
                     <p>Description: {{meeting.description}}</p>
                     <p *ngFor="let participant of meeting.participants"
-                       id="participantNames">{{participant.userName}} </p>
+                       id="participantNames"> {{participant.userName}} </p>
                     <mat-action-row>
                         <button (click)="changeToActive(meeting.meetingId)" color="warn" mat-raised-button>
                             Back to active

@@ -1,6 +1,6 @@
 <div class="mat-app-background basic-container">
    <!-- <mat-card class="basic-container">-->
-        <h4 class="modal-title">New post</h4>
+        <mat-card-title>New post</mat-card-title>
         <br>
         <form (ngSubmit)="onSubmit()" [formGroup]="postForm" class="example-form" class="example">
 
@@ -118,7 +118,6 @@
                 <br>
             </div>
 
-        <mat-card-actions>
             <button mat-raised-button color="primary" type="submit" [disabled]="isUploading">
                 Save post
                 <mat-icon *ngIf="isUploading">
@@ -130,6 +129,6 @@
                     mat-raised-button>
                 Cancel
             </button>
-        </mat-card-actions>
-    </form>
+
+        </form>
 </div>
