@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isLoggedIn: boolean;
     userId: string = '';
     timer;
+    weatherInterval;
     actualTime: Date;
     actualMinutes: string;
     actualSeconds: string;
@@ -44,6 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.actualSeconds=''+ this.actualTime.getSeconds();
             }},1000);
 
+
     }
 
     ngOnInit(){
@@ -53,14 +55,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
         } else {
             this.isLoggedIn = false;
         }
-        this.helperService.getCurrentWeather('Budapest').subscribe((res) => {
-            console.log(res);
-            this.location = res['name'];
-            this.temperature = res['main'].temp +'°C';
-            this.humidity=  res['main'].humidity+'%';
-            this.weather= res['weather'][0].description;
-            this.wind =  res['wind'].speed+'km/h';
-        });
+        setInterval(this.weatherInterval = () => {
+            this.helperService.getCurrentWeather('Budapest').subscribe((res) => {
+                console.log(res);
+                this.location = res['name'];
+                this.temperature = res['main'].temp + '°C';
+                this.humidity = res['main'].humidity + '%';
+                this.weather = res['weather'][0].description;
+                this.wind = res['wind'].speed + 'km/h';
+            })
+        }, 1000 * 60 * 15);
+
     }
 
     logout() {
@@ -70,7 +75,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.isLoggedIn = localStorage.getItem('auth') ? true : false;
             }
         );
-
     }
 
     toggleInTs(sidenavMaster: MatSidenav, sidenavSlave: MatSidenav) {
@@ -85,5 +89,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.timer.clearInterval();
+        this.weatherInterval.clearInterval();
     }
 }
