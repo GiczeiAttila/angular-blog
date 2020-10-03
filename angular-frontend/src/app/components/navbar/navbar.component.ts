@@ -33,39 +33,50 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.isLoggedIn = localStorage.getItem('auth') ? true : false;
             this.userId = localStorage.getItem('userId');
         })
-        this.timer = setInterval(()=>{this.actualTime=new Date;
-            if (this.actualTime.getMinutes() < 10) {
-                this.actualMinutes="0"+this.actualTime.getMinutes();
-            }else{
-                this.actualMinutes=''+ this.actualTime.getMinutes();
-            }
-            if (this.actualTime.getSeconds() < 10) {
-                this.actualSeconds="0"+this.actualTime.getSeconds();
-            }else{
-                this.actualSeconds=''+ this.actualTime.getSeconds();
-            }},1000);
+        this.renderDateTime();
+        this.renderWeather();
 
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         if (localStorage.getItem('auth')) {
             this.isLoggedIn = true;
-            this.userId= localStorage.getItem('userId')
+            this.userId = localStorage.getItem('userId')
         } else {
             this.isLoggedIn = false;
         }
         setInterval(this.weatherInterval = () => {
-            this.helperService.getCurrentWeather('Budapest').subscribe((res) => {
-                console.log(res);
-                this.location = res['name'];
-                this.temperature = res['main'].temp + '°C';
-                this.humidity = res['main'].humidity + '%';
-                this.weather = res['weather'][0].description;
-                this.wind = res['wind'].speed + 'km/h';
-            })
+            this.renderWeather();
         }, 1000 * 60 * 15);
+        this.timer = setInterval(() => {
+            this.renderDateTime();
+        }, 1000);
+    }
 
+    private renderDateTime() {
+        this.actualTime = new Date;
+        if (this.actualTime.getMinutes() < 10) {
+            this.actualMinutes = "0" + this.actualTime.getMinutes();
+        } else {
+            this.actualMinutes = '' + this.actualTime.getMinutes();
+        }
+        if (this.actualTime.getSeconds() < 10) {
+            this.actualSeconds = "0" + this.actualTime.getSeconds();
+        } else {
+            this.actualSeconds = '' + this.actualTime.getSeconds();
+        }
+    }
+
+    private renderWeather() {
+        this.helperService.getCurrentWeather('Budapest').subscribe((res) => {
+            console.log(res);
+            this.location = res['name'];
+            this.temperature = res['main'].temp + '°C';
+            this.humidity = res['main'].humidity + '%';
+            this.weather = res['weather'][0].description;
+            this.wind = res['wind'].speed + 'km/h';
+        })
     }
 
     logout() {
