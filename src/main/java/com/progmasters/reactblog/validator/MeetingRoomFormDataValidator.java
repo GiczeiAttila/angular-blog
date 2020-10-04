@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Component
 public class MeetingRoomFormDataValidator implements Validator {
     @Override
@@ -16,9 +19,15 @@ public class MeetingRoomFormDataValidator implements Validator {
     public void validate(Object o, Errors errors) {
         MeetingRoomFormData meetingRoomFormData = (MeetingRoomFormData) o;
         String name = meetingRoomFormData.getName();
+        Pattern regex = Pattern.compile("[^A-Za-z0-9 ÁÉÍÓÖŐÚÜŰáéíóöőúüű]");
+        Matcher matcher = regex.matcher(name);
 
         if (name.isEmpty() || name == null) {
             errors.rejectValue("name", "meetingRoomFormData.name.empty");
+        } else if (matcher.find()) {
+            errors.rejectValue("name", "meetingRoomFormData.name.invalid-character");
+        } else if (name.charAt(0) == ' ') {
+            errors.rejectValue("name", "meetingRoomFormData.name.start-with-space");
         } else if (Character.isLowerCase(name.charAt(0))) {
             errors.rejectValue("name", "meetingRoomFormData.name.lowercase");
         }
