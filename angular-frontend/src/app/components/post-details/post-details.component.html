@@ -152,7 +152,7 @@
                         </div>
                         <p class="card-text"><small class="text-muted">{{comment?.createdAt}}</small></p>
                         <button (click)="edit(comment)" *ngIf="!isUnderEditing && comment.authorId === userId"
-                                color="accent"
+                                color="primary"
                                 mat-raised-button>Edit
                         </button>
                         <button (click)="save(comment)"
