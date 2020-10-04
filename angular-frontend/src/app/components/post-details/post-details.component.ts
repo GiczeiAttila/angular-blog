@@ -6,6 +6,7 @@ import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {CommentDetailsModel} from "../../models/commentDetails.model";
+import {CommentFormDataModel} from "../../models/commentFormData.model";
 
 @Component({
     selector: 'app-post-details',
@@ -71,12 +72,13 @@ export class PostDetailsComponent implements OnInit {
     }
 
     save(comment: CommentDetailsModel) {
-        const commentData = {...this.commentForm.value};
+        const commentData: CommentFormDataModel = {...this.commentForm.value};
         console.log(commentData);
         commentData.postId = this.id;
         commentData.authorId = this.userId;
         this.blogService.updateComment(commentData, comment.id).subscribe(
             () => {
+                console.log('jé')
             },
             error => handleValidationErrors(error, this.commentForm),
             () => {

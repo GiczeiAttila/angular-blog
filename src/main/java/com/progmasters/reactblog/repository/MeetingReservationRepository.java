@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Repository
 public interface MeetingReservationRepository extends JpaRepository<MeetingReservation, Long> {
 
-    @Query("SELECT m FROM MeetingReservation m WHERE m.creator = :id ORDER BY m.startDate DESC")
-    List<MeetingReservation> findMeetingByCreatorId(@Param("id") User id);
+    @Query("SELECT m FROM MeetingReservation m WHERE m.creator = :id AND m.startDate >= :now ORDER BY m.startDate DESC")
+    List<MeetingReservation> findMeetingByCreatorId(@Param("id") User id, @Param("now") ZonedDateTime dateTimeNow);
 }

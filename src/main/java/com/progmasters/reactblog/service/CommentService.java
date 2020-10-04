@@ -79,7 +79,7 @@ public class CommentService {
         Comment comment = this.commentRepository.findById(id).orElse(null);
         if (comment.getAuthor().getId() == commentFormData.getAuthorId()) {
             comment.setCommentBody(commentFormData.getCommentBody());
-            commentRepository.save(comment);
+
             return comment;
         }
         return null;

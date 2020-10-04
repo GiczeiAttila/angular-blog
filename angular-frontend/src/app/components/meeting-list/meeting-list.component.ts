@@ -59,7 +59,7 @@ export class MeetingListComponent implements OnInit {
         this.userService.addMeetingId(meetingId);
         const dialogRef = this.dialog.open(MeetingUpdateDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            this.ngOnInit();
         });
     }
 

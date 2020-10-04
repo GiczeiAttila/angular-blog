@@ -74,7 +74,7 @@ public class RequestService {
     public List<CalendarTimeOffListDto> getAcceptedTimeOffDates(Long id) {
         TimeOffStatusEnum status1 = TimeOffStatusEnum.valueOf("ACCEPTED");
         TimeOffStatusEnum status2 = TimeOffStatusEnum.valueOf("PENDING");
-        List<CalendarTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findAccepted(status1, status2)
+        List<CalendarTimeOffListDto> listOfAll = this.timeOffDateRangeRepository.findAccepted(id, status1, status2)
                 .stream()
                 .map(timeOff -> new CalendarTimeOffListDto(timeOff))
                 .collect(Collectors.toList());

@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MeetingDialodComponent} from "../meeting-form-dialog/meeting-dialod.component";
 import * as moment from 'moment';
 import {MeetingListItemModel} from "../../models/meetingListItem.model";
+import {Subject} from "rxjs";
 import {Router} from "@angular/router";
 
 
@@ -56,33 +57,35 @@ export class MeetingReservationFormComponent implements OnInit {
         this.userService.refreshCalendar.subscribe(
             () => this.ngOnInit()
         )
-
-        // refresh: Subject<any> = new Subject();
     }
+
+    refresh: Subject<any> = new Subject();
 
     ngOnInit(): void {
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
-        }else {
+        } else {
             this.router.navigate(['']);
         }
+
         this.loadMeetingList();
     }
 
     loadCalendar() {
         this.view = CalendarView.Week;
-        //this.viewDate = new Date();
+        this.viewDate = new Date();
+        this.events = this.displayingMeetingList;
     }
 
     loadMeetingList() {
         this.userId = +localStorage.getItem('userId');
-        this.meetingList = [];
-        this.displayingMeetingList = [];
-        this.events = [];
         this.loadCalendar();
 
         this.userService.getMeetingList(this.userId).subscribe(
             (list) => {
+                this.meetingList = [];
+                this.displayingMeetingList = [];
+                this.events = [];
                 list.forEach(meeting => {
                     const meetingData: CalendarEvent = {
                         title: meeting.title + ' room: ' + meeting.meetingRoomName,
@@ -91,31 +94,15 @@ export class MeetingReservationFormComponent implements OnInit {
                         color: colors.blue
                     }
                     this.events.push(meetingData);
+                    this.displayingMeetingList.push(meetingData);
                 })
-                // this.meetingList = list;
-                // this.addToDisplayList();
-                this.loadCalendar()
             },
             error => console.log(error),
             () => {
-
+                this.refresh.next();
+                this.loadCalendar();
             }
         )
-    }
-
-
-    private addToDisplayList() {
-        this.events = [];
-        this.meetingList.forEach(meeting => {
-            const meetingData: CalendarEvent = {
-                title: meeting.title + ' room: ' + meeting.meetingRoomName,
-                start: new Date(meeting.startDate),
-                end: new Date(meeting.endDate),
-                color: colors.blue
-            }
-            this.events.push(meetingData);
-            this.displayingMeetingList.push(meetingData);
-        })
     }
 
     clickOnHourSegment(date: Date) {

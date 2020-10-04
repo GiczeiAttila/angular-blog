@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,6 +82,7 @@ public class MeetingService {
     public List<MeetingListItem> getMyMeetingList(Long id) {
         Optional<User> optionalUser = this.userRepository.findById(id);
         if (optionalUser.isPresent()) {
+            LocalDateTime dateTimeNow = LocalDateTime.now();
             List<MeetingListItem> meetingReservations = this.meetingParticipantRepository.findMeetingByUserId(optionalUser.get(), MeetingStatus.ACTIVE)
                     .stream()
                     .map(meeting -> new MeetingListItem(meeting.getMeetingReservation()))
@@ -93,7 +96,8 @@ public class MeetingService {
     public List<UserMeetingReservationListItem> getUserMeetingReservation(Long id) {
         Optional<User> optionalUser = this.userRepository.findById(id);
         if (optionalUser.isPresent()) {
-            List<UserMeetingReservationListItem> meetingReservationList = this.meetingReservationRepository.findMeetingByCreatorId(optionalUser.get())
+            ZonedDateTime dateTimeNow = ZonedDateTime.now();
+            List<UserMeetingReservationListItem> meetingReservationList = this.meetingReservationRepository.findMeetingByCreatorId(optionalUser.get(), dateTimeNow)
                     .stream()
                     .map(meeting -> {
                         List<MeetingParticipant> participants = this.meetingParticipantRepository.findUserByMeetingId(meeting);

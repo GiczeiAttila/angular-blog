@@ -47,14 +47,16 @@
 
 <div [ngSwitch]="view">
     <mwl-calendar-week-view style="color: #1b1e21"
-        (dayHeaderClicked)="clickedDate = $event.day?.date"
-        (hourSegmentClicked)="clickOnHourSegment($event?.date)"
-        *ngSwitchCase="'week'"
-        [events]="events"
-        [viewDate]="viewDate"
+                            [refresh]="refresh"
+                            (dayHeaderClicked)="clickedDate = $event.day?.date"
+                            (hourSegmentClicked)="clickOnHourSegment($event?.date)"
+                            *ngSwitchCase="'week'"
+                            [events]="events"
+                            [viewDate]="viewDate"
     >
     </mwl-calendar-week-view>
 </div>
+
 
 
 
