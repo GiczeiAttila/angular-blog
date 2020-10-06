@@ -97,8 +97,15 @@
                     <mat-card-subtitle>{{corporatePost.createdAt}}</mat-card-subtitle>
 
                     <mat-card-actions>
-                        <button (click)="readMore(corporatePost.id)" color="primary" mat-raised-button>Read More</button>
-                        <button  *ngIf="userId===corporatePost.authorId"  (click)="delete(corporatePost.id)" color="warn" mat-raised-button>Delete</button>
+                        <button (click)="readMore(corporatePost.id)" color="primary" mat-raised-button>Read More
+                        </button>
+                        <button (click)="edit(corporatePost.id)" *ngIf="userId===corporatePost.authorId" color="accent"
+                                mat-raised-button>
+                            Edit
+                        </button>
+                        <button *ngIf="userId===corporatePost.authorId" (click)="delete(corporatePost.id)" color="warn"
+                                mat-raised-button>Delete
+                        </button>
                     </mat-card-actions>
                 </mat-card>
 
@@ -173,7 +180,13 @@
 
                     <mat-card-actions>
                         <button (click)="readMore(freeTimePost.id)" color="primary" mat-raised-button>Read More</button>
-                        <button  *ngIf="userId===freeTimePost.authorId"  (click)="delete(freeTimePost.id)" color="warn" mat-raised-button>Delete</button>
+                        <button (click)="edit(freeTimePost.id)" *ngIf="userId===freeTimePost.authorId" color="accent"
+                                mat-raised-button>
+                            Edit
+                        </button>
+                        <button *ngIf="userId===freeTimePost.authorId" (click)="delete(freeTimePost.id)" color="warn"
+                                mat-raised-button>Delete
+                        </button>
                     </mat-card-actions>
                 </mat-card>
 
@@ -250,7 +263,13 @@
                     <mat-card-actions>
                         <button (click)="readMore(professionalPost.id)" color="primary" mat-raised-button>Read More
                         </button>
-                        <button  *ngIf="userId===professionalPost.authorId"  (click)="delete(professionalPost.id)" color="warn" mat-raised-button>Delete</button>
+                        <button (click)="edit(professionalPost.id)" *ngIf="userId===professionalPost.authorId"
+                                color="accent" mat-raised-button>
+                            Edit
+                        </button>
+                        <button *ngIf="userId===professionalPost.authorId" (click)="delete(professionalPost.id)"
+                                color="warn" mat-raised-button>Delete
+                        </button>
                     </mat-card-actions>
                 </mat-card>
 
