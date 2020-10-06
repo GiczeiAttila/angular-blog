@@ -26,6 +26,7 @@ export class PostFormComponent implements OnInit {
     isUploading: boolean;
     postId: number;
     userId: number;
+    isEdited: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
                 private blogService: BlogService,
@@ -51,6 +52,7 @@ export class PostFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isEdited = false;
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
             this.userId = +localStorage.getItem('userId')
@@ -167,6 +169,7 @@ export class PostFormComponent implements OnInit {
                 if (response.type === 'EVENT') {
                     this.isEvent = true;
                 }
+                this.isEdited = true;
                 this.authorId = response.authorId;
                 this.postForm.patchValue({
                     category: response.category,

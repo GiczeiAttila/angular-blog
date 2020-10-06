@@ -22,13 +22,16 @@
             <br>
 
             <mat-form-field appearance="fill" class="example-full-width">
-                <mat-label>Select type</mat-label>
+                <mat-label *ngIf="!isEdited">Select type</mat-label>
+                <mat-label *ngIf="isEdited">Type</mat-label>
                 <mat-select formControlName="type" required>
-                    <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [value]="type.name">
+                    <mat-option (click)="getTypeValue(type.name)" *ngFor="let type of types" [disabled]="isEdited"
+                                [value]="type.name">
                         {{type.displayName}}
                     </mat-option>
                 </mat-select>
-                <mat-hint>Please choose a type</mat-hint>
+                <mat-hint *ngIf="!isEdited">Please choose a type</mat-hint>
+                <mat-hint *ngIf="isEdited">Can't change type</mat-hint>
                 <mat-error
                     *ngIf="postForm.get('type').invalid && postForm.get('type').touched && !postForm.get('type').errors?.serverError">
                     Please choose a type
