@@ -102,7 +102,7 @@ export class PostFormComponent implements OnInit {
     }
 
     getTypeValue(type: string) {
-        if (type == 'EVENT') {
+        if (this.postForm.get('type').value == 'EVENT') {
             this.isEvent = true;
         } else {
             this.isEvent = false;
