@@ -71,7 +71,7 @@
 
                 <a href="#" mat-button id="registration" routerLink="/registration" routerLinkActive="active-link">Registration</a>
 
-                <a href="#" mat-button *ngIf="isLoggedIn" id="meetingRoom" routerLink="/meetingRoom-form">New meeting
+                <a *ngIf="isLoggedIn" href="#" id="meetingRoom" mat-button routerLink="/meetingRoom-form">Meeting
                     room</a>
 
                 <a href="#" mat-button *ngIf="isLoggedIn" id="meeting-form" routerLink="/meetingReservation">Meeting</a>
@@ -107,8 +107,7 @@
                    routerLinkActive="active-link">Registration</a>
 
                 <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingRoom-form"
-                   routerLinkActive="active-link">New meeting
-                    room</a>
+                   routerLinkActive="active-link">Meeting room</a>
 
                 <a href="#" (click)="sidenav.toggle()" mat-list-item *ngIf="isLoggedIn" routerLink="/meetingReservation"
                    routerLinkActive="active-link">Meeting</a>

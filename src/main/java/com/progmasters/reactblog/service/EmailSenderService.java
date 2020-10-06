@@ -159,6 +159,18 @@ public class EmailSenderService {
     }
 
     @Async
+    public void sendMeetingRoomDeletedNotification(MeetingRoom meetingRoom, List<User> userList) {
+        String subject = "Deleted meeting room";
+        String mailBody =
+                meetingRoom.getName() + " meeting room is deleted and You have active meeting(s) in this room. Please choose other meeting room.";
+
+        for (User user : userList) {
+            sendMail(user.getEmail(), subject, mailBody);
+        }
+        logger.info("Notification of deleted meeting room is send with id: " + meetingRoom.getId());
+    }
+
+    @Async
     public void sendMail(String toAddress, String subject, String mailBody) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toAddress);

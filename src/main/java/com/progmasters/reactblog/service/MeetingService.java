@@ -72,7 +72,7 @@ public class MeetingService {
 
 
     public List<MeetingRoomOptionDto> getMeetingRooms() {
-        List<MeetingRoomOptionDto> meetingRooms = this.meetingRoomRepository.findAll()
+        List<MeetingRoomOptionDto> meetingRooms = this.meetingRoomRepository.findAllActive()
                 .stream()
                 .map(room -> new MeetingRoomOptionDto(room))
                 .collect(Collectors.toList());
@@ -161,6 +161,22 @@ public class MeetingService {
                 }
             }
             emailSenderService.sendMeetingDataChangeNotification(meetingReservation, userList);
+        }
+    }
+
+    public void deleteMeetingRoom(Long id) {
+        Optional<MeetingRoom> optionalMeetingRoom = this.meetingRoomRepository.findById(id);
+        List<User> meetingCreatorList = new ArrayList<>();
+
+        if (optionalMeetingRoom.isPresent()) {
+            MeetingRoom meetingRoom = optionalMeetingRoom.get();
+
+            List<MeetingReservation> meetingReservationList = this.meetingReservationRepository.findAllActiveByRoomId(meetingRoom);
+            for (MeetingReservation meeting : meetingReservationList) {
+                meetingCreatorList.add(meeting.getCreator());
+            }
+            meetingRoom.setStatus(MeetingRoomStatus.DELETED);
+            emailSenderService.sendMeetingRoomDeletedNotification(meetingRoom, meetingCreatorList);
         }
     }
 }

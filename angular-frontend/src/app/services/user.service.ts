@@ -180,4 +180,8 @@ export class UserService {
         return this.http.put(MEETING_URL, updatedMeeting);
     }
 
+    deleteMeetingRoom(id: number) {
+        return this.http.put(MEETING_URL + "/delete-meeting-room", id);
+    }
+
 }

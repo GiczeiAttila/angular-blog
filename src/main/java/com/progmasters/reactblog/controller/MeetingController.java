@@ -68,7 +68,7 @@ public class MeetingController {
     }
 
     @GetMapping("meetingRoom")
-    public ResponseEntity<List<MeetingRoomOptionDto>> getAllMeetingRooms() {
+    public ResponseEntity<List<MeetingRoomOptionDto>> getActiveMeetingRooms() {
         List<MeetingRoomOptionDto> meetingRooms = this.meetingService.getMeetingRooms();
         if (meetingRooms != null) {
             logger.info("Request all meeting room");
@@ -124,6 +124,13 @@ public class MeetingController {
     public ResponseEntity<MeetingReservation> updateMeeting(@RequestBody MeetingReservationUpdatedForm updatedForm) {
         this.meetingService.updateMeeting(updatedForm);
         logger.info("Request to update meeting with id: " + updatedForm.getMeetingId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("delete-meeting-room")
+    public ResponseEntity<Void> deleteMeetingRoom(@RequestBody Long id) {
+        this.meetingService.deleteMeetingRoom(id);
+        logger.info("Change meeting room status to deleted with id: " + id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

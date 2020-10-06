@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {handleValidationErrors} from "../../shared/validation.handler";
 import {Router} from "@angular/router";
 import {HelperService} from "../../services/helper.service";
+import {MeetingRoomOptionDtoModel} from "../../models/meetingRoomOptionDto.model";
 
 @Component({
     selector: 'app-meeting-room-form',
@@ -13,6 +14,8 @@ import {HelperService} from "../../services/helper.service";
 export class MeetingRoomFormComponent implements OnInit {
 
     meetingRoomForm: FormGroup;
+    activeMeetingRooms: Array<MeetingRoomOptionDtoModel>;
+    index: number;
 
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
@@ -25,13 +28,14 @@ export class MeetingRoomFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.index = 1;
         if (localStorage.getItem('auth')) {
             this.userService.loginSubject.next();
         }else {
             this.router.navigate(['']);
         }
 
-
+        this.loadMeetingRooms();
     }
 
     saveRoom() {
@@ -47,4 +51,17 @@ export class MeetingRoomFormComponent implements OnInit {
         )
     }
 
+    loadMeetingRooms() {
+        this.userService.fetchMeetingRoomListInitData().subscribe(
+            (list) => this.activeMeetingRooms = list,
+            error => console.log(error)
+        )
+    }
+
+    deleteMeetingRoom(roomId: number) {
+        this.userService.deleteMeetingRoom(roomId).subscribe(
+            () => this.ngOnInit(),
+            error => console.log(error)
+        )
+    }
 }

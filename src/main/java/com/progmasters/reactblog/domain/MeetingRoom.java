@@ -24,6 +24,9 @@ public class MeetingRoom {
     @OneToMany(mappedBy = "meetingRoom")
     private List<MeetingReservation> meetingList;
 
+    @Enumerated(EnumType.STRING)
+    private MeetingRoomStatus status;
+
     public MeetingRoom() {
     }
 
@@ -31,6 +34,8 @@ public class MeetingRoom {
         this.name = meetingRoomFormData.getName();
         this.seats = meetingRoomFormData.getSeats();
         this.meetingList = new ArrayList<>();
+        this.status = MeetingRoomStatus.ACTIVE;
+
     }
 
     public Long getId() {
@@ -65,4 +70,11 @@ public class MeetingRoom {
         this.meetingList = meetingList;
     }
 
+    public MeetingRoomStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MeetingRoomStatus status) {
+        this.status = status;
+    }
 }
