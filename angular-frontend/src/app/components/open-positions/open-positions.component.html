@@ -48,7 +48,8 @@
                     <mat-error>
                         {{openPositionForm.get('positionName').errors?.serverError}}
                     </mat-error>
-                    <mat-error *ngIf="openPositionForm.get('positionName').invalid && openPositionForm.get('positionName').dirty">
+                    <mat-error
+                        *ngIf="openPositionForm.get('positionName').invalid && openPositionForm.get('positionName').touched&&!openPositionForm.get('positionName').errors?.serverError">
                         Open position title is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
@@ -61,7 +62,7 @@
                         {{openPositionForm.get('description').errors?.serverError}}
                     </mat-error>
                     <mat-error
-                        *ngIf="openPositionForm.get('description').invalid && openPositionForm.get('description').dirty">
+                        *ngIf="openPositionForm.get('description').invalid && openPositionForm.get('description').touched&&!openPositionForm.get('description').errors?.serverError">
                         Open position description is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
@@ -73,6 +74,10 @@
                            [min]="minDate" [max]="maxDate" disabled placeholder="start date"
                            required formControlName="deadline">
                     <mat-hint>Open position deadline is required</mat-hint>
+                    <mat-error
+                        *ngIf="openPositionForm.get('deadline').invalid && openPositionForm.get('deadline').touched&&!openPositionForm.get('deadline').errors?.serverError">
+                        Open position deadline is <strong>required</strong>
+                    </mat-error>
                     <mat-error *ngIf="openPositionForm.get('deadline').errors?.serverError">
                         {{openPositionForm.get('deadline').errors?.serverError}}
                     </mat-error>
