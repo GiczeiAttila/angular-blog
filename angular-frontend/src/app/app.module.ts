@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
@@ -42,6 +42,7 @@ import {MeetingListComponent} from './components/meeting-list/meeting-list.compo
 import {MeetingUpdateDialogComponent} from './components/meeting-update-dialog/meeting-update-dialog.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {HttpRequestInterceptor} from "./shared/httpRequestInterceptor";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -97,7 +98,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 
     ],
     entryComponents: [AppComponent],
-    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
+    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
+        {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}],
     bootstrap: [AppComponent]
 })
 export class AppModule {

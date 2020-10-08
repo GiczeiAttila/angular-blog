@@ -33,9 +33,9 @@ public class LoginValidator implements Validator {
         } else {
             if (user.getUserStatus() == UserStatusEnum.BLOCKED) {
                 errors.rejectValue("password", "userLoginFormDto.account-blocked");
-            } else if (!user.getPassword().equals(userLogInFormDto.getPassword())) {
-                errors.rejectValue("password", "userLoginFormDto.wrong-login-data");
-                user.setNumberOfLoginAttempts(user.getNumberOfLoginAttempts() + 1);
+                //           } else if (!user.getPassword().equals(userLogInFormDto.getPassword())) {
+                //               errors.rejectValue("password", "userLoginFormDto.wrong-login-data");
+                //               user.setNumberOfLoginAttempts(user.getNumberOfLoginAttempts() + 1);
             } else if (user.getNumberOfLoginAttempts() < 3) {
                 user.setNumberOfLoginAttempts(0L);
             }

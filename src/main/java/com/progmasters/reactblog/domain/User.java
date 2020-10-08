@@ -23,6 +23,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatusEnum userStatus;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "author")
     private List<Post> myPosts = new ArrayList<>();
 
@@ -59,6 +62,7 @@ public class User {
         this.lastName = userFormDto.getLastName();
         this.email = userFormDto.getEmail();
         this.phoneNumber = userFormDto.getPhoneNumber();
+        this.role = Role.valueOf(userFormDto.getRole());
         this.userStatus = UserStatusEnum.REGISTERED;
         this.token = UUID.randomUUID().toString();
         this.numberOfLoginAttempts = 0L;
@@ -126,6 +130,14 @@ public class User {
 
     public void setUserStatus(UserStatusEnum userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<Post> getMyPosts() {

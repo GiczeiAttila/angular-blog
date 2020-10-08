@@ -9,6 +9,9 @@ public class UserFormDto {
     //private String password;
     private String phoneNumber;
 
+    private String role;
+
+
     public Long getId() {
         return id;
     }
@@ -57,4 +60,11 @@ public class UserFormDto {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

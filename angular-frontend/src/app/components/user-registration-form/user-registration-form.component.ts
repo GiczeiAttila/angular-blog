@@ -5,6 +5,8 @@ import {handleValidationErrors} from "../../shared/validation.handler";
 import {UserRegistrationFormModel} from "../../models/userRegistrationForm.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HelperService} from "../../services/helper.service";
+import {UserRegistrationInitModel} from "../../models/userRegistrationInit.model";
+import {RoleOptionModel} from "../../models/roleOption.model";
 
 @Component({
     selector: 'app-user-registration-form',
@@ -14,17 +16,12 @@ import {HelperService} from "../../services/helper.service";
 export class UserRegistrationFormComponent implements OnInit {
 
     registrationForm: FormGroup;
+    roles: Array<RoleOptionModel>;
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService,
                 private snackBar: MatSnackBar,
                 private helperService: HelperService) {
-    }
-
-    ngOnInit(): void {
-        if (localStorage.getItem('auth')) {
-            this.userService.loginSubject.next();
-        }
         this.registrationForm = this.formBuilder.group(
             {
                 id: ['',Validators.required],
@@ -32,7 +29,21 @@ export class UserRegistrationFormComponent implements OnInit {
                 lastName: ['',Validators.required],
                 email: ['',Validators.required],
                 phoneNumber: ['',Validators.required],
+                role: ['', Validators.required],
             });
+    }
+
+    ngOnInit(): void {
+        if (localStorage.getItem('auth')) {
+            this.userService.loginSubject.next();
+        }
+        this.userService.fetchRolesInitData().subscribe(
+            (data: UserRegistrationInitModel) => {
+                this.roles = data.roles;
+
+            },
+            error => console.warn(error),
+        );
     }
 
     submitRegistration() {

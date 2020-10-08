@@ -199,6 +199,21 @@
                 Mobil phone number is <strong>required</strong>
             </mat-error>
         </mat-form-field>
+        <mat-form-field appearance="fill" class="primary example-full-width">
+            <mat-label>Select a role</mat-label>
+            <mat-select formControlName="role" required>
+                <mat-option *ngFor="let role of roles" [value]="role.name">
+                    {{role.displayName}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Please choose a role</mat-hint>
+            <mat-error
+                *ngIf="registrationForm.get('role').invalid && registrationForm.get('role').touched && !registrationForm.get('role').errors?.serverError"
+                class="text-danger">Please
+                choose a role
+            </mat-error>
+            <mat-error class="text-danger">{{registrationForm.get('role').errors?.serverError}}</mat-error>
+        </mat-form-field>
         <br><br>
 
         <button color="primary" mat-raised-button type="submit">Submit</button>

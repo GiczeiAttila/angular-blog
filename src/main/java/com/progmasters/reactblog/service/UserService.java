@@ -1,19 +1,20 @@
 package com.progmasters.reactblog.service;
 
+import com.progmasters.reactblog.domain.Role;
 import com.progmasters.reactblog.domain.User;
 import com.progmasters.reactblog.domain.UserStatusEnum;
-import com.progmasters.reactblog.domain.dto.PasswordDto;
-import com.progmasters.reactblog.domain.dto.UserConfirmationDto;
-import com.progmasters.reactblog.domain.dto.UserForMeetingOptionDto;
-import com.progmasters.reactblog.domain.dto.UserFormDto;
+import com.progmasters.reactblog.domain.dto.*;
 import com.progmasters.reactblog.repository.SuggestionRepository;
 import com.progmasters.reactblog.repository.TimeOffDateRangeRepository;
 import com.progmasters.reactblog.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +27,8 @@ public class UserService {
     private final SuggestionRepository suggestionRepository;
     private final EmailSenderService emailSenderService;
     private final TimeOffDateRangeRepository timeOffDateRangeRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, SuggestionRepository suggestionRepository, EmailSenderService emailSenderService, TimeOffDateRangeRepository timeOffDateRangeRepository) {
         this.userRepository = userRepository;
@@ -63,10 +66,13 @@ public class UserService {
 
     public void savePassword(PasswordDto passwordDto) {
         Optional<User> userOptional = userRepository.findById(passwordDto.getId());
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent()){
             User user = userOptional.get();
-            if (user.getPassword() == passwordDto.getOldPassword() && user.getUserStatus() == UserStatusEnum.BLOCKED) {
-                user.setPassword(passwordDto.getPassword());
+            String password = passwordEncoder.encode(passwordDto.getPassword());
+            user.setPassword(password);
+            if (user.getPassword() == passwordDto.getOldPassword() && user.getUserStatus()==UserStatusEnum.BLOCKED){
+                String password2 = passwordEncoder.encode(passwordDto.getPassword());
+                user.setPassword(password2);
                 user.setUserStatus(UserStatusEnum.ACTIVE);
                 logger.info("New password saved for id: " + passwordDto.getId());
             }
@@ -94,5 +100,13 @@ public class UserService {
                 .map(user -> new UserForMeetingOptionDto(user))
                 .collect(Collectors.toList());
         return users;
+    }
+
+    public RegistrationFormInitData createRegistrationInitData() {
+        return new RegistrationFormInitData(
+                Arrays.stream(Role.values()).map(RoleDto::new).collect(Collectors.toList())
+
+        );
+
     }
 }

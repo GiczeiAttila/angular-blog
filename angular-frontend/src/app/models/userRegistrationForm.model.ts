@@ -4,5 +4,6 @@ export interface UserRegistrationFormModel{
     lastName: string;
     email: string;
     phoneNumber: string;
+    role: string
     // password: string;
 }

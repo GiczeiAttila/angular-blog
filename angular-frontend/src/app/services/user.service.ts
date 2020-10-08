@@ -27,12 +27,15 @@ import {UserMeetingReservationListItemModel} from "../models/userMeetingReservat
 import {MeetingStatusChangeDtoModel} from "../models/meetingStatusChangeDto.model";
 import {MeetingReservationDataModel} from "../models/meetingReservationData.model";
 import {MeetingReservationUpdatedFormModel} from "../models/meetingReservationUpdatedForm.model";
+import {UserRegistrationInitModel} from "../models/userRegistrationInit.model";
 
 const USER_BASE_URL: string = environment.BASE_URL + '/api/users';
 const SUGGESTION_BASE_URL: string = environment.BASE_URL + '/api/suggestions';
 const REQUEST_BASE_URL: string = environment.BASE_URL + '/api/requests'
 const OPEN_POSITION_URL: string = environment.BASE_URL + '/api/open-positions';
 const MEETING_URL: string = environment.BASE_URL + '/api/meetings';
+const REGISTRATION_URL: string = environment.BASE_URL + '/api/registration';
+
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -184,4 +187,7 @@ export class UserService {
         return this.http.put(MEETING_URL + "/delete-meeting-room", id);
     }
 
+    fetchRolesInitData(): Observable<UserRegistrationInitModel> {
+        return this.http.get<UserRegistrationInitModel>(REGISTRATION_URL);
+    }
 }
