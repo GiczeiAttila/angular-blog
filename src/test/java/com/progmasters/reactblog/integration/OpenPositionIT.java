@@ -1,11 +1,26 @@
 package com.progmasters.reactblog.integration;
 
+import com.progmasters.reactblog.domain.User;
+import com.progmasters.reactblog.domain.dto.OpenPositionFormDto;
+import com.progmasters.reactblog.domain.dto.OpenPositionListItemDto;
 import com.progmasters.reactblog.service.OpenPositionService;
 import com.progmasters.reactblog.service.UserService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Stream;
 
 @SpringBootTest
 @Transactional
@@ -16,7 +31,7 @@ public class OpenPositionIT {
     @Autowired
     private UserService userService;
 
- /*   @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
+    @ParameterizedTest(name = "{index} => plusDay1={0}, plusDay2={1}, plusDay3={2}, plusDay4={3}, expectedNumber={4}")
     @CsvSource({
             "1,2,3,4,3",
             "0,1,2,3,2",
@@ -123,15 +138,16 @@ public class OpenPositionIT {
         public static OpenPositionFormDto getOpenPositionFormDto(int plusDay) {
             OpenPositionFormDto openPositionFormDto = new OpenPositionFormDto();
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+/*            format.setTimeZone(TimeZone.getTimeZone("UTC"));
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_MONTH, plusDay);
-            String deadline = format.format(calendar.getTime());
+            String deadline = format.format(calendar.getTime());*/
+            LocalDate deadline = LocalDate.now();
+            deadline = deadline.plusDays(plusDay);
             openPositionFormDto.setDeadline(deadline);
             openPositionFormDto.setPositionName("Test open position number: " + userId);
             openPositionFormDto.setDescription("Test open position description number: " + userId);
             openPositionFormDto.setUserId(userId--);
-            System.out.println("\n" + deadline + "\n");
             return openPositionFormDto;
         }
     }
@@ -143,8 +159,4 @@ public class OpenPositionIT {
             return user;
         }
     }
-
-  */
-
-
 }
