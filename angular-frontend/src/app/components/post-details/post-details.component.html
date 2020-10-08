@@ -132,37 +132,40 @@
                     <div *ngFor="let comment of postDetails?.comments">
                         <h5 class="card-title">{{comment?.author}}</h5>
                         <p *ngIf="comment.id!==editedCommentId" class="card-text">{{comment?.commentBody}}</p>
-                        <div *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
-                             [formGroup]="commentForm" class="form-group">
-                             <textarea [ngClass]="{
-                                'is-invalid': commentForm.get('commentBody').invalid && commentForm.get('commentBody').touched
-                                || commentForm.get('commentBody').errors?.serverError}" class="form-control"
-                                       formControlName="commentBody" rows="4"
-                             ></textarea>
-                            <small
-                                *ngIf="commentForm.get('commentBody').invalid
-                                && commentForm.get('commentBody').touched
-                                && !commentForm.get('commentBody').errors?.serverError"
-                                class="text-danger"
-                            >Please enter the body of the comment
-                            </small>
-                            <small *ngIf="commentForm.get('commentBody').errors?.serverError" class="text-danger">
-                                {{commentForm.get('commentBody').errors['serverError']}}
-                            </small>
-                        </div>
+                        <app-comment-form (commentCreated)="loadPostDetails()"
+                                          *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                                          [comment]="comment" [postId]="id"></app-comment-form>
+                        <!-- <div *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                              [formGroup]="commentForm" class="form-group">
+                              <textarea [ngClass]="{
+                                 'is-invalid': commentForm.get('commentBody').invalid && commentForm.get('commentBody').touched
+                                 || commentForm.get('commentBody').errors?.serverError}" class="form-control"
+                                        formControlName="commentBody" rows="4"
+                              ></textarea>
+                             <small
+                                 *ngIf="commentForm.get('commentBody').invalid
+                                 && commentForm.get('commentBody').touched
+                                 && !commentForm.get('commentBody').errors?.serverError"
+                                 class="text-danger"
+                             >Please enter the body of the comment
+                             </small>
+                             <small *ngIf="commentForm.get('commentBody').errors?.serverError" class="text-danger">
+                                 {{commentForm.get('commentBody').errors['serverError']}}
+                             </small>
+                         </div>-->
                         <p class="card-text"><small class="text-muted">{{comment?.createdAt}}</small></p>
                         <button (click)="edit(comment)" *ngIf="!isUnderEditing && comment.authorId === userId"
                                 color="primary"
                                 mat-raised-button>Edit
                         </button>
-                        <button (click)="save(comment)"
+                        <!--<button (click)="save(comment)"
                                 *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
                                 color="primary" mat-raised-button>Save
                         </button>
                         <button (click)="cancel()"
                                 *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
                                 color="warn" mat-raised-button>Cancel
-                        </button>
+                        </button>-->
                         <hr>
                     </div>
                 </mat-expansion-panel>

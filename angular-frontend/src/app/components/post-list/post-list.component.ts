@@ -3,6 +3,7 @@ import {BlogService} from '../../services/blog.service';
 import {PostListItemModel} from "../../models/postListItem.model";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {CommentDetailsModel} from "../../models/commentDetails.model";
 
 @Component({
     selector: 'app-post-list',
@@ -20,6 +21,8 @@ export class PostListComponent implements OnInit {
     addCommentOpenState: boolean;
     index: number;
     userId: number;
+    isUnderEditing: boolean;
+    editedCommentId: number;
 
     constructor(private blogService: BlogService,
                 private userService: UserService,
@@ -55,7 +58,11 @@ export class PostListComponent implements OnInit {
                     }
                 })
             },
-            error => console.warn(error)
+            error => console.warn(error),
+            () => {
+                this.isUnderEditing = false;
+                this.editedCommentId = undefined;
+            }
         );
     }
 
@@ -77,5 +84,10 @@ export class PostListComponent implements OnInit {
 
     edit(id: number) {
         this.router.navigate(['postForm', id])
+    }
+
+    editComment(comment: CommentDetailsModel) {
+        this.editedCommentId = comment.id;
+        this.isUnderEditing = true;
     }
 }

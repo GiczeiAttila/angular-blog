@@ -46,8 +46,16 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div *ngFor="let comment of post.comments">
+                            <app-comment-form (commentCreated)="loadPosts()"
+                                              *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                                              [comment]="comment" [postId]="post.id"></app-comment-form>
                             <h5 class="card-title">{{comment.author}} - {{comment.createdAt}}</h5>
-                            <p class="card-text">{{comment.commentBody}}</p>
+                            <p *ngIf="comment.id!==editedCommentId" class="card-text">{{comment.commentBody}}</p>
+                            <button (click)="editComment(comment)"
+                                    *ngIf="!isUnderEditing && comment.authorId === userId"
+                                    color="primary"
+                                    mat-raised-button>Edit
+                            </button>
                             <br>
                         </div>
                     </mat-expansion-panel>
@@ -127,8 +135,16 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div *ngFor="let comment of corporatePost.comments">
+                            <app-comment-form (commentCreated)="loadPosts()"
+                                              *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                                              [comment]="comment" [postId]="corporatePost.id"></app-comment-form>
                             <h5 class="card-title">{{comment.author}} - {{comment.createdAt}}</h5>
-                            <p class="card-text">{{comment.commentBody}}</p>
+                            <p *ngIf="comment.id!==editedCommentId" class="card-text">{{comment.commentBody}}</p>
+                            <button (click)="editComment(comment)"
+                                    *ngIf="!isUnderEditing && comment.authorId === userId"
+                                    color="primary"
+                                    mat-raised-button>Edit
+                            </button>
                             <br>
                         </div>
                     </mat-expansion-panel>
@@ -208,8 +224,16 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div *ngFor="let comment of freeTimePost.comments">
+                            <app-comment-form (commentCreated)="loadPosts()"
+                                              *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                                              [comment]="comment" [postId]="freeTimePost.id"></app-comment-form>
                             <h5 class="card-title">{{comment.author}} - {{comment.createdAt}}</h5>
-                            <p class="card-text">{{comment.commentBody}}</p>
+                            <p *ngIf="comment.id!==editedCommentId" class="card-text">{{comment.commentBody}}</p>
+                            <button (click)="editComment(comment)"
+                                    *ngIf="!isUnderEditing && comment.authorId === userId"
+                                    color="primary"
+                                    mat-raised-button>Edit
+                            </button>
                             <br>
                         </div>
                     </mat-expansion-panel>
@@ -291,8 +315,16 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div *ngFor="let comment of professionalPost.comments">
+                            <app-comment-form (commentCreated)="loadPosts()"
+                                              *ngIf="isUnderEditing && comment.authorId === userId && comment.id===editedCommentId"
+                                              [comment]="comment" [postId]="professionalPost.id"></app-comment-form>
                             <h5 class="card-title">{{comment.author}} - {{comment.createdAt}}</h5>
-                            <p class="card-text">{{comment.commentBody}}</p>
+                            <p *ngIf="comment.id!==editedCommentId" class="card-text">{{comment.commentBody}}</p>
+                            <button (click)="editComment(comment)"
+                                    *ngIf="!isUnderEditing && comment.authorId === userId"
+                                    color="primary"
+                                    mat-raised-button>Edit
+                            </button>
                             <br>
                         </div>
                     </mat-expansion-panel>

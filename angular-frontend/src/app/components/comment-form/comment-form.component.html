@@ -23,6 +23,10 @@
         </small>
     </div>
     <button color="primary" mat-raised-button>Send</button>
+    <button (click)="cancel()"
+            *ngIf="comment && comment?.authorId === authorId"
+            color="warn" mat-raised-button>Cancel
+    </button>
 </form>
 
 

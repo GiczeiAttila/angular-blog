@@ -4,9 +4,7 @@ import {BlogService} from '../../services/blog.service';
 import {PostDetailsModel} from "../../models/postDetails.model";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {handleValidationErrors} from "../../shared/validation.handler";
 import {CommentDetailsModel} from "../../models/commentDetails.model";
-import {CommentFormDataModel} from "../../models/commentFormData.model";
 
 @Component({
     selector: 'app-post-details',
@@ -19,9 +17,9 @@ export class PostDetailsComponent implements OnInit {
     postDetails: PostDetailsModel;
     commentOpenState: boolean;
     addressOpenState: boolean;
-    isUnderEditing: boolean;
     commentForm: FormGroup;
     userId: number
+    isUnderEditing: boolean;
     editedCommentId: number;
 
     constructor(private formBuilder: FormBuilder,
@@ -62,36 +60,15 @@ export class PostDetailsComponent implements OnInit {
                 this.router.navigate(['not-found']);
                 console.warn(error);
             },
+            () => {
+                this.isUnderEditing = false;
+                this.editedCommentId = undefined;
+            }
         );
     }
 
     edit(comment: CommentDetailsModel) {
         this.editedCommentId = comment.id;
         this.isUnderEditing = true;
-        this.commentForm.get('commentBody').setValue(comment.commentBody);
-    }
-
-    save(comment: CommentDetailsModel) {
-        const commentData: CommentFormDataModel = {...this.commentForm.value};
-        console.log(commentData);
-        commentData.postId = this.id;
-        commentData.authorId = this.userId;
-        this.blogService.updateComment(commentData, comment.id).subscribe(
-            () => {
-                console.log('jé')
-            },
-            error => handleValidationErrors(error, this.commentForm),
-            () => {
-                this.isUnderEditing = false;
-                this.editedCommentId = undefined;
-                this.loadPostDetails();
-            }
-        );
-
-    }
-
-    cancel() {
-        this.isUnderEditing = false;
-        this.editedCommentId = undefined;
     }
 }
